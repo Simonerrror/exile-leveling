@@ -1,5 +1,6 @@
 import { formStyles } from "../../styles";
 import { useI18n } from "../../i18n";
+import type { MessageKey } from "../../i18n/core";
 import { type UrlRewriter, fetchStringOrUrl } from "../../utility";
 import { Modal, TextModal } from "../Modal";
 import { Workspace } from "./Workspace";
@@ -158,6 +159,7 @@ export function RouteEditor({
 }
 
 function HelpPage() {
+  const { t } = useI18n();
   const fragmentDescriptions: React.ReactNode[] = Object.entries(
     FragmentDescriptionLookup,
   ).map(([key, variants], i) => (
@@ -176,12 +178,14 @@ function HelpPage() {
             ))}
             <span className="token keyword control-flow">{"}"}</span>
             <br />
-            <span>{variant.description}</span>
+            <span>{t(`route.help.${key}.${j}.description` as MessageKey)}</span>
             <br />
-            {variant.parameters.map((param, j) => (
-              <React.Fragment key={`variant-description-${j}`}>
+            {variant.parameters.map((param, parameterIndex) => (
+              <React.Fragment key={`variant-description-${parameterIndex}`}>
                 <span className="token property">{param.name}</span>:{" "}
-                {param.description}
+                {t(
+                  `route.help.${key}.${j}.parameter.${parameterIndex}` as MessageKey,
+                )}
                 <br />
               </React.Fragment>
             ))}

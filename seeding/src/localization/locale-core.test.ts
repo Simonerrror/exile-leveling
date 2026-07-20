@@ -5,7 +5,9 @@ import {
   normalizeLocale,
   translate,
   translateCatalog,
+  type MessageKey,
 } from "../../../web/src/i18n/core.js";
+import { FragmentDescriptionLookup } from "../../../common/src/route-processing/fragment/language.js";
 
 test("normalizes supported browser locales", () => {
   assert.equal(normalizeLocale("ru-RU"), "ru");
@@ -56,4 +58,28 @@ test("falls back to the canonical English message", () => {
   };
 
   assert.equal(translateCatalog(catalog, "ru", "nav.route"), "Route");
+});
+
+test("provides localized Route Editor help for every DSL description", () => {
+  for (const [fragment, variants] of Object.entries(
+    FragmentDescriptionLookup,
+  )) {
+    variants.forEach((variant, variantIndex) => {
+      const variantKey =
+        `route.help.${fragment}.${variantIndex}.description` as MessageKey;
+
+      assert.equal(translate("en", variantKey), variant.description);
+      assert.notEqual(translate("ru", variantKey), variant.description);
+      assert.ok(translate("ru", variantKey));
+
+      variant.parameters.forEach((parameter, parameterIndex) => {
+        const parameterKey =
+          `route.help.${fragment}.${variantIndex}.parameter.${parameterIndex}` as MessageKey;
+
+        assert.equal(translate("en", parameterKey), parameter.description);
+        assert.notEqual(translate("ru", parameterKey), parameter.description);
+        assert.ok(translate("ru", parameterKey));
+      });
+    });
+  }
 });

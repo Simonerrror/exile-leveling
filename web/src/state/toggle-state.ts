@@ -18,9 +18,10 @@ type ClearableAtomFamily = AtomFamily<
 export const buildToggleState = (
   version: number,
   key: string,
+  migrators = NO_MIGRATORS,
 ): ClearableAtomFamily => {
   const toggleState = new Set<string>(
-    getPersistent<string[]>(key, version, NO_MIGRATORS),
+    getPersistent<string[]>(key, version, migrators),
   );
 
   const refreshAtom = atom(0);

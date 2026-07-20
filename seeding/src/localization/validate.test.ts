@@ -1675,6 +1675,13 @@ test("route signatures ignore translated prose", () => {
   );
 });
 
+test("route parity distinguishes prose-only steps from empty lines", () => {
+  assert.throws(
+    () => assertRouteParity("Talk to Tarkleigh", "", "act-1"),
+    /route structure differs: act-1 line 1/,
+  );
+});
+
 test("route signatures preserve structural ids", () => {
   assert.throws(
     () =>

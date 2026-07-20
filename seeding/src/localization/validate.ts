@@ -752,6 +752,8 @@ export function routeSignature(line: string): string {
       ? `#${translatedDirective}`
       : content
     : "";
+  const lineKind =
+    content.length === 0 ? "empty" : directive ? "directive" : "step";
   const fragments = [...line.matchAll(/\{([^{}]+)\}/g)].map((match) => {
     const [type, ...parameters] = match[1].split("|");
     const displaySignature = displayFragmentSignature(type, parameters);
@@ -759,7 +761,7 @@ export function routeSignature(line: string): string {
     return `{${[type, ...parameters].join("|")}}`;
   });
 
-  return JSON.stringify({ indent, directive, fragments });
+  return JSON.stringify({ indent, lineKind, directive, fragments });
 }
 
 export function assertMessageDictionary(

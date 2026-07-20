@@ -117,6 +117,54 @@ test("persisted locale wins on initial read and failed writes stay in memory", a
   }
 });
 
+test("legacy built-in section collapse keys migrate to stable indices", async () => {
+  const backing = createMemoryStorage();
+  backing.setItem(
+    "section-collapse",
+    JSON.stringify({
+      version: 0,
+      value: ["section-Act_1", "section-Act_10"],
+    }),
+  );
+  const restoreLocalStorage = replaceGlobal("localStorage", backing);
+  const restoreWindow = replaceGlobal("window", { localStorage: backing });
+
+  try {
+    const sectionState = await import(
+      "../../../web/src/state/section-collapse.js"
+    );
+    const migrateSectionCollapseV0 = (
+      sectionState as typeof sectionState & {
+        migrateSectionCollapseV0?: (keys: string[] | null) => string[];
+      }
+    ).migrateSectionCollapseV0;
+
+    assert.equal(typeof migrateSectionCollapseV0, "function");
+    assert.deepEqual(migrateSectionCollapseV0!(null), []);
+    assert.deepEqual(
+      migrateSectionCollapseV0!([
+        "section-Act_1",
+        "section-Act_10",
+        "section-Custom_Name",
+      ]),
+      ["section-0", "section-9", "section-Custom_Name"],
+    );
+
+    const { sectionCollapseFamily } = sectionState;
+    const store = createStore();
+
+    assert.equal(store.get(sectionCollapseFamily("section-0")), true);
+    assert.equal(store.get(sectionCollapseFamily("section-9")), true);
+    assert.deepEqual(JSON.parse(backing.getItem("section-collapse")!), {
+      version: 1,
+      value: ["section-0", "section-9"],
+    });
+  } finally {
+    restoreWindow();
+    restoreLocalStorage();
+  }
+});
+
 test("changing locale preserves route, gem, section, and build state", async () => {
   const backing = createMemoryStorage();
   const restoreLocalStorage = replaceGlobal("localStorage", backing);
