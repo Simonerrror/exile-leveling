@@ -4,7 +4,7 @@ export type ResourceCategoryId =
 export type Resource = Readonly<{
   id: string;
   category: ResourceCategoryId;
-  title: string;
+  name: string;
   url: string;
   domain: string;
   note?: "login" | "featured";
@@ -14,105 +14,105 @@ export const resources = [
   {
     id: "blight-oils",
     category: "calculators",
-    title: "Blight Oils Calculator",
+    name: "Blight Oils Calculator",
     url: "https://blight.raelys.com/",
     domain: "blight.raelys.com",
   },
   {
     id: "chromatic",
     category: "calculators",
-    title: "Chromatic Calculator",
+    name: "Chromatic Calculator",
     url: "https://siveran.github.io/calc.html",
     domain: "siveran.github.io",
   },
   {
     id: "timeless-jewel",
     category: "calculators",
-    title: "Timeless Jewel Viewer",
+    name: "Timeless Jewel Viewer",
     url: "https://vilsol.github.io/timeless-jewels/",
     domain: "vilsol.github.io",
   },
   {
     id: "cluster-jewel",
     category: "calculators",
-    title: "Cluster Jewel Calculator",
+    name: "Cluster Jewel Calculator",
     url: "https://theodorejbieber.github.io/PoEClusterJewelCalculator/",
     domain: "theodorejbieber.github.io",
   },
   {
     id: "craft-of-exile",
     category: "calculators",
-    title: "Craft of Exile",
+    name: "Craft of Exile",
     url: "https://www.craftofexile.com/",
     domain: "www.craftofexile.com",
   },
   {
     id: "filterblade",
     category: "planning",
-    title: "FilterBlade",
+    name: "FilterBlade",
     url: "https://www.filterblade.xyz/",
     domain: "www.filterblade.xyz",
   },
   {
     id: "poe-re",
     category: "planning",
-    title: "PoE.re",
+    name: "PoE.re",
     url: "https://poe.re/",
     domain: "poe.re",
   },
   {
     id: "poe-planner",
     category: "planning",
-    title: "PoE Planner",
+    name: "PoE Planner",
     url: "https://poeplanner.com/",
     domain: "poeplanner.com",
   },
   {
     id: "tft-bulk",
     category: "trade",
-    title: "TFT Bulk Selling Tool",
+    name: "TFT Bulk Selling Tool",
     url: "https://the-forbidden-trove.github.io/bulk-selling-tool/",
     domain: "the-forbidden-trove.github.io",
   },
   {
     id: "trade-extension",
     category: "trade",
-    title: "PoE Trade Extension",
+    name: "PoE Trade Extension",
     url: "https://chromewebstore.google.com/detail/poe-trade-extension/bikeebdigkompjnpcljicocidefgbhgl",
     domain: "chromewebstore.google.com",
   },
   {
     id: "awakened-trade",
     category: "trade",
-    title: "Awakened PoE Trade",
+    name: "Awakened PoE Trade",
     url: "https://github.com/SnosMe/awakened-poe-trade",
     domain: "github.com",
   },
   {
     id: "wealthy-exile",
     category: "analytics",
-    title: "Wealthy Exile",
+    name: "Wealthy Exile",
     url: "https://wealthyexile.com/",
     domain: "wealthyexile.com",
   },
   {
     id: "poe-ninja",
     category: "analytics",
-    title: "poe.ninja",
+    name: "poe.ninja",
     url: "https://poe.ninja/",
     domain: "poe.ninja",
   },
   {
     id: "poe-leveling",
     category: "other",
-    title: "PoE-leveling",
+    name: "PoE-leveling",
     url: "https://poe-leveling.com/",
     domain: "poe-leveling.com",
   },
   {
     id: "merchant-tabs",
     category: "other",
-    title: "Merchant Tabs",
+    name: "Merchant Tabs",
     url: "https://www.pathofexile.com/my-account/merchants-tabs",
     domain: "www.pathofexile.com",
     note: "login",
@@ -120,7 +120,7 @@ export const resources = [
   {
     id: "map-preset",
     category: "other",
-    title: "Current-league map preset",
+    name: "Current-league map preset",
     url: "https://ru.pathofexile.com/trade/search/Mirage/mkJBkBQeT6",
     domain: "ru.pathofexile.com",
     note: "featured",

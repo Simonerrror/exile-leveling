@@ -14,6 +14,30 @@ test("defines all useful resources with unique IDs", () => {
   assert.equal(new Set(resources.map(({ id }) => id)).size, resources.length);
 });
 
+test("defines the canonical resource names in catalog order", () => {
+  assert.deepEqual(
+    resources.map(({ name }) => name),
+    [
+      "Blight Oils Calculator",
+      "Chromatic Calculator",
+      "Timeless Jewel Viewer",
+      "Cluster Jewel Calculator",
+      "Craft of Exile",
+      "FilterBlade",
+      "PoE.re",
+      "PoE Planner",
+      "TFT Bulk Selling Tool",
+      "PoE Trade Extension",
+      "Awakened PoE Trade",
+      "Wealthy Exile",
+      "poe.ninja",
+      "PoE-leveling",
+      "Merchant Tabs",
+      "Current-league map preset",
+    ],
+  );
+});
+
 test("uses HTTPS resource URLs with matching domains", () => {
   for (const resource of resources) {
     const url = new URL(resource.url);
