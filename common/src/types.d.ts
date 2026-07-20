@@ -69,39 +69,12 @@ export namespace LocalizedGameData {
     vendorNpcs: Record<string, Record<string, string>>;
   }
 
-  export interface FallbackReview {
-    reason: string;
-    source: string;
-  }
-
-  export interface IntentionalEnglishFallbacks {
-    gems: Record<string, FallbackReview>;
-    areaMapNames: Record<string, FallbackReview>;
-    craftingRecipes: Record<string, FallbackReview>;
-    questNames: Record<string, FallbackReview>;
-    rewardNpcs: Record<string, FallbackReview>;
-    vendorNpcs: Record<string, FallbackReview>;
-  }
-
-  export interface SourceMetadata {
-    schemaVersion: number;
-    sources: {
-      kind: string;
-      source: string;
-      revision: string;
-      retrievedAt: string;
-      sha256: string;
-    }[];
-  }
-
   export interface Data {
     gems: Record<GameData.Gem["id"], string>;
     areas: Record<GameData.Area["id"], AreaNames>;
     quests: Record<GameData.Quest["id"], QuestNames>;
     classes: Record<string, string>;
     literals: Record<string, string>;
-    sourceMetadata: SourceMetadata;
-    intentionalEnglishFallbacks: IntentionalEnglishFallbacks;
   }
 }
 

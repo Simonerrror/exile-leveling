@@ -66,9 +66,17 @@ async function main(): Promise<void> {
   const russianGameData = await readJson(
     resolve(root, "common/data/i18n/ru.json"),
   );
+  const russianGameDataAudit = await readJson(
+    resolve(root, "seeding/data/localization/ru-output-audit.json"),
+  );
+  const russianAuditManifest = await readJson(
+    resolve(root, "seeding/data/localization/ru-audit-manifest.json"),
+  );
   assertLocalizedGameData(
     russianGameData,
-    canonicalData as Parameters<typeof assertLocalizedGameData>[1],
+    russianGameDataAudit,
+    canonicalData as Parameters<typeof assertLocalizedGameData>[2],
+    russianAuditManifest,
   );
 
   const routes = resolve(root, "common/data/routes");

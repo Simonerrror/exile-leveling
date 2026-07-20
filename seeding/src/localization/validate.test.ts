@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  readdir,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -72,8 +79,39 @@ function localizedGameFixture() {
     },
     classes: { Marauder: "Дикарь" },
     literals: {},
+  };
+}
+
+function localizedAuditFixture() {
+  const sourceKinds = [
+    "BaseItemTypes",
+    "WorldAreas",
+    "MapPins",
+    "Quest",
+    "QuestRewardOffers",
+    "NPCTalk",
+    "NPCs",
+    "Characters",
+    "SkillGems",
+    "RecipeUnlockDisplay",
+  ];
+  return {
+    schemaVersion: 1,
+    kind: "russian-game-data-audit",
+    sourceMetadata: {
+      schemaVersion: 1,
+      sources: sourceKinds.map((kind) => ({
+        kind,
+        source: `https://example.test/${kind}`,
+        revision: "fixture-v1",
+        retrievedAt: "2026-07-20",
+        sha256: "0".repeat(64),
+      })),
+    },
     intentionalEnglishFallbacks: {
       gems: {},
+      classes: {},
+      areaNames: {},
       areaMapNames: {},
       craftingRecipes: {
         area: {
@@ -84,8 +122,17 @@ function localizedGameFixture() {
       questNames: {},
       rewardNpcs: {},
       vendorNpcs: {},
+      literals: {},
     },
   };
+}
+
+function assertLocalizedFixture(
+  localized = localizedGameFixture(),
+  audit = localizedAuditFixture(),
+  canonical = canonicalGameFixture(),
+): void {
+  validation.assertLocalizedGameData(localized, audit, canonical);
 }
 
 async function writeJson(path: string, value: unknown): Promise<void> {
@@ -107,6 +154,36 @@ async function writeAuditManifest(
   path: string,
   inputs: Record<string, string>,
 ): Promise<void> {
+  const pobCommit = "696d36aabaffb88f9c75ee424a1b4433b3233597";
+  const provenance = (name: string) => {
+    if (["pobGems", "pobReport", "classSource"].includes(name)) {
+      return {
+        source: `https://gitverse.ru/pathofbuilding/PathOfBuilding/content/${pobCommit}/${name}`,
+        revision: pobCommit,
+      };
+    }
+    if (
+      ["poedbGemsReport", "areasReport", "questsReport", "npcsReport"].includes(
+        name,
+      )
+    ) {
+      return {
+        source: `https://poedb.tw/ru/${name}`,
+        revision: "retrieved-2026-07-20",
+      };
+    }
+    if (name === "displayAuditReport") {
+      return {
+        source:
+          "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-display-audit.json",
+        revision: "fixture-v1",
+      };
+    }
+    return {
+      source: `https://example.test/${name}`,
+      revision: "fixture-v1",
+    };
+  };
   await writeJson(path, {
     schemaVersion: 1,
     kind: "russian-display-audit-manifest",
@@ -115,8 +192,7 @@ async function writeAuditManifest(
         Object.entries(inputs).map(async ([name, input]) => [
           name,
           {
-            source: `https://example.test/${name}`,
-            revision: "fixture-v1",
+            ...provenance(name),
             retrievedAt: "2026-07-20",
             sha256: createHash("sha256")
               .update(await readFile(input))
@@ -240,11 +316,97 @@ test("audited provenance manifests verify every input hash", async () => {
   }
 });
 
+test("audited provenance returns the exact verified input bytes", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-manifest-"));
+  const input = join(directory, "display-report.json");
+  const manifest = join(directory, "manifest.json");
+  await writeFile(input, "verified bytes\n");
+  await writeAuditManifest(manifest, { displayReport: input });
+
+  try {
+    const verified = await generator.validateAuditManifest(manifest, {
+      displayReport: input,
+    });
+    await writeFile(input, "replacement bytes\n");
+    assert.equal(
+      verified.inputs.displayReport.toString("utf8"),
+      "verified bytes\n",
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test("deterministic localization JSON sorts keys and ends with a newline", () => {
   assert.equal(
     serializeDeterministic({ z: { b: 2, a: 1 }, a: 0 }),
     '{\n  "a": 0,\n  "z": {\n    "a": 1,\n    "b": 2\n  }\n}\n',
   );
+});
+
+test("atomic localization writes leave no temporary artifact", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-atomic-"));
+  const output = join(directory, "ru.json");
+
+  try {
+    await generator.writeAtomicFile(output, "complete\n");
+    assert.equal(await readFile(output, "utf8"), "complete\n");
+    assert.deepEqual(await readdir(directory), ["ru.json"]);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("failed atomic localization writes clean their temporary artifact", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-atomic-"));
+  const output = join(directory, "existing-destination");
+  await mkdir(output);
+  await writeFile(join(output, "sentinel"), "unchanged\n");
+
+  try {
+    await assert.rejects(() =>
+      generator.writeAtomicFile(output, "replacement"),
+    );
+    assert.equal(
+      await readFile(join(output, "sentinel"), "utf8"),
+      "unchanged\n",
+    );
+    assert.deepEqual(await readdir(directory), ["existing-destination"]);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("paired localization output rolls back when the runtime publish fails", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-pair-"));
+  const output = join(directory, "runtime-destination");
+  const auditOutput = join(directory, "audit.json");
+  await mkdir(output);
+  await writeFile(join(output, "sentinel"), "runtime unchanged\n");
+  await writeFile(auditOutput, "audit unchanged\n");
+
+  try {
+    await assert.rejects(() =>
+      generator.writeValidatedData(
+        localizedGameFixture(),
+        localizedAuditFixture(),
+        canonicalGameFixture(),
+        output,
+        auditOutput,
+      ),
+    );
+    assert.equal(await readFile(auditOutput, "utf8"), "audit unchanged\n");
+    assert.equal(
+      await readFile(join(output, "sentinel"), "utf8"),
+      "runtime unchanged\n",
+    );
+    assert.deepEqual((await readdir(directory)).sort(), [
+      "audit.json",
+      "runtime-destination",
+    ]);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 });
 
 test("deterministic localization JSON uses locale-independent code-unit order", () => {
@@ -257,25 +419,37 @@ test("deterministic localization JSON uses locale-independent code-unit order", 
 test("the generator validates complete canonical coverage before writing", async () => {
   const directory = await mkdtemp(join(tmpdir(), "ru-display-data-"));
   const output = join(directory, "ru.json");
+  const auditOutput = join(directory, "ru-output-audit.json");
   await writeFile(output, "unchanged\n");
+  await writeFile(auditOutput, "unchanged audit\n");
   const localized = localizedGameFixture();
   delete (localized.gems as Record<string, string>).gem;
   const writeValidatedData = (
     generator as typeof generator & {
       writeValidatedData: (
         value: unknown,
+        audit: unknown,
         canonical: ReturnType<typeof canonicalGameFixture>,
         output: string,
+        auditOutput: string,
       ) => Promise<void>;
     }
   ).writeValidatedData;
 
   try {
     await assert.rejects(
-      () => writeValidatedData(localized, canonicalGameFixture(), output),
+      () =>
+        writeValidatedData(
+          localized,
+          localizedAuditFixture(),
+          canonicalGameFixture(),
+          output,
+          auditOutput,
+        ),
       /gem coverage invalid: missing IDs: gem/,
     );
     assert.equal(await readFile(output, "utf8"), "unchanged\n");
+    assert.equal(await readFile(auditOutput, "utf8"), "unchanged audit\n");
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
@@ -286,6 +460,7 @@ test("official export mode resolves NPCs and classes through canonical reference
   const canonicalDirectory = join(directory, "canonical");
   const exportsDirectory = join(directory, "exports");
   const output = join(directory, "ru.json");
+  const auditOutput = join(directory, "ru-output-audit.json");
   const auditManifest = join(directory, "manifest.json");
   await mkdir(canonicalDirectory);
   await mkdir(exportsDirectory);
@@ -364,12 +539,181 @@ test("official export mode resolves NPCs and classes through canonical reference
       exportsDirectory,
       auditManifest,
       output,
+      auditOutput,
     });
 
     const result = JSON.parse(await readFile(output, "utf8"));
+    const resultAudit = JSON.parse(await readFile(auditOutput, "utf8"));
     assert.equal(result.classes.Witch, "Ведьма");
     assert.equal(result.quests.quest.rewardNpcs.offer, "Несса");
     assert.equal(result.quests.quest.vendorNpcs.offer.gem, "Несса");
+    assert.equal(resultAudit.kind, "russian-game-data-audit");
+    assert.equal(Object.hasOwn(result, "sourceMetadata"), false);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("audited source mode regenerates a compact fixture deterministically", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-audited-sources-"));
+  const canonicalDirectory = join(directory, "canonical");
+  const sourcesDirectory = join(directory, "sources");
+  await mkdir(canonicalDirectory);
+  await mkdir(sourcesDirectory);
+  const source = (name: string) => join(sourcesDirectory, name);
+  const pobGems = source("Gems.lua");
+  const pobReport = source("pob-report.json");
+  const poedbGemsReport = source("poedb-gems-report.json");
+  const areasReport = source("areas-report.json");
+  const questsReport = source("quests-report.json");
+  const npcsReport = source("npcs-report.json");
+  const classSource = source("tree_ru.lua");
+  const displayAuditReport = source("display-audit.json");
+  const auditManifest = source("manifest.json");
+  const outputOne = join(directory, "ru-one.json");
+  const auditOutputOne = join(directory, "audit-one.json");
+  const outputTwo = join(directory, "ru-two.json");
+  const auditOutputTwo = join(directory, "audit-two.json");
+
+  try {
+    await writeJson(join(canonicalDirectory, "gems.json"), {
+      gem: { id: "gem", name: "Fireball" },
+    });
+    await writeJson(join(canonicalDirectory, "areas.json"), {
+      area: {
+        id: "area",
+        name: "The Coast",
+        map_name: "The Coast",
+        crafting_recipes: [],
+      },
+    });
+    await writeJson(join(canonicalDirectory, "quests.json"), {
+      quest: {
+        id: "quest",
+        name: "Enemy at the Gate",
+        reward_offers: {
+          offer: {
+            quest_npc: "Nessa",
+            quest: { gem: { classes: ["Witch"] } },
+            vendor: { gem: { classes: ["Witch"], npc: "Nessa" } },
+          },
+        },
+      },
+    });
+    await writeJson(join(canonicalDirectory, "characters.json"), {
+      Witch: { start_gem_id: "gem", chest_gem_id: "gem" },
+    });
+
+    const pobText = [
+      '["gem"] = {',
+      '  name = "Огненный шар",',
+      '  gameId = "gem",',
+      "}",
+      "",
+    ].join("\n");
+    await writeFile(pobGems, pobText);
+    await writeJson(pobReport, {
+      snapshot: {
+        commit: "696d36aabaffb88f9c75ee424a1b4433b3233597",
+        tag: "v2.62.0",
+      },
+      decodedFiles: [
+        {
+          sourcePath: "src/Data/Gems.lua",
+          sha256: createHash("sha256").update(pobText).digest("hex"),
+          exactGitObjectMatch: true,
+        },
+      ],
+    });
+    await writeJson(poedbGemsReport, {
+      poedbExactMissingRecords: [],
+      royaleAliasNames: [],
+    });
+    await writeJson(areasReport, {
+      kind: "areas",
+      missingCount: 0,
+      coveredCount: 1,
+      covered: [{ id: "area", localized: "Побережье" }],
+    });
+    await writeJson(questsReport, {
+      kind: "quests",
+      coveredCount: 1,
+      covered: [{ id: "quest", localized: "Враг у ворот" }],
+    });
+    await writeJson(npcsReport, {
+      results: [{ english: "Nessa" }],
+    });
+    await writeFile(classSource, "audited class source\n");
+    await writeJson(displayAuditReport, {
+      schemaVersion: 1,
+      kind: "russian-display-audit",
+      npcs: [
+        {
+          english: "Nessa",
+          localized: "Несса",
+          url: "https://poedb.tw/ru/Nessa",
+          retrievedAt: "2026-07-20",
+          contentSha256: "1".repeat(64),
+        },
+      ],
+      classes: [
+        {
+          english: "Witch",
+          localized: "Ведьма",
+          url: "https://poedb.tw/ru/Witch",
+          retrievedAt: "2026-07-20",
+          contentSha256: "2".repeat(64),
+        },
+      ],
+      nonRussianGems: [],
+    });
+    await writeAuditManifest(auditManifest, {
+      pobGems,
+      pobReport,
+      poedbGemsReport,
+      areasReport,
+      questsReport,
+      npcsReport,
+      classSource,
+      displayAuditReport,
+    });
+    const options = {
+      canonicalDirectory,
+      pobGems,
+      pobReport,
+      poedbGemsReport,
+      areasReport,
+      questsReport,
+      npcsReport,
+      classSource,
+      displayAuditReport,
+      auditManifest,
+    };
+
+    await generator.generateFromAuditedSources({
+      ...options,
+      output: outputOne,
+      auditOutput: auditOutputOne,
+    });
+    await generator.generateFromAuditedSources({
+      ...options,
+      output: outputTwo,
+      auditOutput: auditOutputTwo,
+    });
+
+    assert.equal(
+      await readFile(outputOne, "utf8"),
+      await readFile(outputTwo, "utf8"),
+    );
+    assert.equal(
+      await readFile(auditOutputOne, "utf8"),
+      await readFile(auditOutputTwo, "utf8"),
+    );
+    const result = JSON.parse(await readFile(outputOne, "utf8"));
+    assert.equal(result.gems.gem, "Огненный шар");
+    assert.equal(result.areas.area.name, "Побережье");
+    assert.equal(result.quests.quest.name, "Враг у ворот");
+    assert.equal(result.classes.Witch, "Ведьма");
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
@@ -378,6 +722,7 @@ test("official export mode resolves NPCs and classes through canonical reference
 test("both generator modes reject invalid provenance before writing", async () => {
   const directory = await mkdtemp(join(tmpdir(), "ru-generator-no-write-"));
   const output = join(directory, "ru.json");
+  const auditOutput = join(directory, "ru-output-audit.json");
   const invalidManifest = join(directory, "manifest.json");
   await writeFile(output, "unchanged\n");
   await writeJson(invalidManifest, {
@@ -394,6 +739,7 @@ test("both generator modes reject invalid provenance before writing", async () =
           exportsDirectory: join(directory, "missing-exports"),
           auditManifest: invalidManifest,
           output,
+          auditOutput,
         } as never),
       /audited provenance input coverage invalid/,
     );
@@ -413,6 +759,7 @@ test("both generator modes reject invalid provenance before writing", async () =
           displayAuditReport: join(directory, "missing-display-audit"),
           auditManifest: invalidManifest,
           output,
+          auditOutput,
         } as never),
       /audited provenance input coverage invalid/,
     );
@@ -489,24 +836,130 @@ test("game display helpers localize without mutating canonical data", () => {
   assert.deepEqual(canonical, before);
 });
 
-test("localized game data accepts a complete canonical fixture", () => {
-  const assertLocalizedGameData = (
-    validation as typeof validation & {
-      assertLocalizedGameData: (
-        localized: unknown,
-        canonical: {
-          Gems: Record<string, unknown>;
-          Areas: Record<string, unknown>;
-          Quests: Record<string, unknown>;
-          Characters: Record<string, unknown>;
-        },
-      ) => void;
-    }
-  ).assertLocalizedGameData;
+test("game display name lookups do not enumerate localized collections", () => {
+  const canonical = canonicalGameFixture();
+  const localized = localizedGameFixture();
+  let areaEnumerations = 0;
+  let questEnumerations = 0;
+  localized.areas = new Proxy(localized.areas, {
+    ownKeys(target) {
+      areaEnumerations += 1;
+      return Reflect.ownKeys(target);
+    },
+  });
+  localized.quests = new Proxy(localized.quests, {
+    ownKeys(target) {
+      questEnumerations += 1;
+      return Reflect.ownKeys(target);
+    },
+  });
 
-  assert.doesNotThrow(() =>
-    assertLocalizedGameData(localizedGameFixture(), canonicalGameFixture()),
+  const russian = gameData.createGameData("ru", canonical, localized);
+  assert.equal(russian.areaName("area"), "Побережье");
+  assert.equal(russian.areaName("unknown"), "unknown");
+  assert.equal(russian.questName("quest"), "Враг у ворот");
+  assert.equal(russian.questName("unknown"), "unknown");
+
+  assert.deepEqual(
+    { areaEnumerations, questEnumerations },
+    { areaEnumerations: 0, questEnumerations: 0 },
   );
+});
+
+test("game data helpers are cached by locale", () => {
+  assert.strictEqual(
+    gameData.gameDataForLocale("en"),
+    gameData.gameDataForLocale("en"),
+  );
+  assert.strictEqual(
+    gameData.gameDataForLocale("ru"),
+    gameData.gameDataForLocale("ru"),
+  );
+  assert.notStrictEqual(
+    gameData.gameDataForLocale("en"),
+    gameData.gameDataForLocale("ru"),
+  );
+});
+
+test("localized game data accepts a complete canonical fixture", () => {
+  assert.doesNotThrow(() => assertLocalizedFixture());
+});
+
+test("localized audit rejects malformed or unexpected source metadata", () => {
+  const malformed = localizedAuditFixture();
+  malformed.sourceMetadata.sources[0].sha256 = "not-a-hash";
+  assert.throws(
+    () => assertLocalizedFixture(localizedGameFixture(), malformed),
+    /invalid localized audit: sourceMetadata\.sources\.0\.sha256/,
+  );
+
+  const unexpected = localizedAuditFixture();
+  unexpected.sourceMetadata.sources[0].kind = "UnexpectedSource";
+  assert.throws(
+    () => assertLocalizedFixture(localizedGameFixture(), unexpected),
+    /source metadata kind coverage invalid/,
+  );
+});
+
+test("non-Russian class, area, map, quest, recipe, and literal values require review", () => {
+  const cases: {
+    mutate: (localized: ReturnType<typeof localizedGameFixture>) => void;
+    mutateAudit?: (audit: ReturnType<typeof localizedAuditFixture>) => void;
+    error: RegExp;
+  }[] = [
+    {
+      mutate: (localized) => {
+        localized.classes.Marauder = "Marauder";
+      },
+      error: /English class fallback is not reviewed: Marauder/,
+    },
+    {
+      mutate: (localized) => {
+        localized.areas.area.name = "The Coast";
+      },
+      error: /English area name fallback is not reviewed: area/,
+    },
+    {
+      mutate: (localized) => {
+        localized.areas.area.mapName = "The Coast";
+      },
+      error: /English map name fallback is not reviewed: area/,
+    },
+    {
+      mutate: (localized) => {
+        localized.quests.quest.name = "Enemy at the Gate";
+      },
+      error: /English quest name fallback is not reviewed: quest/,
+    },
+    {
+      mutate: (localized) => {
+        localized.areas.area.craftingRecipes = ["Fire Damage - Rank 1"];
+      },
+      mutateAudit: (audit) => {
+        delete (
+          audit.intentionalEnglishFallbacks.craftingRecipes as Record<
+            string,
+            unknown
+          >
+        ).area;
+      },
+      error: /English crafting recipe fallback is not reviewed: area/,
+    },
+    {
+      mutate: (localized) => {
+        (localized.literals as Record<string, string>).Brutus = "Brutus";
+      },
+      error: /English literal fallback is not reviewed: Brutus/,
+    },
+  ];
+
+  for (const { mutate, mutateAudit, error } of cases) {
+    const localized = localizedGameFixture();
+    const audit = localizedAuditFixture();
+    mutate(localized);
+    mutateAudit?.(audit);
+    assert.throws(() => assertLocalizedFixture(localized, audit), error);
+  }
 });
 
 test("localized game data rejects empty required display values", () => {
@@ -514,15 +967,7 @@ test("localized game data rejects empty required display values", () => {
   localized.gems.gem = "";
 
   assert.throws(
-    () =>
-      (
-        validation as typeof validation & {
-          assertLocalizedGameData: (
-            localized: unknown,
-            canonical: ReturnType<typeof canonicalGameFixture>,
-          ) => void;
-        }
-      ).assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localized),
     /invalid localized game data: gems\.gem must be a non-empty string/,
   );
 });
@@ -532,35 +977,40 @@ test("English display values require an explicit reviewed fallback", () => {
   localized.gems.gem = "Fireball";
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localized),
     /English gem fallback is not reviewed: gem/,
   );
 });
 
 test("reviewed fallback allowlists reject stale IDs", () => {
-  const localized = localizedGameFixture();
+  const audit = localizedAuditFixture();
   (
-    localized.intentionalEnglishFallbacks.gems as Record<
+    audit.intentionalEnglishFallbacks.gems as Record<
       string,
       { reason: string; source: string }
     >
   ).stale = { reason: "old", source: "old source" };
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localizedGameFixture(), audit),
     /unknown\/stale reviewed gem fallback: stale/,
   );
 });
 
 test("reviewed fallback allowlists reject unnecessary entries", () => {
-  const localized = localizedGameFixture();
-  localized.intentionalEnglishFallbacks.gems.gem = {
+  const audit = localizedAuditFixture();
+  (
+    audit.intentionalEnglishFallbacks.gems as Record<
+      string,
+      { reason: string; source: string }
+    >
+  ).gem = {
     reason: "not needed",
     source: "fixture",
   };
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localizedGameFixture(), audit),
     /unnecessary reviewed gem fallback: gem/,
   );
 });
@@ -570,22 +1020,38 @@ test("localized game data requires map names when canonical MapPins have one", (
   localized.areas.area.mapName = null as unknown as string;
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localized),
     /invalid localized game data: areas\.area\.mapName must be a non-empty string/,
   );
 });
 
-test("crafting recipe omissions require an explicit reviewed fallback", () => {
+test("null canonical map names reject unnecessary fallback reviews", () => {
+  const canonical = canonicalGameFixture();
+  canonical.Areas.area.map_name = null;
   const localized = localizedGameFixture();
-  delete (
-    localized.intentionalEnglishFallbacks.craftingRecipes as Record<
+  localized.areas.area.mapName = null;
+  const audit = localizedAuditFixture();
+  (
+    audit.intentionalEnglishFallbacks.areaMapNames as Record<
       string,
-      unknown
+      { reason: string; source: string }
     >
+  ).area = { reason: "not needed", source: "fixture" };
+
+  assert.throws(
+    () => assertLocalizedFixture(localized, audit, canonical),
+    /unnecessary reviewed map name fallback: area/,
+  );
+});
+
+test("crafting recipe omissions require an explicit reviewed fallback", () => {
+  const audit = localizedAuditFixture();
+  delete (
+    audit.intentionalEnglishFallbacks.craftingRecipes as Record<string, unknown>
   ).area;
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localizedGameFixture(), audit),
     /crafting recipe fallback is not reviewed: area/,
   );
 });
@@ -595,7 +1061,7 @@ test("every canonical quest reward NPC path must resolve", () => {
   delete (localized.quests.quest.rewardNpcs as Record<string, string>).offer;
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localized),
     /missing localized reward NPC path: quest\/offer/,
   );
 });
@@ -606,65 +1072,91 @@ test("every canonical vendor NPC gem path must resolve", () => {
     .gem;
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localized),
     /missing localized vendor NPC path: quest\/offer\/gem/,
   );
 });
 
 test("quest NPC maps reject stale offer and vendor gem paths", () => {
   const rewardOffer = localizedGameFixture();
-  rewardOffer.quests.quest.rewardNpcs.stale = "Лишний";
+  (rewardOffer.quests.quest.rewardNpcs as Record<string, string>).stale =
+    "Лишний";
   assert.throws(
-    () =>
-      validation.assertLocalizedGameData(rewardOffer, canonicalGameFixture()),
+    () => assertLocalizedFixture(rewardOffer),
     /unknown\/stale localized reward NPC path: quest\/stale/,
   );
 
   const vendorOffer = localizedGameFixture();
-  vendorOffer.quests.quest.vendorNpcs.stale = {};
+  (
+    vendorOffer.quests.quest.vendorNpcs as Record<
+      string,
+      Record<string, string>
+    >
+  ).stale = {};
   assert.throws(
-    () =>
-      validation.assertLocalizedGameData(vendorOffer, canonicalGameFixture()),
+    () => assertLocalizedFixture(vendorOffer),
     /unknown\/stale localized vendor offer path: quest\/stale/,
   );
 
   const vendorGem = localizedGameFixture();
-  vendorGem.quests.quest.vendorNpcs.offer.stale = "Лишний";
+  (vendorGem.quests.quest.vendorNpcs.offer as Record<string, string>).stale =
+    "Лишний";
   assert.throws(
-    () => validation.assertLocalizedGameData(vendorGem, canonicalGameFixture()),
+    () => assertLocalizedFixture(vendorGem),
     /unknown\/stale localized vendor NPC path: quest\/offer\/stale/,
   );
 });
 
 test("localized reward NPCs reject unnecessary fallback reviews", () => {
-  const localized = localizedGameFixture();
-  localized.intentionalEnglishFallbacks.rewardNpcs["quest/offer"] = {
+  const audit = localizedAuditFixture();
+  (
+    audit.intentionalEnglishFallbacks.rewardNpcs as Record<
+      string,
+      { reason: string; source: string }
+    >
+  )["quest/offer"] = {
     reason: "not needed",
     source: "fixture",
   };
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localizedGameFixture(), audit),
     /unnecessary reviewed reward NPC fallback: quest\/offer/,
   );
 });
 
 test("localized vendor NPCs reject unnecessary fallback reviews", () => {
-  const localized = localizedGameFixture();
-  localized.intentionalEnglishFallbacks.vendorNpcs["quest/offer/gem"] = {
+  const audit = localizedAuditFixture();
+  (
+    audit.intentionalEnglishFallbacks.vendorNpcs as Record<
+      string,
+      { reason: string; source: string }
+    >
+  )["quest/offer/gem"] = {
     reason: "not needed",
     source: "fixture",
   };
 
   assert.throws(
-    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    () => assertLocalizedFixture(localizedGameFixture(), audit),
     /unnecessary reviewed vendor NPC fallback: quest\/offer\/gem/,
   );
 });
 
-test("checked-in Russian game data has exact canonical coverage", () => {
+test("checked-in Russian game data has exact canonical coverage", async () => {
+  const audit = JSON.parse(
+    await readFile(
+      new URL("../../data/localization/ru-output-audit.json", import.meta.url),
+      "utf8",
+    ),
+  );
   assert.doesNotThrow(() =>
-    validation.assertLocalizedGameData(Data.Localized.ru, Data),
+    validation.assertLocalizedGameData(Data.Localized.ru, audit, Data),
+  );
+  assert.equal(Object.hasOwn(Data.Localized.ru, "sourceMetadata"), false);
+  assert.equal(
+    Object.hasOwn(Data.Localized.ru, "intentionalEnglishFallbacks"),
+    false,
   );
   assert.deepEqual(
     {
@@ -694,14 +1186,18 @@ test("checked-in Russian quest paths have exact canonical cardinality", () => {
   assert.equal(vendorCount, 1231);
 });
 
-test("checked-in Russian data reviews the exact non-Russian gem set", () => {
+test("checked-in Russian data reviews the exact non-Russian gem set", async () => {
+  const audit = JSON.parse(
+    await readFile(
+      new URL("../../data/localization/ru-output-audit.json", import.meta.url),
+      "utf8",
+    ),
+  );
   const expected = Object.entries(Data.Localized.ru.gems)
     .filter(([, name]) => !/[А-Яа-яЁё]/.test(name))
     .map(([id]) => id)
     .sort();
-  const reviewed = Object.keys(
-    Data.Localized.ru.intentionalEnglishFallbacks.gems,
-  ).sort();
+  const reviewed = Object.keys(audit.intentionalEnglishFallbacks.gems).sort();
 
   assert.equal(expected.length, 18);
   assert.deepEqual(reviewed, expected);

@@ -45,6 +45,23 @@ function assertNonEmptyString(
   }
 }
 
+function assertExactKeys(
+  value: Record<string, unknown>,
+  expected: readonly string[],
+  path: string,
+): void {
+  const actual = Object.keys(value).sort();
+  const sortedExpected = [...expected].sort();
+  if (
+    actual.length !== sortedExpected.length ||
+    actual.some((key, index) => key !== sortedExpected[index])
+  ) {
+    throw new Error(
+      `invalid localized audit schema: ${path} keys must be ${sortedExpected.join(", ")}`,
+    );
+  }
+}
+
 interface CanonicalGameData {
   Gems: Record<string, { name?: unknown }>;
   Areas: Record<
@@ -55,35 +72,251 @@ interface CanonicalGameData {
   Characters: Record<string, unknown>;
 }
 
+const CYRILLIC = /[А-Яа-яЁё]/;
+const POB_COMMIT = "696d36aabaffb88f9c75ee424a1b4433b3233597";
+const AUDITED_SOURCE_KINDS = new Set([
+  "pobGems",
+  "pobReport",
+  "poedbGemsReport",
+  "areasReport",
+  "questsReport",
+  "npcsReport",
+  "classSource",
+  "displayAuditReport",
+]);
+const OFFICIAL_SOURCE_KINDS = new Set([
+  "BaseItemTypes",
+  "WorldAreas",
+  "MapPins",
+  "Quest",
+  "QuestRewardOffers",
+  "NPCTalk",
+  "NPCs",
+  "Characters",
+  "SkillGems",
+  "RecipeUnlockDisplay",
+]);
+
+function assertAuditSourceMetadata(value: unknown): void {
+  assertRecord(value, "sourceMetadata");
+  assertExactKeys(value, ["schemaVersion", "sources"], "sourceMetadata");
+  if (value.schemaVersion !== 1 || !Array.isArray(value.sources)) {
+    throw new Error(
+      "invalid localized audit: sourceMetadata.schemaVersion or sources",
+    );
+  }
+  const kinds: Record<string, unknown> = {};
+  value.sources.forEach((source, index) => {
+    const path = `sourceMetadata.sources.${index}`;
+    assertRecord(source, path);
+    assertExactKeys(
+      source,
+      ["kind", "source", "revision", "retrievedAt", "sha256"],
+      path,
+    );
+    for (const field of [
+      "kind",
+      "source",
+      "revision",
+      "retrievedAt",
+      "sha256",
+    ]) {
+      assertNonEmptyString(source[field], `${path}.${field}`);
+    }
+    if (!/^https:\/\/\S+$/.test(source.source as string)) {
+      throw new Error(`invalid localized audit: ${path}.source`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(source.retrievedAt as string)) {
+      throw new Error(`invalid localized audit: ${path}.retrievedAt`);
+    }
+    if (!/^[a-f0-9]{64}$/.test(source.sha256 as string)) {
+      throw new Error(`invalid localized audit: ${path}.sha256`);
+    }
+    if (Object.hasOwn(kinds, source.kind as string)) {
+      throw new Error(`duplicate localized audit source kind: ${source.kind}`);
+    }
+    kinds[source.kind as string] = source;
+  });
+
+  const actualKinds = new Set(Object.keys(kinds));
+  const expectedKinds =
+    actualKinds.size === AUDITED_SOURCE_KINDS.size &&
+    [...actualKinds].every((kind) => AUDITED_SOURCE_KINDS.has(kind))
+      ? AUDITED_SOURCE_KINDS
+      : OFFICIAL_SOURCE_KINDS;
+  assertEntityCoverage(
+    "source metadata kind",
+    Object.fromEntries([...expectedKinds].map((kind) => [kind, true])),
+    kinds,
+  );
+
+  if (expectedKinds === AUDITED_SOURCE_KINDS) {
+    for (const kind of ["pobGems", "pobReport", "classSource"]) {
+      const source = kinds[kind] as Record<string, unknown>;
+      if (
+        source.revision !== POB_COMMIT ||
+        !(source.source as string).includes(POB_COMMIT) ||
+        !(source.source as string).startsWith(
+          "https://gitverse.ru/pathofbuilding/PathOfBuilding/",
+        )
+      ) {
+        throw new Error(`invalid localized audit source provenance: ${kind}`);
+      }
+    }
+    for (const kind of [
+      "poedbGemsReport",
+      "areasReport",
+      "questsReport",
+      "npcsReport",
+    ]) {
+      if (
+        !((kinds[kind] as Record<string, unknown>).source as string).startsWith(
+          "https://poedb.tw/",
+        )
+      ) {
+        throw new Error(`invalid localized audit source provenance: ${kind}`);
+      }
+    }
+    const displaySource = (kinds.displayAuditReport as Record<string, unknown>)
+      .source as string;
+    if (
+      !displaySource.startsWith(
+        "https://github.com/Simonerrror/exile-leveling/",
+      )
+    ) {
+      throw new Error(
+        "invalid localized audit source provenance: displayAuditReport",
+      );
+    }
+  }
+}
+
+function assertAuditManifestMatches(
+  sourceMetadata: unknown,
+  expectedManifest: unknown,
+): void {
+  assertRecord(sourceMetadata, "sourceMetadata");
+  assertRecord(expectedManifest, "auditManifest");
+  if (
+    expectedManifest.schemaVersion !== 1 ||
+    expectedManifest.kind !== "russian-display-audit-manifest"
+  ) {
+    throw new Error("invalid localized audit manifest schema");
+  }
+  assertRecord(expectedManifest.inputs, "auditManifest.inputs");
+  if (!Array.isArray(sourceMetadata.sources)) {
+    throw new Error("invalid localized audit: sourceMetadata.sources");
+  }
+  const sources = Object.fromEntries(
+    sourceMetadata.sources.map((source, index) => {
+      assertRecord(source, `sourceMetadata.sources.${index}`);
+      return [source.kind, source];
+    }),
+  );
+  assertEntityCoverage(
+    "audit manifest source",
+    expectedManifest.inputs,
+    sources,
+  );
+  for (const [kind, expected] of Object.entries(expectedManifest.inputs)) {
+    assertRecord(expected, `auditManifest.inputs.${kind}`);
+    const actual = sources[kind] as Record<string, unknown>;
+    for (const field of ["source", "revision", "retrievedAt", "sha256"]) {
+      if (actual[field] !== expected[field]) {
+        throw new Error(
+          `localized audit does not match manifest: ${kind}.${field}`,
+        );
+      }
+    }
+  }
+}
+
 export function assertLocalizedGameData(
   value: unknown,
+  audit: unknown,
   canonical: CanonicalGameData,
+  expectedManifest?: unknown,
 ): void {
   assertRecord(value, "root");
+  const runtimeKeys = ["gems", "areas", "quests", "classes", "literals"];
+  const actualRuntimeKeys = Object.keys(value).sort();
+  if (
+    actualRuntimeKeys.length !== runtimeKeys.length ||
+    actualRuntimeKeys.some(
+      (key, index) => key !== [...runtimeKeys].sort()[index],
+    )
+  ) {
+    throw new Error(
+      "invalid localized game data: runtime root must contain only display maps",
+    );
+  }
+  for (const buildOnlyField of [
+    "sourceMetadata",
+    "intentionalEnglishFallbacks",
+  ]) {
+    if (Object.hasOwn(value, buildOnlyField)) {
+      throw new Error(
+        `invalid localized game data: runtime root contains build-only ${buildOnlyField}`,
+      );
+    }
+  }
+  assertRecord(audit, "audit");
+  assertExactKeys(
+    audit,
+    ["schemaVersion", "kind", "sourceMetadata", "intentionalEnglishFallbacks"],
+    "audit",
+  );
+  if (audit.schemaVersion !== 1 || audit.kind !== "russian-game-data-audit") {
+    throw new Error("invalid localized audit: root schemaVersion or kind");
+  }
+  assertAuditSourceMetadata(audit.sourceMetadata);
+  if (expectedManifest !== undefined) {
+    assertAuditManifestMatches(audit.sourceMetadata, expectedManifest);
+  }
   const gems = value.gems;
   const areas = value.areas;
   const quests = value.quests;
   const classes = value.classes;
   const literals = value.literals;
-  const fallbacks = value.intentionalEnglishFallbacks;
+  const fallbacks = audit.intentionalEnglishFallbacks;
   assertRecord(gems, "gems");
   assertRecord(areas, "areas");
   assertRecord(quests, "quests");
   assertRecord(classes, "classes");
   assertRecord(literals, "literals");
   assertRecord(fallbacks, "intentionalEnglishFallbacks");
+  assertExactKeys(
+    fallbacks,
+    [
+      "gems",
+      "classes",
+      "areaNames",
+      "areaMapNames",
+      "craftingRecipes",
+      "questNames",
+      "rewardNpcs",
+      "vendorNpcs",
+      "literals",
+    ],
+    "intentionalEnglishFallbacks",
+  );
 
   assertEntityCoverage("gem", canonical.Gems, gems);
   assertEntityCoverage("area", canonical.Areas, areas);
   assertEntityCoverage("quest", canonical.Quests, quests);
   assertEntityCoverage("class", canonical.Characters, classes);
   const gemFallbacks = fallbacks.gems;
+  const classFallbacks = fallbacks.classes;
+  const areaNameFallbacks = fallbacks.areaNames;
   const mapNameFallbacks = fallbacks.areaMapNames;
   const craftingFallbacks = fallbacks.craftingRecipes;
   const questNameFallbacks = fallbacks.questNames;
   const rewardNpcFallbacks = fallbacks.rewardNpcs;
   const vendorNpcFallbacks = fallbacks.vendorNpcs;
+  const literalFallbacks = fallbacks.literals;
   assertRecord(gemFallbacks, "intentionalEnglishFallbacks.gems");
+  assertRecord(classFallbacks, "intentionalEnglishFallbacks.classes");
+  assertRecord(areaNameFallbacks, "intentionalEnglishFallbacks.areaNames");
   assertRecord(mapNameFallbacks, "intentionalEnglishFallbacks.areaMapNames");
   assertRecord(
     craftingFallbacks,
@@ -92,17 +325,26 @@ export function assertLocalizedGameData(
   assertRecord(questNameFallbacks, "intentionalEnglishFallbacks.questNames");
   assertRecord(rewardNpcFallbacks, "intentionalEnglishFallbacks.rewardNpcs");
   assertRecord(vendorNpcFallbacks, "intentionalEnglishFallbacks.vendorNpcs");
+  assertRecord(literalFallbacks, "intentionalEnglishFallbacks.literals");
   const fallbackGroups = {
     gems: gemFallbacks,
+    classes: classFallbacks,
+    areaNames: areaNameFallbacks,
     areaMapNames: mapNameFallbacks,
     craftingRecipes: craftingFallbacks,
     questNames: questNameFallbacks,
     rewardNpcs: rewardNpcFallbacks,
     vendorNpcs: vendorNpcFallbacks,
+    literals: literalFallbacks,
   };
   for (const [group, groupValue] of Object.entries(fallbackGroups)) {
     for (const [id, review] of Object.entries(groupValue)) {
       assertRecord(review, `intentionalEnglishFallbacks.${group}.${id}`);
+      assertExactKeys(
+        review,
+        ["reason", "source"],
+        `intentionalEnglishFallbacks.${group}.${id}`,
+      );
       assertNonEmptyString(
         review.reason,
         `intentionalEnglishFallbacks.${group}.${id}.reason`,
@@ -125,7 +367,13 @@ export function assertLocalizedGameData(
     }
   };
   assertReviewedIds("gem", gemFallbacks, new Set(Object.keys(canonical.Gems)));
+  assertReviewedIds(
+    "class",
+    classFallbacks,
+    new Set(Object.keys(canonical.Characters)),
+  );
   const areaIds = new Set(Object.keys(canonical.Areas));
+  assertReviewedIds("area name", areaNameFallbacks, areaIds);
   assertReviewedIds("map name", mapNameFallbacks, areaIds);
   assertReviewedIds("crafting recipe", craftingFallbacks, areaIds);
   assertReviewedIds(
@@ -162,6 +410,11 @@ export function assertLocalizedGameData(
   }
   assertReviewedIds("reward NPC", rewardNpcFallbacks, rewardPaths);
   assertReviewedIds("vendor NPC", vendorNpcFallbacks, vendorPaths);
+  assertReviewedIds(
+    "literal",
+    literalFallbacks,
+    new Set(Object.keys(literals)),
+  );
 
   for (const [id, name] of Object.entries(gems)) {
     assertNonEmptyString(name, `gems.${id}`);
@@ -177,24 +430,47 @@ export function assertLocalizedGameData(
   }
   for (const [id, name] of Object.entries(classes)) {
     assertNonEmptyString(name, `classes.${id}`);
+    const requiresFallback = name === id || !CYRILLIC.test(name);
+    const hasFallback = Object.hasOwn(classFallbacks, id);
+    if (requiresFallback && !hasFallback) {
+      throw new Error(`English class fallback is not reviewed: ${id}`);
+    }
+    if (!requiresFallback && hasFallback) {
+      throw new Error(`unnecessary reviewed class fallback: ${id}`);
+    }
   }
   for (const [id, canonicalArea] of Object.entries(canonical.Areas)) {
     const area = areas[id];
     assertRecord(area, `areas.${id}`);
     assertNonEmptyString(area.name, `areas.${id}.name`);
+    const areaNameRequiresFallback =
+      area.name === canonicalArea.name || !CYRILLIC.test(area.name);
+    const hasAreaNameFallback = Object.hasOwn(areaNameFallbacks, id);
+    if (areaNameRequiresFallback && !hasAreaNameFallback) {
+      throw new Error(`English area name fallback is not reviewed: ${id}`);
+    }
+    if (!areaNameRequiresFallback && hasAreaNameFallback) {
+      throw new Error(`unnecessary reviewed area name fallback: ${id}`);
+    }
     if (canonicalArea.map_name === null) {
       if (area.mapName !== null) {
         throw new Error(
           `invalid localized game data: areas.${id}.mapName must be null`,
         );
       }
+      if (Object.hasOwn(mapNameFallbacks, id)) {
+        throw new Error(`unnecessary reviewed map name fallback: ${id}`);
+      }
     } else {
       assertNonEmptyString(area.mapName, `areas.${id}.mapName`);
-      if (
-        area.mapName === canonicalArea.map_name &&
-        !Object.hasOwn(fallbackGroups.areaMapNames, id)
-      ) {
+      const mapNameRequiresFallback =
+        area.mapName === canonicalArea.map_name || !CYRILLIC.test(area.mapName);
+      const hasMapNameFallback = Object.hasOwn(mapNameFallbacks, id);
+      if (mapNameRequiresFallback && !hasMapNameFallback) {
         throw new Error(`English map name fallback is not reviewed: ${id}`);
+      }
+      if (!mapNameRequiresFallback && hasMapNameFallback) {
+        throw new Error(`unnecessary reviewed map name fallback: ${id}`);
       }
     }
     if (!Array.isArray(area.craftingRecipes)) {
@@ -216,13 +492,34 @@ export function assertLocalizedGameData(
       if (area.craftingRecipes.length !== canonicalRecipes.length) {
         throw new Error(`crafting recipe cardinality differs: ${id}`);
       }
-      area.craftingRecipes.forEach((recipe, index) =>
-        assertNonEmptyString(recipe, `areas.${id}.craftingRecipes.${index}`),
+      area.craftingRecipes.forEach((recipe, index) => {
+        assertNonEmptyString(recipe, `areas.${id}.craftingRecipes.${index}`);
+      });
+      const requiresCraftingFallback = area.craftingRecipes.some(
+        (recipe) => !CYRILLIC.test(recipe),
       );
+      const hasCraftingFallback = Object.hasOwn(craftingFallbacks, id);
+      if (requiresCraftingFallback && !hasCraftingFallback) {
+        throw new Error(
+          `English crafting recipe fallback is not reviewed: ${id}`,
+        );
+      }
+      if (!requiresCraftingFallback && hasCraftingFallback) {
+        throw new Error(`unnecessary reviewed crafting recipe fallback: ${id}`);
+      }
     }
   }
   for (const [literal, translation] of Object.entries(literals)) {
     assertNonEmptyString(translation, `literals.${literal}`);
+    const requiresFallback =
+      translation === literal || !CYRILLIC.test(translation);
+    const hasFallback = Object.hasOwn(literalFallbacks, literal);
+    if (requiresFallback && !hasFallback) {
+      throw new Error(`English literal fallback is not reviewed: ${literal}`);
+    }
+    if (!requiresFallback && hasFallback) {
+      throw new Error(`unnecessary reviewed literal fallback: ${literal}`);
+    }
   }
 
   for (const [questId, canonicalQuest] of Object.entries(canonical.Quests)) {
@@ -240,6 +537,17 @@ export function assertLocalizedGameData(
       }
     } else {
       assertNonEmptyString(quest.name, `quests.${questId}.name`);
+      const requiresFallback =
+        quest.name === canonicalName || !CYRILLIC.test(quest.name);
+      const hasFallback = Object.hasOwn(questNameFallbacks, questId);
+      if (requiresFallback && !hasFallback) {
+        throw new Error(
+          `English quest name fallback is not reviewed: ${questId}`,
+        );
+      }
+      if (!requiresFallback && hasFallback) {
+        throw new Error(`unnecessary reviewed quest name fallback: ${questId}`);
+      }
     }
     assertRecord(quest.rewardNpcs, `quests.${questId}.rewardNpcs`);
     assertRecord(quest.vendorNpcs, `quests.${questId}.vendorNpcs`);

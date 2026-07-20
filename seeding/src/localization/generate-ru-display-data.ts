@@ -1,6 +1,6 @@
-import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
+import { createHash, randomUUID } from "node:crypto";
+import { mkdir, open, readFile, rename, unlink } from "node:fs/promises";
+import { basename, dirname, join, resolve } from "node:path";
 import { assertEntityCoverage, assertLocalizedGameData } from "./validate.js";
 
 export interface DatExport {
@@ -13,22 +13,30 @@ export async function loadDatExport(
   name: string,
 ): Promise<DatExport> {
   const path = join(directory, `${name}.datc64.json`);
-  let text: string;
+  let bytes: Buffer;
   try {
-    text = await readFile(path, "utf8");
+    bytes = await readFile(path);
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {
       throw new Error(`missing localization source: ${path}`);
     }
     throw error;
   }
+  return parseDatExport(bytes, path);
+}
 
+function parseJsonBytes(bytes: Uint8Array, path: string): unknown {
   let value: unknown;
   try {
-    value = JSON.parse(text);
+    value = JSON.parse(Buffer.from(bytes).toString("utf8"));
   } catch {
     throw new Error(`invalid localization source JSON: ${path}`);
   }
+  return value;
+}
+
+function parseDatExport(bytes: Uint8Array, path: string): DatExport {
+  const value = parseJsonBytes(bytes, path);
   if (
     typeof value !== "object" ||
     value === null ||
@@ -59,15 +67,109 @@ export function serializeDeterministic(value: unknown): string {
   return `${JSON.stringify(sortJson(value), null, 2)}\n`;
 }
 
+async function stageAtomicFile(
+  output: string,
+  contents: string,
+): Promise<string> {
+  await mkdir(dirname(output), { recursive: true });
+  const temporary = join(
+    dirname(output),
+    `.${basename(output)}.${process.pid}.${randomUUID()}.tmp`,
+  );
+  let handle: Awaited<ReturnType<typeof open>> | undefined;
+  try {
+    handle = await open(temporary, "wx");
+    await handle.writeFile(contents);
+    await handle.sync();
+    await handle.close();
+    handle = undefined;
+    return temporary;
+  } catch (error) {
+    if (handle) await handle.close().catch(() => undefined);
+    await unlink(temporary).catch((cleanupError: unknown) => {
+      if (
+        !(cleanupError instanceof Error) ||
+        !("code" in cleanupError) ||
+        cleanupError.code !== "ENOENT"
+      ) {
+        throw cleanupError;
+      }
+    });
+    throw error;
+  }
+}
+
+export async function writeAtomicFile(
+  output: string,
+  contents: string,
+): Promise<void> {
+  const temporary = await stageAtomicFile(output, contents);
+  try {
+    await rename(temporary, output);
+  } catch (error) {
+    await unlink(temporary).catch(() => undefined);
+    throw error;
+  }
+}
+
 export async function writeValidatedData(
   value: unknown,
-  canonical: Parameters<typeof assertLocalizedGameData>[1],
+  audit: unknown,
+  canonical: Parameters<typeof assertLocalizedGameData>[2],
   output: string,
+  auditOutput: string,
 ): Promise<void> {
-  assertLocalizedGameData(value, canonical);
+  if (resolve(output) === resolve(auditOutput)) {
+    throw new Error("runtime and audit outputs must use different paths");
+  }
+  assertLocalizedGameData(value, audit, canonical);
   const serialized = serializeDeterministic(value);
-  await mkdir(dirname(output), { recursive: true });
-  await writeFile(output, serialized);
+  const serializedAudit = serializeDeterministic(audit);
+  const stagedAudit = await stageAtomicFile(auditOutput, serializedAudit);
+  let stagedRuntime: string;
+  try {
+    stagedRuntime = await stageAtomicFile(output, serialized);
+  } catch (error) {
+    await unlink(stagedAudit).catch(() => undefined);
+    throw error;
+  }
+
+  let previousAudit: Buffer | undefined;
+  try {
+    previousAudit = await readFile(auditOutput);
+  } catch (error) {
+    if (
+      !(error instanceof Error) ||
+      !("code" in error) ||
+      error.code !== "ENOENT"
+    ) {
+      await Promise.all([
+        unlink(stagedAudit).catch(() => undefined),
+        unlink(stagedRuntime).catch(() => undefined),
+      ]);
+      throw error;
+    }
+  }
+
+  let auditPublished = false;
+  try {
+    await rename(stagedAudit, auditOutput);
+    auditPublished = true;
+    await rename(stagedRuntime, output);
+  } catch (error) {
+    await Promise.all([
+      unlink(stagedAudit).catch(() => undefined),
+      unlink(stagedRuntime).catch(() => undefined),
+    ]);
+    if (auditPublished) {
+      if (previousAudit) {
+        await writeAtomicFile(auditOutput, previousAudit.toString("utf8"));
+      } else {
+        await unlink(auditOutput).catch(() => undefined);
+      }
+    }
+    throw error;
+  }
 }
 
 const RUSSIAN_POB_COMMIT = "696d36aabaffb88f9c75ee424a1b4433b3233597";
@@ -114,6 +216,7 @@ interface AuditOptions {
   displayAuditReport: string;
   auditManifest: string;
   output: string;
+  auditOutput: string;
 }
 
 interface OfficialExportOptions {
@@ -121,6 +224,7 @@ interface OfficialExportOptions {
   exportsDirectory: string;
   auditManifest: string;
   output: string;
+  auditOutput: string;
 }
 
 interface AuditedNameRecord {
@@ -156,20 +260,16 @@ interface AuditSourceMetadata {
 }
 
 async function readJson(path: string): Promise<unknown> {
-  let text: string;
+  let bytes: Buffer;
   try {
-    text = await readFile(path, "utf8");
+    bytes = await readFile(path);
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {
       throw new Error(`missing localization source: ${path}`);
     }
     throw error;
   }
-  try {
-    return JSON.parse(text);
-  } catch {
-    throw new Error(`invalid localization source JSON: ${path}`);
-  }
+  return parseJsonBytes(bytes, path);
 }
 
 function provenanceString(
@@ -192,7 +292,14 @@ function provenanceString(
 export async function loadDisplayAuditReport(
   path: string,
 ): Promise<DisplayAuditReport> {
-  const value = record(await readJson(path), path);
+  return parseDisplayAuditReport(await readFile(path), path);
+}
+
+function parseDisplayAuditReport(
+  bytes: Uint8Array,
+  path: string,
+): DisplayAuditReport {
+  const value = record(parseJsonBytes(bytes, path), path);
   if (value.schemaVersion !== 1 || value.kind !== "russian-display-audit") {
     throw new Error(`invalid audited provenance: ${path}.schemaVersion`);
   }
@@ -240,7 +347,7 @@ export async function loadDisplayAuditReport(
     },
   );
   const report = {
-    schemaVersion: 1,
+    schemaVersion: 1 as const,
     kind: "russian-display-audit" as const,
     npcs: auditedNames("npcs"),
     classes: auditedNames("classes"),
@@ -264,7 +371,10 @@ export async function loadDisplayAuditReport(
 export async function validateAuditManifest(
   path: string,
   inputs: Record<string, string>,
-): Promise<AuditSourceMetadata[]> {
+): Promise<{
+  metadata: AuditSourceMetadata[];
+  inputs: Record<string, Buffer>;
+}> {
   const manifest = record(await readJson(path), path);
   if (
     manifest.schemaVersion !== 1 ||
@@ -275,6 +385,7 @@ export async function validateAuditManifest(
   const manifestInputs = record(manifest.inputs, `${path}.inputs`);
   assertEntityCoverage("audited provenance input", inputs, manifestInputs);
   const sources: AuditSourceMetadata[] = [];
+  const verifiedInputs: Record<string, Buffer> = {};
   for (const [name, inputPath] of Object.entries(inputs)) {
     const metadata = record(manifestInputs[name], `${path}.inputs.${name}`);
     const source = provenanceString(
@@ -300,9 +411,8 @@ export async function validateAuditManifest(
       `${path}.inputs.${name}`,
       /^[a-f0-9]{64}$/,
     );
-    const actual = createHash("sha256")
-      .update(await readFile(inputPath))
-      .digest("hex");
+    const bytes = await readFile(inputPath);
+    const actual = createHash("sha256").update(bytes).digest("hex");
     if (actual !== expected) {
       throw new Error(`audited provenance hash mismatch: ${name}`);
     }
@@ -313,8 +423,9 @@ export async function validateAuditManifest(
       retrievedAt,
       sha256: expected,
     });
+    verifiedInputs[name] = bytes;
   }
-  return sources;
+  return { metadata: sources, inputs: verifiedInputs };
 }
 
 function record(value: unknown, path: string): Record<string, unknown> {
@@ -462,7 +573,7 @@ function review(reason: string, source: string) {
 export async function generateFromAuditedSources(
   options: AuditOptions,
 ): Promise<void> {
-  const sourceMetadata = await validateAuditManifest(options.auditManifest, {
+  const verified = await validateAuditManifest(options.auditManifest, {
     pobGems: options.pobGems,
     pobReport: options.pobReport,
     poedbGemsReport: options.poedbGemsReport,
@@ -472,23 +583,33 @@ export async function generateFromAuditedSources(
     classSource: options.classSource,
     displayAuditReport: options.displayAuditReport,
   });
-  const displayAudit = await loadDisplayAuditReport(options.displayAuditReport);
+  const sourceMetadata = verified.metadata;
+  const displayAudit = parseDisplayAuditReport(
+    verified.inputs.displayAuditReport,
+    options.displayAuditReport,
+  );
   const canonical = await loadCanonical(options.canonicalDirectory);
-  const [
-    pobText,
-    pobReportValue,
-    gemReportValue,
-    areaReportValue,
-    questReportValue,
-    npcReportValue,
-  ] = await Promise.all([
-    readFile(options.pobGems, "utf8"),
-    readJson(options.pobReport),
-    readJson(options.poedbGemsReport),
-    readJson(options.areasReport),
-    readJson(options.questsReport),
-    readJson(options.npcsReport),
-  ]);
+  const pobText = verified.inputs.pobGems.toString("utf8");
+  const pobReportValue = parseJsonBytes(
+    verified.inputs.pobReport,
+    options.pobReport,
+  );
+  const gemReportValue = parseJsonBytes(
+    verified.inputs.poedbGemsReport,
+    options.poedbGemsReport,
+  );
+  const areaReportValue = parseJsonBytes(
+    verified.inputs.areasReport,
+    options.areasReport,
+  );
+  const questReportValue = parseJsonBytes(
+    verified.inputs.questsReport,
+    options.questsReport,
+  );
+  const npcReportValue = parseJsonBytes(
+    verified.inputs.npcsReport,
+    options.npcsReport,
+  );
 
   const pobReport = record(pobReportValue, options.pobReport);
   const snapshot = record(pobReport.snapshot, `${options.pobReport}.snapshot`);
@@ -721,25 +842,38 @@ export async function generateFromAuditedSources(
   );
   assertEntityCoverage("class", canonical.Characters, reviewedClassNames);
   const value = {
-    sourceMetadata: {
-      schemaVersion: 1,
-      sources: sourceMetadata,
-    },
     gems,
     areas,
     quests,
     classes: reviewedClassNames,
     literals: {},
+  };
+  const audit = {
+    schemaVersion: 1,
+    kind: "russian-game-data-audit",
+    sourceMetadata: {
+      schemaVersion: 1,
+      sources: sourceMetadata,
+    },
     intentionalEnglishFallbacks: {
       gems: gemFallbacks,
+      classes: {},
+      areaNames: {},
       areaMapNames: areaMapNameFallbacks,
       craftingRecipes: craftingFallbacks,
       questNames: questNameFallbacks,
       rewardNpcs: rewardNpcFallbacks,
       vendorNpcs: vendorNpcFallbacks,
+      literals: {},
     },
   };
-  await writeValidatedData(value, canonical, options.output);
+  await writeValidatedData(
+    value,
+    audit,
+    canonical,
+    options.output,
+    options.auditOutput,
+  );
 }
 
 export async function generateFromOfficialExports(
@@ -757,7 +891,7 @@ export async function generateFromOfficialExports(
     "SkillGems",
     "RecipeUnlockDisplay",
   ];
-  const sourceMetadata = await validateAuditManifest(
+  const verified = await validateAuditManifest(
     options.auditManifest,
     Object.fromEntries(
       exportNames.map((name) => [
@@ -766,6 +900,7 @@ export async function generateFromOfficialExports(
       ]),
     ),
   );
+  const sourceMetadata = verified.metadata;
   const canonical = await loadCanonical(options.canonicalDirectory);
   const [
     baseItemTypes,
@@ -778,8 +913,11 @@ export async function generateFromOfficialExports(
     characters,
     skillGems,
     recipeUnlockDisplay,
-  ] = await Promise.all(
-    exportNames.map((name) => loadDatExport(options.exportsDirectory, name)),
+  ] = exportNames.map((name) =>
+    parseDatExport(
+      verified.inputs[name],
+      join(options.exportsDirectory, `${name}.datc64.json`),
+    ),
   );
 
   const byId = (table: DatExport) =>
@@ -996,28 +1134,38 @@ export async function generateFromOfficialExports(
     }
   }
 
-  await writeValidatedData(
-    {
-      sourceMetadata: {
-        schemaVersion: 1,
-        sources: sourceMetadata,
-      },
-      gems,
-      areas,
-      quests: localizedQuests,
-      classes,
-      literals: {},
-      intentionalEnglishFallbacks: {
-        gems: gemFallbacks,
-        areaMapNames: areaMapNameFallbacks,
-        craftingRecipes: craftingFallbacks,
-        questNames: questNameFallbacks,
-        rewardNpcs: rewardNpcFallbacks,
-        vendorNpcs: vendorNpcFallbacks,
-      },
+  const value = {
+    gems,
+    areas,
+    quests: localizedQuests,
+    classes,
+    literals: {},
+  };
+  const audit = {
+    schemaVersion: 1,
+    kind: "russian-game-data-audit",
+    sourceMetadata: {
+      schemaVersion: 1,
+      sources: sourceMetadata,
     },
+    intentionalEnglishFallbacks: {
+      gems: gemFallbacks,
+      classes: {},
+      areaNames: {},
+      areaMapNames: areaMapNameFallbacks,
+      craftingRecipes: craftingFallbacks,
+      questNames: questNameFallbacks,
+      rewardNpcs: rewardNpcFallbacks,
+      vendorNpcs: vendorNpcFallbacks,
+      literals: {},
+    },
+  };
+  await writeValidatedData(
+    value,
+    audit,
     canonical,
     options.output,
+    options.auditOutput,
   );
 }
 
@@ -1037,7 +1185,12 @@ function argumentMap(args: string[]): Record<string, string> {
 async function main(): Promise<void> {
   const args = argumentMap(process.argv.slice(2));
   if (args.exports) {
-    for (const key of ["canonical", "audit-manifest", "output"]) {
+    for (const key of [
+      "canonical",
+      "audit-manifest",
+      "output",
+      "audit-output",
+    ]) {
       if (!args[key]) throw new Error(`missing generator argument: --${key}`);
     }
     await generateFromOfficialExports({
@@ -1045,6 +1198,7 @@ async function main(): Promise<void> {
       exportsDirectory: resolve(args.exports),
       auditManifest: resolve(args["audit-manifest"]),
       output: resolve(args.output),
+      auditOutput: resolve(args["audit-output"]),
     });
     return;
   }
@@ -1060,6 +1214,7 @@ async function main(): Promise<void> {
     "display-audit-report",
     "audit-manifest",
     "output",
+    "audit-output",
   ];
   for (const key of required) {
     if (!args[key]) throw new Error(`missing generator argument: --${key}`);
@@ -1076,6 +1231,7 @@ async function main(): Promise<void> {
     displayAuditReport: resolve(args["display-audit-report"]),
     auditManifest: resolve(args["audit-manifest"]),
     output: resolve(args.output),
+    auditOutput: resolve(args["audit-output"]),
   });
 }
 

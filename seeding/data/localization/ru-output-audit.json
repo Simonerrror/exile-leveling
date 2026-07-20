@@ -1,0 +1,401 @@
+{
+  "intentionalEnglishFallbacks": {
+    "areaMapNames": {
+      "1_1_11_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_1_7_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_2_6_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_3_14_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_6_7_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_7_5_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_8_12_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_8_7_1_": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      }
+    },
+    "areaNames": {},
+    "classes": {},
+    "craftingRecipes": {
+      "1_2_14_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_2_14_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_10_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_14_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_15": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_17_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_8_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_3_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_4_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_5_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_6_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_4": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_11_endgame_town": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_14": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_7_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_7_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_10": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_12_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_4": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_5_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_5_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_12_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_2_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_7_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_8": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "3_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "EndGame_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      }
+    },
+    "gems": {
+      "Metadata/Items/Gem/SkillGemCallMercenary": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru/Gem"
+      },
+      "Metadata/Items/Gems/SkillGemBlitz": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Blitz"
+      },
+      "Metadata/Items/Gems/SkillGemBloodWhirl": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Blood_Whirl"
+      },
+      "Metadata/Items/Gems/SkillGemCallOfTheWild": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/DNT_Call_of_the_Wild"
+      },
+      "Metadata/Items/Gems/SkillGemCoilingAssault": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Coiling_Assault"
+      },
+      "Metadata/Items/Gems/SkillGemComboStrike": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru/Gem"
+      },
+      "Metadata/Items/Gems/SkillGemDiscorectangleSlam": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/Discorectangle_Slam"
+      },
+      "Metadata/Items/Gems/SkillGemIgnite": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru/Gem"
+      },
+      "Metadata/Items/Gems/SkillGemProjectilePortal": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Projectile_Portal"
+      },
+      "Metadata/Items/Gems/SkillGemQuickBlock": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Quick_Block"
+      },
+      "Metadata/Items/Gems/SkillGemReplicate": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Replicate"
+      },
+      "Metadata/Items/Gems/SkillGemSerpentStrike": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Serpent_Strike"
+      },
+      "Metadata/Items/Gems/SkillGemSliceAndDice": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Slice_And_Dice"
+      },
+      "Metadata/Items/Gems/SkillGemWandTeleport": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/Wand_Teleport"
+      },
+      "Metadata/Items/Gems/SupportGemCastLinkedCursesOnCurse": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/WIP_Support"
+      },
+      "Metadata/Items/Gems/SupportGemConflagration": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Conflagration_Support"
+      },
+      "Metadata/Items/Gems/SupportGemEdify": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/Edify_Support"
+      },
+      "Metadata/Items/Gems/SupportGemHandcastRapidFire": {
+        "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+        "source": "https://poedb.tw/ru/UNUSED_Handcast_Rapid_Fire"
+      }
+    },
+    "literals": {},
+    "questNames": {
+      "bandit_respec": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      },
+      "d2c1": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      },
+      "d2c2": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      }
+    },
+    "rewardNpcs": {
+      "a2q9/a2q9b_tencent": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      },
+      "d2c1/d2c1": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      },
+      "d2c2/d2c2": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      }
+    },
+    "vendorNpcs": {}
+  },
+  "kind": "russian-game-data-audit",
+  "schemaVersion": 1,
+  "sourceMetadata": {
+    "schemaVersion": 1,
+    "sources": [
+      {
+        "kind": "pobGems",
+        "retrievedAt": "2026-07-20",
+        "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+        "sha256": "5e673494e8891efcb3b5601420235dc8a32e9228791192a211f97396ddf85cdb",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/Data/Gems.lua"
+      },
+      {
+        "kind": "pobReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+        "sha256": "fffb5e04a8a7f4471c423e2a515f018a928d327508dd5e8b07a663b0a0df2e83",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/commits/696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      {
+        "kind": "poedbGemsReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "retrieved-2026-07-20",
+        "sha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e",
+        "source": "https://poedb.tw/ru/Gem"
+      },
+      {
+        "kind": "areasReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "exact-area-pages-retrieved-2026-07-20",
+        "sha256": "3e4231a179ed36a0d534e8f01b80b5c8def332835984befc858db97592018c25",
+        "source": "https://poedb.tw/ru/"
+      },
+      {
+        "kind": "questsReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "exact-quest-pages-retrieved-2026-07-20",
+        "sha256": "2bb0d1a2eb47c8a48ec2b89ee03f861672d9b6d5324cb7d05a9733b7890f06d2",
+        "source": "https://poedb.tw/ru/"
+      },
+      {
+        "kind": "npcsReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "exact-npc-pages-retrieved-2026-07-20",
+        "sha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da",
+        "source": "https://poedb.tw/ru/"
+      },
+      {
+        "kind": "classSource",
+        "retrievedAt": "2026-07-20",
+        "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+        "sha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua"
+      },
+      {
+        "kind": "displayAuditReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "russian-display-audit-v1",
+        "sha256": "176e63bc317500a5e3e5ba30b87d30ef6aefd33134c7c0ec844b349d4483117a",
+        "source": "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-display-audit.json"
+      }
+    ]
+  }
+}

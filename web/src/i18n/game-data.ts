@@ -62,38 +62,24 @@ export function createGameData(
   return {
     gemName: (id: string) =>
       localizedName(id, canonical.Gems[id]?.name, names(localized.gems)),
-    areaName: (id: string) =>
-      localizedName(
-        id,
-        canonical.Areas[id]?.name,
-        names(
-          Object.fromEntries(
-            Object.entries(localized.areas).map(([areaId, area]) => [
-              areaId,
-              area.name,
-            ]),
-          ),
-        ),
-      ),
+    areaName: (id: string) => {
+      const english = canonical.Areas[id]?.name;
+      return locale === "ru"
+        ? (localized.areas[id]?.name ?? english ?? id)
+        : (english ?? id);
+    },
     areaMapName: (id: string): string | null => {
       const english = canonical.Areas[id]?.map_name;
       if (english === null) return null;
       if (locale === "ru") return localized.areas[id]?.mapName || english || id;
       return english || id;
     },
-    questName: (id: string) =>
-      localizedName(
-        id,
-        canonical.Quests[id]?.name,
-        names(
-          Object.fromEntries(
-            Object.entries(localized.quests).map(([questId, quest]) => [
-              questId,
-              quest.name,
-            ]),
-          ),
-        ),
-      ),
+    questName: (id: string) => {
+      const english = canonical.Quests[id]?.name;
+      return locale === "ru"
+        ? (localized.quests[id]?.name ?? english ?? id)
+        : (english ?? id);
+    },
     className: (id: string) =>
       localizedName(
         id,
@@ -118,12 +104,13 @@ export function createGameData(
   };
 }
 
+const gameDataByLocale = {
+  en: createGameData("en", Data, Data.Localized.ru as LocalizedGameData.Data),
+  ru: createGameData("ru", Data, Data.Localized.ru as LocalizedGameData.Data),
+};
+
 export function gameDataForLocale(locale: Locale) {
-  return createGameData(
-    locale,
-    Data,
-    Data.Localized.ru as LocalizedGameData.Data,
-  );
+  return gameDataByLocale[locale];
 }
 
 export const gemName = (locale: Locale, id: string) =>
