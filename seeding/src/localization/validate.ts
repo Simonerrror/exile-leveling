@@ -1,25 +1,89 @@
-const DISPLAY_FRAGMENTS = new Set([
-  "kill",
+const SINGLE_DISPLAY_FRAGMENTS = new Set([
   "arena",
   "quest_text",
   "generic",
   "reward_quest",
-  "reward_vendor",
-  "copy",
 ]);
+
+function assertFragmentArity(
+  type: string,
+  count: number,
+  minimum: number,
+  maximum?: number,
+): void {
+  if (count >= minimum && (maximum === undefined || count <= maximum)) return;
+
+  const expected =
+    maximum === undefined
+      ? `at least ${minimum}`
+      : minimum === maximum
+        ? String(minimum)
+        : `${minimum}-${maximum}`;
+  throw new Error(
+    `invalid route fragment arity: ${type} expected ${expected}, received ${count}`,
+  );
+}
+
+function displayFragmentSignature(
+  type: string,
+  parameters: string[],
+): string | undefined {
+  if (SINGLE_DISPLAY_FRAGMENTS.has(type)) {
+    assertFragmentArity(type, parameters.length, 1, 1);
+    return `{${type}|display}`;
+  }
+  if (type === "reward_vendor") {
+    assertFragmentArity(type, parameters.length, 1, 2);
+    const cost = parameters[1] === undefined ? "" : `|${parameters[1]}`;
+    return `{${type}|display${cost}}`;
+  }
+  if (type === "copy") {
+    assertFragmentArity(type, parameters.length, 1);
+    return `{${type}|display}`;
+  }
+}
 
 export function routeSignature(line: string): string {
   const indent = line.match(/^\s*/)?.[0].length ?? 0;
-  const directive = line.trimStart().startsWith("#")
-    ? line.trim().replace(/^#section\s+.+$/, "#section")
+  const trimmed = line.trim();
+  const translatedDirective = trimmed.match(/^#(section|sub)(?:\s|$)/)?.[1];
+  const directive = trimmed.startsWith("#")
+    ? translatedDirective
+      ? `#${translatedDirective}`
+      : trimmed
     : "";
   const fragments = [...line.matchAll(/\{([^{}]+)\}/g)].map((match) => {
     const [type, ...parameters] = match[1].split("|");
-    if (DISPLAY_FRAGMENTS.has(type)) return `{${type}|display}`;
+    const displaySignature = displayFragmentSignature(type, parameters);
+    if (displaySignature !== undefined) return displaySignature;
     return `{${[type, ...parameters].join("|")}}`;
   });
 
   return JSON.stringify({ indent, directive, fragments });
+}
+
+export function assertMessageDictionary(
+  value: unknown,
+  path: string,
+): asserts value is Record<string, string> {
+  if (
+    typeof value !== "object" ||
+    value === null ||
+    Array.isArray(value) ||
+    Object.getPrototypeOf(value) !== Object.prototype
+  ) {
+    throw new Error(
+      `invalid message dictionary root: ${path} must be a plain object`,
+    );
+  }
+
+  for (const [key, message] of Object.entries(value)) {
+    if (typeof message !== "string") {
+      throw new Error(
+        `invalid message dictionary value: ${path} key ${key} must be a string`,
+      );
+    }
+  }
 }
 
 export function assertMessageParity(
@@ -27,11 +91,11 @@ export function assertMessageParity(
   russian: Record<string, string>,
 ): void {
   for (const key of Object.keys(english)) {
-    if (!(key in russian))
+    if (!Object.hasOwn(russian, key))
       throw new Error(`missing Russian message key: ${key}`);
   }
   for (const key of Object.keys(russian)) {
-    if (!(key in english))
+    if (!Object.hasOwn(english, key))
       throw new Error(`unknown Russian message key: ${key}`);
   }
 }

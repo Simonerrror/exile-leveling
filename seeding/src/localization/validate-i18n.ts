@@ -1,7 +1,11 @@
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { assertMessageParity, assertRouteParity } from "./validate.js";
+import {
+  assertMessageDictionary,
+  assertMessageParity,
+  assertRouteParity,
+} from "./validate.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 
@@ -42,12 +46,12 @@ async function routeFiles(path: string): Promise<string[]> {
 
 async function main(): Promise<void> {
   const messages = resolve(root, "web/src/i18n/messages");
-  const englishMessages = (await readJson(
-    resolve(messages, "en.json"),
-  )) as Record<string, string>;
-  const russianMessages = (await readJson(
-    resolve(messages, "ru.json"),
-  )) as Record<string, string>;
+  const englishMessagesPath = resolve(messages, "en.json");
+  const russianMessagesPath = resolve(messages, "ru.json");
+  const englishMessages = await readJson(englishMessagesPath);
+  const russianMessages = await readJson(russianMessagesPath);
+  assertMessageDictionary(englishMessages, displayPath(englishMessagesPath));
+  assertMessageDictionary(russianMessages, displayPath(russianMessagesPath));
   assertMessageParity(englishMessages, russianMessages);
 
   const routes = resolve(root, "common/data/routes");
