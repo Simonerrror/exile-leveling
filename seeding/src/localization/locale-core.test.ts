@@ -42,6 +42,8 @@ test("translates English and Russian messages", () => {
   assert.equal(translate("ru", "nav.route"), "Маршрут");
   assert.equal(translate("en", "fragment.act", { act: 2 }), "Act 2");
   assert.equal(translate("ru", "fragment.act", { act: 2 }), "Акт 2");
+  assert.equal(translate("en", "modal.cancel"), "Cancel");
+  assert.equal(translate("ru", "modal.submit"), "Отправить");
 });
 
 test("falls back to the canonical English message", () => {

@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { useI18n } from "../../i18n";
 import { pobCodeAtom } from "../../state/pob-code";
 import { routeSelector } from "../../state/route";
 import { routeFilesSelector } from "../../state/route-files";
@@ -21,6 +22,7 @@ import { useAtomCallback } from "jotai/utils";
 import { gemProgressFamily } from "../../state/gem-progress";
 import { routeProgressFamily } from "../../state/route-progress";
 import { sectionCollapseFamily } from "../../state/section-collapse";
+import { LocaleSelector } from "./LocaleSelector";
 
 interface NavbarItemProps {
   label: string;
@@ -32,6 +34,7 @@ interface NavbarItemProps {
 function NavbarItem({ label, expand, icon, onClick }: NavbarItemProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={classNames(styles.navItem, styles.navElement, {
         [styles.expand]: expand,
@@ -51,6 +54,7 @@ interface NavbarProps {}
 export function Navbar({}: NavbarProps) {
   const [navExpand, setNavExpand] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const clipboardRoute = useAtomCallback(async (get) => {
     const route = await get(routeSelector);
@@ -82,9 +86,13 @@ export function Navbar({}: NavbarProps) {
           [styles.expand]: navExpand,
         })}
       >
-        <button onClick={() => setNavExpand(!navExpand)}>
+        <button
+          type="button"
+          aria-label={t("nav.menu")}
+          onClick={() => setNavExpand(!navExpand)}
+        >
           <FaBars
-            aria-label="Menu"
+            aria-hidden={true}
             className={classNames(
               styles.navIcon,
               interactiveStyles.activePrimary,
@@ -103,7 +111,7 @@ export function Navbar({}: NavbarProps) {
             })}
           >
             <NavbarItem
-              label="Route"
+              label={t("nav.route")}
               expand={navExpand}
               icon={<FaMap className={classNames("inlineIcon")} />}
               onClick={() => {
@@ -112,7 +120,7 @@ export function Navbar({}: NavbarProps) {
               }}
             />
             <NavbarItem
-              label="Build"
+              label={t("nav.build")}
               expand={navExpand}
               icon={<FaTools className={classNames("inlineIcon")} />}
               onClick={() => {
@@ -120,7 +128,7 @@ export function Navbar({}: NavbarProps) {
                 setNavExpand(false);
               }}
             />
-            <NavAccordion label="Sections" navExpand={navExpand}>
+            <NavAccordion label={t("nav.sections")} navExpand={navExpand}>
               {routeFiles.map((x, i) => (
                 <NavbarItem
                   key={i}
@@ -134,7 +142,7 @@ export function Navbar({}: NavbarProps) {
               ))}
             </NavAccordion>
             <NavbarItem
-              label={`Edit Route`}
+              label={t("nav.editRoute")}
               expand={navExpand}
               icon={<FaTools className={classNames("inlineIcon")} />}
               onClick={() => {
@@ -143,7 +151,7 @@ export function Navbar({}: NavbarProps) {
               }}
             />
             <NavbarItem
-              label="Reset Progress"
+              label={t("nav.resetProgress")}
               expand={navExpand}
               icon={<FaUndoAlt className={classNames("inlineIcon")} />}
               onClick={() => {
@@ -152,18 +160,18 @@ export function Navbar({}: NavbarProps) {
               }}
             />
             <NavbarItem
-              label="3rd-Party Export"
+              label={t("nav.thirdPartyExport")}
               expand={navExpand}
               icon={<FaRegClipboard className={classNames("inlineIcon")} />}
               onClick={() => {
                 clipboardRoute();
                 trackEvent({ name: "3rd-Party Export" });
-                toast.success("Exported to Clipboard");
+                toast.success(t("toast.exported"));
                 setNavExpand(false);
               }}
             />
             <NavbarItem
-              label="Project on Github"
+              label={t("nav.projectGithub")}
               expand={navExpand}
               icon={<FaGithub className={classNames("inlineIcon")} />}
               onClick={() => {
@@ -178,6 +186,7 @@ export function Navbar({}: NavbarProps) {
             />
           </div>
           {navExpand && <hr />}
+          {navExpand && <LocaleSelector />}
         </div>
       </div>
       <hr />

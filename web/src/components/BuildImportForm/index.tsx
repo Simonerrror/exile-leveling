@@ -1,4 +1,5 @@
 import { formStyles } from "../../styles";
+import { useI18n } from "../../i18n";
 import {
   type UrlRewriter,
   fetchStringOrUrl,
@@ -45,11 +46,12 @@ interface BuildImportFormProps {
 
 export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useI18n();
 
   return (
     <>
       <TextModal
-        label="Path of Building Code"
+        label={t("build.pobCode")}
         size="small"
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
@@ -59,7 +61,7 @@ export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
               if (!pobCodeOrUrl) return Promise.reject("invalid pobCodeOrUrl");
               const pobCode = await fetchStringOrUrl(
                 pobCodeOrUrl,
-                URL_REWRITERS
+                URL_REWRITERS,
               );
 
               const pobData = processPob(pobCode);
@@ -68,10 +70,10 @@ export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
               onSubmit(pobData, pobCode);
             },
             {
-              pending: "Importing Build",
-              success: "Import Success",
-              error: "Import Failed",
-            }
+              pending: t("build.importing"),
+              success: t("build.importSuccess"),
+              error: t("build.importFailed"),
+            },
           )
         }
       />
@@ -82,7 +84,7 @@ export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
             onReset();
           }}
         >
-          Reset Build
+          {t("build.reset")}
         </button>
         <button
           className={classNames(formStyles.formButton)}
@@ -90,7 +92,7 @@ export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
             setIsOpen(true);
           }}
         >
-          Import Build
+          {t("build.import")}
         </button>
       </div>
     </>

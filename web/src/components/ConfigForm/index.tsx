@@ -1,4 +1,5 @@
 import type { Config } from "../../state/config";
+import { useI18n } from "../../i18n";
 import { SplitRow } from "../SplitRow";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -9,10 +10,14 @@ interface ConfigFormProps {
 }
 
 export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
+  const { t } = useI18n();
+
   return (
     <div className={classNames(styles.form)}>
       <SplitRow
-        left={<div className={classNames(styles.label)}>Gems Only</div>}
+        left={
+          <div className={classNames(styles.label)}>{t("config.gemsOnly")}</div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -24,13 +29,17 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
                   gemsOnly: evt.target.checked,
                 });
               }}
-              aria-label="Gems Only"
+              aria-label={t("config.gemsOnly")}
             />
           </div>
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Show All Hints</div>}
+        left={
+          <div className={classNames(styles.label)}>
+            {t("config.showAllHints")}
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -42,7 +51,7 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
                   showSubsteps: evt.target.checked,
                 });
               }}
-              aria-label="Show Hints"
+              aria-label={t("config.showAllHints")}
             />
           </div>
         }

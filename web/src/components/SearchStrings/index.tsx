@@ -1,4 +1,5 @@
 import type { SearchString } from "../../state/search-strings";
+import { useI18n } from "../../i18n";
 import { borderListStyles, interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -10,6 +11,8 @@ interface SearchStringsProps {
 }
 
 export function SearchStrings({ values }: SearchStringsProps) {
+  const { t } = useI18n();
+
   return (
     <div className={classNames(styles.searchStrings)}>
       {values.map((value, i) => (
@@ -19,11 +22,11 @@ export function SearchStrings({ values }: SearchStringsProps) {
             borderListStyles.itemRound,
             interactiveStyles.hoverPrimary,
             interactiveStyles.activePrimary,
-            styles.searchString
+            styles.searchString,
           )}
           onClick={() => {
             navigator.clipboard.writeText(value.text);
-            toast.success("Copied to Clipboard");
+            toast.success(t("toast.copied"));
           }}
         >
           <div>

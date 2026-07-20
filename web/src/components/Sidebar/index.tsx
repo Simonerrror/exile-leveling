@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { useI18n } from "../../i18n";
 import { gemLinksSelector } from "../../state/gem-links";
 import { searchStringsSelector } from "../../state/search-strings";
 import { urlTreesSelector } from "../../state/tree/url-tree";
@@ -61,6 +62,7 @@ interface Section {
 }
 
 function useSections() {
+  const { t } = useI18n();
   const searchStrings = useAtomValue(searchStringsSelector);
   const urlTrees = useAtomValue(urlTreesSelector);
   const gemLinks = useAtomValue(gemLinksSelector);
@@ -73,7 +75,7 @@ function useSections() {
         tab: (
           <>
             <TbHierarchy className={classNames("inlineIcon")} />
-            Tree
+            {t("sidebar.tree")}
           </>
         ),
         content: <SkillTreeViewer urlTrees={urlTrees} />,
@@ -85,7 +87,7 @@ function useSections() {
         tab: (
           <>
             <FaLink className={classNames("inlineIcon")} />
-            Gems
+            {t("sidebar.gems")}
           </>
         ),
         content: <GemLinkViewer gemLinks={gemLinks} />,
@@ -97,7 +99,7 @@ function useSections() {
         tab: (
           <>
             <FiSearch className={classNames("inlineIcon")} />
-            Search
+            {t("sidebar.search")}
           </>
         ),
         content: <SearchStrings values={searchStrings} />,
@@ -105,7 +107,7 @@ function useSections() {
     }
 
     return sections;
-  }, [urlTrees, gemLinks, searchStrings]);
+  }, [urlTrees, gemLinks, searchStrings, t]);
 }
 
 interface HeaderProps {
@@ -120,6 +122,8 @@ function Header({
   onToggleExpand,
   onActiveTab,
 }: HeaderProps) {
+  const { t } = useI18n();
+
   return (
     <div className={classNames(styles.header)}>
       {expand && (
@@ -149,7 +153,7 @@ function Header({
             }}
           >
             <FaListUl className={classNames("inlineIcon")} />
-            All
+            {t("sidebar.all")}
           </button>
         </>
       )}

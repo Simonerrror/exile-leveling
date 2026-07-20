@@ -1,4 +1,5 @@
 import { SplitRow } from "../SplitRow";
+import { useI18n } from "../../i18n";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import type { RouteData } from "common";
@@ -9,10 +10,14 @@ interface BuildInfoFormProps {
 }
 
 export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
+  const { t } = useI18n();
+
   return (
     <div className={classNames(styles.form)}>
       <SplitRow
-        left={<div className={classNames(styles.label)}>Class</div>}
+        left={
+          <div className={classNames(styles.label)}>{t("build.class")}</div>
+        }
         right={
           <div className={classNames(styles.value)}>
             {buildData.characterClass}
@@ -20,15 +25,21 @@ export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Bandits</div>}
+        left={
+          <div className={classNames(styles.label)}>{t("build.bandits")}</div>
+        }
         right={
           <div className={classNames(styles.value)}>
-            {buildData.bandit == "None" ? "Kill All" : buildData.bandit}
+            {buildData.bandit == "None" ? t("build.killAll") : buildData.bandit}
           </div>
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>League Start</div>}
+        left={
+          <div className={classNames(styles.label)}>
+            {t("build.leagueStart")}
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -40,13 +51,15 @@ export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
                   leagueStart: evt.target.checked,
                 });
               }}
-              aria-label="League Start"
+              aria-label={t("build.leagueStart")}
             />
           </div>
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Library</div>}
+        left={
+          <div className={classNames(styles.label)}>{t("build.library")}</div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -58,7 +71,7 @@ export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
                   library: evt.target.checked,
                 });
               }}
-              aria-label="Library"
+              aria-label={t("build.library")}
             />
           </div>
         }

@@ -1,11 +1,14 @@
 import styles from "./styles.module.css";
+import { useI18n } from "../../i18n";
 import classNames from "classnames";
 import { type FallbackProps } from "react-error-boundary";
 
 export function ErrorFallback({}: FallbackProps) {
+  const { t } = useI18n();
+
   return (
     <span>
-      {"Oops, something seems to have broken. Click "}
+      {t("error.prefix")}
       <span
         className={classNames(styles.reset)}
         onClick={() => {
@@ -13,9 +16,9 @@ export function ErrorFallback({}: FallbackProps) {
           location.reload();
         }}
       >
-        here
+        {t("error.link")}
       </span>
-      {" to try and fix things."}
+      {t("error.suffix")}
     </span>
   );
 }

@@ -74,3 +74,23 @@
 .navAccordion:not(.expand) > * {
   display: none;
 }
+
+.localeSelector {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-2);
+  padding: var(--size-2) var(--size-3);
+  background-color: var(--primary);
+}
+
+.localeButton {
+  min-width: 3rem;
+  padding: var(--size-2) var(--size-3);
+  color: var(--on-primary);
+  font-weight: var(--font-heavy);
+  cursor: pointer;
+}
+
+.localeButton[aria-pressed="true"] {
+  background-color: var(--highlight-primary);
+}

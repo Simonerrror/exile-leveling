@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import { useI18n } from "../../i18n";
 import { searchStringsAtom } from "../../state/search-strings";
 import { formStyles } from "../../styles";
 import { CodeEditor } from "../CodeEditor";
@@ -12,11 +13,12 @@ const SearchStringGrammar: Grammar = {
 
 export function SearchStringsEditor() {
   const [searchStrings, setSearchStrings] = useAtom(searchStringsAtom);
+  const { t } = useI18n();
 
   return (
     <div className={classNames(formStyles.formRow)}>
       <label>
-        Search Strings {"("}
+        {t("search.strings")} {"("}
         <a href="https://poe.re/" target="_blank">
           Path of Exile Regex
         </a>

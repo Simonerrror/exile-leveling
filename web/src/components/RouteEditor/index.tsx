@@ -1,4 +1,5 @@
 import { formStyles } from "../../styles";
+import { useI18n } from "../../i18n";
 import { type UrlRewriter, fetchStringOrUrl } from "../../utility";
 import { Modal, TextModal } from "../Modal";
 import { Workspace } from "./Workspace";
@@ -37,6 +38,7 @@ export function RouteEditor({
   onSubmit,
   onReset,
 }: RouteEditorProps) {
+  const { t } = useI18n();
   const [workingFiles, setWorkingFiles] = useState<RouteData.RouteFile[]>([]);
   const [importIsOpen, setImportIsOpen] = useState<boolean>(false);
   const [guideIsOpen, setGuideIsOpen] = useState<boolean>(false);
@@ -67,7 +69,7 @@ export function RouteEditor({
     <>
       <TextModal
         size="large"
-        label="Import Route"
+        label={t("route.importTitle")}
         isOpen={importIsOpen}
         onRequestClose={() => setImportIsOpen(false)}
         onSubmit={(routeOrUrl) =>
@@ -83,9 +85,9 @@ export function RouteEditor({
               onSubmit(routeFiles);
             },
             {
-              pending: "Importing Route",
-              success: "Import Success",
-              error: "Import Failed",
+              pending: t("route.importing"),
+              success: t("route.importSuccess"),
+              error: t("route.importFailed"),
             },
           )
         }
@@ -118,10 +120,10 @@ export function RouteEditor({
             onClick={() => {
               const routeSource = buildRouteSource(workingFiles);
               navigator.clipboard.writeText(routeSource);
-              toast.success("Exported to Clipboard");
+              toast.success(t("toast.exported"));
             }}
           >
-            Export
+            {t("route.export")}
           </button>
           <button
             className={classNames(formStyles.formButton)}
@@ -129,7 +131,7 @@ export function RouteEditor({
               setImportIsOpen(true);
             }}
           >
-            Import
+            {t("route.import")}
           </button>
           <button
             className={classNames(formStyles.formButton)}
@@ -138,7 +140,7 @@ export function RouteEditor({
               onReset();
             }}
           >
-            Reset
+            {t("route.reset")}
           </button>
           <button
             className={classNames(formStyles.formButton)}
@@ -146,7 +148,7 @@ export function RouteEditor({
               submitWorkingFiles();
             }}
           >
-            Save
+            {t("route.save")}
           </button>
         </div>
       </div>

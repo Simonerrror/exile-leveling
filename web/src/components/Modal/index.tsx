@@ -1,4 +1,5 @@
 import { formStyles } from "../../styles";
+import { useI18n } from "../../i18n";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
@@ -34,6 +35,7 @@ export function TextModal({
   onRequestClose,
   size,
 }: TextModalProps) {
+  const { t } = useI18n();
   const valueRef = useRef<string>(null);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export function TextModal({
               onRequestClose();
             }}
           >
-            Cancel
+            {t("modal.cancel")}
           </button>
           <button
             className={classNames(formStyles.formButton)}
@@ -71,7 +73,7 @@ export function TextModal({
               onSubmit(valueRef.current);
             }}
           >
-            Submit
+            {t("modal.submit")}
           </button>
         </div>
       </div>

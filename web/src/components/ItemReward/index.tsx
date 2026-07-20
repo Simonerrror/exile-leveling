@@ -1,4 +1,5 @@
 import { CopyToClipboard } from "../CopyToClipboard";
+import { useI18n } from "../../i18n";
 import { GemCost } from "../GemCost";
 import { InlineFakeBlock } from "../InlineFakeBlock";
 import { SplitRow } from "../SplitRow";
@@ -8,17 +9,6 @@ import { Data, type RouteData } from "common";
 import type { ReactNode } from "react";
 import { MdCircle } from "react-icons/md";
 
-function ItemRewardVerb(type: ItemRewardProps["rewardType"]) {
-  switch (type) {
-    case "quest":
-      return <span>Take </span>;
-    case "vendor":
-      return <span>Buy </span>;
-    default:
-      return <></>;
-  }
-}
-
 interface ItemRewardProps {
   item: string;
   count?: number;
@@ -27,14 +17,22 @@ interface ItemRewardProps {
 }
 
 export function ItemReward({ item, count, cost, rewardType }: ItemRewardProps) {
+  const { t } = useI18n();
+  const verb =
+    rewardType === "quest"
+      ? t("reward.take")
+      : rewardType === "vendor"
+        ? t("reward.buy")
+        : null;
+
   return (
     <>
-      {ItemRewardVerb(rewardType)}
+      {verb !== null && <span>{verb} </span>}
       <span className={classNames(styles.default)}>{item}</span>
       {count && count > 1 && <span> x{count}</span>}
       {rewardType === "vendor" && cost !== undefined && (
         <div className={classNames(styles.noWrap)}>
-          <span> for </span>
+          <span> {t("reward.for")} </span>
           <InlineFakeBlock child={cost} />
         </div>
       )}
@@ -50,11 +48,12 @@ interface GemRewardProps {
 
 export function GemReward({ requiredGem, count, rewardType }: GemRewardProps) {
   const gem = Data.Gems[requiredGem.id];
+  const { t } = useI18n();
 
   if (!gem)
     return (
       <div className={classNames(styles.gemError)}>
-        This is awkward, <b>{requiredGem.id}</b> doesn't seem to exist
+        {t("reward.missingGem", { gem: requiredGem.id })}
       </div>
     );
 

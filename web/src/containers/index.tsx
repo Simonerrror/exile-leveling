@@ -1,6 +1,7 @@
 import { ErrorFallback } from "../components/ErrorFallback";
 import { Loading } from "../components/Loading";
 import { Navbar } from "../components/Navbar";
+import { useI18n } from "../i18n";
 import { pipe } from "../utility";
 import { withBlank } from "../utility/withBlank";
 import { withScrollRestoration } from "../utility/withScrollRestoration";
@@ -18,6 +19,12 @@ const BuildContainer = withBlank(lazy(() => import("./Build")));
 const EditRouteContainer = withBlank(lazy(() => import("./EditRoute")));
 
 export function App() {
+  const { locale, t } = useI18n();
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   return (
     <>
       <Navbar />
@@ -27,14 +34,14 @@ export function App() {
             <Route
               path="/"
               element={
-                <Page title="Exile Leveling" component={<RoutesContainer />} />
+                <Page title={t("app.title")} component={<RoutesContainer />} />
               }
             />
             <Route
               path="/build"
               element={
                 <Page
-                  title="Exile Leveling - Build"
+                  title={t("app.buildTitle")}
                   component={<BuildContainer />}
                 />
               }
@@ -43,7 +50,7 @@ export function App() {
               path="/edit-route"
               element={
                 <Page
-                  title="Exile Leveling - Edit Route"
+                  title={t("app.editRouteTitle")}
                   component={<EditRouteContainer />}
                 />
               }

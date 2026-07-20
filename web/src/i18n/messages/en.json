@@ -34,6 +34,8 @@
   "route.import": "Import",
   "route.reset": "Reset",
   "route.save": "Save",
+  "modal.cancel": "Cancel",
+  "modal.submit": "Submit",
   "search.strings": "Search Strings",
   "sidebar.tree": "Tree",
   "sidebar.gems": "Gems",

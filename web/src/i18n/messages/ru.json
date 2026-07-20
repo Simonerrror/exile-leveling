@@ -34,6 +34,8 @@
   "route.import": "Импортировать",
   "route.reset": "Сбросить",
   "route.save": "Сохранить",
+  "modal.cancel": "Отмена",
+  "modal.submit": "Отправить",
   "search.strings": "Строки поиска",
   "sidebar.tree": "Дерево",
   "sidebar.gems": "Камни умений",
