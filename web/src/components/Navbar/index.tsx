@@ -10,6 +10,7 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import {
   FaBars,
+  FaBookOpen,
   FaGithub,
   FaMap,
   FaRegClipboard,
@@ -125,6 +126,20 @@ export function Navbar({}: NavbarProps) {
               icon={<FaTools className={classNames("inlineIcon")} />}
               onClick={() => {
                 navigate("/build");
+                setNavExpand(false);
+              }}
+            />
+            <NavbarItem
+              label={t("nav.useful")}
+              expand={navExpand}
+              icon={
+                <FaBookOpen
+                  aria-hidden={true}
+                  className={classNames("inlineIcon")}
+                />
+              }
+              onClick={() => {
+                navigate("/useful");
                 setNavExpand(false);
               }}
             />

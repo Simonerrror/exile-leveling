@@ -21,6 +21,11 @@
   max-width: 40rem;
 }
 
+.image {
+  max-height: calc(100vh - 2rem);
+  max-width: calc(100vw - 2rem);
+}
+
 .overlay {
   position: fixed;
   display: flex;

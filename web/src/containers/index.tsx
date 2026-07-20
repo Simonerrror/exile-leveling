@@ -17,6 +17,7 @@ const RoutesContainer = pipe(
 )(lazy(() => import("./Routes")));
 const BuildContainer = withBlank(lazy(() => import("./Build")));
 const EditRouteContainer = withBlank(lazy(() => import("./EditRoute")));
+const UsefulContainer = withBlank(lazy(() => import("./Useful")));
 
 export function App() {
   const { locale, t } = useI18n();
@@ -52,6 +53,15 @@ export function App() {
                 <Page
                   title={t("app.editRouteTitle")}
                   component={<EditRouteContainer />}
+                />
+              }
+            />
+            <Route
+              path="/useful"
+              element={
+                <Page
+                  title={t("app.usefulTitle")}
+                  component={<UsefulContainer />}
                 />
               }
             />
