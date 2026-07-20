@@ -229,3 +229,26 @@ follow-up with these constraints:
 Tabs and accordions were rejected because they hide useful information and add
 interaction cost. The follow-up stays within the existing component and CSS
 structure and adds no dependency or abstraction.
+
+## Approved Header and Import-Hint Follow-up
+
+The user approved one more compact pass:
+
+- the collapsed navigation label is `Useful` / `Полезное`, without repeating
+  `Path of Exile`;
+- collapsed navigation items are centered inside equal-width slots in both
+  locales, while the expanded menu keeps its existing alignment;
+- the Useful page hero is removed completely, including its title and
+  two-line introduction, so the page begins with the existing Tools and Links
+  section;
+- secondary text on the Useful page uses a neutral gray rather than a warm
+  off-white tone;
+- the build import modal labels its input `Path of Building code or link` /
+  `Код или ссылка Path of Building`;
+- a short localized hint below the label lists the already-supported link
+  formats: `pobb.in`, `poe.ninja/pob`, and Pastebin;
+- URL fetching behavior and supported providers do not change in this pass.
+
+The hint is an optional property of the shared text modal so Route Editor
+imports remain unchanged. Automated checks cover the visible labels, removal
+of the hero, and continued presence of all three existing URL rewriters.
