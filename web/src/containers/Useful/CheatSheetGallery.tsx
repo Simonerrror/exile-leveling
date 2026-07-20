@@ -70,11 +70,18 @@ export function CheatSheetGallery() {
                 <FaTimes aria-hidden={true} />
               </button>
             </div>
-            <img
-              className={styles.previewImage}
-              src={imageUrl(selectedSheet)}
-              alt={sheetText(selectedSheet, "alt")}
-            />
+            <button
+              type="button"
+              className={styles.previewImageButton}
+              onClick={() => setSelectedSheet(null)}
+              aria-label={t("useful.closePreview")}
+            >
+              <img
+                className={styles.previewImage}
+                src={imageUrl(selectedSheet)}
+                alt={sheetText(selectedSheet, "alt")}
+              />
+            </button>
           </div>
         </Modal>
       )}
