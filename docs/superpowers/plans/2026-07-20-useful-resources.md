@@ -869,3 +869,109 @@ Expected: focused test and all release gates PASS.
 Verify `/exile-leveling/#/useful` at desktop and 375 px width. Confirm compact
 spacing, distinct category accents, no horizontal overflow, RU switching, and
 modal image dismissal.
+
+---
+
+### Task 9: Remove the redundant hero and expose URL import support
+
+**Files:**
+- Modify: `seeding/src/localization/useful-resources.test.ts`
+- Modify: `web/src/components/BuildImportForm/index.tsx`
+- Modify: `web/src/components/Modal/index.tsx`
+- Modify: `web/src/components/Modal/styles.module.css`
+- Modify: `web/src/components/Navbar/styles.module.css`
+- Modify: `web/src/containers/Useful/index.tsx`
+- Modify: `web/src/containers/Useful/styles.module.css`
+- Modify: `web/src/i18n/messages/en.json`
+- Modify: `web/src/i18n/messages/ru.json`
+
+- [ ] **Step 1: Write the failing source-contract test**
+
+Extend the compact Useful test with assertions equivalent to:
+
+```ts
+assert.doesNotMatch(useful, /styles\.hero/);
+assert.match(modal, /hint\?: string/);
+assert.match(modal, /aria-describedby/);
+assert.match(navbarStyles, /text-align: center/);
+assert.equal(en["nav.useful"], "Useful");
+assert.equal(ru["nav.useful"], "Полезное");
+assert.equal(en["build.pobCode"], "Path of Building code or link");
+assert.equal(ru["build.pobCode"], "Код или ссылка Path of Building");
+assert.match(en["build.pobHint"], /pobb\.in.*poe\.ninja\/pob.*Pastebin/);
+assert.match(ru["build.pobHint"], /pobb\.in.*poe\.ninja\/pob.*Pastebin/);
+```
+
+Add source assertions that the three existing URL rewriters for Pastebin,
+`poe.ninja/pob`, and `pobb.in` remain present.
+
+- [ ] **Step 2: Run the focused test and verify RED**
+
+Run:
+
+```bash
+env COREPACK_ENABLE_PROJECT_SPEC=0 npm run test:i18n -w seeding -- \
+  --test-name-pattern="compact useful"
+```
+
+Expected: FAIL because the hero still renders, `TextModal` has no hint, and the
+old navigation/import labels remain.
+
+- [ ] **Step 3: Implement the optional accessible modal hint**
+
+Add `hint?: string` to `TextModalProps`, create a stable ID with `useId`, render
+the hint only when supplied, and connect it to the textarea:
+
+```tsx
+const hintId = useId();
+
+{hint && (
+  <small className={styles.textHint} id={hintId}>
+    {hint}
+  </small>
+)}
+<textarea aria-describedby={hint ? hintId : undefined} />
+```
+
+Pass `hint={t("build.pobHint")}` only from `BuildImportForm`.
+
+- [ ] **Step 4: Remove the Useful hero and cool the text palette**
+
+Delete the hero markup and its CSS. Add page-scoped neutral variables:
+
+```css
+.page {
+  --useful-text: #e9edf2;
+  --useful-muted: #bcc4cc;
+}
+```
+
+Use `--useful-text` for Useful headings and `--useful-muted` for explanatory
+copy and card descriptions.
+
+- [ ] **Step 5: Center collapsed navigation and shorten the label**
+
+Set collapsed `.navItem` text alignment to center without changing
+`.navItem.expand`. Change `nav.useful` to `Useful` / `Полезное` and add the two
+localized import strings specified in Step 1.
+
+- [ ] **Step 6: Verify GREEN and release gates**
+
+Run:
+
+```bash
+env COREPACK_ENABLE_PROJECT_SPEC=0 npm run test:i18n
+env COREPACK_ENABLE_PROJECT_SPEC=0 npm run validate:i18n
+env COREPACK_ENABLE_PROJECT_SPEC=0 npm run build -w web
+git diff --check
+```
+
+Expected: 96 tests PASS, localization validation PASS, build succeeds, and the
+diff has no whitespace errors.
+
+- [ ] **Step 7: Verify desktop and mobile preview**
+
+At 1280 px and 375 px, confirm the page starts directly with Tools and Links,
+the two collapsed navigation slots are centered, neutral text is readable,
+there is no horizontal overflow, and the import modal exposes the localized
+provider hint to both visual and accessibility inspection.
