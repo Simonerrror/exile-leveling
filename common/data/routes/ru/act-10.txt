@@ -1,0 +1,58 @@
+#section Акт 10
+{waypoint|2_10_town} #Oriath Docks
+➞ {enter|2_10_1} #The Cathedral Rooftop
+➞ {arena|Вершина собора}, убей {kill|Plaguewing}
+    #sub Иди {dir|0}
+➞ {enter|2_10_2} #The Ravaged Square
+Поставь {portal|set} на площади
+➞ {enter|2_10_7} #The Control Blocks
+    #sub Иди {dir|180}
+{waypoint|2_10_town} #Oriath Docks
+Сдай {quest|a10q1} #Safe Passage
+Используй {portal|use}
+Активируй {waypoint_get}
+    #sub Иди {dir|45}
+#ifdef LEAGUE_START
+    ➞ {enter|2_10_9} #The Ossuary
+    Получи {crafting}
+    Пройди {trial}
+    {logout}
+#endif
+{waypoint|2_10_7} #The Control Blocks
+Найди и убей {kill|Vilenta}
+{logout}
+Сдай {quest|a10q6} #Vilenta's Vengeance
+{waypoint|Labyrinth_Airlock}
+{ascend|merciless}
+Получи {crafting|3_Labyrinth_boss_3}
+{waypoint|2_10_2} #The Ravaged Square
+➞ {enter|2_10_3} #The Torched Courts
+    #sub Иди {dir|135}
+➞ {enter|2_10_4} #The Desecrated Chambers
+    #sub Обойди по часовой стрелке
+Получи {crafting}
+➞ {arena|Обитель Невинности}, убей {kill|Avarius, Reassembled}, возьми {quest_text|Посох Чистоты}
+    #sub Иди по спирали против часовой стрелки к {dir|315}
+{logout}
+Поговори с {generic|Бэннон}
+Сдай {quest|a10q2} #Death and Rebirth
+{waypoint|2_10_2} #The Ravaged Square
+Поговори с {generic|Невинность}
+    #sub Иди {dir|45}
+➞ {enter|2_10_5} #The Canals
+➞ {enter|2_10_6} #The Feeding Trough
+Получи {crafting}
+Поговори с {generic|Грех}
+➞ {arena|Алтарь голода}, убей {kill|Kitava, the Insatiable}
+Поговори с {generic|Грех} ➞ {enter|2_10_town} #Oriath Docks
+Поговори с {generic|Лилия Рот}, отплыви из Ориата
+➞ {enter|2_11_endgame_town} #Karui Shores
+Получи {crafting}
+#ifdef BANDIT_KILL
+    Сдай {quest|a10q3} #An End to Hunger
+        #sub Введи {generic|/passives} в чат, чтобы проверить все 24 пассивных очка за задания
+#endif
+#ifndef BANDIT_KILL
+    Сдай {quest|a10q3} #An End to Hunger
+        #sub Введи {generic|/passives} в чат, чтобы проверить все 23 пассивных очка за задания
+#endif
