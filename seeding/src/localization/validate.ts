@@ -45,12 +45,12 @@ function displayFragmentSignature(
 
 export function routeSignature(line: string): string {
   const indent = line.match(/^\s*/)?.[0].length ?? 0;
-  const trimmed = line.trim();
-  const translatedDirective = trimmed.match(/^#(section|sub)(?:\s|$)/)?.[1];
-  const directive = trimmed.startsWith("#")
+  const content = line.slice(indent);
+  const translatedDirective = content.match(/^#(section|sub)(?:\s|$)/)?.[1];
+  const directive = content.startsWith("#")
     ? translatedDirective
       ? `#${translatedDirective}`
-      : trimmed
+      : content
     : "";
   const fragments = [...line.matchAll(/\{([^{}]+)\}/g)].map((match) => {
     const [type, ...parameters] = match[1].split("|");
@@ -111,7 +111,25 @@ export function assertRouteParity(
     throw new Error(`route line count differs: ${name}`);
 
   enLines.forEach((line, index) => {
-    if (routeSignature(line) !== routeSignature(ruLines[index]))
+    let englishSignature: string;
+    let russianSignature: string;
+    try {
+      englishSignature = routeSignature(line);
+      russianSignature = routeSignature(ruLines[index]);
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.startsWith("invalid route fragment arity:")
+      ) {
+        throw new Error(
+          `route structure differs: ${name} line ${index + 1}: ${error.message}`,
+          { cause: error },
+        );
+      }
+      throw error;
+    }
+
+    if (englishSignature !== russianSignature)
       throw new Error(`route structure differs: ${name} line ${index + 1}`);
   });
 }

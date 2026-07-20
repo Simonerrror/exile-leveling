@@ -76,6 +76,14 @@ test("route signatures preserve conditional macros", () => {
   );
 });
 
+test("route signatures preserve conditional trailing whitespace", () => {
+  assert.throws(
+    () =>
+      assertRouteParity("#ifdef LEAGUE_START", "#ifdef LEAGUE_START ", "act-1"),
+    /route structure differs: act-1 line 1/,
+  );
+});
+
 test("route signatures preserve vendor reward costs", () => {
   assert.throws(
     () =>
@@ -92,6 +100,18 @@ test("route signatures reject invalid display fragment arity", () => {
   assert.throws(
     () => routeSignature("Enter {arena}"),
     /invalid route fragment arity: arena/,
+  );
+});
+
+test("route parity adds route and line context to arity errors", () => {
+  assert.throws(
+    () =>
+      assertRouteParity(
+        "one\nEnter {arena}",
+        "один\nВойди {arena|Арена}",
+        "act-2",
+      ),
+    /route structure differs: act-2 line 2: invalid route fragment arity: arena/,
   );
 });
 
