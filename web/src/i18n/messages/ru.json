@@ -22,7 +22,7 @@
   "build.leagueStart": "Старт лиги",
   "build.library": "Библиотека",
   "build.pobCode": "Код или ссылка Path of Building",
-  "build.pobHint": "Поддерживаются ссылки: pobb.in, poe.ninja/pob, Pastebin.",
+  "build.pobHint": "Вставьте код PoB или ссылку pobb.in / poe.ninja/pob.",
   "build.reset": "Сбросить сборку",
   "build.import": "Импортировать сборку",
   "build.importing": "Импорт сборки",

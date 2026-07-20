@@ -22,7 +22,7 @@
   "build.leagueStart": "League Start",
   "build.library": "Library",
   "build.pobCode": "Path of Building code or link",
-  "build.pobHint": "Supported links: pobb.in, poe.ninja/pob, Pastebin.",
+  "build.pobHint": "Paste a PoB code or a pobb.in / poe.ninja/pob link.",
   "build.reset": "Reset Build",
   "build.import": "Import Build",
   "build.importing": "Importing Build",

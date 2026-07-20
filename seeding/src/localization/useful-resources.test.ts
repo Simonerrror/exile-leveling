@@ -9,6 +9,11 @@ import {
   resourceCategories,
   resources,
 } from "../../../web/src/containers/Useful/resources.js";
+import {
+  extractRemotePobCode,
+  fetchPobCode,
+  rewritePobUrl,
+} from "../../../web/src/components/BuildImportForm/url.js";
 
 const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
@@ -100,22 +105,75 @@ test("compact useful layout keeps the important content dense", () => {
   assert.match(modal, /hint\?: string/);
   assert.match(modal, /aria-describedby/);
   assert.match(navbarStyles, /\.navItem\s*\{[^}]*text-align: center/s);
-  assert.match(buildImport, /pastebin\\\.com/);
-  assert.match(buildImport, /poe\\\.ninja\\\/pob/);
-  assert.match(buildImport, /pobb\\\.in/);
+  assert.doesNotMatch(buildImport, /pastebin\\\.com/);
   assert.equal(enMessages["nav.useful"], "Useful");
   assert.equal(ruMessages["nav.useful"], "Полезное");
   assert.equal(enMessages["build.pobCode"], "Path of Building code or link");
   assert.equal(ruMessages["build.pobCode"], "Код или ссылка Path of Building");
-  assert.match(
-    enMessages["build.pobHint"],
-    /pobb\.in.*poe\.ninja\/pob.*Pastebin/,
-  );
-  assert.match(
-    ruMessages["build.pobHint"],
-    /pobb\.in.*poe\.ninja\/pob.*Pastebin/,
-  );
+  assert.match(enMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
+  assert.match(ruMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
   assert.ok(merchantTabs && !("note" in merchantTabs));
+});
+
+test("only rewrites exact supported PoB build URLs", () => {
+  assert.equal(
+    rewritePobUrl("https://pobb.in/SOOBUWxCgrKl"),
+    "pobb.in/SOOBUWxCgrKl/raw",
+  );
+  assert.equal(
+    rewritePobUrl("https://poe.ninja/pob/Abc_123-x"),
+    "poe.ninja/pob/raw/Abc_123-x",
+  );
+
+  for (const value of [
+    "https://pastebin.com/abc123",
+    "https://evil.example/?next=https://pobb.in/SOOBUWxCgrKl",
+    "https://pobb.in.evil.example/SOOBUWxCgrKl",
+    "http://pobb.in/SOOBUWxCgrKl",
+    "https://pobb.in/SOOBUWxCgrKl/raw",
+    "https://pobb.in/SOOBUWxCgrKl?tracking=yes",
+  ]) {
+    assert.equal(rewritePobUrl(value), null, value);
+  }
+});
+
+test("extracts the PoB code from the remote reader response", () => {
+  assert.equal(
+    extractRemotePobCode(
+      [
+        "Title: ",
+        "",
+        "URL Source: http://pobb.in/SOOBUWxCgrKl/raw",
+        "",
+        "Markdown Content:",
+        "eAHtfWtz2krW7uf4V6",
+      ].join("\n"),
+    ),
+    "eAHtfWtz2krW7uf4V6",
+  );
+});
+
+test("keeps raw PoB codes local and rejects unsupported URLs before fetch", async () => {
+  const originalFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = (async () => {
+    fetchCalls += 1;
+    throw new Error("unexpected fetch");
+  }) as typeof fetch;
+
+  try {
+    assert.equal(
+      await fetchPobCode("eAHtfWtz2krW7uf4V6"),
+      "eAHtfWtz2krW7uf4V6",
+    );
+    await assert.rejects(
+      fetchPobCode("https://evil.example/build"),
+      /unsupported build URL/,
+    );
+    assert.equal(fetchCalls, 0);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("assigns every resource to exactly one category", () => {
