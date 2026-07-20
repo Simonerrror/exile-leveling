@@ -636,6 +636,32 @@ test("quest NPC maps reject stale offer and vendor gem paths", () => {
   );
 });
 
+test("localized reward NPCs reject unnecessary fallback reviews", () => {
+  const localized = localizedGameFixture();
+  localized.intentionalEnglishFallbacks.rewardNpcs["quest/offer"] = {
+    reason: "not needed",
+    source: "fixture",
+  };
+
+  assert.throws(
+    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    /unnecessary reviewed reward NPC fallback: quest\/offer/,
+  );
+});
+
+test("localized vendor NPCs reject unnecessary fallback reviews", () => {
+  const localized = localizedGameFixture();
+  localized.intentionalEnglishFallbacks.vendorNpcs["quest/offer/gem"] = {
+    reason: "not needed",
+    source: "fixture",
+  };
+
+  assert.throws(
+    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    /unnecessary reviewed vendor NPC fallback: quest\/offer\/gem/,
+  );
+});
+
 test("checked-in Russian game data has exact canonical coverage", () => {
   assert.doesNotThrow(() =>
     validation.assertLocalizedGameData(Data.Localized.ru, Data),

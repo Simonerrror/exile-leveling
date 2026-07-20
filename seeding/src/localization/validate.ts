@@ -274,12 +274,21 @@ export function assertLocalizedGameData(
         `quests.${questId}.rewardNpcs.${offerId}`,
       );
       const rewardPath = `${questId}/${offerId}`;
-      if (
-        quest.rewardNpcs[offerId] === offerValue.quest_npc &&
-        !Object.hasOwn(fallbackGroups.rewardNpcs, rewardPath)
-      ) {
+      const rewardRequiresFallback =
+        quest.rewardNpcs[offerId] === offerValue.quest_npc ||
+        !/[А-Яа-яЁё]/.test(quest.rewardNpcs[offerId]);
+      const hasRewardFallback = Object.hasOwn(
+        fallbackGroups.rewardNpcs,
+        rewardPath,
+      );
+      if (rewardRequiresFallback && !hasRewardFallback) {
         throw new Error(
           `English reward NPC fallback is not reviewed: ${rewardPath}`,
+        );
+      }
+      if (!rewardRequiresFallback && hasRewardFallback) {
+        throw new Error(
+          `unnecessary reviewed reward NPC fallback: ${rewardPath}`,
         );
       }
       const localizedVendors = quest.vendorNpcs[offerId];
@@ -311,12 +320,21 @@ export function assertLocalizedGameData(
           `canonical.Quests.${questId}.reward_offers.${offerId}.vendor.${gemId}`,
         );
         const vendorPath = `${questId}/${offerId}/${gemId}`;
-        if (
-          localizedVendors[gemId] === vendor.npc &&
-          !Object.hasOwn(fallbackGroups.vendorNpcs, vendorPath)
-        ) {
+        const vendorRequiresFallback =
+          localizedVendors[gemId] === vendor.npc ||
+          !/[А-Яа-яЁё]/.test(localizedVendors[gemId]);
+        const hasVendorFallback = Object.hasOwn(
+          fallbackGroups.vendorNpcs,
+          vendorPath,
+        );
+        if (vendorRequiresFallback && !hasVendorFallback) {
           throw new Error(
             `English vendor NPC fallback is not reviewed: ${vendorPath}`,
+          );
+        }
+        if (!vendorRequiresFallback && hasVendorFallback) {
+          throw new Error(
+            `unnecessary reviewed vendor NPC fallback: ${vendorPath}`,
           );
         }
       }
