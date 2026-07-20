@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import en from "../../../web/src/i18n/messages/en.json" with { type: "json" };
 import ru from "../../../web/src/i18n/messages/ru.json" with { type: "json" };
@@ -8,6 +9,9 @@ import {
   resourceCategories,
   resources,
 } from "../../../web/src/containers/Useful/resources.js";
+
+const readSource = (path: string) =>
+  readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("defines all useful resources with unique IDs", () => {
   assert.equal(resources.length, 16);
@@ -52,6 +56,22 @@ test("uses the current-league map preset URL", () => {
     resources.find(({ id }) => id === "map-preset")?.url,
     "https://ru.pathofexile.com/trade/search/Mirage/mkJBkBQeT6",
   );
+});
+
+test("compact useful layout keeps the important content dense", () => {
+  const navbar = readSource("../../../web/src/components/Navbar/index.tsx");
+  const useful = readSource("../../../web/src/containers/Useful/index.tsx");
+  const styles = readSource(
+    "../../../web/src/containers/Useful/styles.module.css",
+  );
+  const merchantTabs = resources.find(({ id }) => id === "merchant-tabs");
+
+  assert.ok(
+    navbar.indexOf('t("nav.useful")') < navbar.indexOf('t("nav.build")'),
+  );
+  assert.doesNotMatch(useful, /jumpNav/);
+  assert.doesNotMatch(styles, /\.resourceCard\s*\{[^}]*min-height:/s);
+  assert.ok(merchantTabs && !("note" in merchantTabs));
 });
 
 test("assigns every resource to exactly one category", () => {

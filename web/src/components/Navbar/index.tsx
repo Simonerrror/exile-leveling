@@ -121,15 +121,6 @@ export function Navbar({}: NavbarProps) {
               }}
             />
             <NavbarItem
-              label={t("nav.build")}
-              expand={navExpand}
-              icon={<FaTools className={classNames("inlineIcon")} />}
-              onClick={() => {
-                navigate("/build");
-                setNavExpand(false);
-              }}
-            />
-            <NavbarItem
               label={t("nav.useful")}
               expand={navExpand}
               icon={
@@ -140,6 +131,15 @@ export function Navbar({}: NavbarProps) {
               }
               onClick={() => {
                 navigate("/useful");
+                setNavExpand(false);
+              }}
+            />
+            <NavbarItem
+              label={t("nav.build")}
+              expand={navExpand}
+              icon={<FaTools className={classNames("inlineIcon")} />}
+              onClick={() => {
+                navigate("/build");
                 setNavExpand(false);
               }}
             />

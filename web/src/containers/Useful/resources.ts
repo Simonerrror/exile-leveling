@@ -115,7 +115,6 @@ export const resources = [
     name: "Merchant Tabs",
     url: "https://www.pathofexile.com/my-account/merchants-tabs",
     domain: "www.pathofexile.com",
-    note: "login",
   },
   {
     id: "map-preset",

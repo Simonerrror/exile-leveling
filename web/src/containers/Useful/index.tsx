@@ -18,12 +18,6 @@ const resourcesById = new Map(
 
 export default function UsefulContainer() {
   const { t } = useI18n();
-  const jumpTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-    });
   const categoryText = (id: ResourceCategoryId) =>
     t(`useful.category.${id}` as MessageKey);
   const resourceText = (id: ResourceId) =>
@@ -32,22 +26,9 @@ export default function UsefulContainer() {
   return (
     <main className={styles.page}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>Wraeclast toolkit</p>
         <h1>{t("useful.title")}</h1>
         <p>{t("useful.intro")}</p>
       </header>
-
-      <nav aria-label={t("useful.jumpLabel")} className={styles.jumpNav}>
-        <button type="button" onClick={() => jumpTo("useful-tools")}>
-          {t("useful.tools.title")}
-        </button>
-        <button type="button" onClick={() => jumpTo("useful-heist")}>
-          {t("useful.heist.title")}
-        </button>
-        <button type="button" onClick={() => jumpTo("useful-sheets")}>
-          {t("useful.sheets.title")}
-        </button>
-      </nav>
 
       <section id="useful-tools" aria-labelledby="useful-tools-title">
         <div className={styles.sectionHeading}>
@@ -55,7 +36,11 @@ export default function UsefulContainer() {
           <p>{t("useful.tools.description")}</p>
         </div>
         {resourceCategories.map((category) => (
-          <div className={styles.category} key={category.id}>
+          <div
+            className={styles.category}
+            data-category={category.id}
+            key={category.id}
+          >
             <h3>{categoryText(category.id)}</h3>
             <div className={styles.resourceGrid}>
               {category.resourceIds.map((resourceId) => {
@@ -82,14 +67,13 @@ export default function UsefulContainer() {
                     <span className={styles.resourceDescription}>
                       {description}
                     </span>
-                    <span className={styles.resourceFooter}>
-                      <span>{resource.domain}</span>
-                      {note && (
+                    {note && (
+                      <span className={styles.resourceFooter}>
                         <span className={styles.badge}>
                           {t(`useful.note.${note}` as MessageKey)}
                         </span>
-                      )}
-                    </span>
+                      </span>
+                    )}
                   </a>
                 );
               })}
