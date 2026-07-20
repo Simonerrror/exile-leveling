@@ -207,3 +207,25 @@ Delivery follows the user-approved sequence:
 6. Deploy through the existing GitHub Pages workflow and verify the published page.
 
 No merge to `main` or production deployment occurs before the preview approval.
+
+## Approved Compact Follow-up
+
+After reviewing the first deployed version, the user approved a compact
+follow-up with these constraints:
+
+- the collapsed top navigation shows `Route` and `Useful Path of Exile
+  resources`; `Build` remains available in the expanded menu;
+- the large hero becomes a short page heading and the three jump buttons are
+  removed;
+- tool categories remain visible at once, but use distinct restrained accent
+  borders so the page is easier to scan;
+- resource cards become dense rows without a fixed minimum height;
+- the obvious Path of Exile login badge is removed from Merchant Tabs while
+  the current-league badge remains;
+- Heist branches and cheat-sheet captions use less padding and vertical space;
+- image previews still open at full size and clicking the enlarged image still
+  closes the modal.
+
+Tabs and accordions were rejected because they hide useful information and add
+interaction cost. The follow-up stays within the existing component and CSS
+structure and adds no dependency or abstraction.

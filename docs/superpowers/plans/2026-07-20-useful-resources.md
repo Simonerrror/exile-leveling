@@ -816,3 +816,56 @@ After approval:
 4. wait for the existing GitHub Pages workflow;
 5. verify the published `/exile-leveling/useful` page in RU and EN;
 6. report the deployed URL and workflow result.
+
+---
+
+### Task 8: Compact the deployed Useful page
+
+**Files:**
+- Modify: `seeding/src/localization/useful-resources.test.ts`
+- Modify: `web/src/components/Navbar/index.tsx`
+- Modify: `web/src/containers/Useful/index.tsx`
+- Modify: `web/src/containers/Useful/resources.ts`
+- Modify: `web/src/containers/Useful/styles.module.css`
+
+- [ ] **Step 1: Write failing source-contract tests**
+
+Add assertions that the compact navbar orders `nav.useful` before `nav.build`,
+the Useful container has no `jumpNav`, Merchant Tabs has no note, and the CSS
+has no resource-card `min-height`.
+
+- [ ] **Step 2: Run the focused test and verify RED**
+
+Run:
+
+```bash
+npm test -w seeding -- --test-name-pattern="compact useful"
+```
+
+Expected: FAIL against the first deployed layout.
+
+- [ ] **Step 3: Implement the smallest compact layout**
+
+Reorder the navbar items, remove the jump navigation and its scroll helper,
+remove the Merchant Tabs note, and tighten the existing CSS. Use per-category
+accent classes without introducing new components.
+
+- [ ] **Step 4: Verify GREEN and the full release gates**
+
+Run:
+
+```bash
+npm test -w seeding -- --test-name-pattern="compact useful"
+npm run test:i18n
+npm run validate:i18n
+npm run build -w web
+git diff --check
+```
+
+Expected: focused test and all release gates PASS.
+
+- [ ] **Step 5: Check the local preview**
+
+Verify `/exile-leveling/#/useful` at desktop and 375 px width. Confirm compact
+spacing, distinct category accents, no horizontal overflow, RU switching, and
+modal image dismissal.
