@@ -165,11 +165,14 @@ export function assertLocalizedGameData(
 
   for (const [id, name] of Object.entries(gems)) {
     assertNonEmptyString(name, `gems.${id}`);
-    if (
-      name === canonical.Gems[id].name &&
-      !Object.hasOwn(fallbackGroups.gems, id)
-    ) {
+    const requiresReviewedFallback =
+      name === canonical.Gems[id].name || !/[А-Яа-яЁё]/.test(name);
+    const hasReviewedFallback = Object.hasOwn(fallbackGroups.gems, id);
+    if (requiresReviewedFallback && !hasReviewedFallback) {
       throw new Error(`English gem fallback is not reviewed: ${id}`);
+    }
+    if (!requiresReviewedFallback && hasReviewedFallback) {
+      throw new Error(`unnecessary reviewed gem fallback: ${id}`);
     }
   }
   for (const [id, name] of Object.entries(classes)) {
@@ -242,6 +245,20 @@ export function assertLocalizedGameData(
     assertRecord(quest.vendorNpcs, `quests.${questId}.vendorNpcs`);
     const rewardOffers = canonicalQuest.reward_offers;
     assertRecord(rewardOffers, `canonical.Quests.${questId}.reward_offers`);
+    for (const offerId of Object.keys(quest.rewardNpcs)) {
+      if (!Object.hasOwn(rewardOffers, offerId)) {
+        throw new Error(
+          `unknown/stale localized reward NPC path: ${questId}/${offerId}`,
+        );
+      }
+    }
+    for (const offerId of Object.keys(quest.vendorNpcs)) {
+      if (!Object.hasOwn(rewardOffers, offerId)) {
+        throw new Error(
+          `unknown/stale localized vendor offer path: ${questId}/${offerId}`,
+        );
+      }
+    }
     for (const [offerId, offerValue] of Object.entries(rewardOffers)) {
       assertRecord(
         offerValue,
@@ -271,6 +288,13 @@ export function assertLocalizedGameData(
         offerValue.vendor,
         `canonical.Quests.${questId}.reward_offers.${offerId}.vendor`,
       );
+      for (const gemId of Object.keys(localizedVendors)) {
+        if (!Object.hasOwn(offerValue.vendor, gemId)) {
+          throw new Error(
+            `unknown/stale localized vendor NPC path: ${questId}/${offerId}/${gemId}`,
+          );
+        }
+      }
       for (const gemId of Object.keys(offerValue.vendor)) {
         if (!Object.hasOwn(localizedVendors, gemId)) {
           throw new Error(

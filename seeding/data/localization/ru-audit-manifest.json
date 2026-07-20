@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "kind": "russian-display-audit-manifest",
+  "inputs": {
+    "pobGems": {
+      "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/Data/Gems.lua",
+      "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+      "retrievedAt": "2026-07-20",
+      "sha256": "5e673494e8891efcb3b5601420235dc8a32e9228791192a211f97396ddf85cdb"
+    },
+    "pobReport": {
+      "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/commits/696d36aabaffb88f9c75ee424a1b4433b3233597",
+      "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+      "retrievedAt": "2026-07-20",
+      "sha256": "fffb5e04a8a7f4471c423e2a515f018a928d327508dd5e8b07a663b0a0df2e83"
+    },
+    "poedbGemsReport": {
+      "source": "https://poedb.tw/ru/Gem",
+      "revision": "retrieved-2026-07-20",
+      "retrievedAt": "2026-07-20",
+      "sha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    "areasReport": {
+      "source": "https://poedb.tw/ru/",
+      "revision": "exact-area-pages-retrieved-2026-07-20",
+      "retrievedAt": "2026-07-20",
+      "sha256": "3e4231a179ed36a0d534e8f01b80b5c8def332835984befc858db97592018c25"
+    },
+    "questsReport": {
+      "source": "https://poedb.tw/ru/",
+      "revision": "exact-quest-pages-retrieved-2026-07-20",
+      "retrievedAt": "2026-07-20",
+      "sha256": "2bb0d1a2eb47c8a48ec2b89ee03f861672d9b6d5324cb7d05a9733b7890f06d2"
+    },
+    "npcsReport": {
+      "source": "https://poedb.tw/ru/",
+      "revision": "exact-npc-pages-retrieved-2026-07-20",
+      "retrievedAt": "2026-07-20",
+      "sha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    "classSource": {
+      "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+      "retrievedAt": "2026-07-20",
+      "sha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    "displayAuditReport": {
+      "source": "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-display-audit.json",
+      "revision": "russian-display-audit-v1",
+      "retrievedAt": "2026-07-20",
+      "sha256": "176e63bc317500a5e3e5ba30b87d30ef6aefd33134c7c0ec844b349d4483117a"
+    }
+  }
+}

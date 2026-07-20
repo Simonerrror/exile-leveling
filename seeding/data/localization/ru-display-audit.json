@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "kind": "russian-display-audit",
+  "npcs": [
+    {
+      "english": "Bannon",
+      "localized": "Бэннон",
+      "url": "https://poedb.tw/ru/Bannon",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Bestel",
+      "localized": "Бестель",
+      "url": "https://poedb.tw/ru/Bestel",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Captain Fairgraves",
+      "localized": "Капитан Фейргрейвс",
+      "url": "https://poedb.tw/ru/Captain_Fairgraves",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Clarissa",
+      "localized": "Кларисса",
+      "url": "https://poedb.tw/ru/Clarissa",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Commander Kirac",
+      "localized": "Командир Кирак",
+      "url": "https://poedb.tw/ru/Commander_Kirac",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Dialla",
+      "localized": "Диалла",
+      "url": "https://poedb.tw/ru/Dialla",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Eagon Caeserius",
+      "localized": "Игон Цезерий",
+      "url": "https://poedb.tw/ru/Eagon_Caeserius",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Eramir",
+      "localized": "Эрамир",
+      "url": "https://poedb.tw/ru/Eramir",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Greust",
+      "localized": "Груст",
+      "url": "https://poedb.tw/ru/Greust",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Grigor",
+      "localized": "Григор",
+      "url": "https://poedb.tw/ru/Grigor",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Hargan",
+      "localized": "Харган",
+      "url": "https://poedb.tw/ru/Hargan",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Helena",
+      "localized": "Елена",
+      "url": "https://poedb.tw/ru/Helena",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Irasha",
+      "localized": "Ираша",
+      "url": "https://poedb.tw/ru/Irasha",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Lady Dialla",
+      "localized": "Госпожа Диалла",
+      "url": "https://poedb.tw/ru/Lady_Dialla",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Lani",
+      "localized": "Лани",
+      "url": "https://poedb.tw/ru/Lani",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Lilly Roth",
+      "localized": "Лилия Рот",
+      "url": "https://poedb.tw/ru/Lilly_Roth",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Maramoa",
+      "localized": "Марамоа",
+      "url": "https://poedb.tw/ru/Maramoa",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Nessa",
+      "localized": "Несса",
+      "url": "https://poedb.tw/ru/Nessa",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Oyun",
+      "localized": "Оюн",
+      "url": "https://poedb.tw/ru/Oyun",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Petarus and Vanja",
+      "localized": "Петарус и Ваня",
+      "url": "https://poedb.tw/ru/Petarus_and_Vanja",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Silk",
+      "localized": "Шёлк",
+      "url": "https://poedb.tw/ru/Silk",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Siosa",
+      "localized": "Сиоса",
+      "url": "https://poedb.tw/ru/Siosa",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Tarkleigh",
+      "localized": "Таркли",
+      "url": "https://poedb.tw/ru/Tarkleigh",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Tasuni",
+      "localized": "Тасуни",
+      "url": "https://poedb.tw/ru/Tasuni",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Vilenta",
+      "localized": "Вилента",
+      "url": "https://poedb.tw/ru/Vilenta",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Weylam Roth",
+      "localized": "Вейлам Рот",
+      "url": "https://poedb.tw/ru/Weylam_Roth",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    },
+    {
+      "english": "Yeena",
+      "localized": "Йина",
+      "url": "https://poedb.tw/ru/Yeena",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "604d7812f4417df30afb2a93d4ab1c2d0517db2c4587d1a18d01e1daf32d37da"
+    }
+  ],
+  "classes": [
+    {
+      "english": "Duelist",
+      "localized": "Дуэлянт",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Marauder",
+      "localized": "Дикарь",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Ranger",
+      "localized": "Охотница",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Scion",
+      "localized": "Дворянка",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Shadow",
+      "localized": "Бандит",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Templar",
+      "localized": "Жрец",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    },
+    {
+      "english": "Witch",
+      "localized": "Ведьма",
+      "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96"
+    }
+  ],
+  "nonRussianGems": [
+    {
+      "id": "Metadata/Items/Gem/SkillGemCallMercenary",
+      "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+      "source": "https://poedb.tw/ru/Gem",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemBlitz",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Blitz",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemBloodWhirl",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Blood_Whirl",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemCallOfTheWild",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/DNT_Call_of_the_Wild",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemCoilingAssault",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Coiling_Assault",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemComboStrike",
+      "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+      "source": "https://poedb.tw/ru/Gem",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemDiscorectangleSlam",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/Discorectangle_Slam",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemIgnite",
+      "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+      "source": "https://poedb.tw/ru/Gem",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemProjectilePortal",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Projectile_Portal",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemQuickBlock",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Quick_Block",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemReplicate",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Replicate",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemSerpentStrike",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Serpent_Strike",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemSliceAndDice",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Slice_And_Dice",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SkillGemWandTeleport",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/Wand_Teleport",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SupportGemCastLinkedCursesOnCurse",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/WIP_Support",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SupportGemConflagration",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Conflagration_Support",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SupportGemEdify",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/Edify_Support",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    },
+    {
+      "id": "Metadata/Items/Gems/SupportGemHandcastRapidFire",
+      "reason": "The audited Russian record intentionally retains a non-Russian DNT/WIP display value.",
+      "source": "https://poedb.tw/ru/UNUSED_Handcast_Rapid_Fire",
+      "retrievedAt": "2026-07-20",
+      "contentSha256": "4fba0096ff0156263dfff0329d2c9a6c3cf3796baa6a22415a8b20f01c50d55e"
+    }
+  ]
+}

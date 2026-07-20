@@ -11,7 +11,7 @@ export function localizedName(
   english: string | undefined,
   names: LocalizedNameMap,
 ): string {
-  return names[id] || english || id;
+  return names[id] ?? english ?? id;
 }
 
 interface CanonicalData {

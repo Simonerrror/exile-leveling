@@ -50,7 +50,7 @@ function sortJson(value: unknown): unknown {
   if (typeof value !== "object" || value === null) return value;
   return Object.fromEntries(
     Object.entries(value)
-      .sort(([left], [right]) => left.localeCompare(right))
+      .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
       .map(([key, child]) => [key, sortJson(child)]),
   );
 }
@@ -71,49 +71,6 @@ export async function writeValidatedData(
 }
 
 const RUSSIAN_POB_COMMIT = "696d36aabaffb88f9c75ee424a1b4433b3233597";
-const RUSSIAN_POB_SOURCE =
-  "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597";
-const POEDB_SOURCE = "https://poedb.tw/ru (audited exact-ID pages)";
-
-const REVIEWED_NPC_NAMES: Record<string, string> = {
-  Bannon: "Бэннон",
-  Bestel: "Бестель",
-  "Captain Fairgraves": "Капитан Фейргрейвс",
-  Clarissa: "Кларисса",
-  "Commander Kirac": "Командир Кирак",
-  Dialla: "Диалла",
-  "Eagon Caeserius": "Игон Цезерий",
-  Eramir: "Эрамир",
-  Greust: "Груст",
-  Grigor: "Григор",
-  Hargan: "Харган",
-  Helena: "Елена",
-  Irasha: "Ираша",
-  "Lady Dialla": "Госпожа Диалла",
-  Lani: "Лани",
-  "Lilly Roth": "Лилия Рот",
-  Maramoa: "Марамоа",
-  Nessa: "Несса",
-  Oyun: "Оюн",
-  "Petarus and Vanja": "Петарус и Ваня",
-  Silk: "Шёлк",
-  Siosa: "Сиоса",
-  Tarkleigh: "Таркли",
-  Tasuni: "Тасуни",
-  Vilenta: "Вилента",
-  "Weylam Roth": "Вейлам Рот",
-  Yeena: "Йина",
-};
-
-const REVIEWED_CLASS_NAMES: Record<string, string> = {
-  Duelist: "Гладиатор",
-  Marauder: "Дикарь",
-  Ranger: "Охотница",
-  Scion: "Дворянка",
-  Shadow: "Бандит",
-  Templar: "Жрец",
-  Witch: "Ведьма",
-};
 
 interface CanonicalFiles {
   Gems: Record<string, { id: string; name: string }>;
@@ -153,13 +110,49 @@ interface AuditOptions {
   areasReport: string;
   questsReport: string;
   npcsReport: string;
+  classSource: string;
+  displayAuditReport: string;
+  auditManifest: string;
   output: string;
 }
 
 interface OfficialExportOptions {
   canonicalDirectory: string;
   exportsDirectory: string;
+  auditManifest: string;
   output: string;
+}
+
+interface AuditedNameRecord {
+  english: string;
+  localized: string;
+  url: string;
+  retrievedAt: string;
+  contentSha256: string;
+}
+
+interface AuditedGemFallbackRecord {
+  id: string;
+  reason: string;
+  source: string;
+  retrievedAt: string;
+  contentSha256: string;
+}
+
+interface DisplayAuditReport {
+  schemaVersion: 1;
+  kind: "russian-display-audit";
+  npcs: AuditedNameRecord[];
+  classes: AuditedNameRecord[];
+  nonRussianGems: AuditedGemFallbackRecord[];
+}
+
+interface AuditSourceMetadata {
+  kind: string;
+  source: string;
+  revision: string;
+  retrievedAt: string;
+  sha256: string;
 }
 
 async function readJson(path: string): Promise<unknown> {
@@ -177,6 +170,151 @@ async function readJson(path: string): Promise<unknown> {
   } catch {
     throw new Error(`invalid localization source JSON: ${path}`);
   }
+}
+
+function provenanceString(
+  value: Record<string, unknown>,
+  key: string,
+  path: string,
+  pattern?: RegExp,
+): string {
+  const field = value[key];
+  if (
+    typeof field !== "string" ||
+    field.length === 0 ||
+    (pattern && !pattern.test(field))
+  ) {
+    throw new Error(`invalid audited provenance: ${path}.${key}`);
+  }
+  return field;
+}
+
+export async function loadDisplayAuditReport(
+  path: string,
+): Promise<DisplayAuditReport> {
+  const value = record(await readJson(path), path);
+  if (value.schemaVersion !== 1 || value.kind !== "russian-display-audit") {
+    throw new Error(`invalid audited provenance: ${path}.schemaVersion`);
+  }
+  const auditedNames = (key: "npcs" | "classes") =>
+    rows(value, key, path).map((row, index) => {
+      const itemPath = `${key}.${index}`;
+      return {
+        english: provenanceString(row, "english", itemPath),
+        localized: provenanceString(row, "localized", itemPath),
+        url: provenanceString(row, "url", itemPath, /^https:\/\/\S+$/),
+        retrievedAt: provenanceString(
+          row,
+          "retrievedAt",
+          itemPath,
+          /^\d{4}-\d{2}-\d{2}$/,
+        ),
+        contentSha256: provenanceString(
+          row,
+          "contentSha256",
+          itemPath,
+          /^[a-f0-9]{64}$/,
+        ),
+      };
+    });
+  const nonRussianGems = rows(value, "nonRussianGems", path).map(
+    (row, index) => {
+      const itemPath = `nonRussianGems.${index}`;
+      return {
+        id: provenanceString(row, "id", itemPath),
+        reason: provenanceString(row, "reason", itemPath),
+        source: provenanceString(row, "source", itemPath, /^https:\/\/\S+$/),
+        retrievedAt: provenanceString(
+          row,
+          "retrievedAt",
+          itemPath,
+          /^\d{4}-\d{2}-\d{2}$/,
+        ),
+        contentSha256: provenanceString(
+          row,
+          "contentSha256",
+          itemPath,
+          /^[a-f0-9]{64}$/,
+        ),
+      };
+    },
+  );
+  const report = {
+    schemaVersion: 1,
+    kind: "russian-display-audit" as const,
+    npcs: auditedNames("npcs"),
+    classes: auditedNames("classes"),
+    nonRussianGems,
+  };
+  for (const [kind, records] of [
+    ["NPC", report.npcs],
+    ["class", report.classes],
+    ["non-Russian gem", report.nonRussianGems],
+  ] as const) {
+    const keys = records.map((item) =>
+      "english" in item ? item.english : item.id,
+    );
+    if (new Set(keys).size !== keys.length) {
+      throw new Error(`duplicate audited ${kind} record`);
+    }
+  }
+  return report;
+}
+
+export async function validateAuditManifest(
+  path: string,
+  inputs: Record<string, string>,
+): Promise<AuditSourceMetadata[]> {
+  const manifest = record(await readJson(path), path);
+  if (
+    manifest.schemaVersion !== 1 ||
+    manifest.kind !== "russian-display-audit-manifest"
+  ) {
+    throw new Error(`invalid audited provenance: ${path}.schemaVersion`);
+  }
+  const manifestInputs = record(manifest.inputs, `${path}.inputs`);
+  assertEntityCoverage("audited provenance input", inputs, manifestInputs);
+  const sources: AuditSourceMetadata[] = [];
+  for (const [name, inputPath] of Object.entries(inputs)) {
+    const metadata = record(manifestInputs[name], `${path}.inputs.${name}`);
+    const source = provenanceString(
+      metadata,
+      "source",
+      `${path}.inputs.${name}`,
+      /^https:\/\/\S+$/,
+    );
+    const revision = provenanceString(
+      metadata,
+      "revision",
+      `${path}.inputs.${name}`,
+    );
+    const retrievedAt = provenanceString(
+      metadata,
+      "retrievedAt",
+      `${path}.inputs.${name}`,
+      /^\d{4}-\d{2}-\d{2}$/,
+    );
+    const expected = provenanceString(
+      metadata,
+      "sha256",
+      `${path}.inputs.${name}`,
+      /^[a-f0-9]{64}$/,
+    );
+    const actual = createHash("sha256")
+      .update(await readFile(inputPath))
+      .digest("hex");
+    if (actual !== expected) {
+      throw new Error(`audited provenance hash mismatch: ${name}`);
+    }
+    sources.push({
+      kind: name,
+      source,
+      revision,
+      retrievedAt,
+      sha256: expected,
+    });
+  }
+  return sources;
 }
 
 function record(value: unknown, path: string): Record<string, unknown> {
@@ -324,6 +462,17 @@ function review(reason: string, source: string) {
 export async function generateFromAuditedSources(
   options: AuditOptions,
 ): Promise<void> {
+  const sourceMetadata = await validateAuditManifest(options.auditManifest, {
+    pobGems: options.pobGems,
+    pobReport: options.pobReport,
+    poedbGemsReport: options.poedbGemsReport,
+    areasReport: options.areasReport,
+    questsReport: options.questsReport,
+    npcsReport: options.npcsReport,
+    classSource: options.classSource,
+    displayAuditReport: options.displayAuditReport,
+  });
+  const displayAudit = await loadDisplayAuditReport(options.displayAuditReport);
   const canonical = await loadCanonical(options.canonicalDirectory);
   const [
     pobText,
@@ -391,28 +540,33 @@ export async function generateFromAuditedSources(
     );
   }
 
-  const technicalFallbacks = new Set([
-    "Metadata/Items/Gems/SkillGemIgnite",
-    "Metadata/Items/Gems/SkillGemComboStrike",
-    "Metadata/Items/Gem/SkillGemCallMercenary",
-  ]);
-  for (const id of technicalFallbacks) {
+  const auditedGemFallbacks = Object.fromEntries(
+    displayAudit.nonRussianGems.map((item) => [item.id, item]),
+  );
+  for (const id of Object.keys(auditedGemFallbacks)) {
+    if (Object.hasOwn(gems, id)) continue;
     const gem = canonical.Gems[id];
     if (!gem) throw new Error(`stale reviewed gem fallback: ${id}`);
     gems[id] = gem.name;
   }
   assertEntityCoverage("gem", canonical.Gems, gems);
 
-  const gemFallbacks: Record<string, ReturnType<typeof review>> = {};
-  for (const [id, localized] of Object.entries(gems)) {
-    if (localized !== canonical.Gems[id].name) continue;
-    gemFallbacks[id] = review(
-      technicalFallbacks.has(id)
-        ? "No usable exact Russian value exists for this technical/internal gem ID."
-        : "The audited official-source record intentionally retains an English DNT/WIP value.",
-      technicalFallbacks.has(id) ? POEDB_SOURCE : RUSSIAN_POB_SOURCE,
-    );
-  }
+  const nonRussianGems = Object.fromEntries(
+    Object.entries(gems).filter(
+      ([, localized]) => !/[А-Яа-яЁё]/.test(localized),
+    ),
+  );
+  assertEntityCoverage(
+    "reviewed non-Russian gem",
+    nonRussianGems,
+    auditedGemFallbacks,
+  );
+  const gemFallbacks = Object.fromEntries(
+    Object.entries(auditedGemFallbacks).map(([id, item]) => [
+      id,
+      review(item.reason, item.source),
+    ]),
+  );
 
   const areaReport = record(areaReportValue, options.areasReport);
   if (
@@ -497,10 +651,13 @@ export async function generateFromAuditedSources(
       stringField(npc, "english", options.npcsReport),
     ),
   );
+  const reviewedNpcNames = Object.fromEntries(
+    displayAudit.npcs.map((npc) => [npc.english, npc.localized]),
+  );
   assertEntityCoverage(
     "reviewed NPC",
     Object.fromEntries([...auditedNpcNames].map((name) => [name, true])),
-    REVIEWED_NPC_NAMES,
+    reviewedNpcNames,
   );
 
   const quests: Record<
@@ -529,27 +686,26 @@ export async function generateFromAuditedSources(
       if (!offer) continue;
       const rewardPath = `${quest.id}/${offerId}`;
       rewardNpcs[offerId] =
-        REVIEWED_NPC_NAMES[offer.quest_npc] ?? offer.quest_npc;
+        reviewedNpcNames[offer.quest_npc] ?? offer.quest_npc;
       if (syntheticNpcNames.has(offer.quest_npc)) {
         rewardNpcFallbacks[rewardPath] = review(
           "Synthetic route label intentionally remains canonical English.",
           "canonical quest data",
         );
-      } else if (!REVIEWED_NPC_NAMES[offer.quest_npc]) {
+      } else if (!reviewedNpcNames[offer.quest_npc]) {
         throw new Error(`missing reviewed NPC name: ${offer.quest_npc}`);
       }
       vendorNpcs[offerId] = {};
       for (const [gemId, vendor] of Object.entries(offer.vendor)) {
         if (!vendor) continue;
         const path = `${quest.id}/${offerId}/${gemId}`;
-        vendorNpcs[offerId][gemId] =
-          REVIEWED_NPC_NAMES[vendor.npc] ?? vendor.npc;
+        vendorNpcs[offerId][gemId] = reviewedNpcNames[vendor.npc] ?? vendor.npc;
         if (syntheticNpcNames.has(vendor.npc)) {
           vendorNpcFallbacks[path] = review(
             "Synthetic route label intentionally remains canonical English.",
             "canonical quest data",
           );
-        } else if (!REVIEWED_NPC_NAMES[vendor.npc]) {
+        } else if (!reviewedNpcNames[vendor.npc]) {
           throw new Error(`missing reviewed vendor NPC name: ${vendor.npc}`);
         }
       }
@@ -557,23 +713,22 @@ export async function generateFromAuditedSources(
     quests[quest.id] = { name, rewardNpcs, vendorNpcs };
   }
 
-  assertEntityCoverage("class", canonical.Characters, REVIEWED_CLASS_NAMES);
+  const reviewedClassNames = Object.fromEntries(
+    displayAudit.classes.map((characterClass) => [
+      characterClass.english,
+      characterClass.localized,
+    ]),
+  );
+  assertEntityCoverage("class", canonical.Characters, reviewedClassNames);
   const value = {
     sourceMetadata: {
       schemaVersion: 1,
-      sources: [
-        {
-          kind: "gems",
-          revision: RUSSIAN_POB_COMMIT,
-          source: RUSSIAN_POB_SOURCE,
-        },
-        { kind: "poedb", source: POEDB_SOURCE },
-      ],
+      sources: sourceMetadata,
     },
     gems,
     areas,
     quests,
-    classes: REVIEWED_CLASS_NAMES,
+    classes: reviewedClassNames,
     literals: {},
     intentionalEnglishFallbacks: {
       gems: gemFallbacks,
@@ -590,32 +745,42 @@ export async function generateFromAuditedSources(
 export async function generateFromOfficialExports(
   options: OfficialExportOptions,
 ): Promise<void> {
+  const exportNames = [
+    "BaseItemTypes",
+    "WorldAreas",
+    "MapPins",
+    "Quest",
+    "QuestRewardOffers",
+    "NPCTalk",
+    "NPCs",
+    "Characters",
+    "SkillGems",
+    "RecipeUnlockDisplay",
+  ];
+  const sourceMetadata = await validateAuditManifest(
+    options.auditManifest,
+    Object.fromEntries(
+      exportNames.map((name) => [
+        name,
+        join(options.exportsDirectory, `${name}.datc64.json`),
+      ]),
+    ),
+  );
   const canonical = await loadCanonical(options.canonicalDirectory);
   const [
     baseItemTypes,
     worldAreas,
     mapPins,
     questsExport,
+    questRewardOffers,
     npcTalk,
     npcs,
     characters,
+    skillGems,
     recipeUnlockDisplay,
   ] = await Promise.all(
-    [
-      "BaseItemTypes",
-      "WorldAreas",
-      "MapPins",
-      "Quest",
-      "NPCTalk",
-      "NPCs",
-      "Characters",
-      "RecipeUnlockDisplay",
-    ].map((name) => loadDatExport(options.exportsDirectory, name)),
+    exportNames.map((name) => loadDatExport(options.exportsDirectory, name)),
   );
-  // NPCTalk is intentionally loaded and schema-checked here. Canonical data no
-  // longer retains its stable row keys, so NPCs are joined by reviewed
-  // EnglishName fields in the export instead of by lossy display text.
-  void npcTalk;
 
   const byId = (table: DatExport) =>
     new Map(
@@ -626,16 +791,37 @@ export async function generateFromOfficialExports(
   const baseItemsById = byId(baseItemTypes);
   const worldAreasById = byId(worldAreas);
   const questsById = byId(questsExport);
+  const npcNamesByOfferId = new Map<string, string>();
+  for (const row of npcTalk.data) {
+    if (
+      typeof row.QuestRewardOffersKey !== "number" ||
+      typeof row.NPCKey !== "number"
+    ) {
+      continue;
+    }
+    const offer = questRewardOffers.data[row.QuestRewardOffersKey];
+    const npc = npcs.data[row.NPCKey];
+    if (
+      typeof offer?.Id === "string" &&
+      typeof npc?.Name === "string" &&
+      npc.Name.length > 0
+    ) {
+      npcNamesByOfferId.set(offer.Id, npc.Name);
+    }
+  }
   const npcNames = new Map<string, string>();
-  for (const row of npcs.data) {
-    const english =
-      typeof row.EnglishName === "string"
-        ? row.EnglishName
-        : typeof row.Id === "string" && REVIEWED_NPC_NAMES[row.Id]
-          ? row.Id
-          : undefined;
-    if (english && typeof row.Name === "string" && row.Name.length > 0) {
-      npcNames.set(english, row.Name);
+  for (const quest of Object.values(canonical.Quests)) {
+    for (const [offerId, offer] of Object.entries(quest.reward_offers)) {
+      if (!offer) continue;
+      const localized = npcNamesByOfferId.get(offerId);
+      if (!localized) continue;
+      const existing = npcNames.get(offer.quest_npc);
+      if (existing && existing !== localized) {
+        throw new Error(
+          `conflicting official NPC translations: ${offer.quest_npc}`,
+        );
+      }
+      npcNames.set(offer.quest_npc, localized);
     }
   }
 
@@ -646,7 +832,7 @@ export async function generateFromOfficialExports(
     const name = baseItemsById.get(gem.id)?.Name;
     if (typeof name !== "string" || name.length === 0) continue;
     gems[gem.id] = name;
-    if (name === gem.name) {
+    if (!/[А-Яа-яЁё]/.test(name)) {
       gemFallbacks[gem.id] = review(
         "The official Russian export retains this English technical/DNT value.",
         fallbackSource,
@@ -735,7 +921,12 @@ export async function generateFromOfficialExports(
   > = {};
   for (const quest of Object.values(canonical.Quests)) {
     const localizedQuest = questsById.get(quest.id);
-    if (!localizedQuest || typeof localizedQuest.Name !== "string") continue;
+    if (
+      quest.name !== "" &&
+      (!localizedQuest || typeof localizedQuest.Name !== "string")
+    ) {
+      continue;
+    }
     if (quest.name === "") {
       questNameFallbacks[quest.id] = review(
         "Canonical synthetic quest bucket intentionally has no display name.",
@@ -772,23 +963,32 @@ export async function generateFromOfficialExports(
       }
     }
     localizedQuests[quest.id] = {
-      name: localizedQuest.Name,
+      name: quest.name === "" ? "" : (localizedQuest?.Name as string),
       rewardNpcs,
       vendorNpcs,
     };
   }
 
   const classes: Record<string, string> = {};
+  const canonicalClassByStartGem = new Map(
+    Object.entries(canonical.Characters).map(([english, character]) => [
+      (character as { start_gem_id?: unknown }).start_gem_id,
+      english,
+    ]),
+  );
   for (const character of characters.data) {
+    if (typeof character.StartSkillGem !== "number") continue;
+    const skillGem = skillGems.data[character.StartSkillGem];
+    const baseItem =
+      typeof skillGem?.BaseItemTypesKey === "number"
+        ? baseItemTypes.data[skillGem.BaseItemTypesKey]
+        : undefined;
     const english =
-      typeof character.EnglishName === "string"
-        ? character.EnglishName
-        : typeof character.Id === "string"
-          ? character.Id
-          : undefined;
+      typeof baseItem?.Id === "string"
+        ? canonicalClassByStartGem.get(baseItem.Id)
+        : undefined;
     if (
       english &&
-      Object.hasOwn(canonical.Characters, english) &&
       typeof character.Name === "string" &&
       character.Name.length > 0
     ) {
@@ -800,7 +1000,7 @@ export async function generateFromOfficialExports(
     {
       sourceMetadata: {
         schemaVersion: 1,
-        sources: [{ kind: "official-dat", source: fallbackSource }],
+        sources: sourceMetadata,
       },
       gems,
       areas,
@@ -837,12 +1037,13 @@ function argumentMap(args: string[]): Record<string, string> {
 async function main(): Promise<void> {
   const args = argumentMap(process.argv.slice(2));
   if (args.exports) {
-    for (const key of ["canonical", "output"]) {
+    for (const key of ["canonical", "audit-manifest", "output"]) {
       if (!args[key]) throw new Error(`missing generator argument: --${key}`);
     }
     await generateFromOfficialExports({
       canonicalDirectory: resolve(args.canonical),
       exportsDirectory: resolve(args.exports),
+      auditManifest: resolve(args["audit-manifest"]),
       output: resolve(args.output),
     });
     return;
@@ -855,6 +1056,9 @@ async function main(): Promise<void> {
     "areas-report",
     "quests-report",
     "npcs-report",
+    "class-source",
+    "display-audit-report",
+    "audit-manifest",
     "output",
   ];
   for (const key of required) {
@@ -868,6 +1072,9 @@ async function main(): Promise<void> {
     areasReport: resolve(args["areas-report"]),
     questsReport: resolve(args["quests-report"]),
     npcsReport: resolve(args["npcs-report"]),
+    classSource: resolve(args["class-source"]),
+    displayAuditReport: resolve(args["display-audit-report"]),
+    auditManifest: resolve(args["audit-manifest"]),
     output: resolve(args.output),
   });
 }

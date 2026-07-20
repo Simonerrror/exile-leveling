@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -87,6 +88,46 @@ function localizedGameFixture() {
   };
 }
 
+async function writeJson(path: string, value: unknown): Promise<void> {
+  await writeFile(path, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+async function writeDatFixture(
+  directory: string,
+  name: string,
+  data: Record<string, unknown>[],
+): Promise<void> {
+  await writeJson(join(directory, `${name}.datc64.json`), {
+    columns: [],
+    data,
+  });
+}
+
+async function writeAuditManifest(
+  path: string,
+  inputs: Record<string, string>,
+): Promise<void> {
+  await writeJson(path, {
+    schemaVersion: 1,
+    kind: "russian-display-audit-manifest",
+    inputs: Object.fromEntries(
+      await Promise.all(
+        Object.entries(inputs).map(async ([name, input]) => [
+          name,
+          {
+            source: `https://example.test/${name}`,
+            revision: "fixture-v1",
+            retrievedAt: "2026-07-20",
+            sha256: createHash("sha256")
+              .update(await readFile(input))
+              .digest("hex"),
+          },
+        ]),
+      ),
+    ),
+  });
+}
+
 test("entity coverage reports missing and unknown IDs", () => {
   const assertEntityCoverage = (
     validation as typeof validation & {
@@ -129,10 +170,87 @@ test("the generator rejects missing and malformed DAT exports", async () => {
   }
 });
 
+test("audited display reports require versioned per-record provenance", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-audit-"));
+  const report = join(directory, "display-report.json");
+  await writeJson(report, {
+    schemaVersion: 1,
+    kind: "russian-display-audit",
+    npcs: [
+      {
+        english: "Nessa",
+        localized: "Несса",
+        url: "",
+        retrievedAt: "",
+        contentSha256: "",
+      },
+    ],
+    classes: [],
+    nonRussianGems: [],
+  });
+  const loadDisplayAuditReport = (
+    generator as typeof generator & {
+      loadDisplayAuditReport: (path: string) => Promise<unknown>;
+    }
+  ).loadDisplayAuditReport;
+
+  try {
+    await assert.rejects(
+      () => loadDisplayAuditReport(report),
+      /invalid audited provenance: npcs\.0\.url/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("audited provenance manifests verify every input hash", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-manifest-"));
+  const input = join(directory, "display-report.json");
+  const manifest = join(directory, "manifest.json");
+  await writeFile(input, "audited input\n");
+  await writeJson(manifest, {
+    schemaVersion: 1,
+    kind: "russian-display-audit-manifest",
+    inputs: {
+      displayReport: {
+        source: "https://example.test/display-report",
+        revision: "fixture-v1",
+        retrievedAt: "2026-07-20",
+        sha256: "0".repeat(64),
+      },
+    },
+  });
+  const validateAuditManifest = (
+    generator as typeof generator & {
+      validateAuditManifest: (
+        path: string,
+        inputs: Record<string, string>,
+      ) => Promise<void>;
+    }
+  ).validateAuditManifest;
+
+  try {
+    await assert.rejects(
+      () => validateAuditManifest(manifest, { displayReport: input }),
+      /audited provenance hash mismatch: displayReport/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test("deterministic localization JSON sorts keys and ends with a newline", () => {
   assert.equal(
     serializeDeterministic({ z: { b: 2, a: 1 }, a: 0 }),
     '{\n  "a": 0,\n  "z": {\n    "a": 1,\n    "b": 2\n  }\n}\n',
+  );
+});
+
+test("deterministic localization JSON uses locale-independent code-unit order", () => {
+  assert.equal(
+    serializeDeterministic({ Я: 4, a: 3, A: 1, я: 5, Z: 2 }),
+    '{\n  "A": 1,\n  "Z": 2,\n  "a": 3,\n  "Я": 4,\n  "я": 5\n}\n',
   );
 });
 
@@ -163,12 +281,170 @@ test("the generator validates complete canonical coverage before writing", async
   }
 });
 
+test("official export mode resolves NPCs and classes through canonical references", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-official-exports-"));
+  const canonicalDirectory = join(directory, "canonical");
+  const exportsDirectory = join(directory, "exports");
+  const output = join(directory, "ru.json");
+  const auditManifest = join(directory, "manifest.json");
+  await mkdir(canonicalDirectory);
+  await mkdir(exportsDirectory);
+  try {
+    await writeJson(join(canonicalDirectory, "gems.json"), {
+      gem: { id: "gem", name: "Fireball" },
+    });
+    await writeJson(join(canonicalDirectory, "areas.json"), {
+      area: {
+        id: "area",
+        name: "The Coast",
+        map_name: "The Coast",
+        crafting_recipes: [],
+      },
+    });
+    await writeJson(join(canonicalDirectory, "quests.json"), {
+      quest: {
+        id: "quest",
+        name: "Enemy at the Gate",
+        reward_offers: {
+          offer: {
+            quest_npc: "Nessa",
+            quest: { gem: { classes: ["Witch"] } },
+            vendor: { gem: { classes: ["Witch"], npc: "Nessa" } },
+          },
+        },
+      },
+    });
+    await writeJson(join(canonicalDirectory, "characters.json"), {
+      Witch: { start_gem_id: "gem", chest_gem_id: "gem" },
+    });
+    await writeDatFixture(exportsDirectory, "BaseItemTypes", [
+      { Id: "gem", Name: "Огненный шар" },
+    ]);
+    await writeDatFixture(exportsDirectory, "WorldAreas", [
+      { Id: "area", Name: "Побережье" },
+    ]);
+    await writeDatFixture(exportsDirectory, "MapPins", [
+      { Name: "Побережье", Waypoint_WorldAreasKey: 0 },
+    ]);
+    await writeDatFixture(exportsDirectory, "Quest", [
+      { Id: "quest", Name: "Враг у ворот" },
+    ]);
+    await writeDatFixture(exportsDirectory, "QuestRewardOffers", [
+      { Id: "offer", QuestKey: 0 },
+    ]);
+    await writeDatFixture(exportsDirectory, "NPCs", [{ Name: "Несса" }]);
+    await writeDatFixture(exportsDirectory, "NPCTalk", [
+      { NPCKey: 0, QuestRewardOffersKey: 0 },
+    ]);
+    await writeDatFixture(exportsDirectory, "Characters", [
+      { Name: "Ведьма", StartSkillGem: 0 },
+    ]);
+    await writeDatFixture(exportsDirectory, "SkillGems", [
+      { BaseItemTypesKey: 0 },
+    ]);
+    await writeDatFixture(exportsDirectory, "RecipeUnlockDisplay", []);
+    const manifestInputs = Object.fromEntries(
+      [
+        "BaseItemTypes",
+        "WorldAreas",
+        "MapPins",
+        "Quest",
+        "QuestRewardOffers",
+        "NPCTalk",
+        "NPCs",
+        "Characters",
+        "SkillGems",
+        "RecipeUnlockDisplay",
+      ].map((name) => [name, join(exportsDirectory, `${name}.datc64.json`)]),
+    );
+    await writeAuditManifest(auditManifest, manifestInputs);
+
+    await generator.generateFromOfficialExports({
+      canonicalDirectory,
+      exportsDirectory,
+      auditManifest,
+      output,
+    });
+
+    const result = JSON.parse(await readFile(output, "utf8"));
+    assert.equal(result.classes.Witch, "Ведьма");
+    assert.equal(result.quests.quest.rewardNpcs.offer, "Несса");
+    assert.equal(result.quests.quest.vendorNpcs.offer.gem, "Несса");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("both generator modes reject invalid provenance before writing", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-generator-no-write-"));
+  const output = join(directory, "ru.json");
+  const invalidManifest = join(directory, "manifest.json");
+  await writeFile(output, "unchanged\n");
+  await writeJson(invalidManifest, {
+    schemaVersion: 1,
+    kind: "russian-display-audit-manifest",
+    inputs: {},
+  });
+
+  try {
+    await assert.rejects(
+      () =>
+        generator.generateFromOfficialExports({
+          canonicalDirectory: join(directory, "missing-canonical"),
+          exportsDirectory: join(directory, "missing-exports"),
+          auditManifest: invalidManifest,
+          output,
+        } as never),
+      /audited provenance input coverage invalid/,
+    );
+    assert.equal(await readFile(output, "utf8"), "unchanged\n");
+
+    await assert.rejects(
+      () =>
+        generator.generateFromAuditedSources({
+          canonicalDirectory: join(directory, "missing-canonical"),
+          pobGems: join(directory, "missing-gems"),
+          pobReport: join(directory, "missing-pob-report"),
+          poedbGemsReport: join(directory, "missing-poedb-report"),
+          areasReport: join(directory, "missing-areas-report"),
+          questsReport: join(directory, "missing-quests-report"),
+          npcsReport: join(directory, "missing-npcs-report"),
+          classSource: join(directory, "missing-class-source"),
+          displayAuditReport: join(directory, "missing-display-audit"),
+          auditManifest: invalidManifest,
+          output,
+        } as never),
+      /audited provenance input coverage invalid/,
+    );
+    assert.equal(await readFile(output, "utf8"), "unchanged\n");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test("localized names use Russian data then safe English and ID fallbacks", () => {
-  const names: LocalizedNameMap = { known: "Известное имя" };
+  const names: LocalizedNameMap = { blank: "", known: "Известное имя" };
 
   assert.equal(localizedName("known", "Known name", names), "Известное имя");
+  assert.equal(localizedName("blank", "English name", names), "");
   assert.equal(localizedName("missing", "English name", names), "English name");
   assert.equal(localizedName("unknown", undefined, names), "unknown");
+});
+
+test("quest display helpers preserve canonical blank synthetic names", () => {
+  const canonical = canonicalGameFixture();
+  const localized = localizedGameFixture();
+  canonical.Quests.quest.name = "";
+  localized.quests.quest.name = "";
+
+  assert.equal(
+    gameData.createGameData("ru", canonical, localized).questName("quest"),
+    "",
+  );
+  assert.equal(
+    gameData.createGameData("en", canonical, localized).questName("quest"),
+    "",
+  );
 });
 
 test("game display helpers localize without mutating canonical data", () => {
@@ -276,6 +552,19 @@ test("reviewed fallback allowlists reject stale IDs", () => {
   );
 });
 
+test("reviewed fallback allowlists reject unnecessary entries", () => {
+  const localized = localizedGameFixture();
+  localized.intentionalEnglishFallbacks.gems.gem = {
+    reason: "not needed",
+    source: "fixture",
+  };
+
+  assert.throws(
+    () => validation.assertLocalizedGameData(localized, canonicalGameFixture()),
+    /unnecessary reviewed gem fallback: gem/,
+  );
+});
+
 test("localized game data requires map names when canonical MapPins have one", () => {
   const localized = localizedGameFixture();
   localized.areas.area.mapName = null as unknown as string;
@@ -322,6 +611,31 @@ test("every canonical vendor NPC gem path must resolve", () => {
   );
 });
 
+test("quest NPC maps reject stale offer and vendor gem paths", () => {
+  const rewardOffer = localizedGameFixture();
+  rewardOffer.quests.quest.rewardNpcs.stale = "Лишний";
+  assert.throws(
+    () =>
+      validation.assertLocalizedGameData(rewardOffer, canonicalGameFixture()),
+    /unknown\/stale localized reward NPC path: quest\/stale/,
+  );
+
+  const vendorOffer = localizedGameFixture();
+  vendorOffer.quests.quest.vendorNpcs.stale = {};
+  assert.throws(
+    () =>
+      validation.assertLocalizedGameData(vendorOffer, canonicalGameFixture()),
+    /unknown\/stale localized vendor offer path: quest\/stale/,
+  );
+
+  const vendorGem = localizedGameFixture();
+  vendorGem.quests.quest.vendorNpcs.offer.stale = "Лишний";
+  assert.throws(
+    () => validation.assertLocalizedGameData(vendorGem, canonicalGameFixture()),
+    /unknown\/stale localized vendor NPC path: quest\/offer\/stale/,
+  );
+});
+
 test("checked-in Russian game data has exact canonical coverage", () => {
   assert.doesNotThrow(() =>
     validation.assertLocalizedGameData(Data.Localized.ru, Data),
@@ -338,6 +652,37 @@ test("checked-in Russian game data has exact canonical coverage", () => {
   assert.deepEqual(
     new Set(Object.values(Data.Localized.ru.quests.a3q8.vendorNpcs.a3q8)),
     new Set(["Кларисса", "Марамоа"]),
+  );
+});
+
+test("checked-in Russian quest paths have exact canonical cardinality", () => {
+  let rewardCount = 0;
+  let vendorCount = 0;
+  for (const quest of Object.values(Data.Localized.ru.quests)) {
+    rewardCount += Object.keys(quest.rewardNpcs).length;
+    for (const offer of Object.values(quest.vendorNpcs)) {
+      vendorCount += Object.keys(offer).length;
+    }
+  }
+  assert.equal(rewardCount, 80);
+  assert.equal(vendorCount, 1231);
+});
+
+test("checked-in Russian data reviews the exact non-Russian gem set", () => {
+  const expected = Object.entries(Data.Localized.ru.gems)
+    .filter(([, name]) => !/[А-Яа-яЁё]/.test(name))
+    .map(([id]) => id)
+    .sort();
+  const reviewed = Object.keys(
+    Data.Localized.ru.intentionalEnglishFallbacks.gems,
+  ).sort();
+
+  assert.equal(expected.length, 18);
+  assert.deepEqual(reviewed, expected);
+  assert(expected.includes("Metadata/Items/Gems/SkillGemBlitz"));
+  assert(expected.includes("Metadata/Items/Gems/SkillGemBloodWhirl"));
+  assert(
+    expected.includes("Metadata/Items/Gems/SupportGemCastLinkedCursesOnCurse"),
   );
 });
 

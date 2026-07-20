@@ -88,7 +88,9 @@ export namespace LocalizedGameData {
     sources: {
       kind: string;
       source: string;
-      revision?: string;
+      revision: string;
+      retrievedAt: string;
+      sha256: string;
     }[];
   }
 
