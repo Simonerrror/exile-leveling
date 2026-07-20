@@ -2,10 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   formatMessage,
-  messages,
   normalizeLocale,
   translate,
-  type MessageKey,
+  translateCatalog,
 } from "../../../web/src/i18n/core.js";
 
 test("normalizes supported browser locales", () => {
@@ -17,6 +16,10 @@ test("normalizes supported browser locales", () => {
 
 test("normalizes unsupported and absent locales to English", () => {
   assert.equal(normalizeLocale("broken"), "en");
+  assert.equal(normalizeLocale("runtime"), "en");
+  assert.equal(normalizeLocale("rubbish"), "en");
+  assert.equal(normalizeLocale("ruin"), "en");
+  assert.equal(normalizeLocale("ru_foo"), "en");
   assert.equal(normalizeLocale(null), "en");
 });
 
@@ -42,12 +45,10 @@ test("translates English and Russian messages", () => {
 });
 
 test("falls back to the canonical English message", () => {
-  const russianMessages = messages.ru as Partial<Record<MessageKey, string>>;
-  const russianRoute = russianMessages["nav.route"];
-  delete russianMessages["nav.route"];
-  try {
-    assert.equal(translate("ru", "nav.route"), "Route");
-  } finally {
-    russianMessages["nav.route"] = russianRoute;
-  }
+  const catalog = {
+    en: { "nav.route": "Route" },
+    ru: {},
+  };
+
+  assert.equal(translateCatalog(catalog, "ru", "nav.route"), "Route");
 });

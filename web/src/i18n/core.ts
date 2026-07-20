@@ -5,12 +5,16 @@ export type Locale = "en" | "ru";
 export type MessageKey = keyof typeof en;
 export type MessageParameters = Record<string, string | number>;
 
-export const messages: Record<Locale, Record<MessageKey, string>> = { en, ru };
+type MessageCatalog<Key extends string> = Readonly<{
+  en: Readonly<Record<Key, string>>;
+  ru: Readonly<Partial<Record<Key, string>>>;
+}>;
+
+const messages: Readonly<Record<Locale, Readonly<Record<MessageKey, string>>>> =
+  { en, ru };
 
 export function normalizeLocale(value: unknown): Locale {
-  return typeof value === "string" && value.toLowerCase().startsWith("ru")
-    ? "ru"
-    : "en";
+  return typeof value === "string" && /^ru(?:-|$)/i.test(value) ? "ru" : "en";
 }
 
 export function formatMessage(
@@ -27,5 +31,14 @@ export function translate(
   key: MessageKey,
   parameters: MessageParameters = {},
 ): string {
-  return formatMessage(messages[locale][key] ?? en[key], parameters);
+  return translateCatalog(messages, locale, key, parameters);
+}
+
+export function translateCatalog<Key extends string>(
+  catalog: MessageCatalog<Key>,
+  locale: Locale,
+  key: Key,
+  parameters: MessageParameters = {},
+): string {
+  return formatMessage(catalog[locale][key] ?? catalog.en[key], parameters);
 }

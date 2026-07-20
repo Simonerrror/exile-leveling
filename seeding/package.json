@@ -5,7 +5,7 @@
   "scripts": {
     "seed": "tsx src/index.ts ../common/data",
     "generate-route-ids": "tsx src/index.ts ../common/data/json generate-route-ids",
-    "test:i18n": "tsx --test src/localization/validate.test.ts src/localization/locale-core.test.ts",
+    "test:i18n": "tsx --test src/localization/validate.test.ts src/localization/locale-core.test.ts src/localization/locale-state.test.ts",
     "validate:i18n": "tsx src/localization/validate-i18n.ts"
   },
   "license": "ISC",

@@ -1,8 +1,14 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { normalizeLocale, type Locale } from "../i18n/core";
+import { createSafeJSONStorage } from "./locale-storage";
 
-const storedLocaleAtom = atomWithStorage<unknown>("locale", null);
+const storedLocaleAtom = atomWithStorage<unknown>(
+  "locale",
+  null,
+  createSafeJSONStorage(),
+  { getOnInit: true },
+);
 
 export const localeAtom = atom(
   (get): Locale => {
