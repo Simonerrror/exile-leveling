@@ -247,6 +247,7 @@ export namespace Fragments {
 
   export interface CraftingFragment {
     type: "crafting";
+    areaId: GameData.Area["id"];
     crafting_recipes: string[];
   }
 

@@ -223,6 +223,7 @@ interface AuditOptions {
 interface OfficialExportOptions {
   canonicalDirectory: string;
   exportsDirectory: string;
+  routeLiteralAuditReport: string;
   auditManifest: string;
   output: string;
   auditOutput: string;
@@ -268,6 +269,10 @@ interface RouteLiteralAuditReport {
   killLiterals: Record<string, AuditedLiteralRecord>;
   buildInfoBandits: Record<string, AuditedLiteralRecord>;
   buildInfoClasses: Record<string, AuditedLiteralRecord>;
+  baseHashes: {
+    runtime: string;
+    audit: string;
+  };
 }
 
 interface AuditSourceMetadata {
@@ -405,6 +410,33 @@ function parseRouteLiteralAuditReport(
     throw new Error(`invalid audited route literal schema: ${path}`);
   }
   const mappings = record(value.mappings, `${path}.mappings`);
+  const sourceMetadata = record(value.sourceMetadata, `${path}.sourceMetadata`);
+  const canonicalizedBase = record(
+    sourceMetadata.canonicalizedBase,
+    `${path}.sourceMetadata.canonicalizedBase`,
+  );
+  const runtimeBase = record(
+    canonicalizedBase.runtime,
+    `${path}.sourceMetadata.canonicalizedBase.runtime`,
+  );
+  const auditBase = record(
+    canonicalizedBase.audit,
+    `${path}.sourceMetadata.canonicalizedBase.audit`,
+  );
+  const baseHashes = {
+    runtime: provenanceString(
+      runtimeBase,
+      "sha256",
+      `${path}.sourceMetadata.canonicalizedBase.runtime`,
+      /^[a-f0-9]{64}$/,
+    ),
+    audit: provenanceString(
+      auditBase,
+      "sha256",
+      `${path}.sourceMetadata.canonicalizedBase.audit`,
+      /^[a-f0-9]{64}$/,
+    ),
+  };
   const parseMappings = (key: string) => {
     const source = record(mappings[key], `${path}.mappings.${key}`);
     return Object.fromEntries(
@@ -450,6 +482,7 @@ function parseRouteLiteralAuditReport(
     killLiterals: parseMappings("killLiterals"),
     buildInfoBandits: parseMappings("buildInfoBandits"),
     buildInfoClasses: parseMappings("buildInfoClasses"),
+    baseHashes,
   };
   const coverage = record(value.coverage, `${path}.coverage`);
   for (const [field, count] of [
@@ -727,6 +760,44 @@ function review(reason: string, source: string) {
   return { reason, source };
 }
 
+export function canonicalizedLiteralBaseHashes(
+  value: unknown,
+  audit: unknown,
+): { runtime: string; audit: string } {
+  const runtimeBase = record(structuredClone(value), "runtime");
+  runtimeBase.literals = {};
+
+  const auditBase = record(structuredClone(audit), "audit");
+  const sourceMetadata = record(
+    auditBase.sourceMetadata,
+    "audit.sourceMetadata",
+  );
+  if (!Array.isArray(sourceMetadata.sources)) {
+    throw new Error("invalid localized audit: sourceMetadata.sources");
+  }
+  sourceMetadata.sources = sourceMetadata.sources.filter(
+    (source) =>
+      !(
+        typeof source === "object" &&
+        source !== null &&
+        !Array.isArray(source) &&
+        source.kind === "routeLiteralAuditReport"
+      ),
+  );
+  const fallbacks = record(
+    auditBase.intentionalEnglishFallbacks,
+    "audit.intentionalEnglishFallbacks",
+  );
+  fallbacks.literals = {};
+
+  const hash = (input: unknown) =>
+    createHash("sha256").update(serializeDeterministic(input)).digest("hex");
+  return {
+    runtime: hash(runtimeBase),
+    audit: hash(auditBase),
+  };
+}
+
 function routeLiteralValues(
   audit: RouteLiteralAuditReport,
 ): Record<string, string> {
@@ -763,6 +834,56 @@ function assertRouteLiteralClasses(
   }
 }
 
+export function applyRouteLiteralAudit(
+  value: unknown,
+  audit: unknown,
+  routeLiteralAudit: RouteLiteralAuditReport,
+  metadata: AuditSourceMetadata,
+  verifyBase: boolean,
+): { value: Record<string, unknown>; audit: Record<string, unknown> } {
+  if (verifyBase) {
+    const actual = canonicalizedLiteralBaseHashes(value, audit);
+    if (actual.runtime !== routeLiteralAudit.baseHashes.runtime) {
+      throw new Error("localized literal base runtime hash mismatch");
+    }
+    if (actual.audit !== routeLiteralAudit.baseHashes.audit) {
+      throw new Error("localized literal base audit hash mismatch");
+    }
+  }
+
+  const nextValue = record(structuredClone(value), "runtime");
+  const nextAudit = record(structuredClone(audit), "audit");
+  const classes = record(nextValue.classes, "runtime.classes");
+  assertRouteLiteralClasses(classes, routeLiteralAudit);
+  nextValue.literals = routeLiteralValues(routeLiteralAudit);
+
+  const sourceMetadata = record(
+    nextAudit.sourceMetadata,
+    "audit.sourceMetadata",
+  );
+  if (!Array.isArray(sourceMetadata.sources)) {
+    throw new Error("invalid localized audit: sourceMetadata.sources");
+  }
+  sourceMetadata.sources = [
+    ...sourceMetadata.sources.filter(
+      (source) =>
+        !(
+          typeof source === "object" &&
+          source !== null &&
+          !Array.isArray(source) &&
+          source.kind === "routeLiteralAuditReport"
+        ),
+    ),
+    metadata,
+  ];
+  const fallbacks = record(
+    nextAudit.intentionalEnglishFallbacks,
+    "audit.intentionalEnglishFallbacks",
+  );
+  fallbacks.literals = {};
+  return { value: nextValue, audit: nextAudit };
+}
+
 export async function mergeRouteLiteralAudit(
   options: RouteLiteralMergeOptions,
 ): Promise<void> {
@@ -776,44 +897,16 @@ export async function mergeRouteLiteralAudit(
     options.routeLiteralAuditReport,
   );
   const canonical = await loadCanonical(options.canonicalDirectory);
-  const value = record(await readJson(options.output), options.output);
-  const audit = record(
+  const applied = applyRouteLiteralAudit(
+    await readJson(options.output),
     await readJson(options.auditOutput),
-    options.auditOutput,
-  );
-  const classes = record(value.classes, `${options.output}.classes`);
-  assertRouteLiteralClasses(classes, routeLiteralAudit);
-  value.literals = routeLiteralValues(routeLiteralAudit);
-
-  const sourceMetadata = record(
-    audit.sourceMetadata,
-    `${options.auditOutput}.sourceMetadata`,
-  );
-  if (!Array.isArray(sourceMetadata.sources)) {
-    throw new Error(
-      `invalid localized audit: ${options.auditOutput}.sourceMetadata.sources`,
-    );
-  }
-  sourceMetadata.sources = [
-    ...sourceMetadata.sources.filter(
-      (source) =>
-        !(
-          typeof source === "object" &&
-          source !== null &&
-          !Array.isArray(source) &&
-          source.kind === "routeLiteralAuditReport"
-        ),
-    ),
+    routeLiteralAudit,
     verified.metadata,
-  ];
-  const fallbacks = record(
-    audit.intentionalEnglishFallbacks,
-    `${options.auditOutput}.intentionalEnglishFallbacks`,
+    true,
   );
-  fallbacks.literals = {};
   await writeValidatedData(
-    value,
-    audit,
+    applied.value,
+    applied.audit,
     canonical,
     options.output,
     options.auditOutput,
@@ -1096,14 +1189,12 @@ export async function generateFromAuditedSources(
     ]),
   );
   assertEntityCoverage("class", canonical.Characters, reviewedClassNames);
-  assertRouteLiteralClasses(reviewedClassNames, routeLiteralAudit);
-  const literals = routeLiteralValues(routeLiteralAudit);
   const value = {
     gems,
     areas,
     quests,
     classes: reviewedClassNames,
-    literals,
+    literals: {},
   };
   const audit = {
     schemaVersion: 1,
@@ -1124,9 +1215,22 @@ export async function generateFromAuditedSources(
       literals: {},
     },
   };
-  await writeValidatedData(
+  const routeLiteralMetadata = sourceMetadata.find(
+    (source) => source.kind === "routeLiteralAuditReport",
+  );
+  if (!routeLiteralMetadata) {
+    throw new Error("missing route literal audit source metadata");
+  }
+  const applied = applyRouteLiteralAudit(
     value,
     audit,
+    routeLiteralAudit,
+    routeLiteralMetadata,
+    false,
+  );
+  await writeValidatedData(
+    applied.value,
+    applied.audit,
     canonical,
     options.output,
     options.auditOutput,
@@ -1148,16 +1252,20 @@ export async function generateFromOfficialExports(
     "SkillGems",
     "RecipeUnlockDisplay",
   ];
-  const verified = await validateAuditManifest(
-    options.auditManifest,
-    Object.fromEntries(
+  const verified = await validateAuditManifest(options.auditManifest, {
+    ...Object.fromEntries(
       exportNames.map((name) => [
         name,
         join(options.exportsDirectory, `${name}.datc64.json`),
       ]),
     ),
-  );
+    routeLiteralAuditReport: options.routeLiteralAuditReport,
+  });
   const sourceMetadata = verified.metadata;
+  const routeLiteralAudit = parseRouteLiteralAuditReport(
+    verified.inputs.routeLiteralAuditReport,
+    options.routeLiteralAuditReport,
+  );
   const canonical = await loadCanonical(options.canonicalDirectory);
   const [
     baseItemTypes,
@@ -1417,9 +1525,22 @@ export async function generateFromOfficialExports(
       literals: {},
     },
   };
-  await writeValidatedData(
+  const routeLiteralMetadata = sourceMetadata.find(
+    (source) => source.kind === "routeLiteralAuditReport",
+  );
+  if (!routeLiteralMetadata) {
+    throw new Error("missing route literal audit source metadata");
+  }
+  const applied = applyRouteLiteralAudit(
     value,
     audit,
+    routeLiteralAudit,
+    routeLiteralMetadata,
+    false,
+  );
+  await writeValidatedData(
+    applied.value,
+    applied.audit,
     canonical,
     options.output,
     options.auditOutput,
@@ -1463,6 +1584,7 @@ async function main(): Promise<void> {
   if (args.exports) {
     for (const key of [
       "canonical",
+      "route-literal-audit-report",
       "audit-manifest",
       "output",
       "audit-output",
@@ -1472,6 +1594,7 @@ async function main(): Promise<void> {
     await generateFromOfficialExports({
       canonicalDirectory: resolve(args.canonical),
       exportsDirectory: resolve(args.exports),
+      routeLiteralAuditReport: resolve(args["route-literal-audit-report"]),
       auditManifest: resolve(args["audit-manifest"]),
       output: resolve(args.output),
       auditOutput: resolve(args["audit-output"]),

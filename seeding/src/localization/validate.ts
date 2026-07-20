@@ -124,6 +124,10 @@ const OFFICIAL_SOURCE_KINDS = new Set([
   "SkillGems",
   "RecipeUnlockDisplay",
 ]);
+const OFFICIAL_WITH_LITERAL_SOURCE_KINDS = new Set([
+  ...OFFICIAL_SOURCE_KINDS,
+  "routeLiteralAuditReport",
+]);
 
 function assertAuditSourceMetadata(value: unknown): void {
   assertRecord(value, "sourceMetadata");
@@ -171,12 +175,35 @@ function assertAuditSourceMetadata(value: unknown): void {
     actualKinds.size === AUDITED_SOURCE_KINDS.size &&
     [...actualKinds].every((kind) => AUDITED_SOURCE_KINDS.has(kind))
       ? AUDITED_SOURCE_KINDS
-      : OFFICIAL_SOURCE_KINDS;
+      : actualKinds.size === OFFICIAL_WITH_LITERAL_SOURCE_KINDS.size &&
+          [...actualKinds].every((kind) =>
+            OFFICIAL_WITH_LITERAL_SOURCE_KINDS.has(kind),
+          )
+        ? OFFICIAL_WITH_LITERAL_SOURCE_KINDS
+        : OFFICIAL_SOURCE_KINDS;
   assertEntityCoverage(
     "source metadata kind",
     Object.fromEntries([...expectedKinds].map((kind) => [kind, true])),
     kinds,
   );
+
+  if (
+    expectedKinds === AUDITED_SOURCE_KINDS ||
+    expectedKinds === OFFICIAL_WITH_LITERAL_SOURCE_KINDS
+  ) {
+    const literalSource = (
+      kinds.routeLiteralAuditReport as Record<string, unknown>
+    ).source as string;
+    if (
+      !literalSource.startsWith(
+        "https://github.com/Simonerrror/exile-leveling/",
+      )
+    ) {
+      throw new Error(
+        "invalid localized audit source provenance: routeLiteralAuditReport",
+      );
+    }
+  }
 
   if (expectedKinds === AUDITED_SOURCE_KINDS) {
     for (const kind of ["pobGems", "pobReport", "classSource"]) {
@@ -214,18 +241,6 @@ function assertAuditSourceMetadata(value: unknown): void {
     ) {
       throw new Error(
         "invalid localized audit source provenance: displayAuditReport",
-      );
-    }
-    const literalSource = (
-      kinds.routeLiteralAuditReport as Record<string, unknown>
-    ).source as string;
-    if (
-      !literalSource.startsWith(
-        "https://github.com/Simonerrror/exile-leveling/",
-      )
-    ) {
-      throw new Error(
-        "invalid localized audit source provenance: routeLiteralAuditReport",
       );
     }
   }

@@ -41,6 +41,7 @@ function EnemyComponent(enemy: string) {
 interface FragmentGameData {
   areaName: (id: string) => string;
   areaMapName: (id: string) => string | null;
+  craftingRecipes: (id: string) => string[];
   questName: (id: string) => string;
   rewardNpc: (questId: string, rewardOfferId: string) => string;
   literal: (english: string) => string;
@@ -335,7 +336,15 @@ export function Fragment(
     case "ascend":
       return AscendComponent(fragment.version, context);
     case "crafting":
-      return [CraftingComponent(fragment.crafting_recipes, context), null];
+      return [
+        CraftingComponent(
+          fragment.areaId
+            ? context.game.craftingRecipes(fragment.areaId)
+            : fragment.crafting_recipes,
+          context,
+        ),
+        null,
+      ];
     case "dir":
       return [DirectionComponent(fragment.dirIndex), null];
     case "copy":

@@ -400,7 +400,7 @@
         "kind": "routeLiteralAuditReport",
         "retrievedAt": "2026-07-20",
         "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
-        "sha256": "1dcc8f46c315f07a9120754a757d0e632d226e10c307b827fd616513c05f0db3",
+        "sha256": "9129b7fa5c68ecad3fa63a1ae0c779d82978132b189eb9b4b373a9b48818fb0c",
         "source": "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-route-literal-audit.json"
       }
     ]

@@ -3,6 +3,18 @@
   "kind": "russian-route-kill-and-build-info-literal-audit",
   "generatedAt": "2026-07-20",
   "sourceMetadata": {
+    "canonicalizedBase": {
+      "runtime": {
+        "path": "common/data/i18n/ru.json",
+        "normalization": "replace literals with an empty object",
+        "sha256": "a825926eb53148d4a2af00725d57f4a789c81101c5fbeb20a0daa8b2d6cb3d6a"
+      },
+      "audit": {
+        "path": "seeding/data/localization/ru-output-audit.json",
+        "normalization": "remove routeLiteralAuditReport source and replace literal fallbacks with an empty object",
+        "sha256": "0b0d2cc89f47d5de9215277493afcca021f595258d9f80ef0e83dd1460e0446c"
+      }
+    },
     "canonicalRoutes": {
       "path": "common/data/routes/en",
       "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",

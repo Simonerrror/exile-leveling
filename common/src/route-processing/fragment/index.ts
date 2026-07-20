@@ -384,6 +384,7 @@ function EvaluateCrafting(
   return {
     fragment: {
       type: "crafting",
+      areaId: area.id,
       crafting_recipes: area.crafting_recipes,
     },
   };

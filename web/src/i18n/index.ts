@@ -8,6 +8,7 @@ export {
   areaName,
   buildGemSearchString,
   className,
+  craftingRecipes,
   createGameData,
   gameDataForLocale,
   gemName,

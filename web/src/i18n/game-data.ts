@@ -16,7 +16,14 @@ export function localizedName(
 
 interface CanonicalData {
   Gems: Record<string, { name: string }>;
-  Areas: Record<string, { name: string; map_name: string | null }>;
+  Areas: Record<
+    string,
+    {
+      name: string;
+      map_name: string | null;
+      crafting_recipes: string[];
+    }
+  >;
   Quests: Record<
     string,
     {
@@ -37,7 +44,14 @@ interface CanonicalData {
 
 interface LocalizedData {
   gems: Record<string, string>;
-  areas: Record<string, { name: string; mapName: string | null }>;
+  areas: Record<
+    string,
+    {
+      name: string;
+      mapName: string | null;
+      craftingRecipes: string[];
+    }
+  >;
   quests: Record<
     string,
     {
@@ -73,6 +87,13 @@ export function createGameData(
       if (english === null) return null;
       if (locale === "ru") return localized.areas[id]?.mapName || english || id;
       return english || id;
+    },
+    craftingRecipes: (id: string): string[] => {
+      const english = canonical.Areas[id]?.crafting_recipes ?? [];
+      const russian = localized.areas[id]?.craftingRecipes;
+      return locale === "ru" && russian && russian.length > 0
+        ? russian
+        : english;
     },
     questName: (id: string) => {
       const english = canonical.Quests[id]?.name;
@@ -119,6 +140,8 @@ export const areaName = (locale: Locale, id: string) =>
   gameDataForLocale(locale).areaName(id);
 export const areaMapName = (locale: Locale, id: string) =>
   gameDataForLocale(locale).areaMapName(id);
+export const craftingRecipes = (locale: Locale, id: string) =>
+  gameDataForLocale(locale).craftingRecipes(id);
 export const questName = (locale: Locale, id: string) =>
   gameDataForLocale(locale).questName(id);
 export const className = (locale: Locale, id: string) =>
