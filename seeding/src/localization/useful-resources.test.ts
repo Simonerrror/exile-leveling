@@ -1,0 +1,77 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import en from "../../../web/src/i18n/messages/en.json" with { type: "json" };
+import ru from "../../../web/src/i18n/messages/ru.json" with { type: "json" };
+import {
+  cheatSheets,
+  heistBranches,
+  resourceCategories,
+  resources,
+} from "../../../web/src/containers/Useful/resources.js";
+
+test("defines all useful resources with unique IDs", () => {
+  assert.equal(resources.length, 16);
+  assert.equal(new Set(resources.map(({ id }) => id)).size, resources.length);
+});
+
+test("uses HTTPS resource URLs with matching domains", () => {
+  for (const resource of resources) {
+    const url = new URL(resource.url);
+
+    assert.equal(url.protocol, "https:", resource.id);
+    assert.equal(resource.domain, url.hostname, resource.id);
+  }
+});
+
+test("uses the current-league map preset URL", () => {
+  assert.equal(
+    resources.find(({ id }) => id === "map-preset")?.url,
+    "https://ru.pathofexile.com/trade/search/Mirage/mkJBkBQeT6",
+  );
+});
+
+test("assigns every resource to exactly one category", () => {
+  const categorizedIds = resourceCategories.flatMap(({ resourceIds }) =>
+    Array.from(resourceIds),
+  );
+
+  assert.equal(categorizedIds.length, resources.length);
+  assert.deepEqual(
+    [...categorizedIds].sort(),
+    resources.map(({ id }) => id).sort(),
+  );
+});
+
+test("defines the two Heist rogue branches", () => {
+  assert.deepEqual(heistBranches, [
+    ["Tibbs", "Tullina", "Nenet"],
+    ["Karst", "Huck", "Niles", "Vinderi", "Gianna"],
+  ]);
+});
+
+test("defines three cheat sheets with unique filenames", () => {
+  assert.equal(cheatSheets.length, 3);
+  assert.equal(
+    new Set(cheatSheets.map(({ filename }) => filename)).size,
+    cheatSheets.length,
+  );
+});
+
+for (const [locale, messages] of Object.entries({ en, ru })) {
+  for (const sheet of cheatSheets) {
+    test(`${locale} defines messages for the ${sheet.id} cheat sheet`, () => {
+      for (const field of [
+        "title",
+        "description",
+        "alt",
+        "attribution",
+      ] as const) {
+        const key = `useful.sheet.${sheet.id}.${field}`;
+        assert.equal(
+          typeof (messages as Record<string, unknown>)[key],
+          "string",
+        );
+      }
+    });
+  }
+}
