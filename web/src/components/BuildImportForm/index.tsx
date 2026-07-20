@@ -52,6 +52,7 @@ export function BuildImportForm({ onSubmit, onReset }: BuildImportFormProps) {
     <>
       <TextModal
         label={t("build.pobCode")}
+        hint={t("build.pobHint")}
         size="small"
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}

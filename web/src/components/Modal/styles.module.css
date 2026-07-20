@@ -47,3 +47,10 @@
   resize: none;
   overflow: hidden;
 }
+
+.textHint {
+  color: #bcc4cc;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin-top: calc(-1 * var(--size-2));
+}

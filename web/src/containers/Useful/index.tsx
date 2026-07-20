@@ -25,14 +25,9 @@ export default function UsefulContainer() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.hero}>
-        <h1>{t("useful.title")}</h1>
-        <p>{t("useful.intro")}</p>
-      </header>
-
       <section id="useful-tools" aria-labelledby="useful-tools-title">
         <div className={styles.sectionHeading}>
-          <h2 id="useful-tools-title">{t("useful.tools.title")}</h2>
+          <h1 id="useful-tools-title">{t("useful.tools.title")}</h1>
           <p>{t("useful.tools.description")}</p>
         </div>
         {resourceCategories.map((category) => (

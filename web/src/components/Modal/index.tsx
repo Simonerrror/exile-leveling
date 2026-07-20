@@ -2,7 +2,7 @@ import { formStyles } from "../../styles";
 import { useI18n } from "../../i18n";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import ReactModal from "react-modal";
 
 ReactModal.setAppElement("#root");
@@ -23,6 +23,7 @@ export function Modal(props: ReactModal.Props & ModalSizeProps) {
 
 interface TextModalProps extends ModalSizeProps {
   label: string;
+  hint?: string;
   isOpen: boolean;
   onSubmit: (value: string | null) => void;
   onRequestClose: () => void;
@@ -30,6 +31,7 @@ interface TextModalProps extends ModalSizeProps {
 
 export function TextModal({
   label,
+  hint,
   isOpen,
   onSubmit,
   onRequestClose,
@@ -37,6 +39,7 @@ export function TextModal({
 }: TextModalProps) {
   const { t } = useI18n();
   const valueRef = useRef<string>(null);
+  const hintId = useId();
 
   useEffect(() => {
     if (!isOpen) valueRef.current = null;
@@ -47,6 +50,11 @@ export function TextModal({
       <div className={classNames(formStyles.form, styles.grow)}>
         <div className={classNames(formStyles.formRow, styles.grow)}>
           <label>{label}</label>
+          {hint && (
+            <small className={styles.textHint} id={hintId}>
+              {hint}
+            </small>
+          )}
           <textarea
             spellCheck={false}
             className={classNames(formStyles.formInput, styles.textInput)}
@@ -55,6 +63,7 @@ export function TextModal({
             }}
             autoFocus={true}
             aria-label={label}
+            aria-describedby={hint ? hintId : undefined}
           />
         </div>
         <div className={classNames(formStyles.groupRight)}>

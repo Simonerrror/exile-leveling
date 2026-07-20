@@ -60,17 +60,45 @@ test("uses the current-league map preset URL", () => {
 
 test("compact useful layout keeps the important content dense", () => {
   const navbar = readSource("../../../web/src/components/Navbar/index.tsx");
+  const navbarStyles = readSource(
+    "../../../web/src/components/Navbar/styles.module.css",
+  );
+  const buildImport = readSource(
+    "../../../web/src/components/BuildImportForm/index.tsx",
+  );
+  const modal = readSource("../../../web/src/components/Modal/index.tsx");
   const useful = readSource("../../../web/src/containers/Useful/index.tsx");
   const styles = readSource(
     "../../../web/src/containers/Useful/styles.module.css",
   );
   const merchantTabs = resources.find(({ id }) => id === "merchant-tabs");
+  const enMessages = en as Record<string, string>;
+  const ruMessages = ru as Record<string, string>;
 
   assert.ok(
     navbar.indexOf('t("nav.useful")') < navbar.indexOf('t("nav.build")'),
   );
   assert.doesNotMatch(useful, /jumpNav/);
+  assert.doesNotMatch(useful, /styles\.hero/);
   assert.doesNotMatch(styles, /\.resourceCard\s*\{[^}]*min-height:/s);
+  assert.match(modal, /hint\?: string/);
+  assert.match(modal, /aria-describedby/);
+  assert.match(navbarStyles, /\.navItem\s*\{[^}]*text-align: center/s);
+  assert.match(buildImport, /pastebin\\\.com/);
+  assert.match(buildImport, /poe\\\.ninja\\\/pob/);
+  assert.match(buildImport, /pobb\\\.in/);
+  assert.equal(enMessages["nav.useful"], "Useful");
+  assert.equal(ruMessages["nav.useful"], "Полезное");
+  assert.equal(enMessages["build.pobCode"], "Path of Building code or link");
+  assert.equal(ruMessages["build.pobCode"], "Код или ссылка Path of Building");
+  assert.match(
+    enMessages["build.pobHint"],
+    /pobb\.in.*poe\.ninja\/pob.*Pastebin/,
+  );
+  assert.match(
+    ruMessages["build.pobHint"],
+    /pobb\.in.*poe\.ninja\/pob.*Pastebin/,
+  );
   assert.ok(merchantTabs && !("note" in merchantTabs));
 });
 
