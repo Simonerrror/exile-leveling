@@ -160,12 +160,21 @@ export const vendorNpc = (
 export const literal = (locale: Locale, english: string) =>
   gameDataForLocale(locale).literal(english);
 
+export function buildVendorSearchString(
+  displayNames: readonly string[],
+): string {
+  if (displayNames.length === 0) return "";
+  const escapedNames = displayNames.map((name) =>
+    name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  );
+  return `"${escapedNames.join("|")}"`;
+}
+
 export function buildGemSearchString(
   locale: Locale,
   gemIds: readonly string[],
 ): string {
-  if (gemIds.length === 0) return "";
-  return `"${gemIds.map((id) => gemName(locale, id)).join("|")}"`;
+  return buildVendorSearchString(gemIds.map((id) => gemName(locale, id)));
 }
 
 export function useGameData() {

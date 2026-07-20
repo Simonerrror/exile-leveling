@@ -23,6 +23,7 @@ import {
   routeSignature,
 } from "./validate.js";
 import {
+  buildVendorSearchString,
   localizedName,
   type LocalizedNameMap,
 } from "../../../web/src/i18n/game-data.js";
@@ -1196,6 +1197,21 @@ test("vendor gem search expressions follow the active client language", () => {
     '"missing"',
     "unknown metadata IDs use the safe ID fallback",
   );
+});
+
+test("vendor gem search escapes each localized display name before alternation", () => {
+  assert.equal(buildVendorSearchString(["..."]), '"\\.\\.\\."');
+  assert.equal(buildVendorSearchString(["[DNT] Blood"]), '"\\[DNT\\] Blood"');
+  assert.equal(
+    buildVendorSearchString([String.raw`Path\Name`]),
+    '"Path\\\\Name"',
+  );
+  assert.equal(buildVendorSearchString(["Огненный шар"]), '"Огненный шар"');
+  assert.equal(
+    buildVendorSearchString(["...", "[DNT] Blood", "Огненный шар"]),
+    '"\\.\\.\\.|\\[DNT\\] Blood|Огненный шар"',
+  );
+  assert.equal(buildVendorSearchString([]), "");
 });
 
 test("built-in literal keys are every unique kill payload plus bandit label", () => {

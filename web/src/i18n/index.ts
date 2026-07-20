@@ -7,6 +7,7 @@ export {
   areaMapName,
   areaName,
   buildGemSearchString,
+  buildVendorSearchString,
   className,
   craftingRecipes,
   createGameData,
