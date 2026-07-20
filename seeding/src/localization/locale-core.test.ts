@@ -44,6 +44,9 @@ test("translates English and Russian messages", () => {
   assert.equal(translate("ru", "fragment.act", { act: 2 }), "Акт 2");
   assert.equal(translate("en", "modal.cancel"), "Cancel");
   assert.equal(translate("ru", "modal.submit"), "Отправить");
+  assert.equal(translate("en", "build.noClass"), "None");
+  assert.equal(translate("ru", "build.noClass"), "Не выбран");
+  assert.equal(translate("ru", "gems.defaultSection"), "По умолчанию");
 });
 
 test("falls back to the canonical English message", () => {

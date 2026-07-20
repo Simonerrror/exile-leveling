@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  assertBuiltInLiteralCoverage,
   assertLocalizedGameData,
   assertMessageDictionary,
   assertMessageParity,
@@ -84,12 +85,23 @@ async function main(): Promise<void> {
   const russianRoutes = resolve(routes, "ru");
   const englishRouteFiles = await routeFiles(englishRoutes);
   const russianRouteFiles = await routeFiles(russianRoutes);
+  const englishRouteSources = await Promise.all(
+    englishRouteFiles.map((file) => readText(resolve(englishRoutes, file))),
+  );
+  assertBuiltInLiteralCoverage(
+    englishRouteSources,
+    (
+      russianGameData as {
+        literals: Record<string, unknown>;
+      }
+    ).literals,
+  );
 
-  for (const file of englishRouteFiles) {
+  for (const [index, file] of englishRouteFiles.entries()) {
     if (!russianRouteFiles.includes(file))
       throw new Error(`missing Russian route file: ${file}`);
     assertRouteParity(
-      await readText(resolve(englishRoutes, file)),
+      englishRouteSources[index],
       await readText(resolve(russianRoutes, file)),
       file.replace(/\.txt$/, ""),
     );

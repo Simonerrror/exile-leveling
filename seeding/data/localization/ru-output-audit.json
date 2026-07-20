@@ -395,6 +395,13 @@
         "revision": "russian-display-audit-v1",
         "sha256": "176e63bc317500a5e3e5ba30b87d30ef6aefd33134c7c0ec844b349d4483117a",
         "source": "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-display-audit.json"
+      },
+      {
+        "kind": "routeLiteralAuditReport",
+        "retrievedAt": "2026-07-20",
+        "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
+        "sha256": "1dcc8f46c315f07a9120754a757d0e632d226e10c307b827fd616513c05f0db3",
+        "source": "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-route-literal-audit.json"
       }
     ]
   }

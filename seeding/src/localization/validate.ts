@@ -5,6 +5,33 @@ const SINGLE_DISPLAY_FRAGMENTS = new Set([
   "reward_quest",
 ]);
 
+const BUILD_BANDIT_LITERALS = ["Alira", "Kraityn", "Oak"] as const;
+
+export function collectBuiltInLiteralKeys(
+  routeSources: readonly string[],
+): string[] {
+  const literals = new Set<string>(BUILD_BANDIT_LITERALS);
+  for (const source of routeSources) {
+    for (const match of source.matchAll(/\{kill\|([^}]+)\}/g)) {
+      literals.add(match[1]);
+    }
+  }
+  return [...literals].sort();
+}
+
+export function assertBuiltInLiteralCoverage(
+  routeSources: readonly string[],
+  literals: Record<string, unknown>,
+): void {
+  assertEntityCoverage(
+    "built-in literal",
+    Object.fromEntries(
+      collectBuiltInLiteralKeys(routeSources).map((literal) => [literal, true]),
+    ),
+    literals,
+  );
+}
+
 export function assertEntityCoverage(
   kind: string,
   canonical: Record<string, unknown>,
@@ -83,6 +110,7 @@ const AUDITED_SOURCE_KINDS = new Set([
   "npcsReport",
   "classSource",
   "displayAuditReport",
+  "routeLiteralAuditReport",
 ]);
 const OFFICIAL_SOURCE_KINDS = new Set([
   "BaseItemTypes",
@@ -186,6 +214,18 @@ function assertAuditSourceMetadata(value: unknown): void {
     ) {
       throw new Error(
         "invalid localized audit source provenance: displayAuditReport",
+      );
+    }
+    const literalSource = (
+      kinds.routeLiteralAuditReport as Record<string, unknown>
+    ).source as string;
+    if (
+      !literalSource.startsWith(
+        "https://github.com/Simonerrror/exile-leveling/",
+      )
+    ) {
+      throw new Error(
+        "invalid localized audit source provenance: routeLiteralAuditReport",
       );
     }
   }

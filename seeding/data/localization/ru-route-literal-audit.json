@@ -1,0 +1,1071 @@
+{
+  "schemaVersion": 1,
+  "kind": "russian-route-kill-and-build-info-literal-audit",
+  "generatedAt": "2026-07-20",
+  "sourceMetadata": {
+    "canonicalRoutes": {
+      "path": "common/data/routes/en",
+      "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
+      "contentSha256": "d8d0e57bc4d62c83df848917dac0840c09a79bc8b765f2711752344c471ce42d",
+      "extractionPattern": "{kill|...}"
+    },
+    "poedb": {
+      "baseUrl": "https://poedb.tw/ru/",
+      "retrievedAt": "2026-07-20",
+      "method": "Exact English-slug pages; localized visible title read from og:title except documented selectors."
+    },
+    "checkedInAudit": {
+      "path": "seeding/data/localization/ru-display-audit.json",
+      "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
+      "contentSha256": "176e63bc317500a5e3e5ba30b87d30ef6aefd33134c7c0ec844b349d4483117a"
+    }
+  },
+  "coverage": {
+    "routeKillOccurrences": 74,
+    "uniqueRouteKillLiterals": 60,
+    "killMappings": 60,
+    "killRussianDisplayValues": 60,
+    "killEnglishFallbacks": 0,
+    "exactPoedbEntityPages": 58,
+    "relatedPoedbQuestResolutions": 1,
+    "genericCuratedInstructions": 1,
+    "buildInfoBandits": 3,
+    "buildInfoClasses": 7,
+    "buildInfoOtherRawSentinels": 1,
+    "buildInfoEnglishFallbacks": 1
+  },
+  "mappings": {
+    "killLiterals": {
+      "Abberath, the Cloven One": {
+        "display": "Абберата, Раздвоенного",
+        "officialNominative": "Абберат, Раздвоенный",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Abberath%2C_the_Cloven_One",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fbabcb8fca152810ee238f28deac5fc4c28177eae5ebc31a4121362099cf7d8f",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Alira Darktongue": {
+        "display": "Алиру Мракоглас",
+        "officialNominative": "Алира Мракоглас",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Alira_Darktongue",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "8e4a9d28ddd1dcc44c18671bed878196f8dd1bd9258245c8d603001208867959",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Arakaali, Spinner of Shadows": {
+        "display": "Аракаали, Прядильщицу теней",
+        "officialNominative": "Аракаали, Прядильщица теней",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Arakaali%2C_Spinner_of_Shadows",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "2d69a699dbf334d54161ec3c15fd7138a4aeeeb7883d67532519c3d93668e732",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Avarius, Reassembled": {
+        "display": "Авария, Собранного",
+        "officialNominative": "Аварий, Собранный",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Avarius%2C_Reassembled",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "f94cda6471838e419edbdb7377dd7e2f85a7e6309978a7539dddbca42f62f429",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Brutus, Lord Incarcerator": {
+        "display": "Изувера, старшего тюремщика",
+        "officialNominative": "Изувер, старший тюремщик",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Brutus%2C_Lord_Incarcerator",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "58bd499231490746c78baedb3083d535c5b65d51b0ff2870c8603cad806097e2",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Captain Arteri": {
+        "display": "Трибуна Артемия",
+        "officialNominative": "Трибун Артемий",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Captain_Arteri",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "c208dad747422f1a6b46547ea9aab9782ac4f660e0c2293397f96fc5de7dfef9",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Captain Fairgraves": {
+        "display": "Капитана Фейргрейвса",
+        "officialNominative": "Капитан Фейргрейвс",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Captain_Fairgraves",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "3fef41c32270a280e99e12705777e10e1803c6ff8c572b0d9687d839eeae30dd",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Daresso, King of Swords": {
+        "display": "Дарессо, Венценосца мечей",
+        "officialNominative": "Дарессо, Венценосец мечей",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Daresso%2C_King_of_Swords",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "1c797bb855b3d053798680208324b361f73b6e5bb81f51c08c4598443f8048c8",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Dawn, Harbinger of Solaris": {
+        "display": "Рассвета, предвестника Солярис",
+        "officialNominative": "Рассвет, предвестник Солярис",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Dawn%2C_Harbinger_of_Solaris",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "907a0d581869b899c6af4057a3087e0be5af30665c74e468cc8fb3d1641480a0",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Doedre Darktongue": {
+        "display": "Доэдре Тёмного оратора",
+        "officialNominative": "Доэдре Тёмный оратор",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Doedre_Darktongue",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "1dd86d527750e7e13fb8f99705d790a7669b4abf0e1e6759a229e97061fe24ff",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Doedre the Vile": {
+        "display": "Доэдре Подлую",
+        "officialNominative": "Доэдре Подлая",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Doedre_the_Vile",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "68a86f77cc7771e48fcfcc0c187af6f0330d511152cbb397005f8f172b07558d",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Doedre, Darksoul": {
+        "display": "Доэдре, Тёмную душу",
+        "officialNominative": "Доэдре, Тёмная душа",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Doedre%2C_Darksoul",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "1dfd939e20ab1d9efb9fbfcca4ba59dcad33348be656e07d4d98564a62cb5dbb",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Dominus, High Templar": {
+        "display": "Владыку, Верховного жреца",
+        "officialNominative": "Владыка, Верховный жрец",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Dominus%2C_High_Templar",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "0c0c54d6c1693a3e7103f4d5f34e7fb39084f76f2f0c9360f1700714dabca83b",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Dusk, Harbinger of Lunaris": {
+        "display": "Заката, предвестника Лунарис",
+        "officialNominative": "Закат, предвестник Лунарис",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Dusk%2C_Harbinger_of_Lunaris",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "288825928069b1bf6ae7321605f55f68783a248758fe026a117520b72d63ae3c",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Everything": {
+        "display": "всех",
+        "officialNominative": null,
+        "status": "curated-generic-instruction",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "project-route-literal",
+          "path": "common/data/routes/en",
+          "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
+          "contentSha256": "d8d0e57bc4d62c83df848917dac0840c09a79bc8b765f2711752344c471ce42d"
+        },
+        "curationReason": "Generic route instruction, not a Path of Exile entity. PoEDB exact page returned HTTP 404. Russian contextual value `всех` is explicitly curated for `Убей всех`."
+      },
+      "Fidelitas, the Mourning": {
+        "display": "Фиделиса, Скорбящего",
+        "officialNominative": "Фиделис, Скорбящий",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Fidelitas%2C_the_Mourning",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "e63825e88fa9746c5cf91c78f652c12cba37af42f09dbf27682f20cf32754f03",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Garukhan, Queen of the Winds": {
+        "display": "Гарухан, Царицу ветров",
+        "officialNominative": "Гарухан, Царица ветров",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Garukhan%2C_Queen_of_the_Winds",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "a23385ebcfbe494394e082712ba750d197c3b9c795ffe973bea81b00033cd274",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Gemling Legionnaires": {
+        "display": "легионеров-каменитов",
+        "officialNominative": "легионеры-камениты",
+        "status": "verified-related-poedb-quest-text-and-curated-case",
+        "grammaticalContext": "plural accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-quest-page",
+          "url": "https://poedb.tw/ru/The_Gemling_Legion",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "5bc84b086897c748dc4741b44a7a4d21173fcdd83f89d0aaa742b9dd54eeecf6",
+          "selectorEvidence": "Quest rows contain `Убейте легионеров-каменитов` and `легионеры-камениты`."
+        },
+        "supportingSource": {
+          "kind": "poedb-exact-singular-monster-page",
+          "url": "https://poedb.tw/ru/Gemling_Legionnaire",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "e6ae7567e1b330a99b24cf95781fcc3aa8a351ac7716841c565e304c8bc8f569",
+          "officialSingular": "Легионер-каменит"
+        },
+        "curationReason": "The plural-name URL is absent, so the exact official plural accusative is taken from the Russian quest objective; capitalization follows mid-sentence route context."
+      },
+      "General Adus": {
+        "display": "Стратега Адаса",
+        "officialNominative": "Стратег Адас",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/General_Adus",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "ec8c1073bfc7ebd6253c914eec36f336ed340841a448e3e2e147dbdf19ce2168",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "General Gravicius": {
+        "display": "Легата Гравиция",
+        "officialNominative": "Легат Гравиций",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/General_Gravicius",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "3257b6e93d6b3f7d17c6be08e353af7336d56f92375006e2ea5dd52934204a45",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Greust, Lord of the Forest": {
+        "display": "Груста, Хозяина леса",
+        "officialNominative": "Груст, Хозяин леса",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Greust%2C_Lord_of_the_Forest",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "d7e63fcf77e7ccf947ec1727d6d9ea34aaff8e453e9fd9daee08d8b795e33020",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Gruthkul, Mother of Despair": {
+        "display": "Граткул, Мать отчаяния",
+        "officialNominative": "Граткул, Мать отчаяния",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Gruthkul%2C_Mother_of_Despair",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "0d353fb0894e53128bef4a7f59a832d99540b56147afa5fa8c74e49a0981d1af",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Hailrake": {
+        "display": "Отморозка",
+        "officialNominative": "Отморозок",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Hailrake",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "c4b1c17bbbc17a30437477580b4f88f3fe8efdb9551e5178ec729c11363e2008",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "High Templar Avarius": {
+        "display": "Верховного жреца Авария",
+        "officialNominative": "Верховный жрец Аварий",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/High_Templar_Avarius",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "566c5ee4419a1818b409fbe0d5267f061e03cf7891c1d1aef1e413901c4d70c5",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Hillock": {
+        "display": "Хиллока",
+        "officialNominative": "Хиллок",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Hillock",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "48e1650142d86809211d5ecf67bfdc9c48972095664857c9c26b5882591cd2f7",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Justicar Casticus": {
+        "display": "Юстициара Кастифия",
+        "officialNominative": "Юстициар Кастифий",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Justicar_Casticus",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "29f22df64ce43569326ce8bcd8176d1927a734c2c5889dd48557a98800f0412f",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "King Kaom": {
+        "display": "Вождя Каома",
+        "officialNominative": "Вождь Каом",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/King_Kaom",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "ba371448347f16872da81f6ffaba42e499e5a0e3a27f051fee43c553095ba981",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Kitava, the Insatiable": {
+        "display": "Китаву, Ненасытного",
+        "officialNominative": "Китава, Ненасытный",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Kitava%2C_the_Insatiable",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "9a07bd4954de83ee319426c7cc2816ab683f635d06b56124cf939842cc51eb9b",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Kraityn, Scarbearer": {
+        "display": "Крайтина, Меченого",
+        "officialNominative": "Крайтин, Меченый",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Kraityn%2C_Scarbearer",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "673551797c9454a3781a358f717b492ccfc4c30a0f14dc00a3da2776b4fbfc5f",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Lunaris, Eternal Moon": {
+        "display": "Лунарис, Вечную Луну",
+        "officialNominative": "Лунарис, Вечная Луна",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Lunaris%2C_Eternal_Moon",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "d12dfafeb1b539145824bff983e85c340df3ae3d7c76bedab073eb647c3a897c",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Malachai, The Nightmare": {
+        "display": "Малахая, Кошмара",
+        "officialNominative": "Малахай, Кошмар",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Malachai%2C_The_Nightmare",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "2b099cb8831fbaab749eeba6373978997ad033a1946d2414955f0183e3c4fd95",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Maligaro, The Broken": {
+        "display": "Малигаро, Изломанного",
+        "officialNominative": "Малигаро, Изломанный",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Maligaro%2C_The_Broken",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "9ed4d1bafc178ba15b1f48b56234659077339a58de469ce98b495a1cd8a518ee",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Maligaro, The Inquisitor": {
+        "display": "Дознавателя Малигаро",
+        "officialNominative": "Дознаватель Малигаро",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Maligaro%2C_The_Inquisitor",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "6e9587f589772d59b5e8b1ac5191aabeeb760a9dd9adc36b983337d326b706ad",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Maligaro, the Artist": {
+        "display": "Малигаро, Творца",
+        "officialNominative": "Малигаро, Творец",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Maligaro%2C_the_Artist",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "e7b5f2294a18a14c957fa7d280d05a34da9fd29dae3fb69cf6e53689d74d11d6",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Merveil, the Siren": {
+        "display": "Мервейл, Сирену",
+        "officialNominative": "Мервейл, Сирена",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Merveil%2C_the_Siren",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "36c1b90784b68fa942358395245f2d53fb44b00175541191cc324b621a2dc9cc",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Oak, Skullbreaker": {
+        "display": "Дуба, Череполома",
+        "officialNominative": "Дуб, Череполом",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Oak%2C_Skullbreaker",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "a101c451f2a0e99ccf37ede4338bde80b148c8d78975d2038427b5463aeb9661",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Overseer Krow": {
+        "display": "Надзирателя Кроу",
+        "officialNominative": "Надзиратель Кроу",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Overseer_Krow",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "69fa9e1f0d00f433aaabd85302b47692a3e24b928acdc149785ccfa4362475f7",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Piety": {
+        "display": "Веру",
+        "officialNominative": "Вера",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Piety",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "b355f980d079028382171cd483216385c6fba545ca7437fa80c8e723e99349b3",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Piety, the Abomination": {
+        "display": "Веру, Отродье",
+        "officialNominative": "Вера, Отродье",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Piety%2C_the_Abomination",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "dbb3b620ab627efdb8564024c740d6e9eb002ff8baf517be58838a1f4071fa4b",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Plaguewing": {
+        "display": "Чумокрыла",
+        "officialNominative": "Чумокрыл",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Plaguewing",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "01508e157e427851fc441d70b75086125fba49cd950b78ac10988b56f25357cb",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Reassembled Brutus": {
+        "display": "Пересобранного Изувера",
+        "officialNominative": "Пересобранный Изувер",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Reassembled_Brutus",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "6597938ea78772ad579ad77179be3b5558e7c04a0e115b2d044522288dc1fc0d",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Ryslatha, the Puppet Mistress": {
+        "display": "Рюслату, Госпожу марионеток",
+        "officialNominative": "Рюслата, Госпожа марионеток",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Ryslatha%2C_the_Puppet_Mistress",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "18e93bfd2f6ffdfad7f0f86ae7280545afd1d034d53e75457780ff936bc4ac48",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Shakari, Queen of the Sands": {
+        "display": "Шакари, Царицу песков",
+        "officialNominative": "Шакари, Царица песков",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Shakari%2C_Queen_of_the_Sands",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "cf575dac2824b525eff33c82d3b4b452143a3db02a238d9d66488054f6f22cde",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Shavronne of Umbra": {
+        "display": "Шавронн Тёмную",
+        "officialNominative": "Шавронн Тёмная",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Shavronne_of_Umbra",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "cbf48b4d3f2b29ddae0296507917b41d48cd54cf06a8deae10643a1f61f9d732",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Shavronne the Returned": {
+        "display": "Шавронн Возвращенную",
+        "officialNominative": "Шавронн Возвращенная",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Shavronne_the_Returned",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "0fea29a221f6c5df74bca25ab3e929702cec2b97592b3626c97527cd190842ec",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Shavronne, Unbound": {
+        "display": "Шавронн, Освобождённую",
+        "officialNominative": "Шавронн, Освобождённая",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Shavronne%2C_Unbound",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "2123b483c46d506e4d87166c85243c09e6a1fa27eb85bcc77803f110eebea1cd",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Solaris, Eternal Sun": {
+        "display": "Солярис, Вечное Солнце",
+        "officialNominative": "Солярис, Вечное Солнце",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Solaris%2C_Eternal_Sun",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "ce52cec609c1589d05eaac3506ce6a4779bb01f61e79b44a64e20ee8cd20ea33",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "The Basilisk": {
+        "display": "Василиска",
+        "officialNominative": "Василиск",
+        "status": "verified-exact-poedb-tab-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Basilisk",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "2e8a86b6206ec98a771b56891fb7d632418a67140a4f6b259e8b549188d7c9ae",
+          "selectorEvidence": "active MonsterVarieties tab `.lc` whose area is `Кипящее озеро`"
+        },
+        "curationReason": "The page-level og:title concatenates unrelated records. The active canonical monster tab visibly names `Василиск` and identifies The Boiling Lake; display is its animate accusative."
+      },
+      "The Depraved Trinity": {
+        "display": "Порочную троицу",
+        "officialNominative": "Порочная троица",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Depraved_Trinity",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "3f352ebaf2ebec277428ef50f6a89cc8356628165328ed96ce9588e748b658fc",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "The Dishonoured Queen": {
+        "display": "Оскорблённую царицу",
+        "officialNominative": "Оскорблённая царица",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Dishonoured_Queen",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "dae0e0477b29342dea9fa7aeb6199930c3d8226fcdda2b146a901191976781b1",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "The Dweller of the Deep": {
+        "display": "Обитателя глубин",
+        "officialNominative": "Обитатель глубин",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Dweller_of_the_Deep",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "f144c4faeb0cc3c1a568cb346b072e9f0e0e4ecdc0dc683cbe55d9fceef16aab",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "The Great White Beast": {
+        "display": "Великого белого зверя",
+        "officialNominative": "Великий белый зверь",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Great_White_Beast",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "cd6c4449a6b6eda9153a133b0c25ec041109948b88a8cc24b2012b004867a500",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "The Weaver": {
+        "display": "Ткачиху",
+        "officialNominative": "Ткачиха",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/The_Weaver",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "63a4d960ba6bcb2119ca525de09a5617e37f2125007efc933b303bc6720045cc",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Tolman": {
+        "display": "Толмана",
+        "officialNominative": "Толман",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Tolman",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "c0119f98cfdebcf83c7cdef871bc2d9435c414f1603368d83c87067fd0419a52",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Tsoagoth, The Brine King": {
+        "display": "Тсоагота, Морского царя",
+        "officialNominative": "Тсоагот, Морской царь",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Tsoagoth%2C_The_Brine_King",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "56b9c849324ea156097bcb016893c41659829b1626c9d32a3251e5c7ecca4198",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Tukohama, Karui God of War": {
+        "display": "Тукохаму, бога войны каруи",
+        "officialNominative": "Тукохама, бог войны каруи",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Tukohama%2C_Karui_God_of_War",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "6328cc7d936fd6a7a80398a57d02ccf0da214cdfe3f8c5922784d4f64a4496fa",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Vaal Oversoul": {
+        "display": "Вседушу ваал",
+        "officialNominative": "Вседуша ваал",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Vaal_Oversoul",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "90531c62b03af34aa57e8b70bb8d37d54a748535e5be2fcb6ed319de8dddd59f",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Vilenta": {
+        "display": "Виленту",
+        "officialNominative": "Вилента",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Vilenta",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "b27ea65ce44bd811a44fe4ccb895fbae9bc302470cd45b54af8008080203bfa9",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Voll, Emperor of Purity": {
+        "display": "Волла, Императора Чистоты",
+        "officialNominative": "Волл, Император Чистоты",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Voll%2C_Emperor_of_Purity",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "4033dc3d0eeb4c3e0618588541ae0b02c89e643aed571f9363e22f6b09c2413d",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      },
+      "Yugul, Reflection of Terror": {
+        "display": "Югула, Отражение ужаса",
+        "officialNominative": "Югул, Отражение ужаса",
+        "status": "verified-exact-poedb-and-curated-accusative",
+        "grammaticalContext": "accusative after Russian kill imperative",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Yugul%2C_Reflection_of_Terror",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "d8b49ebe5ba2eda33702f90ab1d133a3aa61f591a26aa064400008b0f1e16c30",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        },
+        "curationReason": "PoEDB supplies the official Russian nominative; display is manually inflected for the Russian kill-imperative context."
+      }
+    },
+    "buildInfoBandits": {
+      "Oak": {
+        "display": "Дуб",
+        "officialNominative": "Дуб",
+        "status": "verified-exact-poedb",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Oak",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "b71ab157fc823785bf15a1ad902cf11c63b4af64b3092c08449ffa609a73d80e",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        }
+      },
+      "Kraityn": {
+        "display": "Крайтин",
+        "officialNominative": "Крайтин",
+        "status": "verified-exact-poedb",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Kraityn",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "c15f7f9fcb549e5619d326ba575b167546894bd2e6586068473ed54542f672e4",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        }
+      },
+      "Alira": {
+        "display": "Алира",
+        "officialNominative": "Алира",
+        "status": "verified-exact-poedb",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "poedb-exact-entity-page",
+          "url": "https://poedb.tw/ru/Alira",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "dc1a8df30321cf51357f046220e1c22d59dc33c015fd24ba6588b77b8533ba46",
+          "selectorEvidence": "meta[property=\"og:title\"]"
+        }
+      }
+    },
+    "buildInfoClasses": {
+      "Duelist": {
+        "display": "Дуэлянт",
+        "officialNominative": "Дуэлянт",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Marauder": {
+        "display": "Дикарь",
+        "officialNominative": "Дикарь",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Ranger": {
+        "display": "Охотница",
+        "officialNominative": "Охотница",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Scion": {
+        "display": "Дворянка",
+        "officialNominative": "Дворянка",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Shadow": {
+        "display": "Бандит",
+        "officialNominative": "Бандит",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Templar": {
+        "display": "Жрец",
+        "officialNominative": "Жрец",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      },
+      "Witch": {
+        "display": "Ведьма",
+        "officialNominative": "Ведьма",
+        "status": "verified-checked-in-audit-source",
+        "grammaticalContext": "standalone nominative in BuildInfoForm",
+        "source": {
+          "kind": "PathOfBuilding-Russian-tree-data",
+          "url": "https://gitverse.ru/pathofbuilding/PathOfBuilding/content/696d36aabaffb88f9c75ee424a1b4433b3233597/src/TreeData/3_28/tree_ru.lua",
+          "retrievedAt": "2026-07-20",
+          "contentSha256": "fa4c05d5c8e716dbf226f405790229e2bd0f9f0105d937056827463275a87a96",
+          "sourceAuditPath": "seeding/data/localization/ru-display-audit.json"
+        }
+      }
+    },
+    "buildInfoOther": {
+      "None": {
+        "display": "None",
+        "officialNominative": null,
+        "status": "explicit-english-fallback",
+        "grammaticalContext": "characterClass sentinel displayed raw by BuildInfoForm",
+        "source": {
+          "kind": "project-code",
+          "path": "web/src/state/build-data.ts",
+          "revision": "ebabcb76b5596454aea23b4377ccdaf569431813",
+          "contentSha256": "7eb764ee0cb84ddfd84ef46e6d5bf58713bc446d2810f3ef975ba20568e7656a"
+        },
+        "fallbackReason": "Internal unset sentinel, not an official Path of Exile class name. Translate through a dedicated UI message instead of treating it as game data."
+      }
+    }
+  },
+  "sourceFailures": [
+    {
+      "english": "Everything",
+      "attemptedUrl": "https://poedb.tw/ru/Everything",
+      "result": "HTTP 404",
+      "resolution": "Explicit generic contextual curation `всех`."
+    },
+    {
+      "english": "Gemling Legionnaires",
+      "attemptedUrl": "https://poedb.tw/ru/Gemling_Legionnaires",
+      "result": "HTTP 404",
+      "resolution": "Exact Russian quest page and exact singular monster page prove `легионеров-каменитов`."
+    }
+  ],
+  "ambiguousNames": [
+    {
+      "english": "The Basilisk",
+      "pageUrl": "https://poedb.tw/ru/The_Basilisk",
+      "issue": "Page-level og:title concatenates `Василиск Каменноугольный Часовой-пандемоний` from multiple records.",
+      "resolution": "Use visible active MonsterVarieties name `Василиск`; the same tab identifies area `Кипящее озеро` (The Boiling Lake).",
+      "display": "Василиска"
+    },
+    {
+      "english": "Alira Darktongue",
+      "pageUrl": "https://poedb.tw/ru/Alira_Darktongue",
+      "issue": "PoEDB og:title has trailing whitespace.",
+      "resolution": "Trim whitespace only; official wording remains `Алира Мракоглас`.",
+      "display": "Алиру Мракоглас"
+    }
+  ],
+  "notes": [
+    "Kill display values are intentionally contextual accusatives; do not replace them with nominative page titles.",
+    "Bandits and classes are standalone BuildInfoForm values and therefore remain nominative.",
+    "Unknown imported characterClass strings must retain runtime English fallback."
+  ]
+}

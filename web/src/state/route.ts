@@ -1,7 +1,9 @@
 import { atom } from "jotai";
 import { buildDataSelector } from "./build-data";
 import { configSelector } from "./config";
+import { buildGemSearchString } from "../i18n/game-data";
 import { requiredGemsSelector } from "./gem";
+import { localeAtom } from "./locale";
 import { routeFilesSelector } from "./route-files";
 import type { RouteData } from "common";
 
@@ -39,11 +41,12 @@ const baseRouteSelector = atom(async (get) => {
 });
 
 export const routeSelector = atom(async (get) => {
-  const { buildGemSteps, findCharacterGems, Data } = await import("common");
+  const { buildGemSteps, findCharacterGems } = await import("common");
 
   const baseRoute = await get(baseRouteSelector);
   const buildData = get(buildDataSelector);
   const settings = get(configSelector);
+  const locale = get(localeAtom);
   const requiredGems = get(requiredGemsSelector);
 
   if (requiredGems.length == 0) return baseRoute;
@@ -80,16 +83,17 @@ export const routeSelector = atom(async (get) => {
 
       const skipStep = settings.gemsOnly && gemSteps.length === 0;
       if (!skipStep) {
-        const searchString = gemSteps
-          .map((x) => Data.Gems[x.requiredGem.id].name)
-          .join("|");
+        const searchString = buildGemSearchString(
+          locale,
+          gemSteps.map((x) => x.requiredGem.id),
+        );
 
         let step;
         if (searchString !== "") {
           step = structuredClone(baseStep);
           step.parts.push({
             type: "copy",
-            text: `"${searchString}"`,
+            text: searchString,
             side: "tail",
           });
         } else {

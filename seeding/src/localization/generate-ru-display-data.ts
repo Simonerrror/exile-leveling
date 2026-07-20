@@ -214,6 +214,7 @@ interface AuditOptions {
   npcsReport: string;
   classSource: string;
   displayAuditReport: string;
+  routeLiteralAuditReport: string;
   auditManifest: string;
   output: string;
   auditOutput: string;
@@ -222,6 +223,14 @@ interface AuditOptions {
 interface OfficialExportOptions {
   canonicalDirectory: string;
   exportsDirectory: string;
+  auditManifest: string;
+  output: string;
+  auditOutput: string;
+}
+
+interface RouteLiteralMergeOptions {
+  canonicalDirectory: string;
+  routeLiteralAuditReport: string;
   auditManifest: string;
   output: string;
   auditOutput: string;
@@ -249,6 +258,16 @@ interface DisplayAuditReport {
   npcs: AuditedNameRecord[];
   classes: AuditedNameRecord[];
   nonRussianGems: AuditedGemFallbackRecord[];
+}
+
+interface AuditedLiteralRecord {
+  display: string;
+}
+
+interface RouteLiteralAuditReport {
+  killLiterals: Record<string, AuditedLiteralRecord>;
+  buildInfoBandits: Record<string, AuditedLiteralRecord>;
+  buildInfoClasses: Record<string, AuditedLiteralRecord>;
 }
 
 interface AuditSourceMetadata {
@@ -366,6 +385,144 @@ function parseDisplayAuditReport(
     }
   }
   return report;
+}
+
+export async function loadRouteLiteralAuditReport(
+  path: string,
+): Promise<RouteLiteralAuditReport> {
+  return parseRouteLiteralAuditReport(await readFile(path), path);
+}
+
+function parseRouteLiteralAuditReport(
+  bytes: Uint8Array,
+  path: string,
+): RouteLiteralAuditReport {
+  const value = record(parseJsonBytes(bytes, path), path);
+  if (
+    value.schemaVersion !== 1 ||
+    value.kind !== "russian-route-kill-and-build-info-literal-audit"
+  ) {
+    throw new Error(`invalid audited route literal schema: ${path}`);
+  }
+  const mappings = record(value.mappings, `${path}.mappings`);
+  const parseMappings = (key: string) => {
+    const source = record(mappings[key], `${path}.mappings.${key}`);
+    return Object.fromEntries(
+      Object.entries(source).map(([english, raw]) => {
+        const entryPath = `${path}.mappings.${key}.${english}`;
+        const entry = record(raw, entryPath);
+        const display = provenanceString(entry, "display", entryPath);
+        if (!/[А-Яа-яЁё]/.test(display)) {
+          throw new Error(`non-Russian audited route literal: ${english}`);
+        }
+        provenanceString(entry, "status", entryPath);
+        provenanceString(entry, "grammaticalContext", entryPath);
+        const provenance = record(entry.source, `${entryPath}.source`);
+        provenanceString(provenance, "kind", `${entryPath}.source`);
+        provenanceString(
+          provenance,
+          "contentSha256",
+          `${entryPath}.source`,
+          /^[a-f0-9]{64}$/,
+        );
+        if (typeof provenance.url === "string") {
+          provenanceString(
+            provenance,
+            "url",
+            `${entryPath}.source`,
+            /^https:\/\/\S+$/,
+          );
+          provenanceString(
+            provenance,
+            "retrievedAt",
+            `${entryPath}.source`,
+            /^\d{4}-\d{2}-\d{2}$/,
+          );
+        } else {
+          provenanceString(provenance, "path", `${entryPath}.source`);
+          provenanceString(provenance, "revision", `${entryPath}.source`);
+        }
+        return [english, { display }];
+      }),
+    );
+  };
+  const report = {
+    killLiterals: parseMappings("killLiterals"),
+    buildInfoBandits: parseMappings("buildInfoBandits"),
+    buildInfoClasses: parseMappings("buildInfoClasses"),
+  };
+  const coverage = record(value.coverage, `${path}.coverage`);
+  for (const [field, count] of [
+    ["uniqueRouteKillLiterals", Object.keys(report.killLiterals).length],
+    ["killMappings", Object.keys(report.killLiterals).length],
+    ["killRussianDisplayValues", Object.keys(report.killLiterals).length],
+    ["buildInfoBandits", Object.keys(report.buildInfoBandits).length],
+    ["buildInfoClasses", Object.keys(report.buildInfoClasses).length],
+  ] as const) {
+    if (coverage[field] !== count) {
+      throw new Error(`invalid audited route literal coverage: ${field}`);
+    }
+  }
+  if (coverage.killEnglishFallbacks !== 0) {
+    throw new Error(
+      "invalid audited route literal coverage: killEnglishFallbacks",
+    );
+  }
+  return report;
+}
+
+export async function validateAuditManifestInput(
+  path: string,
+  name: string,
+  inputPath: string,
+): Promise<{ metadata: AuditSourceMetadata; bytes: Buffer }> {
+  const manifest = record(await readJson(path), path);
+  if (
+    manifest.schemaVersion !== 1 ||
+    manifest.kind !== "russian-display-audit-manifest"
+  ) {
+    throw new Error(`invalid audited provenance: ${path}.schemaVersion`);
+  }
+  const manifestInputs = record(manifest.inputs, `${path}.inputs`);
+  const metadata = record(manifestInputs[name], `${path}.inputs.${name}`);
+  const source = provenanceString(
+    metadata,
+    "source",
+    `${path}.inputs.${name}`,
+    /^https:\/\/\S+$/,
+  );
+  const revision = provenanceString(
+    metadata,
+    "revision",
+    `${path}.inputs.${name}`,
+  );
+  const retrievedAt = provenanceString(
+    metadata,
+    "retrievedAt",
+    `${path}.inputs.${name}`,
+    /^\d{4}-\d{2}-\d{2}$/,
+  );
+  const expected = provenanceString(
+    metadata,
+    "sha256",
+    `${path}.inputs.${name}`,
+    /^[a-f0-9]{64}$/,
+  );
+  const bytes = await readFile(inputPath);
+  const actual = createHash("sha256").update(bytes).digest("hex");
+  if (actual !== expected) {
+    throw new Error(`audited provenance hash mismatch: ${name}`);
+  }
+  return {
+    metadata: {
+      kind: name,
+      source,
+      revision,
+      retrievedAt,
+      sha256: expected,
+    },
+    bytes,
+  };
 }
 
 export async function validateAuditManifest(
@@ -570,6 +727,99 @@ function review(reason: string, source: string) {
   return { reason, source };
 }
 
+function routeLiteralValues(
+  audit: RouteLiteralAuditReport,
+): Record<string, string> {
+  const literals = Object.fromEntries(
+    [
+      ...Object.entries(audit.killLiterals),
+      ...Object.entries(audit.buildInfoBandits),
+    ].map(([english, entry]) => [english, entry.display]),
+  );
+  const expectedCount =
+    Object.keys(audit.killLiterals).length +
+    Object.keys(audit.buildInfoBandits).length;
+  if (Object.keys(literals).length !== expectedCount) {
+    throw new Error("route literal audit contains duplicate display keys");
+  }
+  return literals;
+}
+
+function assertRouteLiteralClasses(
+  classes: Record<string, unknown>,
+  audit: RouteLiteralAuditReport,
+): void {
+  const audited = Object.fromEntries(
+    Object.entries(audit.buildInfoClasses).map(([id, entry]) => [
+      id,
+      entry.display,
+    ]),
+  );
+  assertEntityCoverage("route literal class audit", classes, audited);
+  for (const [id, localized] of Object.entries(classes)) {
+    if (audited[id] !== localized) {
+      throw new Error(`route literal class audit differs: ${id}`);
+    }
+  }
+}
+
+export async function mergeRouteLiteralAudit(
+  options: RouteLiteralMergeOptions,
+): Promise<void> {
+  const verified = await validateAuditManifestInput(
+    options.auditManifest,
+    "routeLiteralAuditReport",
+    options.routeLiteralAuditReport,
+  );
+  const routeLiteralAudit = parseRouteLiteralAuditReport(
+    verified.bytes,
+    options.routeLiteralAuditReport,
+  );
+  const canonical = await loadCanonical(options.canonicalDirectory);
+  const value = record(await readJson(options.output), options.output);
+  const audit = record(
+    await readJson(options.auditOutput),
+    options.auditOutput,
+  );
+  const classes = record(value.classes, `${options.output}.classes`);
+  assertRouteLiteralClasses(classes, routeLiteralAudit);
+  value.literals = routeLiteralValues(routeLiteralAudit);
+
+  const sourceMetadata = record(
+    audit.sourceMetadata,
+    `${options.auditOutput}.sourceMetadata`,
+  );
+  if (!Array.isArray(sourceMetadata.sources)) {
+    throw new Error(
+      `invalid localized audit: ${options.auditOutput}.sourceMetadata.sources`,
+    );
+  }
+  sourceMetadata.sources = [
+    ...sourceMetadata.sources.filter(
+      (source) =>
+        !(
+          typeof source === "object" &&
+          source !== null &&
+          !Array.isArray(source) &&
+          source.kind === "routeLiteralAuditReport"
+        ),
+    ),
+    verified.metadata,
+  ];
+  const fallbacks = record(
+    audit.intentionalEnglishFallbacks,
+    `${options.auditOutput}.intentionalEnglishFallbacks`,
+  );
+  fallbacks.literals = {};
+  await writeValidatedData(
+    value,
+    audit,
+    canonical,
+    options.output,
+    options.auditOutput,
+  );
+}
+
 export async function generateFromAuditedSources(
   options: AuditOptions,
 ): Promise<void> {
@@ -582,11 +832,16 @@ export async function generateFromAuditedSources(
     npcsReport: options.npcsReport,
     classSource: options.classSource,
     displayAuditReport: options.displayAuditReport,
+    routeLiteralAuditReport: options.routeLiteralAuditReport,
   });
   const sourceMetadata = verified.metadata;
   const displayAudit = parseDisplayAuditReport(
     verified.inputs.displayAuditReport,
     options.displayAuditReport,
+  );
+  const routeLiteralAudit = parseRouteLiteralAuditReport(
+    verified.inputs.routeLiteralAuditReport,
+    options.routeLiteralAuditReport,
   );
   const canonical = await loadCanonical(options.canonicalDirectory);
   const pobText = verified.inputs.pobGems.toString("utf8");
@@ -841,12 +1096,14 @@ export async function generateFromAuditedSources(
     ]),
   );
   assertEntityCoverage("class", canonical.Characters, reviewedClassNames);
+  assertRouteLiteralClasses(reviewedClassNames, routeLiteralAudit);
+  const literals = routeLiteralValues(routeLiteralAudit);
   const value = {
     gems,
     areas,
     quests,
     classes: reviewedClassNames,
-    literals: {},
+    literals,
   };
   const audit = {
     schemaVersion: 1,
@@ -1184,6 +1441,25 @@ function argumentMap(args: string[]): Record<string, string> {
 
 async function main(): Promise<void> {
   const args = argumentMap(process.argv.slice(2));
+  if (args["merge-route-literals"]) {
+    for (const key of [
+      "canonical",
+      "route-literal-audit-report",
+      "audit-manifest",
+      "output",
+      "audit-output",
+    ]) {
+      if (!args[key]) throw new Error(`missing generator argument: --${key}`);
+    }
+    await mergeRouteLiteralAudit({
+      canonicalDirectory: resolve(args.canonical),
+      routeLiteralAuditReport: resolve(args["route-literal-audit-report"]),
+      auditManifest: resolve(args["audit-manifest"]),
+      output: resolve(args.output),
+      auditOutput: resolve(args["audit-output"]),
+    });
+    return;
+  }
   if (args.exports) {
     for (const key of [
       "canonical",
@@ -1212,6 +1488,7 @@ async function main(): Promise<void> {
     "npcs-report",
     "class-source",
     "display-audit-report",
+    "route-literal-audit-report",
     "audit-manifest",
     "output",
     "audit-output",
@@ -1229,6 +1506,7 @@ async function main(): Promise<void> {
     npcsReport: resolve(args["npcs-report"]),
     classSource: resolve(args["class-source"]),
     displayAuditReport: resolve(args["display-audit-report"]),
+    routeLiteralAuditReport: resolve(args["route-literal-audit-report"]),
     auditManifest: resolve(args["audit-manifest"]),
     output: resolve(args.output),
     auditOutput: resolve(args["audit-output"]),

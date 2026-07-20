@@ -1,4 +1,5 @@
 import { formStyles } from "../../styles";
+import { useGameData, useI18n } from "../../i18n";
 import { GemCost } from "../GemCost";
 import { InlineFakeBlock } from "../InlineFakeBlock";
 import { SidebarTooltip } from "../SidebarTooltip";
@@ -16,6 +17,8 @@ interface GemLinkViewerProps {
 }
 
 export function GemLinkViewer({ gemLinks }: GemLinkViewerProps) {
+  const game = useGameData();
+  const { t } = useI18n();
   const findUniqueGemTitles = (links: RouteData.GemLinkGroup[]): string[] => {
     const linkTitles = new Set<string>();
     for (const link of links) {
@@ -25,7 +28,7 @@ export function GemLinkViewer({ gemLinks }: GemLinkViewerProps) {
   };
   const [curIndex, setCurIndex] = useState<number>(0);
   const [gemSections, setGemSections] = useState<string[]>(
-    findUniqueGemTitles(gemLinks)
+    findUniqueGemTitles(gemLinks),
   );
   const [tooltipGemLink, setTooltipGemLink] =
     useState<RouteData.GemLink | null>(null);
@@ -36,13 +39,18 @@ export function GemLinkViewer({ gemLinks }: GemLinkViewerProps) {
   }, [gemLinks]);
 
   const activeGemLinks: RouteData.GemLinkGroup[] = gemLinks.filter(
-    (link) => link.title === gemSections[curIndex]
+    (link) => link.title === gemSections[curIndex],
   );
   return (
     <div className={classNames(styles.gemLinks)}>
-      {tooltipGemLink && <GemTooltip gemLink={tooltipGemLink} />}
+      {tooltipGemLink && (
+        <GemTooltip gemLink={tooltipGemLink} game={game} t={t} />
+      )}
       <label className={classNames(styles.label)}>
-        {gemSections.length > 0 && gemSections[curIndex]}
+        {gemSections.length > 0 &&
+          (gemSections[curIndex] === "Default"
+            ? t("gems.defaultSection")
+            : gemSections[curIndex])}
       </label>
       <div className={classNames(styles.buttons)}>
         <button
@@ -73,23 +81,25 @@ export function GemLinkViewer({ gemLinks }: GemLinkViewerProps) {
                     primaryGems.map((gem) => (
                       <GemLink
                         gemLink={gem}
+                        game={game}
                         isPrimary={true}
                         onTooltip={setTooltipGemLink}
                       />
-                    ))
+                    )),
                   )}
                   {flattenChildren(
                     secondaryGems.map((gem) => (
                       <GemLink
                         gemLink={gem}
+                        game={game}
                         isPrimary={false}
                         onTooltip={setTooltipGemLink}
                       />
-                    ))
+                    )),
                   )}
                 </div>
               </>
-            ))
+            )),
           )}
         </div>
       )}
@@ -99,11 +109,12 @@ export function GemLinkViewer({ gemLinks }: GemLinkViewerProps) {
 
 interface GemLinkProps {
   gemLink: RouteData.GemLink;
+  game: ReturnType<typeof useGameData>;
   isPrimary: boolean;
   onTooltip: (gemlink: RouteData.GemLink | null) => void;
 }
 
-function GemLink({ gemLink, isPrimary, onTooltip }: GemLinkProps) {
+function GemLink({ gemLink, game, isPrimary, onTooltip }: GemLinkProps) {
   const gem = Data.Gems[gemLink.id];
   return (
     <div
@@ -119,16 +130,18 @@ function GemLink({ gemLink, isPrimary, onTooltip }: GemLinkProps) {
         color={Data.GemColours[gem.primary_attribute]}
         className={classNames("inlineIcon")}
       />
-      <span>{gem.name}</span>
+      <span>{game.gemName(gemLink.id)}</span>
     </div>
   );
 }
 
 interface GemTooltipProps {
   gemLink: RouteData.GemLink;
+  game: ReturnType<typeof useGameData>;
+  t: ReturnType<typeof useI18n>["t"];
 }
 
-function GemTooltip({ gemLink }: GemTooltipProps) {
+function GemTooltip({ gemLink, game, t }: GemTooltipProps) {
   const gem = Data.Gems[gemLink.id];
 
   return (
@@ -140,7 +153,7 @@ function GemTooltip({ gemLink }: GemTooltipProps) {
               color={Data.GemColours[gem.primary_attribute]}
               className={classNames("inlineIcon")}
             />
-            {gem.name}
+            {game.gemName(gemLink.id)}
           </span>
           <InlineFakeBlock child={<GemCost gem={gem} />} />
         </div>
@@ -149,13 +162,15 @@ function GemTooltip({ gemLink }: GemTooltipProps) {
       <div className={classNames(styles.gemLinkQuestInfo)}>
         {gemLink.quests.flatMap<JSX.Element>((x, i) => {
           const quest = Data.Quests[x.questId];
-          const npc = quest.reward_offers[x.rewardOfferId]?.vendor[gem.id]?.npc;
+          const npc = quest.reward_offers[x.rewardOfferId]?.vendor[gem.id]
+            ? game.vendorNpc(x.questId, x.rewardOfferId, gem.id)
+            : undefined;
           const text = (
             <React.Fragment key={i}>
               {i !== 0 && <hr className={classNames(styles.questSeperator)} />}
-              <span>{quest.name}</span>
+              <span>{game.questName(x.questId)}</span>
               <span>{npc}</span>
-              <span>Act {quest.act}</span>
+              <span>{t("fragment.act", { act: quest.act })}</span>
             </React.Fragment>
           );
 

@@ -1,5 +1,5 @@
 import { CopyToClipboard } from "../CopyToClipboard";
-import { useI18n } from "../../i18n";
+import { useGameData, useI18n } from "../../i18n";
 import { GemCost } from "../GemCost";
 import { InlineFakeBlock } from "../InlineFakeBlock";
 import { SplitRow } from "../SplitRow";
@@ -48,6 +48,7 @@ interface GemRewardProps {
 
 export function GemReward({ requiredGem, count, rewardType }: GemRewardProps) {
   const gem = Data.Gems[requiredGem.id];
+  const game = useGameData();
   const { t } = useI18n();
 
   if (!gem)
@@ -66,7 +67,7 @@ export function GemReward({ requiredGem, count, rewardType }: GemRewardProps) {
             className={classNames("inlineIcon")}
           />
           <ItemReward
-            item={gem.name}
+            item={game.gemName(requiredGem.id)}
             cost={<GemCost gem={gem} />}
             rewardType={rewardType}
             count={count}
@@ -75,7 +76,8 @@ export function GemReward({ requiredGem, count, rewardType }: GemRewardProps) {
       }
       right={
         <div className={classNames(styles.rewardNote)}>
-          {requiredGem.note} <CopyToClipboard text={gem.name} />
+          {requiredGem.note}{" "}
+          <CopyToClipboard text={game.gemName(requiredGem.id)} />
         </div>
       }
     />

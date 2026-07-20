@@ -6,6 +6,7 @@ import { translate, type MessageKey, type MessageParameters } from "./core";
 export {
   areaMapName,
   areaName,
+  buildGemSearchString,
   className,
   createGameData,
   gameDataForLocale,

@@ -1,5 +1,5 @@
 import { SplitRow } from "../SplitRow";
-import { useI18n } from "../../i18n";
+import { useGameData, useI18n } from "../../i18n";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import type { RouteData } from "common";
@@ -10,6 +10,7 @@ interface BuildInfoFormProps {
 }
 
 export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
+  const game = useGameData();
   const { t } = useI18n();
 
   return (
@@ -20,7 +21,9 @@ export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
         }
         right={
           <div className={classNames(styles.value)}>
-            {buildData.characterClass}
+            {buildData.characterClass === "None"
+              ? t("build.noClass")
+              : game.className(buildData.characterClass)}
           </div>
         }
       />
@@ -30,7 +33,9 @@ export function BuildInfoForm({ buildData, onSubmit }: BuildInfoFormProps) {
         }
         right={
           <div className={classNames(styles.value)}>
-            {buildData.bandit == "None" ? t("build.killAll") : buildData.bandit}
+            {buildData.bandit == "None"
+              ? t("build.killAll")
+              : game.literal(buildData.bandit)}
           </div>
         }
       />

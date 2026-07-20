@@ -1,6 +1,7 @@
 import { CopyToClipboard } from "../../CopyToClipboard";
 import { InlineFakeBlock } from "../../InlineFakeBlock";
 import { ItemReward } from "../../ItemReward";
+import type { MessageKey, MessageParameters } from "../../../i18n/core";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { Data, type Fragments, type GameData } from "common";
@@ -37,18 +38,36 @@ function EnemyComponent(enemy: string) {
   return <span className={classNames(styles.enemy)}>{enemy}</span>;
 }
 
+interface FragmentGameData {
+  areaName: (id: string) => string;
+  areaMapName: (id: string) => string | null;
+  questName: (id: string) => string;
+  rewardNpc: (questId: string, rewardOfferId: string) => string;
+  literal: (english: string) => string;
+}
+
+export interface FragmentRenderContext {
+  game: FragmentGameData;
+  t: (key: MessageKey, parameters?: MessageParameters) => string;
+}
+
 function AreaComponent(
-  name: string,
-  isTownArea: boolean,
-  areaLevel: number | undefined
+  areaId: string,
+  game: FragmentGameData,
+  useMapName = false,
 ) {
+  const area = Data.Areas[areaId];
+  const name = useMapName
+    ? (game.areaMapName(areaId) ?? game.areaName(areaId))
+    : game.areaName(areaId);
+
   return (
     <div className={classNames(styles.noWrap)}>
       <span className={classNames(styles.area)}>{name}</span>
-      {!isTownArea && areaLevel !== undefined && (
-        <> {MinAreaLevelComponent(areaLevel)}</>
+      {!area.is_town_area && area.level !== undefined && (
+        <> {MinAreaLevelComponent(area.level)}</>
       )}
-      {isTownArea && (
+      {area.is_town_area && (
         <img
           src={getImageUrl("town.png")}
           className={classNames("inlineIcon")}
@@ -59,15 +78,24 @@ function AreaComponent(
   );
 }
 
-function QuestComponent(fragment: Fragments.QuestFragment) {
+function ArenaComponent(name: string) {
+  return <span className={classNames(styles.area)}>{name}</span>;
+}
+
+function QuestComponent(
+  fragment: Fragments.QuestFragment,
+  game: FragmentGameData,
+) {
   const quest = Data.Quests[fragment.questId];
 
   const npcs = Array.from(
     new Set(
       fragment.rewardOffers
-        .map((x) => quest.reward_offers[x]?.quest_npc)
-        .filter((x) => x !== undefined)
-    )
+        .filter((rewardOfferId) => quest.reward_offers[rewardOfferId])
+        .map((rewardOfferId) =>
+          game.rewardNpc(fragment.questId, rewardOfferId),
+        ),
+    ),
   );
 
   return (
@@ -77,7 +105,9 @@ function QuestComponent(fragment: Fragments.QuestFragment) {
         className={classNames("inlineIcon")}
         alt=""
       />
-      <span className={classNames(styles.quest)}>{quest.name}</span>
+      <span className={classNames(styles.quest)}>
+        {game.questName(fragment.questId)}
+      </span>
       {npcs.length > 0 && (
         <> - {GenericComponent(Array.from(npcs).join(", "))}</>
       )}
@@ -89,7 +119,7 @@ function QuestTextComponent(text: string) {
   return <span className={classNames(styles.questText)}>{text}</span>;
 }
 
-function WaypointComponent() {
+function WaypointComponent(label: string) {
   return (
     <div className={classNames(styles.noWrap)}>
       <img
@@ -97,12 +127,12 @@ function WaypointComponent() {
         className={classNames("inlineIcon")}
         alt=""
       />
-      <span className={classNames(styles.waypoint)}>Waypoint</span>
+      <span className={classNames(styles.waypoint)}>{label}</span>
     </div>
   );
 }
 
-function TrialComponent() {
+function TrialComponent(label: string) {
   return (
     <div className={classNames(styles.noWrap)}>
       <img
@@ -110,22 +140,28 @@ function TrialComponent() {
         className={classNames("inlineIcon")}
         alt=""
       />
-      <span className={classNames(styles.trial)}>Trial of Ascendancy</span>
+      <span className={classNames(styles.trial)}>{label}</span>
     </div>
   );
 }
 
-function LogoutComponent(area: GameData.Area) {
+function LogoutComponent(
+  areaId: GameData.Area["id"],
+  context: FragmentRenderContext,
+) {
   return (
     <>
-      {GenericComponent("Logout")}
+      {GenericComponent(context.t("fragment.logout"))}
       <span> ➞ </span>
-      {AreaComponent(area.name, area.is_town_area, area.level)}
+      {AreaComponent(areaId, context.game)}
     </>
   );
 }
 
-function PortalComponent(area?: GameData.Area) {
+function PortalComponent(
+  context: FragmentRenderContext,
+  areaId?: GameData.Area["id"],
+) {
   return (
     <div className={classNames(styles.noWrap)}>
       <img
@@ -133,11 +169,13 @@ function PortalComponent(area?: GameData.Area) {
         className={classNames("inlineIcon")}
         alt=""
       />
-      <span className={classNames(styles.portal)}>Portal</span>
-      {area && (
+      <span className={classNames(styles.portal)}>
+        {context.t("fragment.portal")}
+      </span>
+      {areaId && (
         <>
           <span> ➞ </span>
-          {AreaComponent(area.name, area.is_town_area, area.level)}
+          {AreaComponent(areaId, context.game)}
         </>
       )}
     </div>
@@ -163,7 +201,10 @@ function GenericComponent(text: string) {
   return <span className={classNames(styles.default)}>{text}</span>;
 }
 
-function CraftingComponent(craftingRecipes: string[]) {
+function CraftingComponent(
+  craftingRecipes: string[],
+  context: FragmentRenderContext,
+) {
   return (
     <span>
       <div className={classNames(styles.noWrap)}>
@@ -172,7 +213,7 @@ function CraftingComponent(craftingRecipes: string[]) {
           className={classNames("inlineIcon")}
           alt=""
         />
-        {GenericComponent("Crafting: ")}
+        {GenericComponent(`${context.t("fragment.crafting")}: `)}
       </div>
       {GenericComponent(craftingRecipes.join(", "))}
     </span>
@@ -196,7 +237,8 @@ const ASCEND_LOOKUP: Record<
 };
 
 function AscendComponent(
-  version: Fragments.AscendFragment["version"]
+  version: Fragments.AscendFragment["version"],
+  context: FragmentRenderContext,
 ): [React.ReactNode, React.ReactNode] {
   const { url, areaId } = ASCEND_LOOKUP[version];
   const area = Data.Areas[areaId];
@@ -207,7 +249,9 @@ function AscendComponent(
         className={classNames("inlineIcon")}
         alt=""
       />
-      <span className={classNames(styles.trial)}>Ascend</span>
+      <span className={classNames(styles.trial)}>
+        {context.t("fragment.ascend")}
+      </span>
       <> {MinAreaLevelComponent(area.level)}</>
     </div>,
     <a
@@ -217,61 +261,60 @@ function AscendComponent(
         e.stopPropagation();
       }}
     >
-      Daily Layout
+      {context.t("fragment.dailyLayout")}
     </a>,
   ];
 }
 
 export function Fragment(
-  fragment: Fragments.AnyFragment
+  fragment: Fragments.AnyFragment,
+  context: FragmentRenderContext,
 ): [React.ReactNode, React.ReactNode] {
   if (typeof fragment === "string") return [<>{fragment}</>, null];
 
   switch (fragment.type) {
     case "kill":
-      return [EnemyComponent(fragment.value), null];
+      return [EnemyComponent(context.game.literal(fragment.value)), null];
     case "arena":
-      return [AreaComponent(fragment.value, false, undefined), null];
-    case "area": {
-      const area = Data.Areas[fragment.areaId];
-      return [AreaComponent(area.name, area.is_town_area, area.level), null];
-    }
-    case "enter": {
-      const area = Data.Areas[fragment.areaId];
-      return [AreaComponent(area.name, area.is_town_area, area.level), null];
-    }
+      return [ArenaComponent(fragment.value), null];
+    case "area":
+      return [AreaComponent(fragment.areaId, context.game), null];
+    case "enter":
+      return [AreaComponent(fragment.areaId, context.game), null];
     case "logout":
-      return [LogoutComponent(Data.Areas[fragment.areaId]), null];
+      return [LogoutComponent(fragment.areaId, context), null];
     case "waypoint":
-      return [WaypointComponent(), null];
+      return [WaypointComponent(context.t("fragment.waypoint")), null];
     case "waypoint_use": {
       const dstArea = Data.Areas[fragment.dstAreaId];
       const srcArea = Data.Areas[fragment.srcAreaId];
       return [
         <>
-          {WaypointComponent()}
+          {WaypointComponent(context.t("fragment.waypoint"))}
           <span> ➞ </span>
-          {AreaComponent(
-            dstArea.map_name || dstArea.name,
-            dstArea.is_town_area,
-            dstArea.level
-          )}
+          {AreaComponent(fragment.dstAreaId, context.game, true)}
           {dstArea.act !== srcArea.act &&
             dstArea.id !== "Labyrinth_Airlock" && (
-              <> - {GenericComponent(`Act ${dstArea.act}`)}</>
+              <>
+                {" "}
+                -{" "}
+                {GenericComponent(
+                  context.t("fragment.act", { act: dstArea.act }),
+                )}
+              </>
             )}
         </>,
         null,
       ];
     }
     case "waypoint_get":
-      return [WaypointComponent(), null];
+      return [WaypointComponent(context.t("fragment.waypoint")), null];
     case "portal_use":
-      return [PortalComponent(Data.Areas[fragment.dstAreaId]), null];
+      return [PortalComponent(context, fragment.dstAreaId), null];
     case "portal_set":
-      return [PortalComponent(), null];
+      return [PortalComponent(context), null];
     case "quest":
-      return [QuestComponent(fragment), null];
+      return [QuestComponent(fragment, context.game), null];
     case "quest_text":
       return [QuestTextComponent(fragment.value), null];
     case "generic":
@@ -288,11 +331,11 @@ export function Fragment(
         null,
       ];
     case "trial":
-      return [TrialComponent(), null];
+      return [TrialComponent(context.t("fragment.trial")), null];
     case "ascend":
-      return AscendComponent(fragment.version);
+      return AscendComponent(fragment.version, context);
     case "crafting":
-      return [CraftingComponent(fragment.crafting_recipes), null];
+      return [CraftingComponent(fragment.crafting_recipes, context), null];
     case "dir":
       return [DirectionComponent(fragment.dirIndex), null];
     case "copy":

@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { useGameData, useI18n } from "../../i18n";
 import { configSelector } from "../../state/config";
 import { SplitRow } from "../SplitRow";
 import { Fragment } from "./Fragment";
@@ -15,6 +16,8 @@ interface StepProps {
 
 export function FragmentStep({ step }: StepProps) {
   const config = useAtomValue(configSelector);
+  const game = useGameData();
+  const { t } = useI18n();
   const [showSubSteps, setShowSubSteps] = useState(config.showSubsteps);
 
   const headNodes: React.ReactNode[] = [];
@@ -22,7 +25,7 @@ export function FragmentStep({ step }: StepProps) {
 
   for (let i = 0; i < step.parts.length; i++) {
     const fragment = step.parts[i];
-    const [head, tail] = Fragment(fragment);
+    const [head, tail] = Fragment(fragment, { game, t });
 
     if (head) headNodes.push(head);
     if (tail) tailNodes.push(tail);

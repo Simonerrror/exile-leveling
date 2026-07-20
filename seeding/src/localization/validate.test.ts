@@ -172,10 +172,9 @@ async function writeAuditManifest(
         revision: "retrieved-2026-07-20",
       };
     }
-    if (name === "displayAuditReport") {
+    if (name === "displayAuditReport" || name === "routeLiteralAuditReport") {
       return {
-        source:
-          "https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/ru-display-audit.json",
+        source: `https://github.com/Simonerrror/exile-leveling/blob/codex/russian-localization/seeding/data/localization/${name}.json`,
         revision: "fixture-v1",
       };
     }
@@ -280,6 +279,31 @@ test("audited display reports require versioned per-record provenance", async ()
   }
 });
 
+test("route literal audits reject non-Russian runtime display values", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-literal-audit-"));
+  const report = join(directory, "literal-audit.json");
+  const audit = JSON.parse(
+    await readFile(
+      new URL(
+        "../../data/localization/ru-route-literal-audit.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  audit.mappings.killLiterals.Hillock.display = "Hillock";
+  await writeJson(report, audit);
+
+  try {
+    await assert.rejects(
+      () => generator.loadRouteLiteralAuditReport(report),
+      /non-Russian audited route literal: Hillock/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test("audited provenance manifests verify every input hash", async () => {
   const directory = await mkdtemp(join(tmpdir(), "ru-display-manifest-"));
   const input = join(directory, "display-report.json");
@@ -332,6 +356,28 @@ test("audited provenance returns the exact verified input bytes", async () => {
       verified.inputs.displayReport.toString("utf8"),
       "verified bytes\n",
     );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("a manifest-verified incremental input ignores unrelated source entries", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "ru-display-manifest-"));
+  const routeLiteralAuditReport = join(directory, "route-literals.json");
+  const unrelated = join(directory, "unrelated.json");
+  const manifest = join(directory, "manifest.json");
+  await writeFile(routeLiteralAuditReport, "literal bytes\n");
+  await writeFile(unrelated, "unrelated bytes\n");
+  await writeAuditManifest(manifest, { routeLiteralAuditReport, unrelated });
+
+  try {
+    const verified = await generator.validateAuditManifestInput(
+      manifest,
+      "routeLiteralAuditReport",
+      routeLiteralAuditReport,
+    );
+    assert.equal(verified.bytes.toString("utf8"), "literal bytes\n");
+    assert.equal(verified.metadata.kind, "routeLiteralAuditReport");
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
@@ -569,6 +615,7 @@ test("audited source mode regenerates a compact fixture deterministically", asyn
   const npcsReport = source("npcs-report.json");
   const classSource = source("tree_ru.lua");
   const displayAuditReport = source("display-audit.json");
+  const routeLiteralAuditReport = source("route-literal-audit.json");
   const auditManifest = source("manifest.json");
   const outputOne = join(directory, "ru-one.json");
   const auditOutputOne = join(directory, "audit-one.json");
@@ -667,6 +714,41 @@ test("audited source mode regenerates a compact fixture deterministically", asyn
       ],
       nonRussianGems: [],
     });
+    const auditedLiteral = (display: string) => ({
+      display,
+      officialNominative: display,
+      status: "verified-fixture",
+      grammaticalContext: "fixture display",
+      source: {
+        kind: "fixture",
+        path: "fixture",
+        revision: "fixture-v1",
+        contentSha256: "3".repeat(64),
+      },
+    });
+    await writeJson(routeLiteralAuditReport, {
+      schemaVersion: 1,
+      kind: "russian-route-kill-and-build-info-literal-audit",
+      coverage: {
+        uniqueRouteKillLiterals: 0,
+        killMappings: 0,
+        killRussianDisplayValues: 0,
+        killEnglishFallbacks: 0,
+        buildInfoBandits: 3,
+        buildInfoClasses: 1,
+      },
+      mappings: {
+        killLiterals: {},
+        buildInfoBandits: {
+          Alira: auditedLiteral("Алира"),
+          Kraityn: auditedLiteral("Крайтин"),
+          Oak: auditedLiteral("Дуб"),
+        },
+        buildInfoClasses: {
+          Witch: auditedLiteral("Ведьма"),
+        },
+      },
+    });
     await writeAuditManifest(auditManifest, {
       pobGems,
       pobReport,
@@ -676,6 +758,7 @@ test("audited source mode regenerates a compact fixture deterministically", asyn
       npcsReport,
       classSource,
       displayAuditReport,
+      routeLiteralAuditReport,
     });
     const options = {
       canonicalDirectory,
@@ -687,6 +770,7 @@ test("audited source mode regenerates a compact fixture deterministically", asyn
       npcsReport,
       classSource,
       displayAuditReport,
+      routeLiteralAuditReport,
       auditManifest,
     };
 
@@ -834,6 +918,65 @@ test("game display helpers localize without mutating canonical data", () => {
   assert.equal(english.gemName("gem"), "Fireball");
   assert.equal(english.rewardNpc("quest", "offer"), "Tarkleigh");
   assert.deepEqual(canonical, before);
+});
+
+test("vendor gem search expressions follow the active client language", () => {
+  const fireballId = "Metadata/Items/Gems/SkillGemFireball";
+  const buildGemSearchString = (
+    gameData as typeof gameData & {
+      buildGemSearchString: (
+        locale: "en" | "ru",
+        gemIds: readonly string[],
+      ) => string;
+    }
+  ).buildGemSearchString;
+
+  assert.equal(buildGemSearchString("en", [fireballId]), '"Fireball"');
+  assert.equal(buildGemSearchString("ru", [fireballId]), '"Огненный шар"');
+  assert.equal(buildGemSearchString("ru", []), "");
+  assert.equal(
+    buildGemSearchString("en", ["missing"]),
+    '"missing"',
+    "unknown metadata IDs use the safe ID fallback",
+  );
+});
+
+test("built-in literal keys are every unique kill payload plus bandit label", () => {
+  const collectBuiltInLiteralKeys = (
+    validation as typeof validation & {
+      collectBuiltInLiteralKeys: (routes: readonly string[]) => string[];
+    }
+  ).collectBuiltInLiteralKeys;
+
+  assert.deepEqual(
+    collectBuiltInLiteralKeys([
+      "Kill {kill|Hillock} then {kill|Hillock}",
+      "Help {kill|Oak, Skullbreaker}",
+    ]),
+    ["Alira", "Hillock", "Kraityn", "Oak", "Oak, Skullbreaker"],
+  );
+});
+
+test("built-in literal coverage rejects missing and stale mappings", () => {
+  const assertBuiltInLiteralCoverage = (
+    validation as typeof validation & {
+      assertBuiltInLiteralCoverage: (
+        routes: readonly string[],
+        literals: Record<string, string>,
+      ) => void;
+    }
+  ).assertBuiltInLiteralCoverage;
+
+  assert.throws(
+    () =>
+      assertBuiltInLiteralCoverage(["{kill|Hillock}"], {
+        Alira: "Алира",
+        Kraityn: "Крайтин",
+        Oak: "Дуб",
+        stale: "Устаревшее",
+      }),
+    /built-in literal coverage invalid: missing IDs: Hillock; unknown\/stale IDs: stale/,
+  );
 });
 
 test("game display name lookups do not enumerate localized collections", () => {
@@ -1184,6 +1327,21 @@ test("checked-in Russian quest paths have exact canonical cardinality", () => {
   }
   assert.equal(rewardCount, 80);
   assert.equal(vendorCount, 1231);
+});
+
+test("checked-in Russian literals exactly cover built-in kills and bandits", async () => {
+  const routeDirectory = new URL(
+    "../../../common/data/routes/en/",
+    import.meta.url,
+  );
+  const routes = await Promise.all(
+    (await readdir(routeDirectory))
+      .filter((name) => name.endsWith(".txt"))
+      .map((name) => readFile(new URL(name, routeDirectory), "utf8")),
+  );
+
+  validation.assertBuiltInLiteralCoverage(routes, Data.Localized.ru.literals);
+  assert.equal(Object.keys(Data.Localized.ru.literals).length, 63);
 });
 
 test("checked-in Russian data reviews the exact non-Russian gem set", async () => {

@@ -99,7 +99,7 @@
     Найди и убей {kill|Oak, Skullbreaker}, возьми {quest_text|Амулет Дуба}
     {waypoint|1_2_9} #The Western Forest
         #sub Ищи в стороне, противоположной входу в лагерь
-    Помоги {kill|Alira Darktongue}, возьми {quest_text|Верхушка}
+    Оставь в живых {kill|Alira Darktongue}, возьми {quest_text|Верхушка}
         #sub Иди {dir|180}, ищи факел вплотную к дороге
         #sub Иди по тропе в направлении факела
     Убей {kill|Captain Arteri}
@@ -130,7 +130,7 @@
     {waypoint|1_2_3} #The Crossroads
     ➞ {enter|1_2_4} #The Broken Bridge
         #sub Иди {dir|45}
-    Помоги {kill|Kraityn, Scarbearer}, возьми {quest_text|Верхушка}
+    Оставь в живых {kill|Kraityn, Scarbearer}, возьми {quest_text|Верхушка}
         #sub Иди по дороге
     {logout}
     {waypoint|1_2_12} #The Wetlands
@@ -156,7 +156,7 @@
     {waypoint|1_2_7} #The Riverways
     ➞ {enter|1_2_12} #The Wetlands
         #sub Найди 2 столба рядом с {waypoint} и иди по тропе
-    Найди и помоги {kill|Oak, Skullbreaker}, возьми {quest_text|Верхушка}
+    Оставь в живых {kill|Oak, Skullbreaker}, возьми {quest_text|Верхушка}
     Отрави {quest_text|Древесные корни} ➞ {enter|1_2_11} #The Vaal Ruins
         #sub Ищи в стороне, противоположной входу в лагерь
 #endif

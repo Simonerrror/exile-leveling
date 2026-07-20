@@ -137,6 +137,14 @@ export const vendorNpc = (
 export const literal = (locale: Locale, english: string) =>
   gameDataForLocale(locale).literal(english);
 
+export function buildGemSearchString(
+  locale: Locale,
+  gemIds: readonly string[],
+): string {
+  if (gemIds.length === 0) return "";
+  return `"${gemIds.map((id) => gemName(locale, id)).join("|")}"`;
+}
+
 export function useGameData() {
   const locale = useAtomValue(localeAtom);
   return useMemo(() => gameDataForLocale(locale), [locale]);
