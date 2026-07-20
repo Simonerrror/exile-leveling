@@ -3,6 +3,13 @@
 Path of Exile campaign guide with Path of Building integration and an
 English/Russian interface.
 
+This fork adds Russian localization and a curated Path of Exile resources
+section. The original project was created by
+[HeartofPhos](https://github.com/HeartofPhos):
+[HeartofPhos/exile-leveling](https://github.com/HeartofPhos/exile-leveling).
+
+[Open the Russian/English web app](https://simonerrror.github.io/exile-leveling/)
+
 ## Language behavior
 
 On the first visit, browser language `ru` or a language tag beginning with
