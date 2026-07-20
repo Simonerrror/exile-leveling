@@ -176,6 +176,28 @@ test("keeps raw PoB codes local and rejects unsupported URLs before fetch", asyn
   }
 });
 
+test("fetches an allowed PoB link from Reader over HTTPS", async () => {
+  const originalFetch = globalThis.fetch;
+  let requestedUrl = "";
+  globalThis.fetch = (async (input) => {
+    requestedUrl = String(input);
+    return new Response("Markdown Content:\neAHtfWtz2krW7uf4V6");
+  }) as typeof fetch;
+
+  try {
+    assert.equal(
+      await fetchPobCode("https://pobb.in/SOOBUWxCgrKl"),
+      "eAHtfWtz2krW7uf4V6",
+    );
+    assert.equal(
+      requestedUrl,
+      "https://r.jina.ai/https://pobb.in/SOOBUWxCgrKl/raw",
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("assigns every resource to exactly one category", () => {
   const categorizedIds = resourceCategories.flatMap(({ resourceIds }) =>
     Array.from(resourceIds),

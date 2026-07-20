@@ -51,7 +51,7 @@ export async function fetchPobCode(value: string) {
     return value;
   }
 
-  const response = await fetch(`${REMOTE_READER_URL}/http://${remoteUrl}`);
+  const response = await fetch(`${REMOTE_READER_URL}/https://${remoteUrl}`);
   if (!response.ok) throw new Error("download failed");
 
   return extractRemotePobCode(await response.text());
