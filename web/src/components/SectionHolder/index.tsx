@@ -7,12 +7,13 @@ import { useLayoutEffect } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 interface SectionHolderProps {
+  id: string;
   name: string;
   items: TaskListProps["items"];
 }
 
-export function SectionHolder({ name, items }: SectionHolderProps) {
-  const sectionId = `section-${name.replace(/\s+/g, "_")}`;
+export function SectionHolder({ id, name, items }: SectionHolderProps) {
+  const sectionId = `section-${id}`;
   const [collapsed, setCollapsed] = useAtom(sectionCollapseFamily(sectionId));
 
   const scrollToSection = (collapsed: boolean) => {

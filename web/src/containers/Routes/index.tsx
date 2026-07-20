@@ -47,6 +47,7 @@ export default function RoutesContainer() {
     items.push(
       <SectionHolder
         key={sectionIndex}
+        id={String(sectionIndex)}
         name={section.name}
         items={taskItems}
       />,

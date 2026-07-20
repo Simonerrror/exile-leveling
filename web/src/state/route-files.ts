@@ -1,35 +1,44 @@
 import { atomWithStorage, RESET } from "jotai/utils";
 import { versionedStorage } from ".";
 import { globImportLazy } from "../utility";
+import { localeAtom } from "./locale";
+import { selectRouteSources } from "./route-sources";
 import { type RouteData } from "common";
 import { atom } from "jotai";
 
 const ROUTE_PROGRESS_VERSION = 1;
 
+function routeSourceKey(key: string): string {
+  const segments = key.replaceAll("\\", "/").split("/");
+  const filename = segments.pop();
+  const locale = segments.pop();
+
+  if (
+    filename === undefined ||
+    locale === undefined ||
+    !/^act-\d+\.txt$/.test(filename)
+  ) {
+    throw new Error(`invalid route source path: ${key}`);
+  }
+
+  return `${locale}/${filename.slice(0, -".txt".length)}`;
+}
+
 export const RouteSourceLookup = globImportLazy<string>(
-  import.meta.glob("/../common/data/routes/*.txt", {
+  import.meta.glob("/../common/data/routes/*/*.txt", {
     query: "?raw",
     import: "default",
   }),
-  (key) => /.*\/(.*?).txt$/.exec(key)![1],
+  routeSourceKey,
   (value) => value,
 );
 
-async function loadDefaultRouteFiles() {
-  const { getRouteFiles } = await import("common");
+const routeFileSourcesAtom = atom(async (get) =>
+  selectRouteSources(RouteSourceLookup, get(localeAtom)),
+);
 
-  const routeSources = await Promise.all([
-    RouteSourceLookup["act-1"],
-    RouteSourceLookup["act-2"],
-    RouteSourceLookup["act-3"],
-    RouteSourceLookup["act-4"],
-    RouteSourceLookup["act-5"],
-    RouteSourceLookup["act-6"],
-    RouteSourceLookup["act-7"],
-    RouteSourceLookup["act-8"],
-    RouteSourceLookup["act-9"],
-    RouteSourceLookup["act-10"],
-  ]);
+async function loadDefaultRouteFiles(routeSources: string[]) {
+  const { getRouteFiles } = await import("common");
 
   return getRouteFiles(routeSources);
 }
@@ -45,7 +54,7 @@ export const routeFilesSelector = atom(
     const data = get(routeFilesAtom);
 
     if (data === null) {
-      return await loadDefaultRouteFiles();
+      return await loadDefaultRouteFiles(await get(routeFileSourcesAtom));
     }
 
     return data;

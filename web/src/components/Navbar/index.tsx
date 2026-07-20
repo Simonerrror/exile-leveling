@@ -127,7 +127,7 @@ export function Navbar({}: NavbarProps) {
                   label={x.name}
                   expand={navExpand}
                   onClick={() => {
-                    navigate(`/#section-${x.name.replace(/\s+/g, "_")}`);
+                    navigate(`/#section-${i}`);
                     setNavExpand(false);
                   }}
                 />

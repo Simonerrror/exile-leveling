@@ -116,3 +116,57 @@ test("persisted locale wins on initial read and failed writes stay in memory", a
     restoreLocalStorage();
   }
 });
+
+test("changing locale preserves route, gem, section, and build state", async () => {
+  const backing = createMemoryStorage();
+  const restoreLocalStorage = replaceGlobal("localStorage", backing);
+  const restoreWindow = replaceGlobal("window", { localStorage: backing });
+  const restoreNavigator = replaceGlobal("navigator", { language: "en-US" });
+
+  try {
+    const [
+      { localeAtom },
+      { routeProgressFamily },
+      { gemProgressFamily },
+      { sectionCollapseFamily },
+      { buildDataSelector },
+    ] = await Promise.all([
+      import("../../../web/src/state/locale.js"),
+      import("../../../web/src/state/route-progress.js"),
+      import("../../../web/src/state/gem-progress.js"),
+      import("../../../web/src/state/section-collapse.js"),
+      import("../../../web/src/state/build-data.js"),
+    ]);
+    const store = createStore();
+    const routeProgress = routeProgressFamily("2,3");
+    const gemProgress = gemProgressFamily(
+      "Metadata/Items/Gems/SkillGemFireball",
+    );
+    const sectionCollapse = sectionCollapseFamily("section-2");
+    const build = {
+      characterClass: "Witch",
+      bandit: "Alira",
+      leagueStart: false,
+      library: true,
+    } as const;
+
+    store.set(routeProgress, true);
+    store.set(gemProgress, true);
+    store.set(sectionCollapse, true);
+    store.set(buildDataSelector, build);
+    store.set(localeAtom, "ru");
+
+    assert.equal(store.get(routeProgress), true);
+    assert.equal(store.get(gemProgress), true);
+    assert.equal(store.get(sectionCollapse), true);
+    assert.deepEqual(store.get(buildDataSelector), build);
+
+    store.set(routeProgress, false);
+    store.set(gemProgress, false);
+    store.set(sectionCollapse, false);
+  } finally {
+    restoreNavigator();
+    restoreWindow();
+    restoreLocalStorage();
+  }
+});
