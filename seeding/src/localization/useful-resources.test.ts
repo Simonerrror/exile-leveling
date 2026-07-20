@@ -81,6 +81,22 @@ test("compact useful layout keeps the important content dense", () => {
   assert.doesNotMatch(useful, /jumpNav/);
   assert.doesNotMatch(useful, /styles\.hero/);
   assert.doesNotMatch(styles, /\.resourceCard\s*\{[^}]*min-height:/s);
+  assert.match(
+    styles,
+    /\.heistBranches\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s,
+  );
+  assert.doesNotMatch(
+    styles,
+    /@media[^}]+\{[\s\S]*?\.heistBranches\s*\{[^}]*grid-template-columns:\s*1fr/s,
+  );
+  assert.match(
+    styles,
+    /\.resourceTitle strong\s*\{[^}]*color:\s*var\(--useful-title\)/s,
+  );
+  assert.match(
+    styles,
+    /\.resourceDescription\s*\{[^}]*color:\s*var\(--useful-description\)/s,
+  );
   assert.match(modal, /hint\?: string/);
   assert.match(modal, /aria-describedby/);
   assert.match(navbarStyles, /\.navItem\s*\{[^}]*text-align: center/s);
@@ -116,9 +132,47 @@ test("assigns every resource to exactly one category", () => {
 
 test("defines the two Heist rogue branches", () => {
   assert.deepEqual(heistBranches, [
-    ["Tibbs", "Tullina", "Nenet"],
-    ["Karst", "Huck", "Niles", "Vinderi", "Gianna"],
+    ["tibbs", "tullina", "nenet"],
+    ["karst", "huck", "niles", "vinderi", "gianna"],
   ]);
+});
+
+test("localizes every Heist rogue name", () => {
+  const expectedNames = {
+    en: [
+      "Tibbs",
+      "Tullina",
+      "Nenet",
+      "Karst",
+      "Huck",
+      "Niles",
+      "Vinderi",
+      "Gianna",
+    ],
+    ru: [
+      "Тиббс",
+      "Туллина",
+      "Ненет",
+      "Карст",
+      "Хак",
+      "Найлс",
+      "Виндери",
+      "Джианна",
+    ],
+  };
+
+  for (const [locale, messages] of Object.entries({ en, ru })) {
+    const localizedNames = heistBranches
+      .flat()
+      .map(
+        (companion) =>
+          (messages as Record<string, string>)[
+            `useful.heist.companion.${companion}`
+          ],
+      );
+
+    assert.deepEqual(localizedNames, expectedNames[locale as "en" | "ru"]);
+  }
 });
 
 test("defines three cheat sheets with unique filenames", () => {

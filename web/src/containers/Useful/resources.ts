@@ -161,8 +161,8 @@ export const resourceCategories = [
 }>[];
 
 export const heistBranches = [
-  ["Tibbs", "Tullina", "Nenet"],
-  ["Karst", "Huck", "Niles", "Vinderi", "Gianna"],
+  ["tibbs", "tullina", "nenet"],
+  ["karst", "huck", "niles", "vinderi", "gianna"],
 ] as const;
 
 export type CheatSheet = Readonly<{

@@ -95,7 +95,9 @@ export default function UsefulContainer() {
               <ol>
                 {branch.map((companion, index) => (
                   <li key={companion}>
-                    <span>{companion}</span>
+                    <span>
+                      {t(`useful.heist.companion.${companion}` as MessageKey)}
+                    </span>
                     {index < branch.length - 1 && (
                       <FaArrowRight
                         aria-hidden={true}
