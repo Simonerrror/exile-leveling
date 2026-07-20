@@ -18,6 +18,12 @@ const resourcesById = new Map(
 
 export default function UsefulContainer() {
   const { t } = useI18n();
+  const jumpTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
   const categoryText = (id: ResourceCategoryId) =>
     t(`useful.category.${id}` as MessageKey);
   const resourceText = (id: ResourceId) =>
@@ -32,9 +38,15 @@ export default function UsefulContainer() {
       </header>
 
       <nav aria-label={t("useful.jumpLabel")} className={styles.jumpNav}>
-        <a href="#useful-tools">{t("useful.tools.title")}</a>
-        <a href="#useful-heist">{t("useful.heist.title")}</a>
-        <a href="#useful-sheets">{t("useful.sheets.title")}</a>
+        <button type="button" onClick={() => jumpTo("useful-tools")}>
+          {t("useful.tools.title")}
+        </button>
+        <button type="button" onClick={() => jumpTo("useful-heist")}>
+          {t("useful.heist.title")}
+        </button>
+        <button type="button" onClick={() => jumpTo("useful-sheets")}>
+          {t("useful.sheets.title")}
+        </button>
       </nav>
 
       <section id="useful-tools" aria-labelledby="useful-tools-title">

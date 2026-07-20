@@ -43,16 +43,17 @@
   margin-top: -2.5rem;
 }
 
-.jumpNav a {
+.jumpNav button {
   background: var(--secondary);
   border: var(--border-width) solid var(--accent-secondary);
   border-radius: 999px;
+  cursor: pointer;
   min-height: 2.75rem;
   padding: 0.55rem 1rem;
   text-decoration: none;
 }
 
-.jumpNav a:hover {
+.jumpNav button:hover {
   border-color: var(--useful-gold);
   color: var(--on-secondary);
 }
