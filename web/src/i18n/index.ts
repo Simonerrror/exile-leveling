@@ -3,6 +3,21 @@ import { useCallback } from "react";
 import { localeAtom } from "../state/locale";
 import { translate, type MessageKey, type MessageParameters } from "./core";
 
+export {
+  areaMapName,
+  areaName,
+  className,
+  createGameData,
+  gameDataForLocale,
+  gemName,
+  literal,
+  localizedName,
+  questName,
+  rewardNpc,
+  useGameData,
+  vendorNpc,
+} from "./game-data";
+
 export function useI18n() {
   const locale = useAtomValue(localeAtom);
   const t = useCallback(

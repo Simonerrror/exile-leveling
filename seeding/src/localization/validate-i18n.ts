@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  assertLocalizedGameData,
   assertMessageDictionary,
   assertMessageParity,
   assertRouteParity,
@@ -54,6 +55,22 @@ async function main(): Promise<void> {
   assertMessageDictionary(russianMessages, displayPath(russianMessagesPath));
   assertMessageParity(englishMessages, russianMessages);
 
+  const canonicalData = {
+    Areas: await readJson(resolve(root, "common/data/json/areas.json")),
+    Characters: await readJson(
+      resolve(root, "common/data/json/characters.json"),
+    ),
+    Gems: await readJson(resolve(root, "common/data/json/gems.json")),
+    Quests: await readJson(resolve(root, "common/data/json/quests.json")),
+  };
+  const russianGameData = await readJson(
+    resolve(root, "common/data/i18n/ru.json"),
+  );
+  assertLocalizedGameData(
+    russianGameData,
+    canonicalData as Parameters<typeof assertLocalizedGameData>[1],
+  );
+
   const routes = resolve(root, "common/data/routes");
   const englishRoutes = resolve(routes, "en");
   const russianRoutes = resolve(routes, "ru");
@@ -73,16 +90,6 @@ async function main(): Promise<void> {
     if (!englishRouteFiles.includes(file))
       throw new Error(`unknown Russian route file: ${file}`);
   }
-
-  for (const file of [
-    "areas.json",
-    "characters.json",
-    "gems.json",
-    "quests.json",
-  ]) {
-    await readJson(resolve(root, "common/data/json", file));
-  }
-  await readJson(resolve(root, "common/data/i18n/ru.json"));
 }
 
 main().catch((error: unknown) => {

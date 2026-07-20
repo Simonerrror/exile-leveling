@@ -1,5 +1,10 @@
 export { Data } from "./data.js";
-export type { Fragments, GameData, RouteData } from "./types.js";
+export type {
+  Fragments,
+  GameData,
+  LocalizedGameData,
+  RouteData,
+} from "./types.js";
 export {
   type RouteState,
   buildRouteSource,

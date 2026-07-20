@@ -1,0 +1,3990 @@
+{
+  "areas": {
+    "1_1_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Сумрачное взморье"
+    },
+    "1_1_11_1": {
+      "craftingRecipes": [],
+      "mapName": "Merveil's Caverns",
+      "name": "Пещера гнева"
+    },
+    "1_1_11_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Пещера злобы"
+    },
+    "1_1_2": {
+      "craftingRecipes": [],
+      "mapName": "Побережье",
+      "name": "Побережье"
+    },
+    "1_1_2a": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Прибрежный остров"
+    },
+    "1_1_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Илистые низины"
+    },
+    "1_1_3a": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Смрадная заводь"
+    },
+    "1_1_4_0": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Залитый провал"
+    },
+    "1_1_4_1": {
+      "craftingRecipes": [],
+      "mapName": "Сырой проход",
+      "name": "Сырой проход"
+    },
+    "1_1_5": {
+      "craftingRecipes": [],
+      "mapName": "Утёс",
+      "name": "Утёс"
+    },
+    "1_1_6": {
+      "craftingRecipes": [],
+      "mapName": "Склон",
+      "name": "Склон"
+    },
+    "1_1_7_1": {
+      "craftingRecipes": [],
+      "mapName": "The Prison",
+      "name": "Тюремное подземелье"
+    },
+    "1_1_7_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Тюремные помещения"
+    },
+    "1_1_8": {
+      "craftingRecipes": [],
+      "mapName": "Врата заключённых",
+      "name": "Врата заключённых"
+    },
+    "1_1_9": {
+      "craftingRecipes": [],
+      "mapName": "Кладбище кораблей",
+      "name": "Кладбище кораблей"
+    },
+    "1_1_9a": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Грот погибших кораблей"
+    },
+    "1_1_town": {
+      "craftingRecipes": [],
+      "mapName": "Застава Львиного глаза",
+      "name": "Застава Львиного глаза"
+    },
+    "1_2_1": {
+      "craftingRecipes": [],
+      "mapName": "Южный лес",
+      "name": "Южный лес"
+    },
+    "1_2_10": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Покои Ткачихи"
+    },
+    "1_2_11": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Руины ваал"
+    },
+    "1_2_12": {
+      "craftingRecipes": [],
+      "mapName": "Топь",
+      "name": "Топь"
+    },
+    "1_2_13": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Чащоба"
+    },
+    "1_2_14_2": {
+      "craftingRecipes": [],
+      "mapName": "Пещеры",
+      "name": "Пещеры"
+    },
+    "1_2_14_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Древняя пирамида"
+    },
+    "1_2_15": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Руины осквернённой святыни"
+    },
+    "1_2_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Старые поля"
+    },
+    "1_2_2a": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Берлога"
+    },
+    "1_2_3": {
+      "craftingRecipes": [],
+      "mapName": "Перекрёсток",
+      "name": "Перекрёсток"
+    },
+    "1_2_4": {
+      "craftingRecipes": [],
+      "mapName": "Разрушенный мост",
+      "name": "Разрушенный мост"
+    },
+    "1_2_5_1": {
+      "craftingRecipes": [],
+      "mapName": "Склеп",
+      "name": "Склеп — уровень 1"
+    },
+    "1_2_5_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Склеп — уровень 2"
+    },
+    "1_2_6_1": {
+      "craftingRecipes": [],
+      "mapName": "The Chamber of Sins",
+      "name": "Обитель грехов — уровень 1"
+    },
+    "1_2_6_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Обитель грехов — уровень 2"
+    },
+    "1_2_7": {
+      "craftingRecipes": [],
+      "mapName": "Пойма реки",
+      "name": "Пойма реки"
+    },
+    "1_2_8": {
+      "craftingRecipes": [],
+      "mapName": "Северный лес",
+      "name": "Северный лес"
+    },
+    "1_2_9": {
+      "craftingRecipes": [],
+      "mapName": "Западный лес",
+      "name": "Западный лес"
+    },
+    "1_2_town": {
+      "craftingRecipes": [],
+      "mapName": "Лесной лагерь",
+      "name": "Лесной лагерь"
+    },
+    "1_3_1": {
+      "craftingRecipes": [],
+      "mapName": "Сарн",
+      "name": "Сарн"
+    },
+    "1_3_10_1": {
+      "craftingRecipes": [],
+      "mapName": "Канализация",
+      "name": "Канализация"
+    },
+    "1_3_13": {
+      "craftingRecipes": [],
+      "mapName": "Лагерь Эбенового легиона",
+      "name": "Лагерь Эбенового легиона"
+    },
+    "1_3_14_1": {
+      "craftingRecipes": [],
+      "mapName": "The Lunaris Temple",
+      "name": "Храм Лунарис — уровень 1"
+    },
+    "1_3_14_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Храм Лунарис — уровень 2"
+    },
+    "1_3_15": {
+      "craftingRecipes": [],
+      "mapName": "Имперские сады",
+      "name": "Имперские сады"
+    },
+    "1_3_17_1": {
+      "craftingRecipes": [],
+      "mapName": "Библиотека",
+      "name": "Библиотека"
+    },
+    "1_3_17_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Архивы"
+    },
+    "1_3_18_1": {
+      "craftingRecipes": [],
+      "mapName": "Перст Господень",
+      "name": "Перст Господень"
+    },
+    "1_3_18_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Верхние этажи Перста Господня"
+    },
+    "1_3_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Трущобы"
+    },
+    "1_3_3_1": {
+      "craftingRecipes": [],
+      "mapName": "Крематорий",
+      "name": "Крематорий"
+    },
+    "1_3_5": {
+      "craftingRecipes": [],
+      "mapName": "Рынок",
+      "name": "Рынок"
+    },
+    "1_3_6": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Катакомбы"
+    },
+    "1_3_7": {
+      "craftingRecipes": [],
+      "mapName": "Передовая",
+      "name": "Передовая"
+    },
+    "1_3_8_1": {
+      "craftingRecipes": [],
+      "mapName": "Храм Солярис — уровень 1",
+      "name": "Храм Солярис — уровень 1"
+    },
+    "1_3_8_2": {
+      "craftingRecipes": [],
+      "mapName": "Храм Солярис — уровень 2",
+      "name": "Храм Солярис — уровень 2"
+    },
+    "1_3_9": {
+      "craftingRecipes": [],
+      "mapName": "Доки",
+      "name": "Доки"
+    },
+    "1_3_town": {
+      "craftingRecipes": [],
+      "mapName": "Лагерь Сарна",
+      "name": "Лагерь Сарна"
+    },
+    "1_4_1": {
+      "craftingRecipes": [],
+      "mapName": "Акведук",
+      "name": "Акведук"
+    },
+    "1_4_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Высохшее озеро"
+    },
+    "1_4_3_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Шахты — уровень 1"
+    },
+    "1_4_3_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Шахты — уровень 2"
+    },
+    "1_4_3_3": {
+      "craftingRecipes": [],
+      "mapName": "Кристальная жила",
+      "name": "Кристальная жила"
+    },
+    "1_4_4_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Сон Каома"
+    },
+    "1_4_4_3": {
+      "craftingRecipes": [],
+      "mapName": "Крепость Каома",
+      "name": "Крепость Каома"
+    },
+    "1_4_5_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Сон Дарессо"
+    },
+    "1_4_5_2": {
+      "craftingRecipes": [],
+      "mapName": "Великая Арена",
+      "name": "Великая Арена"
+    },
+    "1_4_6_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Брюхо Зверя — уровень 1"
+    },
+    "1_4_6_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Брюхо Зверя — уровень 2"
+    },
+    "1_4_6_3": {
+      "craftingRecipes": [],
+      "mapName": "Жатва",
+      "name": "Жатва"
+    },
+    "1_4_7": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Подъём"
+    },
+    "1_4_town": {
+      "craftingRecipes": [],
+      "mapName": "Македы",
+      "name": "Македы"
+    },
+    "1_5_1": {
+      "craftingRecipes": [],
+      "mapName": "Узилище",
+      "name": "Узилище"
+    },
+    "1_5_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Изолятор"
+    },
+    "1_5_3": {
+      "craftingRecipes": [],
+      "mapName": "Площадь Ориата",
+      "name": "Площадь Ориата"
+    },
+    "1_5_3b": {
+      "craftingRecipes": [],
+      "mapName": "Разрушенная площадь",
+      "name": "Разрушенная площадь"
+    },
+    "1_5_4": {
+      "craftingRecipes": [],
+      "mapName": "Суды жрецов",
+      "name": "Суды жрецов"
+    },
+    "1_5_4b": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Подожжённые суды"
+    },
+    "1_5_5": {
+      "craftingRecipes": [],
+      "mapName": "Обитель Невинности",
+      "name": "Обитель Невинности"
+    },
+    "1_5_6": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Костница"
+    },
+    "1_5_7": {
+      "craftingRecipes": [],
+      "mapName": "Реликварий",
+      "name": "Реликварий"
+    },
+    "1_5_8": {
+      "craftingRecipes": [],
+      "mapName": "Крыша собора",
+      "name": "Крыша собора"
+    },
+    "1_5_town": {
+      "craftingRecipes": [],
+      "mapName": "Башня надзирателя",
+      "name": "Башня надзирателя"
+    },
+    "1_Labyrinth_boss_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Испытание претендента"
+    },
+    "2_10_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Крыша собора"
+    },
+    "2_10_2": {
+      "craftingRecipes": [],
+      "mapName": "Разорённая площадь",
+      "name": "Разорённая площадь"
+    },
+    "2_10_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Подожжённые суды"
+    },
+    "2_10_4": {
+      "craftingRecipes": [],
+      "mapName": "Осквернённая обитель",
+      "name": "Осквернённая обитель"
+    },
+    "2_10_5": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Каналы"
+    },
+    "2_10_6": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Кормушка"
+    },
+    "2_10_7": {
+      "craftingRecipes": [],
+      "mapName": "Изолятор",
+      "name": "Изолятор"
+    },
+    "2_10_8": {
+      "craftingRecipes": [],
+      "mapName": "Реликварий",
+      "name": "Реликварий"
+    },
+    "2_10_9": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Костница"
+    },
+    "2_10_town": {
+      "craftingRecipes": [],
+      "mapName": "Доки Ориата",
+      "name": "Доки Ориата"
+    },
+    "2_11_endgame_town": {
+      "craftingRecipes": [],
+      "mapName": "Берега Каруи",
+      "name": "Берега Каруи"
+    },
+    "2_6_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Сумрачное взморье"
+    },
+    "2_6_10": {
+      "craftingRecipes": [],
+      "mapName": "Пойма реки",
+      "name": "Пойма реки"
+    },
+    "2_6_11": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Топь"
+    },
+    "2_6_12": {
+      "craftingRecipes": [],
+      "mapName": "Южный лес",
+      "name": "Южный лес"
+    },
+    "2_6_13": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Пещера злобы"
+    },
+    "2_6_14": {
+      "craftingRecipes": [],
+      "mapName": "Маяк",
+      "name": "Маяк"
+    },
+    "2_6_15": {
+      "craftingRecipes": [],
+      "mapName": "Риф Морского царя",
+      "name": "Риф Морского царя"
+    },
+    "2_6_2": {
+      "craftingRecipes": [],
+      "mapName": "Побережье",
+      "name": "Побережье"
+    },
+    "2_6_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Прибрежный остров"
+    },
+    "2_6_4": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Илистые низины"
+    },
+    "2_6_5": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Крепость каруи"
+    },
+    "2_6_6": {
+      "craftingRecipes": [],
+      "mapName": "Хребет",
+      "name": "Хребет"
+    },
+    "2_6_7_1": {
+      "craftingRecipes": [],
+      "mapName": "The Prison",
+      "name": "Тюремное подземелье"
+    },
+    "2_6_7_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Башня Шавронн"
+    },
+    "2_6_8": {
+      "craftingRecipes": [],
+      "mapName": "Врата заключённых",
+      "name": "Врата заключённых"
+    },
+    "2_6_9": {
+      "craftingRecipes": [],
+      "mapName": "Западный лес",
+      "name": "Западный лес"
+    },
+    "2_6_town": {
+      "craftingRecipes": [],
+      "mapName": "Застава Львиного глаза",
+      "name": "Застава Львиного глаза"
+    },
+    "2_7_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Разрушенный мост"
+    },
+    "2_7_10": {
+      "craftingRecipes": [],
+      "mapName": "Перешеек",
+      "name": "Перешеек"
+    },
+    "2_7_11": {
+      "craftingRecipes": [],
+      "mapName": "Город ваал",
+      "name": "Город ваал"
+    },
+    "2_7_12_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Храм разложения — уровень 1"
+    },
+    "2_7_12_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Храм разложения — уровень 2"
+    },
+    "2_7_2": {
+      "craftingRecipes": [],
+      "mapName": "Перекрёсток",
+      "name": "Перекрёсток"
+    },
+    "2_7_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Руины осквернённой святыни"
+    },
+    "2_7_4": {
+      "craftingRecipes": [],
+      "mapName": "Склеп",
+      "name": "Склеп"
+    },
+    "2_7_5_1": {
+      "craftingRecipes": [],
+      "mapName": "The Chamber of Sins",
+      "name": "Обитель грехов — уровень 1"
+    },
+    "2_7_5_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Обитель грехов — уровень 2"
+    },
+    "2_7_5_map": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Святилище Малигаро"
+    },
+    "2_7_6": {
+      "craftingRecipes": [],
+      "mapName": "Берлога",
+      "name": "Берлога"
+    },
+    "2_7_7": {
+      "craftingRecipes": [],
+      "mapName": "Пепельные поля",
+      "name": "Пепельные поля"
+    },
+    "2_7_8": {
+      "craftingRecipes": [],
+      "mapName": "Северный лес",
+      "name": "Северный лес"
+    },
+    "2_7_9": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Чащоба"
+    },
+    "2_7_town": {
+      "craftingRecipes": [],
+      "mapName": "Лагерь на мосту",
+      "name": "Лагерь на мосту"
+    },
+    "2_8_1": {
+      "craftingRecipes": [],
+      "mapName": "Бастион Сарна",
+      "name": "Бастион Сарна"
+    },
+    "2_8_10": {
+      "craftingRecipes": [],
+      "mapName": "Имперские поля",
+      "name": "Имперские поля"
+    },
+    "2_8_11": {
+      "craftingRecipes": [],
+      "mapName": "Площадь Солярис",
+      "name": "Площадь Солярис"
+    },
+    "2_8_12_1": {
+      "craftingRecipes": [],
+      "mapName": "The Solaris Temple",
+      "name": "Храм Солярис — уровень 1"
+    },
+    "2_8_12_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Храм Солярис — уровень 2"
+    },
+    "2_8_13": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Портовый мост"
+    },
+    "2_8_14": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Скрытое подполье"
+    },
+    "2_8_2_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Отравленные каналы"
+    },
+    "2_8_2_2": {
+      "craftingRecipes": [],
+      "mapName": "Отравленные каналы",
+      "name": "Сточная яма Доэдре"
+    },
+    "2_8_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Роскошная набережная"
+    },
+    "2_8_4": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Висячие сады"
+    },
+    "2_8_5": {
+      "craftingRecipes": [],
+      "mapName": "Купальни",
+      "name": "Купальни"
+    },
+    "2_8_6": {
+      "craftingRecipes": [],
+      "mapName": "Площадь Лунарис",
+      "name": "Площадь Лунарис"
+    },
+    "2_8_7_1_": {
+      "craftingRecipes": [],
+      "mapName": "The Lunaris Temple",
+      "name": "Храм Лунарис — уровень 1"
+    },
+    "2_8_7_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Храм Лунарис — уровень 2"
+    },
+    "2_8_8": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Пристань"
+    },
+    "2_8_9": {
+      "craftingRecipes": [],
+      "mapName": "Зерновые ворота",
+      "name": "Зерновые ворота"
+    },
+    "2_8_town": {
+      "craftingRecipes": [],
+      "mapName": "Лагерь Сарна",
+      "name": "Лагерь Сарна"
+    },
+    "2_9_1": {
+      "craftingRecipes": [],
+      "mapName": "Кровавый акведук",
+      "name": "Кровавый акведук"
+    },
+    "2_9_10_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Брюхо Зверя"
+    },
+    "2_9_10_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Гниющее нутро"
+    },
+    "2_9_2": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Спуск"
+    },
+    "2_9_3": {
+      "craftingRecipes": [],
+      "mapName": "Пустыня Вастири",
+      "name": "Пустыня Вастири"
+    },
+    "2_9_4": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Оазис"
+    },
+    "2_9_5": {
+      "craftingRecipes": [],
+      "mapName": "Предгорье",
+      "name": "Предгорье"
+    },
+    "2_9_6": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Кипящее озеро"
+    },
+    "2_9_7": {
+      "craftingRecipes": [],
+      "mapName": "Тоннель",
+      "name": "Тоннель"
+    },
+    "2_9_8": {
+      "craftingRecipes": [],
+      "mapName": "Каменоломня",
+      "name": "Каменоломня"
+    },
+    "2_9_9": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Фабрика"
+    },
+    "2_9_town": {
+      "craftingRecipes": [],
+      "mapName": "Македы",
+      "name": "Македы"
+    },
+    "2_Labyrinth_boss_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Испытание претендента"
+    },
+    "3_Labyrinth_boss_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Испытание претендента"
+    },
+    "EndGame_Labyrinth_boss_3": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Испытание претендента"
+    },
+    "ffa1_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Арена Сарна"
+    },
+    "ffa3_1": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Арена Сарна"
+    },
+    "Labyrinth_Airlock": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Площадь претендентов"
+    },
+    "SanctumFoyer_Fellshrine": {
+      "craftingRecipes": [],
+      "mapName": null,
+      "name": "Запретное святилище"
+    }
+  },
+  "classes": {
+    "Duelist": "Гладиатор",
+    "Marauder": "Дикарь",
+    "Ranger": "Охотница",
+    "Scion": "Дворянка",
+    "Shadow": "Бандит",
+    "Templar": "Жрец",
+    "Witch": "Ведьма"
+  },
+  "gems": {
+    "Metadata/Items/Chayula/EshGraftGem1": "Окутанные светом",
+    "Metadata/Items/Chayula/EshGraftGem2": "Сияющий силуэт",
+    "Metadata/Items/Chayula/EshGraftGem3": "Изматывающая хватка",
+    "Metadata/Items/Chayula/EshGraftGem4": "Перегруженные сухожилия",
+    "Metadata/Items/Chayula/TulGraftGem1": "Танец в белом",
+    "Metadata/Items/Chayula/TulGraftGem2": "Падающие кристаллы",
+    "Metadata/Items/Chayula/TulGraftGem3": "Великая лавина",
+    "Metadata/Items/Chayula/TulGraftGem4": "Оберегающая неподвижность",
+    "Metadata/Items/Chayula/UulNetolGraftGem1": "Обращение в пыль",
+    "Metadata/Items/Chayula/UulNetolGraftGem2": "Присвоение плоти",
+    "Metadata/Items/Chayula/UulNetolGraftGem3": "Жестокое желание",
+    "Metadata/Items/Chayula/UulNetolGraftGem4": "Нежное объятие",
+    "Metadata/Items/Chayula/XophGraftGem1": "Сердце пламени",
+    "Metadata/Items/Chayula/XophGraftGem2": "Его пылающее послание",
+    "Metadata/Items/Chayula/XophGraftGem3": "Призыв костра",
+    "Metadata/Items/Chayula/XophGraftGem4": "Вой серого ветра",
+    "Metadata/Items/Gem/SkillGemCallMercenary": "Order: To me!",
+    "Metadata/Items/Gems/SkillGemAbsolution": "Отпущение",
+    "Metadata/Items/Gems/SkillGemAbyssalCry": "Клич преисподней",
+    "Metadata/Items/Gems/SkillGemAlchemistsMark": "Метка алхимика",
+    "Metadata/Items/Gems/SkillGemAmbush": "Засада",
+    "Metadata/Items/Gems/SkillGemAncestralCry": "Клич предков",
+    "Metadata/Items/Gems/SkillGemAncestralWarchief": "Вождь предков",
+    "Metadata/Items/Gems/SkillGemAncestralWarchiefRoyale": "Вождь предков",
+    "Metadata/Items/Gems/SkillGemAnger": "Жгучая злоба",
+    "Metadata/Items/Gems/SkillGemAnimateArmour": "Аниматрон",
+    "Metadata/Items/Gems/SkillGemAnimateWeapon": "Живое оружие",
+    "Metadata/Items/Gems/SkillGemArc": "Цепь молний",
+    "Metadata/Items/Gems/SkillGemArcaneCloak": "Чародейский покров",
+    "Metadata/Items/Gems/SkillGemArcanistBrand": "Клеймо чаротворца",
+    "Metadata/Items/Gems/SkillGemArcticArmour": "Северная броня",
+    "Metadata/Items/Gems/SkillGemArcticBreath": "Ползучий мороз",
+    "Metadata/Items/Gems/SkillGemArcticBreathRoyale": "Ползучий мороз",
+    "Metadata/Items/Gems/SkillGemArmageddonBrand": "Клеймо Армагеддона",
+    "Metadata/Items/Gems/SkillGemArtilleryBallista": "Артиллерийская баллиста",
+    "Metadata/Items/Gems/SkillGemArtilleryBallistaRoyale": "Артиллерийская баллиста",
+    "Metadata/Items/Gems/SkillGemAutomation": "Автоматизация",
+    "Metadata/Items/Gems/SkillGemBackstab": "Удар в спину",
+    "Metadata/Items/Gems/SkillGemBallLightning": "Шаровая молния",
+    "Metadata/Items/Gems/SkillGemBallLightningRoyale": "Шаровая молния",
+    "Metadata/Items/Gems/SkillGemBarrage": "Очередь",
+    "Metadata/Items/Gems/SkillGemBattlemagesCry": "Клич боевого мага",
+    "Metadata/Items/Gems/SkillGemBearTrap": "Медвежий капкан",
+    "Metadata/Items/Gems/SkillGemBearTrapRoyale": "Медвежий капкан",
+    "Metadata/Items/Gems/SkillGemBerserk": "Боевое безумие",
+    "Metadata/Items/Gems/SkillGemBladeBlast": "Взрыв клинков",
+    "Metadata/Items/Gems/SkillGemBladeBlastRoyale": "Взрыв клинков",
+    "Metadata/Items/Gems/SkillGemBladefall": "Мечепад",
+    "Metadata/Items/Gems/SkillGemBladefallRoyale": "Мечепад",
+    "Metadata/Items/Gems/SkillGemBladestorm": "Ураган лезвий",
+    "Metadata/Items/Gems/SkillGemBladestormRoyale": "Ураган лезвий",
+    "Metadata/Items/Gems/SkillGemBladeTrap": "Ловушка лезвий",
+    "Metadata/Items/Gems/SkillGemBladeVortex": "Вихрь клинков",
+    "Metadata/Items/Gems/SkillGemBladeVortexRoyale": "Вихрь клинков",
+    "Metadata/Items/Gems/SkillGemBlastRain": "Дождь взрывов",
+    "Metadata/Items/Gems/SkillGemBlastRainRoyale": "Дождь взрывов",
+    "Metadata/Items/Gems/SkillGemBlazingSalvo": "Пылающий залп",
+    "Metadata/Items/Gems/SkillGemBlazingSalvoRoyale": "Пылающий залп",
+    "Metadata/Items/Gems/SkillGemBlight": "Мор",
+    "Metadata/Items/Gems/SkillGemBlightRoyale": "Мор",
+    "Metadata/Items/Gems/SkillGemBlindingAura": "Слепящая аура",
+    "Metadata/Items/Gems/SkillGemBlinkArrow": "Стрела-телепорт",
+    "Metadata/Items/Gems/SkillGemBlinkArrowRoyale": "Стрела-телепорт",
+    "Metadata/Items/Gems/SkillGemBlitz": "DNT Blitz",
+    "Metadata/Items/Gems/SkillGemBloodAndSand": "Кровь и песок",
+    "Metadata/Items/Gems/SkillGemBloodAndSandRoyale": "Кровь и песок",
+    "Metadata/Items/Gems/SkillGemBloodOffering": "Подношение крови",
+    "Metadata/Items/Gems/SkillGemBloodRage": "Кровавый угар",
+    "Metadata/Items/Gems/SkillGemBloodreap": "Кровавая жатва",
+    "Metadata/Items/Gems/SkillGemBloodreapRoyale": "Кровавая жатва",
+    "Metadata/Items/Gems/SkillGemBloodWhirl": "[DNT]Blood Whirl",
+    "Metadata/Items/Gems/SkillGemBoneLance": "Эксгумация",
+    "Metadata/Items/Gems/SkillGemBoneLanceRoyale": "Эксгумация",
+    "Metadata/Items/Gems/SkillGemBoneOffering": "Подношение костей",
+    "Metadata/Items/Gems/SkillGemBoneshatter": "Дробление костей",
+    "Metadata/Items/Gems/SkillGemBurningArrow": "Горящая стрела",
+    "Metadata/Items/Gems/SkillGemBurningArrowRoyale": "Горящая стрела",
+    "Metadata/Items/Gems/SkillGemCallOfTheWild": "[DNT] Call of the Wild",
+    "Metadata/Items/Gems/SkillGemCallToArms": "Автоусиление",
+    "Metadata/Items/Gems/SkillGemCaptureMonster": "Поймать монстра",
+    "Metadata/Items/Gems/SkillGemChainHook": "Цепной крюк",
+    "Metadata/Items/Gems/SkillGemChainHookRoyale": "Цепной крюк",
+    "Metadata/Items/Gems/SkillGemChannelledSnipe": "Прицельный выстрел",
+    "Metadata/Items/Gems/SkillGemChargedAttack": "Порыв клинков",
+    "Metadata/Items/Gems/SkillGemChargedAttackRoyale": "Порыв клинков",
+    "Metadata/Items/Gems/SkillGemChargedDash": "Заряженный рывок",
+    "Metadata/Items/Gems/SkillGemChargedDashRoyale": "Заряженный рывок",
+    "Metadata/Items/Gems/SkillGemClarity": "Ясность ума",
+    "Metadata/Items/Gems/SkillGemClarityRoyale": "Ясность ума",
+    "Metadata/Items/Gems/SkillGemCleave": "Рассечение",
+    "Metadata/Items/Gems/SkillGemCleaveRoyale": "Рассечение",
+    "Metadata/Items/Gems/SkillGemCobraLash": "Бросок кобры",
+    "Metadata/Items/Gems/SkillGemCobraLashRoyale": "Бросок кобры",
+    "Metadata/Items/Gems/SkillGemCoilingAssault": "[DNT] Coiling Assault",
+    "Metadata/Items/Gems/SkillGemColdResistAura": "Спасение от холода",
+    "Metadata/Items/Gems/SkillGemColdSnap": "Укус стужи",
+    "Metadata/Items/Gems/SkillGemColdSnapRoyale": "Укус стужи",
+    "Metadata/Items/Gems/SkillGemComboStrike": "...",
+    "Metadata/Items/Gems/SkillGemConductivity": "Проводимость",
+    "Metadata/Items/Gems/SkillGemConflagration": "Пожарище",
+    "Metadata/Items/Gems/SkillGemConsecratedPath": "Освящённый путь",
+    "Metadata/Items/Gems/SkillGemContagion": "Инфекция",
+    "Metadata/Items/Gems/SkillGemConversionTrap": "Ловушка переманивания",
+    "Metadata/Items/Gems/SkillGemConvocation": "Сбор",
+    "Metadata/Items/Gems/SkillGemConvocationNew": "Сбор",
+    "Metadata/Items/Gems/SkillGemCorpseEruption": "Кремация",
+    "Metadata/Items/Gems/SkillGemCorpseEruptionRoyale": "Кремация",
+    "Metadata/Items/Gems/SkillGemCorpseWarp": "Обмен телами",
+    "Metadata/Items/Gems/SkillGemCorruptingFever": "Разлагающая лихорадка",
+    "Metadata/Items/Gems/SkillGemCracklingLance": "Искрящееся копьё",
+    "Metadata/Items/Gems/SkillGemCriticalWeakness": "Метка убийцы",
+    "Metadata/Items/Gems/SkillGemCriticalWeaknessRoyale": "Метка убийцы",
+    "Metadata/Items/Gems/SkillGemCyclone": "Вихрь",
+    "Metadata/Items/Gems/SkillGemCycloneRoyale": "Вихрь",
+    "Metadata/Items/Gems/SkillGemDamageInfusion": "Вливание урона",
+    "Metadata/Items/Gems/SkillGemDamageOverTimeAura": "Злорадство",
+    "Metadata/Items/Gems/SkillGemDarkPact": "Тёмный договор",
+    "Metadata/Items/Gems/SkillGemDarkPactRoyale": "Тёмный договор",
+    "Metadata/Items/Gems/SkillGemDarkRitual": "Погибель",
+    "Metadata/Items/Gems/SkillGemDash": "Рывок",
+    "Metadata/Items/Gems/SkillGemDashRoyale": "Рывок",
+    "Metadata/Items/Gems/SkillGemDeathAura": "Аура смерти",
+    "Metadata/Items/Gems/SkillGemDecoyTotem": "Тотем-приманка",
+    "Metadata/Items/Gems/SkillGemDefianceBanner": "Знамя непокорности",
+    "Metadata/Items/Gems/SkillGemDesecrate": "Осквернение",
+    "Metadata/Items/Gems/SkillGemDesecrateRoyale": "Осквернение",
+    "Metadata/Items/Gems/SkillGemDestructiveLink": "Разрушительная связь",
+    "Metadata/Items/Gems/SkillGemDetermination": "Решимость",
+    "Metadata/Items/Gems/SkillGemDetonateDead": "Подрыв трупа",
+    "Metadata/Items/Gems/SkillGemDetonateDeadRoyale": "Подрыв трупа",
+    "Metadata/Items/Gems/SkillGemDetonateMines": "Подрыв мин",
+    "Metadata/Items/Gems/SkillGemDevouringTotem": "Поглощающий тотем",
+    "Metadata/Items/Gems/SkillGemDischarge": "Разряд",
+    "Metadata/Items/Gems/SkillGemDiscipline": "Дисциплина",
+    "Metadata/Items/Gems/SkillGemDiscorectangleSlam": "Discorectangle Slam",
+    "Metadata/Items/Gems/SkillGemDivineBlast": "Божественный взрыв",
+    "Metadata/Items/Gems/SkillGemDivineRetribution": "Божественное возмездие",
+    "Metadata/Items/Gems/SkillGemDivineTempest": "Божественный гнев",
+    "Metadata/Items/Gems/SkillGemDivineTempestRoyale": "Божественный гнев",
+    "Metadata/Items/Gems/SkillGemDominatingBlow": "Удар власти",
+    "Metadata/Items/Gems/SkillGemDominatingBlowRoyale": "Удар власти",
+    "Metadata/Items/Gems/SkillGemDoubleStrike": "Двойной удар",
+    "Metadata/Items/Gems/SkillGemDreadBanner": "Знамя страха",
+    "Metadata/Items/Gems/SkillGemDualStrike": "Парный удар",
+    "Metadata/Items/Gems/SkillGemDualStrikeRoyale": "Парный удар",
+    "Metadata/Items/Gems/SkillGemEarthquake": "Землетрясение",
+    "Metadata/Items/Gems/SkillGemEarthquakeRoyale": "Землетрясение",
+    "Metadata/Items/Gems/SkillGemEarthshatter": "Разлом земли",
+    "Metadata/Items/Gems/SkillGemElementalHit": "Удар стихии",
+    "Metadata/Items/Gems/SkillGemElementalHitRoyale": "Удар стихии",
+    "Metadata/Items/Gems/SkillGemElementalProjectiles": "Снаряды стихий",
+    "Metadata/Items/Gems/SkillGemElementalWeakness": "Уязвимость к стихиям",
+    "Metadata/Items/Gems/SkillGemElementalWeaknessRoyale": "Уязвимость к стихиям",
+    "Metadata/Items/Gems/SkillGemEnduringCry": "Клич стойкости",
+    "Metadata/Items/Gems/SkillGemEnduringCryRoyale": "Клич стойкости",
+    "Metadata/Items/Gems/SkillGemEnergyBlade": "Клинок энергии",
+    "Metadata/Items/Gems/SkillGemEnfeeble": "Слабость",
+    "Metadata/Items/Gems/SkillGemEnsnaringArrow": "Стрела ловчего",
+    "Metadata/Items/Gems/SkillGemEnsnaringArrowRoyale": "Стрела ловчего",
+    "Metadata/Items/Gems/SkillGemEnvy": "Зависть",
+    "Metadata/Items/Gems/SkillGemEssenceDrain": "Похищение сущности",
+    "Metadata/Items/Gems/SkillGemEssenceDrainRoyale": "Похищение сущности",
+    "Metadata/Items/Gems/SkillGemEtherealKnives": "Бесплотные ножи",
+    "Metadata/Items/Gems/SkillGemEtherealKnivesRoyale": "Бесплотные ножи",
+    "Metadata/Items/Gems/SkillGemEviscerate": "Потрошение",
+    "Metadata/Items/Gems/SkillGemExplosiveArrow": "Взрывная стрела",
+    "Metadata/Items/Gems/SkillGemExplosiveArrowRoyale": "Взрывная стрела",
+    "Metadata/Items/Gems/SkillGemExplosiveConcoction": "Взрывная смесь",
+    "Metadata/Items/Gems/SkillGemExsanguinate": "Обескровливание",
+    "Metadata/Items/Gems/SkillGemEyeOfWinter": "Око зимы",
+    "Metadata/Items/Gems/SkillGemFireball": "Огненный шар",
+    "Metadata/Items/Gems/SkillGemFireballRoyale": "Огненный шар",
+    "Metadata/Items/Gems/SkillGemFireBeam": "Опаляющий луч",
+    "Metadata/Items/Gems/SkillGemFireNovaMine": "Пирокластовая мина",
+    "Metadata/Items/Gems/SkillGemFireResistAura": "Спасение от огня",
+    "Metadata/Items/Gems/SkillGemFirestorm": "Огненный шторм",
+    "Metadata/Items/Gems/SkillGemFirestormRoyale": "Огненный шторм",
+    "Metadata/Items/Gems/SkillGemFireTrap": "Огненная ловушка",
+    "Metadata/Items/Gems/SkillGemFireTrapRoyale": "Огненная ловушка",
+    "Metadata/Items/Gems/SkillGemFireWeapon": "Горящее оружие",
+    "Metadata/Items/Gems/SkillGemFlameblast": "Пламенный взрыв",
+    "Metadata/Items/Gems/SkillGemFlameDash": "Огненный рывок",
+    "Metadata/Items/Gems/SkillGemFlameDashRoyale": "Огненный рывок",
+    "Metadata/Items/Gems/SkillGemFlameLink": "Пламенная связь",
+    "Metadata/Items/Gems/SkillGemFlamethrowerTrap": "Ловушка-огнемёт",
+    "Metadata/Items/Gems/SkillGemFlamethrowerTrapRoyale": "Ловушка-огнемёт",
+    "Metadata/Items/Gems/SkillGemFlameTotem": "Тотем священного огня",
+    "Metadata/Items/Gems/SkillGemFlameTotemRoyale": "Тотем священного огня",
+    "Metadata/Items/Gems/SkillGemFlameWall": "Стена пламени",
+    "Metadata/Items/Gems/SkillGemFlameWhip": "Выброс пламени",
+    "Metadata/Items/Gems/SkillGemFlammability": "Горючесть",
+    "Metadata/Items/Gems/SkillGemFlammableShot": "Горючий выстрел",
+    "Metadata/Items/Gems/SkillGemFleshAndStone": "Камень и плоть",
+    "Metadata/Items/Gems/SkillGemFleshOffering": "Подношение плоти",
+    "Metadata/Items/Gems/SkillGemFlickerStrike": "Внезапный удар",
+    "Metadata/Items/Gems/SkillGemForbiddenRite": "Запретный ритуал",
+    "Metadata/Items/Gems/SkillGemFreezeMine": "Шквальная мина",
+    "Metadata/Items/Gems/SkillGemFreezingPulse": "Волна холода",
+    "Metadata/Items/Gems/SkillGemFreezingPulseRoyale": "Волна холода",
+    "Metadata/Items/Gems/SkillGemFrenzy": "Бешенство",
+    "Metadata/Items/Gems/SkillGemFrostbite": "Обморожение",
+    "Metadata/Items/Gems/SkillGemFrostBlades": "Ледяные клинки",
+    "Metadata/Items/Gems/SkillGemFrostBladesRoyale": "Ледяные клинки",
+    "Metadata/Items/Gems/SkillGemFrostblink": "Ледяной скачок",
+    "Metadata/Items/Gems/SkillGemFrostblinkRoyale": "Ледяной скачок",
+    "Metadata/Items/Gems/SkillGemFrostBolt": "Морозный шар",
+    "Metadata/Items/Gems/SkillGemFrostBoltNova": "Пурга",
+    "Metadata/Items/Gems/SkillGemFrostBoltNovaRoyale": "Пурга",
+    "Metadata/Items/Gems/SkillGemFrostBoltRoyale": "Морозный шар",
+    "Metadata/Items/Gems/SkillGemFrostBomb": "Морозная бомба",
+    "Metadata/Items/Gems/SkillGemFrostBombRoyale": "Морозная бомба",
+    "Metadata/Items/Gems/SkillGemFrostShield": "Морозный щит",
+    "Metadata/Items/Gems/SkillGemFrostWall": "Стена льда",
+    "Metadata/Items/Gems/SkillGemFrozenLegion": "Замёрзший легион",
+    "Metadata/Items/Gems/SkillGemGalvanicField": "Электризующее поле",
+    "Metadata/Items/Gems/SkillGemGeneralsCry": "Клич полководца",
+    "Metadata/Items/Gems/SkillGemGeneralsCryRoyale": "Клич полководца",
+    "Metadata/Items/Gems/SkillGemGlacialCascade": "Ледяной каскад",
+    "Metadata/Items/Gems/SkillGemGlacialCascadeRoyale": "Ледяной каскад",
+    "Metadata/Items/Gems/SkillGemGlacialHammer": "Леденящий молот",
+    "Metadata/Items/Gems/SkillGemGlacialHammerRoyale": "Леденящий молот",
+    "Metadata/Items/Gems/SkillGemGluttonyOfElements": "Жажда стихий",
+    "Metadata/Items/Gems/SkillGemGrace": "Грация",
+    "Metadata/Items/Gems/SkillGemGroundSlam": "Сотрясение",
+    "Metadata/Items/Gems/SkillGemGroundSlamRoyale": "Сотрясение",
+    "Metadata/Items/Gems/SkillGemHaste": "Спешка",
+    "Metadata/Items/Gems/SkillGemHatred": "Холодная ненависть",
+    "Metadata/Items/Gems/SkillGemHeavyStrike": "Тяжёлый удар",
+    "Metadata/Items/Gems/SkillGemHeavyStrikeRoyale": "Тяжёлый удар",
+    "Metadata/Items/Gems/SkillGemHeraldOfAgony": "Вестник агонии",
+    "Metadata/Items/Gems/SkillGemHeraldOfAsh": "Вестник пепла",
+    "Metadata/Items/Gems/SkillGemHeraldOfIce": "Вестник льда",
+    "Metadata/Items/Gems/SkillGemHeraldOfPurity": "Вестник чистоты",
+    "Metadata/Items/Gems/SkillGemHeraldOfThunder": "Вестник грома",
+    "Metadata/Items/Gems/SkillGemHexblast": "Взрыв порчи",
+    "Metadata/Items/Gems/SkillGemHolyHammers": "Священные молоты",
+    "Metadata/Items/Gems/SkillGemHolyStrike": "Святой удар",
+    "Metadata/Items/Gems/SkillGemHydrosphere": "Гидросфера",
+    "Metadata/Items/Gems/SkillGemHydrosphereRoyale": "Гидросфера",
+    "Metadata/Items/Gems/SkillGemIceCrash": "Ледяное сокрушение",
+    "Metadata/Items/Gems/SkillGemIceCrashRoyale": "Ледяное сокрушение",
+    "Metadata/Items/Gems/SkillGemIcefire": "Обжигающий лёд",
+    "Metadata/Items/Gems/SkillGemIceNova": "Кольцо льда",
+    "Metadata/Items/Gems/SkillGemIceNovaRoyale": "Кольцо льда",
+    "Metadata/Items/Gems/SkillGemIceShot": "Ледяной выстрел",
+    "Metadata/Items/Gems/SkillGemIceShotRoyale": "Ледяной выстрел",
+    "Metadata/Items/Gems/SkillGemIceSiphonTrap": "Ловушка переливания",
+    "Metadata/Items/Gems/SkillGemIceSiphonTrapRoyale": "Ловушка переливания",
+    "Metadata/Items/Gems/SkillGemIceSpear": "Ледяное копьё",
+    "Metadata/Items/Gems/SkillGemIceSpearRoyale": "Ледяное копьё",
+    "Metadata/Items/Gems/SkillGemIceTrap": "Ледяная ловушка",
+    "Metadata/Items/Gems/SkillGemIceTrapRoyale": "Ледяная ловушка",
+    "Metadata/Items/Gems/SkillGemIgnite": "Ignite",
+    "Metadata/Items/Gems/SkillGemImmortalCall": "Призыв к бессмертию",
+    "Metadata/Items/Gems/SkillGemIncinerate": "Испепеление",
+    "Metadata/Items/Gems/SkillGemIncinerateRoyale": "Испепеление",
+    "Metadata/Items/Gems/SkillGemInfernalBlow": "Удар преисподней",
+    "Metadata/Items/Gems/SkillGemInfernalBlowRoyale": "Удар преисподней",
+    "Metadata/Items/Gems/SkillGemInfernalSwarm": "Степной пожар",
+    "Metadata/Items/Gems/SkillGemInfernalSweep": "Инфернальный взмах",
+    "Metadata/Items/Gems/SkillGemIntimidatingCry": "Устрашающий клич",
+    "Metadata/Items/Gems/SkillGemIntuitiveLink": "Подсознательная связь",
+    "Metadata/Items/Gems/SkillGemKineticBlast": "Кинетический взрыв",
+    "Metadata/Items/Gems/SkillGemKineticBolt": "Кинетический заряд",
+    "Metadata/Items/Gems/SkillGemKineticFusillade": "Кинетический шквал",
+    "Metadata/Items/Gems/SkillGemKineticRain": "Кинетический дождь",
+    "Metadata/Items/Gems/SkillGemLacerate": "Разрубание",
+    "Metadata/Items/Gems/SkillGemLacerateRoyale": "Разрубание",
+    "Metadata/Items/Gems/SkillGemLancingSteel": "Пронзающая сталь",
+    "Metadata/Items/Gems/SkillGemLeapSlam": "Наскок",
+    "Metadata/Items/Gems/SkillGemLeapSlamRoyale": "Наскок",
+    "Metadata/Items/Gems/SkillGemLightningArrow": "Стрела молнии",
+    "Metadata/Items/Gems/SkillGemLightningArrowRoyale": "Стрела молнии",
+    "Metadata/Items/Gems/SkillGemLightningChannel": "Поток молний",
+    "Metadata/Items/Gems/SkillGemLightningCircle": "Круг молний",
+    "Metadata/Items/Gems/SkillGemLightningConduit": "Проводник молнии",
+    "Metadata/Items/Gems/SkillGemLightningResistAura": "Спасение от молний",
+    "Metadata/Items/Gems/SkillGemLightningStrike": "Удар молнии",
+    "Metadata/Items/Gems/SkillGemLightningTendrils": "Побеги молний",
+    "Metadata/Items/Gems/SkillGemLightningTendrilsChannelled": "Побеги молний",
+    "Metadata/Items/Gems/SkillGemLightningTendrilsRoyale": "Побеги молний",
+    "Metadata/Items/Gems/SkillGemLightningTowerTrap": "Ловушка шпиля молний",
+    "Metadata/Items/Gems/SkillGemLightningTowerTrapRoyale": "Ловушка шпиля молний",
+    "Metadata/Items/Gems/SkillGemLightningTrap": "Ловушка молний",
+    "Metadata/Items/Gems/SkillGemLightningTrapRoyale": "Ловушка молний",
+    "Metadata/Items/Gems/SkillGemLightningWarp": "Грозовой переход",
+    "Metadata/Items/Gems/SkillGemLightningWarpRoyale": "Грозовой переход",
+    "Metadata/Items/Gems/SkillGemMagmaOrb": "Ползучая магма",
+    "Metadata/Items/Gems/SkillGemMagmaOrbRoyale": "Ползучая магма",
+    "Metadata/Items/Gems/SkillGemManabond": "Узы маны",
+    "Metadata/Items/Gems/SkillGemMeleeTotem": "Защитник предков",
+    "Metadata/Items/Gems/SkillGemMeleeTotemRoyale": "Защитник предков",
+    "Metadata/Items/Gems/SkillGemMirrorArrow": "Стрела-двойник",
+    "Metadata/Items/Gems/SkillGemMoltenShell": "Расплавленный панцирь",
+    "Metadata/Items/Gems/SkillGemMoltenStrike": "Магмовый удар",
+    "Metadata/Items/Gems/SkillGemMoltenStrikeRoyale": "Магмовый удар",
+    "Metadata/Items/Gems/SkillGemNewArcticArmour": "Северная броня",
+    "Metadata/Items/Gems/SkillGemNewBladeVortex": "Новый Вихрь клинков",
+    "Metadata/Items/Gems/SkillGemNewPhaseRun": "Призрачный бег",
+    "Metadata/Items/Gems/SkillGemNewPunishment": "Наказание",
+    "Metadata/Items/Gems/SkillGemNewShockNova": "Кольцо молний",
+    "Metadata/Items/Gems/SkillGemNewVulnerability": "Беззащитность",
+    "Metadata/Items/Gems/SkillGemNewVulnerabilityRoyale": "Беззащитность",
+    "Metadata/Items/Gems/SkillGemOrbOfStorms": "Сфера бурь",
+    "Metadata/Items/Gems/SkillGemPenanceBrand": "Клеймо покаяния",
+    "Metadata/Items/Gems/SkillGemPerforate": "Пронзающие шипы",
+    "Metadata/Items/Gems/SkillGemPestilentStrike": "Моровой удар",
+    "Metadata/Items/Gems/SkillGemPetrifiedBlood": "Окаменелая кровь",
+    "Metadata/Items/Gems/SkillGemPhaseRun": "Призрачный бег",
+    "Metadata/Items/Gems/SkillGemPhaseRunRoyale": "Призрачный бег",
+    "Metadata/Items/Gems/SkillGemPhysCascadeTrap": "Сейсмическая ловушка",
+    "Metadata/Items/Gems/SkillGemPlagueBearer": "Носитель чумы",
+    "Metadata/Items/Gems/SkillGemPlaytestAttack": "Тестовая атака",
+    "Metadata/Items/Gems/SkillGemPlaytestSlam": "Тестовый мощный удар",
+    "Metadata/Items/Gems/SkillGemPlaytestSpell": "Тестовые чары",
+    "Metadata/Items/Gems/SkillGemPoachersMark": "Метка браконьера",
+    "Metadata/Items/Gems/SkillGemPoachersMarkRoyale": "Метка браконьера",
+    "Metadata/Items/Gems/SkillGemPoisonArrow": "Едкая стрела",
+    "Metadata/Items/Gems/SkillGemPoisonArrowRoyale": "Едкая стрела",
+    "Metadata/Items/Gems/SkillGemPoisonousConcoction": "Ядовитая смесь",
+    "Metadata/Items/Gems/SkillGemPortal": "Портал",
+    "Metadata/Items/Gems/SkillGemPowerSiphon": "Перелив энергии",
+    "Metadata/Items/Gems/SkillGemPrecision": "Точность",
+    "Metadata/Items/Gems/SkillGemPrecisionRoyale": "Точность",
+    "Metadata/Items/Gems/SkillGemPride": "Гордость",
+    "Metadata/Items/Gems/SkillGemProjectilePortal": "DNT Projectile Portal",
+    "Metadata/Items/Gems/SkillGemProjectileWeakness": "Метка снайпера",
+    "Metadata/Items/Gems/SkillGemProtectiveLink": "Ограждающая связь",
+    "Metadata/Items/Gems/SkillGemPuncture": "Надрез",
+    "Metadata/Items/Gems/SkillGemPunctureRoyale": "Надрез",
+    "Metadata/Items/Gems/SkillGemPunishment": "Наказание",
+    "Metadata/Items/Gems/SkillGemPurge": "Волна осуждения",
+    "Metadata/Items/Gems/SkillGemPurgeRoyale": "Волна осуждения",
+    "Metadata/Items/Gems/SkillGemPurity": "Спасение от стихий",
+    "Metadata/Items/Gems/SkillGemQuickBlock": "[DNT] Quick Block",
+    "Metadata/Items/Gems/SkillGemQuickstep": "Отскок",
+    "Metadata/Items/Gems/SkillGemRageVortex": "Свирепый вихрь",
+    "Metadata/Items/Gems/SkillGemRainOfArrows": "Ливень стрел",
+    "Metadata/Items/Gems/SkillGemRainOfArrowsRoyale": "Ливень стрел",
+    "Metadata/Items/Gems/SkillGemRaiseSpectre": "Сотворение призрака",
+    "Metadata/Items/Gems/SkillGemRaiseZombie": "Поднятие зомби",
+    "Metadata/Items/Gems/SkillGemRallyingCry": "Клич сплочения",
+    "Metadata/Items/Gems/SkillGemReave": "Опустошение",
+    "Metadata/Items/Gems/SkillGemRecallBrands": "Возврат клейм",
+    "Metadata/Items/Gems/SkillGemReckoning": "Буря мечей",
+    "Metadata/Items/Gems/SkillGemRejuvenationTotem": "Восполняющий тотем",
+    "Metadata/Items/Gems/SkillGemRejuvenationTotemRoyale": "Восполняющий тотем",
+    "Metadata/Items/Gems/SkillGemRendingSteel": "Раздирающая сталь",
+    "Metadata/Items/Gems/SkillGemReplicate": "[DNT] Replicate",
+    "Metadata/Items/Gems/SkillGemRighteousFire": "Праведный огонь",
+    "Metadata/Items/Gems/SkillGemRighteousLightning": "Праведная молния",
+    "Metadata/Items/Gems/SkillGemRiposte": "Взмах ледяного щита",
+    "Metadata/Items/Gems/SkillGemRiptide": "Прилив",
+    "Metadata/Items/Gems/SkillGemSanctify": "Очищающее пламя",
+    "Metadata/Items/Gems/SkillGemSanctifyRoyale": "Очищающее пламя",
+    "Metadata/Items/Gems/SkillGemScourgeArrow": "Стрела скверны",
+    "Metadata/Items/Gems/SkillGemScourgeArrowRoyale": "Стрела скверны",
+    "Metadata/Items/Gems/SkillGemSearingBond": "Обжигающие узы",
+    "Metadata/Items/Gems/SkillGemSearingBondRoyale": "Обжигающие узы",
+    "Metadata/Items/Gems/SkillGemSeismicCry": "Сейсмический клич",
+    "Metadata/Items/Gems/SkillGemSerpentStrike": "[DNT] Serpent Strike",
+    "Metadata/Items/Gems/SkillGemShadowBlades": "Клинки тени",
+    "Metadata/Items/Gems/SkillGemShatteringSteel": "Дробящая сталь",
+    "Metadata/Items/Gems/SkillGemShatteringSteelRoyale": "Дробящая сталь",
+    "Metadata/Items/Gems/SkillGemShieldCharge": "Удар щитом",
+    "Metadata/Items/Gems/SkillGemShieldChargeRoyale": "Удар щитом",
+    "Metadata/Items/Gems/SkillGemShieldCrush": "Сокрушающий щит",
+    "Metadata/Items/Gems/SkillGemShieldOfLight": "Щит света",
+    "Metadata/Items/Gems/SkillGemShockNova": "Кольцо молний",
+    "Metadata/Items/Gems/SkillGemShockNovaRoyale": "Кольцо молний",
+    "Metadata/Items/Gems/SkillGemShockwaveTotem": "Сотрясающий тотем",
+    "Metadata/Items/Gems/SkillGemShockwaveTotemRoyale": "Сотрясающий тотем",
+    "Metadata/Items/Gems/SkillGemShrapnelBallista": "Осколочная баллиста",
+    "Metadata/Items/Gems/SkillGemShrapnelShot": "Электризующая стрела",
+    "Metadata/Items/Gems/SkillGemShrapnelShotRoyale": "Электризующая стрела",
+    "Metadata/Items/Gems/SkillGemShrapnelTrap": "Взрывная ловушка",
+    "Metadata/Items/Gems/SkillGemSiegeBallista": "Осадная баллиста",
+    "Metadata/Items/Gems/SkillGemSiegeBallistaRoyale": "Осадная баллиста",
+    "Metadata/Items/Gems/SkillGemSigilOfPower": "Печать силы",
+    "Metadata/Items/Gems/SkillGemSlashTotem": "Мастер клинка предков",
+    "Metadata/Items/Gems/SkillGemSliceAndDice": "[DNT] Slice And Dice",
+    "Metadata/Items/Gems/SkillGemSmite": "Кара",
+    "Metadata/Items/Gems/SkillGemSmiteRoyale": "Кара",
+    "Metadata/Items/Gems/SkillGemSmokeMine": "Дымовая мина",
+    "Metadata/Items/Gems/SkillGemSmokeMineRoyale": "Дымовая мина",
+    "Metadata/Items/Gems/SkillGemSomaticShell": "Соматический панцирь",
+    "Metadata/Items/Gems/SkillGemSoulLink": "Духовная связь",
+    "Metadata/Items/Gems/SkillGemSoulrend": "Разрыв души",
+    "Metadata/Items/Gems/SkillGemSpark": "Искра",
+    "Metadata/Items/Gems/SkillGemSpectralHelix": "Призрачная спираль",
+    "Metadata/Items/Gems/SkillGemSpectralSpinningWeapon": "Призрачное крутящееся оружие",
+    "Metadata/Items/Gems/SkillGemSpellDamageAura": "Фанатизм",
+    "Metadata/Items/Gems/SkillGemSpellslinger": "Чароплёт",
+    "Metadata/Items/Gems/SkillGemSpiritOffering": "Подношение духа",
+    "Metadata/Items/Gems/SkillGemSplitArrow": "Расколотая стрела",
+    "Metadata/Items/Gems/SkillGemSplittingSteel": "Раскалывающая сталь",
+    "Metadata/Items/Gems/SkillGemStaticStrike": "Статичный разряд",
+    "Metadata/Items/Gems/SkillGemStaticTether": "Статичная связь",
+    "Metadata/Items/Gems/SkillGemSteelskin": "Стальная кожа",
+    "Metadata/Items/Gems/SkillGemStormBind": "Грозовые руны",
+    "Metadata/Items/Gems/SkillGemStormblastMine": "Штормовая мина",
+    "Metadata/Items/Gems/SkillGemStormBrand": "Клеймо бури",
+    "Metadata/Items/Gems/SkillGemStormBurst": "Грозовой взрыв",
+    "Metadata/Items/Gems/SkillGemStormCall": "Призыв бури",
+    "Metadata/Items/Gems/SkillGemStormCallRoyale": "Призыв бури",
+    "Metadata/Items/Gems/SkillGemStormRain": "Грозовой дождь",
+    "Metadata/Items/Gems/SkillGemSummonCarrionGolem": "Призыв трупного голема",
+    "Metadata/Items/Gems/SkillGemSummonChaosGolem": "Призыв голема хаоса",
+    "Metadata/Items/Gems/SkillGemSummonFlameGolem": "Призыв голема огня",
+    "Metadata/Items/Gems/SkillGemSummonIceGolem": "Призыв голема льда",
+    "Metadata/Items/Gems/SkillGemSummonLightningGolem": "Призыв голема молнии",
+    "Metadata/Items/Gems/SkillGemSummonRagingSpirit": "Призыв неистового духа",
+    "Metadata/Items/Gems/SkillGemSummonRagingSpiritRoyale": "Призыв неистового духа",
+    "Metadata/Items/Gems/SkillGemSummonReaper": "Призыв Жнеца",
+    "Metadata/Items/Gems/SkillGemSummonRelic": "Призыв священной реликвии",
+    "Metadata/Items/Gems/SkillGemSummonRockGolem": "Призыв каменного голема",
+    "Metadata/Items/Gems/SkillGemSummonSkeletons": "Сотворение скелетов",
+    "Metadata/Items/Gems/SkillGemSummonSkeletonsChannelled": "Поддерживаемое Сотворение скелетов",
+    "Metadata/Items/Gems/SkillGemSummonSkeletonsRoyale": "Сотворение скелетов",
+    "Metadata/Items/Gems/SkillGemSummonSkitterbots": "Призыв мехаботов",
+    "Metadata/Items/Gems/SkillGemSunder": "Раскол",
+    "Metadata/Items/Gems/SkillGemSunderRoyale": "Раскол",
+    "Metadata/Items/Gems/SkillGemSweep": "Священный взмах",
+    "Metadata/Items/Gems/SkillGemSweepRoyale": "Священный взмах",
+    "Metadata/Items/Gems/SkillGemTectonicSlam": "Тектонический удар",
+    "Metadata/Items/Gems/SkillGemTempestShield": "Щит бури",
+    "Metadata/Items/Gems/SkillGemTemporalChains": "Путы времени",
+    "Metadata/Items/Gems/SkillGemTemporalRift": "Временной разрыв",
+    "Metadata/Items/Gems/SkillGemThrownShieldProjectile": "Бросок призрачного щита",
+    "Metadata/Items/Gems/SkillGemThrownShieldProjectileRoyale": "Бросок призрачного щита",
+    "Metadata/Items/Gems/SkillGemThrownWeapon": "Призрачный бросок",
+    "Metadata/Items/Gems/SkillGemThrownWeaponRoyale": "Призрачный бросок",
+    "Metadata/Items/Gems/SkillGemThunderstorm": "Гроза",
+    "Metadata/Items/Gems/SkillGemTornado": "Торнадо",
+    "Metadata/Items/Gems/SkillGemTornadoShot": "Вихрь стрел",
+    "Metadata/Items/Gems/SkillGemTouchOfGod": "Перст божий",
+    "Metadata/Items/Gems/SkillGemToxicRain": "Токсичный дождь",
+    "Metadata/Items/Gems/SkillGemToxicRainRoyale": "Токсичный дождь",
+    "Metadata/Items/Gems/SkillGemVaalAbsolution": "Отпущение ваал",
+    "Metadata/Items/Gems/SkillGemVaalAncestralWarchief": "Вождь предков ваал",
+    "Metadata/Items/Gems/SkillGemVaalAnimateWeapon": "Живое оружие ваал",
+    "Metadata/Items/Gems/SkillGemVaalArc": "Цепь молний ваал",
+    "Metadata/Items/Gems/SkillGemVaalArcticArmour": "Северная броня ваал",
+    "Metadata/Items/Gems/SkillGemVaalBladeVortex": "Вихрь клинков ваал",
+    "Metadata/Items/Gems/SkillGemVaalBlight": "Мор ваал",
+    "Metadata/Items/Gems/SkillGemVaalBurningArrow": "Горящая стрела ваал",
+    "Metadata/Items/Gems/SkillGemVaalCausticArrow": "Едкая стрела ваал",
+    "Metadata/Items/Gems/SkillGemVaalChargedAttack": "Порыв клинков ваал",
+    "Metadata/Items/Gems/SkillGemVaalClarity": "Ясность ума ваал",
+    "Metadata/Items/Gems/SkillGemVaalCleave": "Рассечение ваал",
+    "Metadata/Items/Gems/SkillGemVaalColdResistAura": "Погибель от холода ваал",
+    "Metadata/Items/Gems/SkillGemVaalColdSnap": "Укус стужи ваал",
+    "Metadata/Items/Gems/SkillGemVaalCyclone": "Вихрь ваал",
+    "Metadata/Items/Gems/SkillGemVaalDetonateDead": "Подрыв трупа ваал",
+    "Metadata/Items/Gems/SkillGemVaalDiscipline": "Дисциплина ваал",
+    "Metadata/Items/Gems/SkillGemVaalDomination": "Господство ваал",
+    "Metadata/Items/Gems/SkillGemVaalDoubleStrike": "Двойной удар ваал",
+    "Metadata/Items/Gems/SkillGemVaalEarthquake": "Землетрясение ваал",
+    "Metadata/Items/Gems/SkillGemVaalFireball": "Огненный шар ваал",
+    "Metadata/Items/Gems/SkillGemVaalFireResistAura": "Погибель от огня ваал",
+    "Metadata/Items/Gems/SkillGemVaalFirestorm": "Огненный шторм ваал",
+    "Metadata/Items/Gems/SkillGemVaalFireTrap": "Огненная ловушка ваал",
+    "Metadata/Items/Gems/SkillGemVaalFlameblast": "Пламенный взрыв ваал",
+    "Metadata/Items/Gems/SkillGemVaalFleshOffering": "Подношение плоти ваал",
+    "Metadata/Items/Gems/SkillGemVaalFlickerStrike": "Внезапный удар ваал",
+    "Metadata/Items/Gems/SkillGemVaalGlacialHammer": "Леденящий молот ваал",
+    "Metadata/Items/Gems/SkillGemVaalGrace": "Грация ваал",
+    "Metadata/Items/Gems/SkillGemVaalGroundSlam": "Сотрясение ваал",
+    "Metadata/Items/Gems/SkillGemVaalHaste": "Спешка ваал",
+    "Metadata/Items/Gems/SkillGemVaalHeavyStrike": "Тяжелый удар ваал",
+    "Metadata/Items/Gems/SkillGemVaalIceNova": "Кольцо льда ваал",
+    "Metadata/Items/Gems/SkillGemVaalIceShot": "Ледяной выстрел ваал",
+    "Metadata/Items/Gems/SkillGemVaalImmortalCall": "Призыв к бессмертию ваал",
+    "Metadata/Items/Gems/SkillGemVaalLightningArrow": "Стрела молнии ваал",
+    "Metadata/Items/Gems/SkillGemVaalLightningResistAura": "Погибель от молнии ваал",
+    "Metadata/Items/Gems/SkillGemVaalLightningStrike": "Удар молнии ваал",
+    "Metadata/Items/Gems/SkillGemVaalLightningTrap": "Ловушка молний ваал",
+    "Metadata/Items/Gems/SkillGemVaalLightningWarp": "Грозовой переход ваал",
+    "Metadata/Items/Gems/SkillGemVaalMoltenShell": "Расплавленный панцирь ваал",
+    "Metadata/Items/Gems/SkillGemVaalMoltenStrike": "Магмовый удар ваал",
+    "Metadata/Items/Gems/SkillGemVaalPortal": "Разлом ваал",
+    "Metadata/Items/Gems/SkillGemVaalPowerSiphon": "Перелив энергии ваал",
+    "Metadata/Items/Gems/SkillGemVaalRainOfArrows": "Ливень стрел ваал",
+    "Metadata/Items/Gems/SkillGemVaalReap": "Кровавая жатва ваал",
+    "Metadata/Items/Gems/SkillGemVaalReave": "Опустошение ваал",
+    "Metadata/Items/Gems/SkillGemVaalRejuvenationTotem": "Восполняющий тотем ваал",
+    "Metadata/Items/Gems/SkillGemVaalRighteousFire": "Праведный огонь ваал",
+    "Metadata/Items/Gems/SkillGemVaalSmite": "Кара ваал",
+    "Metadata/Items/Gems/SkillGemVaalSpark": "Искра ваал",
+    "Metadata/Items/Gems/SkillGemVaalSplitArrow": "Расколотая стрела ваал",
+    "Metadata/Items/Gems/SkillGemVaalStormCall": "Призыв бури ваал",
+    "Metadata/Items/Gems/SkillGemVaalSummonSkeletons": "Сотворение скелетов ваал",
+    "Metadata/Items/Gems/SkillGemVaalSweep": "Круговой взмах ваал",
+    "Metadata/Items/Gems/SkillGemVaalThrownWeapon": "Призрачный бросок ваал",
+    "Metadata/Items/Gems/SkillGemVaalVenomGyre": "Круг яда ваал",
+    "Metadata/Items/Gems/SkillGemVaalVolcanicFissure": "Вулканический разлом ваал",
+    "Metadata/Items/Gems/SkillGemVampiricLink": "Иссушающая связь",
+    "Metadata/Items/Gems/SkillGemVengeance": "Сокрушающий кулак",
+    "Metadata/Items/Gems/SkillGemVengefulCry": "Клич отмщения",
+    "Metadata/Items/Gems/SkillGemVenomGyre": "Круг яда",
+    "Metadata/Items/Gems/SkillGemVenomGyreRoyale": "Круг яда",
+    "Metadata/Items/Gems/SkillGemVigilantStrike": "Расчётливый удар",
+    "Metadata/Items/Gems/SkillGemViperStrike": "Удар гадюки",
+    "Metadata/Items/Gems/SkillGemViperStrikeRoyale": "Удар гадюки",
+    "Metadata/Items/Gems/SkillGemVitality": "Живучесть",
+    "Metadata/Items/Gems/SkillGemVitalityRoyale": "Живучесть",
+    "Metadata/Items/Gems/SkillGemVoidSphere": "Сфера пустоты",
+    "Metadata/Items/Gems/SkillGemVoidSphereRoyale": "Сфера пустоты",
+    "Metadata/Items/Gems/SkillGemVolatileDead": "Нестабильный труп",
+    "Metadata/Items/Gems/SkillGemVolcanicFissure": "Вулканический разлом",
+    "Metadata/Items/Gems/SkillGemVoltaxicBurst": "Вольтаксовая вспышка",
+    "Metadata/Items/Gems/SkillGemVortexMine": "Мина-воронка",
+    "Metadata/Items/Gems/SkillGemVulnerability": "Отчаяние",
+    "Metadata/Items/Gems/SkillGemVulnerabilityRoyale": "Отчаяние",
+    "Metadata/Items/Gems/SkillGemWallOfForce": "Силовая стена",
+    "Metadata/Items/Gems/SkillGemWandTeleport": "Wand Teleport",
+    "Metadata/Items/Gems/SkillGemWarBanner": "Знамя войны",
+    "Metadata/Items/Gems/SkillGemWarlordsMark": "Метка вождя",
+    "Metadata/Items/Gems/SkillGemWarlordsMarkRoyale": "Метка вождя",
+    "Metadata/Items/Gems/SkillGemWhirlingBlades": "Шквал клинков",
+    "Metadata/Items/Gems/SkillGemWhirlingBladesRoyale": "Шквал клинков",
+    "Metadata/Items/Gems/SkillGemWildStrike": "Шальной удар",
+    "Metadata/Items/Gems/SkillGemWildStrikeRoyale": "Шальной удар",
+    "Metadata/Items/Gems/SkillGemWinterOrb": "Зимняя сфера",
+    "Metadata/Items/Gems/SkillGemWintertideBrand": "Клеймо зимы",
+    "Metadata/Items/Gems/SkillGemWither": "Увядание",
+    "Metadata/Items/Gems/SkillGemWitheringStep": "Губительный шаг",
+    "Metadata/Items/Gems/SkillGemWrath": "Грозный гнев",
+    "Metadata/Items/Gems/SupportGemAddedChaosDamage": "Поддержка: Урон хаосом",
+    "Metadata/Items/Gems/SupportGemAddedChaosDamagePlus": "Пробуждённый - Поддержка: Урон хаосом",
+    "Metadata/Items/Gems/SupportGemAddedColdDamage": "Поддержка: Урон холодом",
+    "Metadata/Items/Gems/SupportGemAddedColdDamagePlus": "Пробуждённый - Поддержка: Урон холодом",
+    "Metadata/Items/Gems/SupportGemAddedColdDamageRoyale": "Поддержка: Урон холодом",
+    "Metadata/Items/Gems/SupportGemAddedFireDamage": "Поддержка: Урон огнём",
+    "Metadata/Items/Gems/SupportGemAddedFireDamagePlus": "Пробуждённый - Поддержка: Урон огнём",
+    "Metadata/Items/Gems/SupportGemAddedLightningDamage": "Поддержка: Урон молнией",
+    "Metadata/Items/Gems/SupportGemAddedLightningDamagePlus": "Пробуждённый - Поддержка: Урон молнией",
+    "Metadata/Items/Gems/SupportGemAddedLightningDamageRoyale": "Поддержка: Урон молнией",
+    "Metadata/Items/Gems/SupportGemAdditionalAccuracy": "Поддержка: Меткость",
+    "Metadata/Items/Gems/SupportGemAdditionalLevel": "Поддержка: Усилитель",
+    "Metadata/Items/Gems/SupportGemAdditionalQuality": "Поддержка: Улучшитель",
+    "Metadata/Items/Gems/SupportGemAdditionalXP": "Поддержка: Наставник",
+    "Metadata/Items/Gems/SupportGemAncestralCallPlus": "Пробуждённый - Поддержка: Зов предков",
+    "Metadata/Items/Gems/SupportGemAnnihilation": "Поддержка: Изничтожение",
+    "Metadata/Items/Gems/SupportGemArcaneSurge": "Поддержка: Колдовской выброс",
+    "Metadata/Items/Gems/SupportGemArchmage": "Поддержка: Архимаг",
+    "Metadata/Items/Gems/SupportGemArrowNova": "Поддержка: Кольцо стрел",
+    "Metadata/Items/Gems/SupportGemArrowNovaPlus": "Пробуждённый - Поддержка: Кольцо стрел",
+    "Metadata/Items/Gems/SupportGemArrowNovaRoyale": "Поддержка: Кольцо стрел",
+    "Metadata/Items/Gems/SupportGemBarrage": "Поддержка: Стрельба очередями",
+    "Metadata/Items/Gems/SupportGemBehead": "Поддержка: Обезглавливание",
+    "Metadata/Items/Gems/SupportGemBlasphemy": "Поддержка: Богохульство",
+    "Metadata/Items/Gems/SupportGemBlasphemyPlus": "Пробуждённый - Поддержка: Богохульство",
+    "Metadata/Items/Gems/SupportGemBlasphemyRoyale": "Поддержка: Богохульство",
+    "Metadata/Items/Gems/SupportGemBlessedCall": "Поддержка: Священный призыв",
+    "Metadata/Items/Gems/SupportGemBlind": "Поддержка: Ослепление",
+    "Metadata/Items/Gems/SupportGemBlindRoyale": "Поддержка: Ослепление",
+    "Metadata/Items/Gems/SupportGemBlockChanceReduction": "Поддержка: Затруднение блока",
+    "Metadata/Items/Gems/SupportGemBloodlust": "Поддержка: Кровожадность",
+    "Metadata/Items/Gems/SupportGemBloodMagic": "Поддержка: Заносчивость",
+    "Metadata/Items/Gems/SupportGemBloodsoakedBanner": "Поддержка: Окровавленное знамя",
+    "Metadata/Items/Gems/SupportGemBloodthirst": "Поддержка: Кровавое зверство",
+    "Metadata/Items/Gems/SupportGemBonechill": "Поддержка: Леденящее охлаждение",
+    "Metadata/Items/Gems/SupportGemBonespire": "Поддержка: Костяной шип",
+    "Metadata/Items/Gems/SupportGemBrutality": "Поддержка: Жестокость",
+    "Metadata/Items/Gems/SupportGemBrutalityPlus": "Пробуждённый - Поддержка: Жестокость",
+    "Metadata/Items/Gems/SupportGemBurningDamagePlus": "Пробуждённый - Поддержка: Урон от горения",
+    "Metadata/Items/Gems/SupportGemCastLinkedCursesOnCurse": "WIP",
+    "Metadata/Items/Gems/SupportGemCastOnCrit": "Поддержка: Сотворение чар при критическом ударе",
+    "Metadata/Items/Gems/SupportGemCastOnCritPlus": "Пробуждённый - Поддержка: Сотворение чар при критическом ударе",
+    "Metadata/Items/Gems/SupportGemCastOnDamageTaken": "Поддержка: Сотворение чар при получении урона",
+    "Metadata/Items/Gems/SupportGemCastOnDeath": "Поддержка: Сотворение чар при смерти",
+    "Metadata/Items/Gems/SupportGemCastOnDeathRoyale": "Поддержка: Сотворение чар при смерти",
+    "Metadata/Items/Gems/SupportGemCastOnKill": "Поддержка: Сотворение чар при убийстве в ближнем бою",
+    "Metadata/Items/Gems/SupportGemCastOnStunned": "Поддержка: Сотворение чар при оглушении",
+    "Metadata/Items/Gems/SupportGemCastOnWardBreak": "Поддержка: Сотворение чар при разрушении барьера",
+    "Metadata/Items/Gems/SupportGemCastWhileChannelling": "Поддержка: Сотворение чар при поддержании",
+    "Metadata/Items/Gems/SupportGemCastWhileChannellingPlus": "Пробуждённый - Поддержка: Сотворение чар при поддержании",
+    "Metadata/Items/Gems/SupportGemCastWhileChannellingRoyale": "Поддержка: Сотворение чар при поддержании",
+    "Metadata/Items/Gems/SupportGemChain": "Поддержка: Цепь",
+    "Metadata/Items/Gems/SupportGemChainPlus": "Пробуждённый - Поддержка: Цепь",
+    "Metadata/Items/Gems/SupportGemChanceToBleed": "Поддержка: Шанс кровотечения",
+    "Metadata/Items/Gems/SupportGemChanceToBleedRoyale": "Поддержка: Шанс кровотечения",
+    "Metadata/Items/Gems/SupportGemChanceToFlee": "Поддержка: Паника",
+    "Metadata/Items/Gems/SupportGemChanceToIgnite": "Поддержка: Воспламенение",
+    "Metadata/Items/Gems/SupportGemChaosAttacks": "Поддержка: Губительное прикосновение",
+    "Metadata/Items/Gems/SupportGemChargedMines": "Поддержка: Заряженные мины",
+    "Metadata/Items/Gems/SupportGemCloseCombat": "Поддержка: Бой вплотную",
+    "Metadata/Items/Gems/SupportGemClusterTrap": "Поддержка: Кассетные ловушки",
+    "Metadata/Items/Gems/SupportGemColdPenetration": "Поддержка: Пронизывающий холод",
+    "Metadata/Items/Gems/SupportGemColdPenetrationPlus": "Пробуждённый - Поддержка: Пронизывающий холод",
+    "Metadata/Items/Gems/SupportGemColdToFire": "Поддержка: Холод в огонь",
+    "Metadata/Items/Gems/SupportGemCompanionship": "Поддержка: Товарищество",
+    "Metadata/Items/Gems/SupportGemConcentratedEffect": "Поддержка: Средоточие",
+    "Metadata/Items/Gems/SupportGemConcentratedEffectRoyale": "Поддержка: Средоточие",
+    "Metadata/Items/Gems/SupportGemConflagration": "[UNUSED] Conflagration Support",
+    "Metadata/Items/Gems/SupportGemCongregation": "Поддержка: Сонм",
+    "Metadata/Items/Gems/SupportGemControlledBlaze": "Поддержка: Управляемое горение",
+    "Metadata/Items/Gems/SupportGemControlledDestruction": "Поддержка: Контролируемое разрушение",
+    "Metadata/Items/Gems/SupportGemControlledDestructionPlus": "Пробуждённый - Поддержка: Контролируемое разрушение",
+    "Metadata/Items/Gems/SupportGemCooldownRecovery": "Поддержка: Ускорение перезарядки",
+    "Metadata/Items/Gems/SupportGemCorruptingCry": "Поддержка: Оскверняющий клич",
+    "Metadata/Items/Gems/SupportGemCruelty": "Поддержка: Злость",
+    "Metadata/Items/Gems/SupportGemCullingStrike": "Поддержка: Добивание",
+    "Metadata/Items/Gems/SupportGemCullTheWeak": "Поддержка: Добивание слабых",
+    "Metadata/Items/Gems/SupportGemCursedGround": "Поддержка: Проклятая земля",
+    "Metadata/Items/Gems/SupportGemCurseOnHit": "Поддержка: Касание порчи",
+    "Metadata/Items/Gems/SupportGemCurseOnHitPlus": "Пробуждённый - Поддержка: Касание порчи",
+    "Metadata/Items/Gems/SupportGemDamageAgainstChilled": "Поддержка: Переохлаждение",
+    "Metadata/Items/Gems/SupportGemDeadlyAilments": "Поддержка: Смертельные состояния",
+    "Metadata/Items/Gems/SupportGemDeadlyAilmentsPlus": "Пробуждённый - Поддержка: Смертельные состояния",
+    "Metadata/Items/Gems/SupportGemDeathmark": "Поддержка: Хищник",
+    "Metadata/Items/Gems/SupportGemDecay": "Поддержка: Разложение",
+    "Metadata/Items/Gems/SupportGemDevour": "Поддержка: Пожирание",
+    "Metadata/Items/Gems/SupportGemDivineBlessing": "Поддержка: Божественное благословение",
+    "Metadata/Items/Gems/SupportGemDivineSentinel": "Поддержка: Божественный страж",
+    "Metadata/Items/Gems/SupportGemEarthbreaker": "Поддержка: Камнелом",
+    "Metadata/Items/Gems/SupportGemEclipse": "Поддержка: Затмение",
+    "Metadata/Items/Gems/SupportGemEdify": "Edify Support",
+    "Metadata/Items/Gems/SupportGemEfficacy": "Поддержка: Эффективность",
+    "Metadata/Items/Gems/SupportGemEldritchBlasphemy": "Поддержка: Мистическое богохульство",
+    "Metadata/Items/Gems/SupportGemElementalFocus": "Поддержка: Концентрация стихий",
+    "Metadata/Items/Gems/SupportGemElementalFocusPlus": "Пробуждённый - Поддержка: Концентрация стихий",
+    "Metadata/Items/Gems/SupportGemElementalPenetration": "Поддержка: Пронизывающие стихии",
+    "Metadata/Items/Gems/SupportGemElementalProliferation": "Поддержка: Разгул стихий",
+    "Metadata/Items/Gems/SupportGemEmpowerPlus": "Пробуждённый - Поддержка: Усилитель",
+    "Metadata/Items/Gems/SupportGemEnduranceChargeOnMeleeStun": "Поддержка: Заряд выносливости при оглушении в ближнем бою",
+    "Metadata/Items/Gems/SupportGemEnergyShieldLeech": "Поддержка: Похищение энергетического щита",
+    "Metadata/Items/Gems/SupportGemEnhancePlus": "Пробуждённый - Поддержка: Улучшитель",
+    "Metadata/Items/Gems/SupportGemEnlightenPlus": "Пробуждённый - Поддержка: Наставник",
+    "Metadata/Items/Gems/SupportGemEternalBlessing": "Поддержка: Вечное благословение",
+    "Metadata/Items/Gems/SupportGemExcommunicate": "Поддержка: Отлучение",
+    "Metadata/Items/Gems/SupportGemExemplar": "Поддержка: Эталон",
+    "Metadata/Items/Gems/SupportGemExpertRetaliation": "Поддержка: Искусная расплата",
+    "Metadata/Items/Gems/SupportGemFasterAttack": "Поддержка: Ускорение атак",
+    "Metadata/Items/Gems/SupportGemFasterAttackRoyale": "Поддержка: Ускорение атак",
+    "Metadata/Items/Gems/SupportGemFasterCast": "Поддержка: Ускоренное сотворение чар",
+    "Metadata/Items/Gems/SupportGemFasterCastRoyale": "Поддержка: Ускоренное сотворение чар",
+    "Metadata/Items/Gems/SupportGemFasterProjectiles": "Поддержка: Ускорение снарядов",
+    "Metadata/Items/Gems/SupportGemFasterProjectilesRoyale": "Поддержка: Ускорение снарядов",
+    "Metadata/Items/Gems/SupportGemFeedingFrenzy": "Поддержка: Голодное остервенение",
+    "Metadata/Items/Gems/SupportGemFirePenetration": "Поддержка: Пронизывающий жар",
+    "Metadata/Items/Gems/SupportGemFirePenetrationPlus": "Пробуждённый - Поддержка: Пронизывающий жар",
+    "Metadata/Items/Gems/SupportGemFissure": "Поддержка: Расселина",
+    "Metadata/Items/Gems/SupportGemFistOfWar": "Поддержка: Кулак войны",
+    "Metadata/Items/Gems/SupportGemFistOfWarRoyale": "Поддержка: Кулак войны",
+    "Metadata/Items/Gems/SupportGemFlamewood": "Поддержка: Лучина",
+    "Metadata/Items/Gems/SupportGemFocusedBallista": "Поддержка: Прицельная баллиста",
+    "Metadata/Items/Gems/SupportGemFocusedChannelling": "Поддержка: Сфокусированное поддержание",
+    "Metadata/Items/Gems/SupportGemFork": "Поддержка: Разветвление",
+    "Metadata/Items/Gems/SupportGemForkPlus": "Пробуждённый - Поддержка: Разветвление",
+    "Metadata/Items/Gems/SupportGemFortify": "Поддержка: Укрепление",
+    "Metadata/Items/Gems/SupportGemFortifyRoyale": "Поддержка: Укрепление",
+    "Metadata/Items/Gems/SupportGemFoulgrasp": "Поддержка: Дурная хватка",
+    "Metadata/Items/Gems/SupportGemFrenzyChargeOnSlayingFrozenEnemy": "Поддержка: Укус льда",
+    "Metadata/Items/Gems/SupportGemFrenzyPowerOnTrapTrigger": "Поддержка: Заряженные ловушки",
+    "Metadata/Items/Gems/SupportGemFreshMeat": "Поддержка: Свежее мясо",
+    "Metadata/Items/Gems/SupportGemFrigidBond": "Поддержка: Морозные узы",
+    "Metadata/Items/Gems/SupportGemFrostmage": "Поддержка: Морозная магия",
+    "Metadata/Items/Gems/SupportGemGenerosity": "Поддержка: Щедрость",
+    "Metadata/Items/Gems/SupportGemGenerosityPlus": "Пробуждённый - Поддержка: Щедрость",
+    "Metadata/Items/Gems/SupportGemGluttony": "Поддержка: Ненасытность",
+    "Metadata/Items/Gems/SupportGemGreaterAncestralCall": "Поддержка: Великий зов предков",
+    "Metadata/Items/Gems/SupportGemGreaterChain": "Поддержка: Большая цепь",
+    "Metadata/Items/Gems/SupportGemGreaterDevour": "Поддержка: Большое пожирание",
+    "Metadata/Items/Gems/SupportGemGreaterFork": "Поддержка: Большое разветвление",
+    "Metadata/Items/Gems/SupportGemGreaterKineticInstability": "Поддержка: Большая кинетическая нестабильность",
+    "Metadata/Items/Gems/SupportGemGreaterMultipleProjectiles": "Поддержка: Много дополнительных снарядов",
+    "Metadata/Items/Gems/SupportGemGreaterMultipleProjectilesPlus": "Пробуждённый - Поддержка: Много дополнительных снарядов",
+    "Metadata/Items/Gems/SupportGemGreaterMultistrike": "Поддержка: Большой град ударов",
+    "Metadata/Items/Gems/SupportGemGreaterSpellCascade": "Поддержка: Большой каскад чар",
+    "Metadata/Items/Gems/SupportGemGreaterSpellEcho": "Поддержка: Большое эхо магии",
+    "Metadata/Items/Gems/SupportGemGreaterUnleash": "Поддержка: Большое высвобождение",
+    "Metadata/Items/Gems/SupportGemGreaterVolley": "Поддержка: Большой залп",
+    "Metadata/Items/Gems/SupportGemGuardiansBlessing": "Поддержка: Благословение защитника",
+    "Metadata/Items/Gems/SupportGemHallow": "Поддержка: Благодать",
+    "Metadata/Items/Gems/SupportGemHandcastAnticipation": "Поддержка: Высвобождение",
+    "Metadata/Items/Gems/SupportGemHandcastAnticipationRoyale": "Поддержка: Высвобождение",
+    "Metadata/Items/Gems/SupportGemHandcastRapidFire": "DNT Handcast Rapid Fire",
+    "Metadata/Items/Gems/SupportGemHandcastSpellBoost": "Поддержка: Интенсивность",
+    "Metadata/Items/Gems/SupportGemHarrowingThrong": "Поддержка: Жуткое полчище",
+    "Metadata/Items/Gems/SupportGemHexBloom": "Поддержка: Расцвет порчи",
+    "Metadata/Items/Gems/SupportGemHexpass": "Поддержка: Пагуба",
+    "Metadata/Items/Gems/SupportGemHextoad": "Поддержка: Жабья порча",
+    "Metadata/Items/Gems/SupportGemHighImpactMineSupport": "Поддержка: Усиленная мина",
+    "Metadata/Items/Gems/SupportGemHiveborn": "Поддержка: Порождение улья",
+    "Metadata/Items/Gems/SupportGemIgniteProliferation": "Поддержка: Распространение поджога",
+    "Metadata/Items/Gems/SupportGemImmolate": "Поддержка: Жертвенность",
+    "Metadata/Items/Gems/SupportGemImpale": "Поддержка: Прокол",
+    "Metadata/Items/Gems/SupportGemImpendingDoom": "Поддержка: Обречённость",
+    "Metadata/Items/Gems/SupportGemImpendingDoomRoyale": "Поддержка: Обречённость",
+    "Metadata/Items/Gems/SupportGemIncreasedAreaOfEffect": "Поддержка: Расширенная область действия",
+    "Metadata/Items/Gems/SupportGemIncreasedAreaOfEffectPlus": "Пробуждённый - Поддержка: Расширенная область действия",
+    "Metadata/Items/Gems/SupportGemIncreasedAreaOfEffectRoyale": "Поддержка: Расширенная область действия",
+    "Metadata/Items/Gems/SupportGemIncreasedBurningDamage": "Поддержка: Урон от горения",
+    "Metadata/Items/Gems/SupportGemIncreasedCriticalDamage": "Поддержка: Усиление критических ударов",
+    "Metadata/Items/Gems/SupportGemIncreasedCriticalStrikes": "Поддержка: Учащение критических ударов",
+    "Metadata/Items/Gems/SupportGemIncreasedCriticalStrikesRoyale": "Поддержка: Учащение критических ударов",
+    "Metadata/Items/Gems/SupportGemIncreasedDuration": "Поддержка: Продление",
+    "Metadata/Items/Gems/SupportGemIncreasedDurationRoyale": "Поддержка: Продление",
+    "Metadata/Items/Gems/SupportGemInfernalLegion": "Поддержка: Пылающий легион",
+    "Metadata/Items/Gems/SupportGemInvention": "Поддержка: Изобретательность",
+    "Metadata/Items/Gems/SupportGemInvertTheRules": "Поддержка: Обращение правил",
+    "Metadata/Items/Gems/SupportGemIronGrip": "Поддержка: Железная хватка",
+    "Metadata/Items/Gems/SupportGemIronWill": "Поддержка: Железная воля",
+    "Metadata/Items/Gems/SupportGemItemQuantity": "Поддержка: Количество предметов",
+    "Metadata/Items/Gems/SupportGemItemRarity": "Поддержка: Редкость предметов",
+    "Metadata/Items/Gems/SupportGemKineticInstability": "Поддержка: Кинетическая нестабильность",
+    "Metadata/Items/Gems/SupportGemKnockback": "Поддержка: Отбрасывание",
+    "Metadata/Items/Gems/SupportGemKnockbackRoyale": "Поддержка: Отбрасывание",
+    "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles": "Поддержка: Дополнительные снаряды",
+    "Metadata/Items/Gems/SupportGemLesserMultipleProjectilesRoyale": "Поддержка: Дополнительные снаряды",
+    "Metadata/Items/Gems/SupportGemLesserPoison": "Поддержка: Шанс отравить",
+    "Metadata/Items/Gems/SupportGemLethalDose": "Поддержка: Смертельная доза",
+    "Metadata/Items/Gems/SupportGemLifeGainOnHit": "Поддержка: Здоровье за удар",
+    "Metadata/Items/Gems/SupportGemLifeLeech": "Поддержка: Вытягивание здоровья",
+    "Metadata/Items/Gems/SupportGemLifetap": "Поддержка: Жизнеотвод",
+    "Metadata/Items/Gems/SupportGemLifetapRoyale": "Поддержка: Жизнеотвод",
+    "Metadata/Items/Gems/SupportGemLightningPenetration": "Поддержка: Пронизывающие молнии",
+    "Metadata/Items/Gems/SupportGemLightningPenetrationPlus": "Пробуждённый - Поддержка: Пронизывающие молнии",
+    "Metadata/Items/Gems/SupportGemLivingLightning": "Поддержка: Живая молния",
+    "Metadata/Items/Gems/SupportGemLocusMine": "Поддержка: Направленная мина",
+    "Metadata/Items/Gems/SupportGemMachinations": "Поддержка: Махинации",
+    "Metadata/Items/Gems/SupportGemMagnetism": "Поддержка: Магнетизм",
+    "Metadata/Items/Gems/SupportGemMaim": "Поддержка: Увечье",
+    "Metadata/Items/Gems/SupportGemMaimRoyale": "Поддержка: Увечье",
+    "Metadata/Items/Gems/SupportGemManaforgedArrows": "Поддержка: Стрелы маны",
+    "Metadata/Items/Gems/SupportGemManaLeech": "Поддержка: Вытягивание маны",
+    "Metadata/Items/Gems/SupportGemMarkOnHit": "Поддержка: Метка при попадании",
+    "Metadata/Items/Gems/SupportGemMeatShield": "Поддержка: Живой щит",
+    "Metadata/Items/Gems/SupportGemMeleeDamageOnFullLife": "Поддержка: Урон при полном здоровье",
+    "Metadata/Items/Gems/SupportGemMeleePhysicalDamage": "Поддержка: Физический урон ближнего боя",
+    "Metadata/Items/Gems/SupportGemMeleePhysicalDamagePlus": "Пробуждённый - Поддержка: Физический урон ближнего боя",
+    "Metadata/Items/Gems/SupportGemMeleeSplash": "Поддержка: Раскатистый удар",
+    "Metadata/Items/Gems/SupportGemMeleeSplashPlus": "Пробуждённый - Поддержка: Раскатистый удар",
+    "Metadata/Items/Gems/SupportGemMeleeSplashRoyale": "Поддержка: Раскатистый удар",
+    "Metadata/Items/Gems/SupportGemMinefield": "Поддержка: Минное поле",
+    "Metadata/Items/Gems/SupportGemMinionDamage": "Поддержка: Урон приспешников",
+    "Metadata/Items/Gems/SupportGemMinionDamagePlus": "Пробуждённый - Поддержка: Урон приспешников",
+    "Metadata/Items/Gems/SupportGemMinionLife": "Поддержка: Здоровье приспешников",
+    "Metadata/Items/Gems/SupportGemMinionPact": "Поддержка: Договор служения",
+    "Metadata/Items/Gems/SupportGemMinionSpeed": "Поддержка: Скорость приспешников",
+    "Metadata/Items/Gems/SupportGemMirageArcher": "Поддержка: Призрачный лучник",
+    "Metadata/Items/Gems/SupportGemMulticast": "Поддержка: Эхо магии",
+    "Metadata/Items/Gems/SupportGemMulticastRoyale": "Поддержка: Эхо магии",
+    "Metadata/Items/Gems/SupportGemMultistrike": "Поддержка: Град ударов",
+    "Metadata/Items/Gems/SupportGemMultistrikePlus": "Пробуждённый - Поддержка: Град ударов",
+    "Metadata/Items/Gems/SupportGemMultistrikeRoyale": "Поддержка: Град ударов",
+    "Metadata/Items/Gems/SupportGemMultiTotem": "Поддержка: Множество тотемов",
+    "Metadata/Items/Gems/SupportGemMultiTotemRoyale": "Поддержка: Множество тотемов",
+    "Metadata/Items/Gems/SupportGemMultiTrap": "Поддержка: Дополнительные ловушки",
+    "Metadata/Items/Gems/SupportGemNightblade": "Поддержка: Клинок во тьме",
+    "Metadata/Items/Gems/SupportGemOnslaught": "Поддержка: Импульс",
+    "Metadata/Items/Gems/SupportGemOnslaughtOnSlayingShockedEnemy": "Поддержка: Возбуждение",
+    "Metadata/Items/Gems/SupportGemOvercharge": "Поддержка: Перегрузка",
+    "Metadata/Items/Gems/SupportGemOverexertion": "Поддержка: Переусиление",
+    "Metadata/Items/Gems/SupportGemOverheat": "Поддержка: Перегрев",
+    "Metadata/Items/Gems/SupportGemOverloadedIntensity": "Поддержка: Перегруженная интенсивность",
+    "Metadata/Items/Gems/SupportGemPacifism": "Поддержка: Пацифизм",
+    "Metadata/Items/Gems/SupportGemParallelProjectiles": "Поддержка: Залп",
+    "Metadata/Items/Gems/SupportGemParallelProjectilesRoyale": "Поддержка: Залп",
+    "Metadata/Items/Gems/SupportGemPhysicalProjectileAttackDamage": "Поддержка: Яростные снаряды",
+    "Metadata/Items/Gems/SupportGemPhysicalToLightning": "Поддержка: Физический урон в молнии",
+    "Metadata/Items/Gems/SupportGemPierce": "Поддержка: Пронзание",
+    "Metadata/Items/Gems/SupportGemPinpoint": "Поддержка: Сосредоточение",
+    "Metadata/Items/Gems/SupportGemPointBlank": "Поддержка: Стрельба в упор",
+    "Metadata/Items/Gems/SupportGemPointBlankRoyale": "Поддержка: Стрельба в упор",
+    "Metadata/Items/Gems/SupportGemPoison": "Поддержка: Критические удары состояниями",
+    "Metadata/Items/Gems/SupportGemPowerChargeOnCrit": "Поддержка: Заряд энергии при критическом ударе",
+    "Metadata/Items/Gems/SupportGemPrismaticBurst": "Поддержка: Радужная вспышка",
+    "Metadata/Items/Gems/SupportGemPulverise": "Поддержка: Распыление",
+    "Metadata/Items/Gems/SupportGemPyre": "Поддержка: Костёр",
+    "Metadata/Items/Gems/SupportGemRage": "Поддержка: Свирепость",
+    "Metadata/Items/Gems/SupportGemRageRoyale": "Поддержка: Свирепость",
+    "Metadata/Items/Gems/SupportGemRangedAttackTotem": "Поддержка: Тотем-баллиста",
+    "Metadata/Items/Gems/SupportGemRangedAttackTotemRoyale": "Поддержка: Тотем-баллиста",
+    "Metadata/Items/Gems/SupportGemRapidDecay": "Поддержка: Стремительный недуг",
+    "Metadata/Items/Gems/SupportGemReducedDuration": "Поддержка: Сокращение",
+    "Metadata/Items/Gems/SupportGemReducedDurationRoyale": "Поддержка: Сокращение",
+    "Metadata/Items/Gems/SupportGemReducedMana": "Поддержка: Вдохновение",
+    "Metadata/Items/Gems/SupportGemRemoteMine": "Поддержка: Цепной подрыв",
+    "Metadata/Items/Gems/SupportGemReturningProjectiles": "Поддержка: Возвращающиеся снаряды",
+    "Metadata/Items/Gems/SupportGemRupture": "Поддержка: Разрывание",
+    "Metadata/Items/Gems/SupportGemRuthless": "Поддержка: Беспощадность",
+    "Metadata/Items/Gems/SupportGemSacredWisps": "Поддержка: Священные огоньки",
+    "Metadata/Items/Gems/SupportGemSacrifice": "Поддержка: Жертвоприношение",
+    "Metadata/Items/Gems/SupportGemSadism": "Поддержка: Садизм",
+    "Metadata/Items/Gems/SupportGemScornfulHerald": "Поддержка: Вестник презрения",
+    "Metadata/Items/Gems/SupportGemSecondWind": "Поддержка: Второе дыхание",
+    "Metadata/Items/Gems/SupportGemSecondWindRoyale": "Поддержка: Второе дыхание",
+    "Metadata/Items/Gems/SupportGemShockwave": "Поддержка: Ударная волна",
+    "Metadata/Items/Gems/SupportGemSlowerProjectiles": "Поддержка: Замедленные снаряды",
+    "Metadata/Items/Gems/SupportGemSpellblade": "Поддержка: Чародейский клинок",
+    "Metadata/Items/Gems/SupportGemSpellCascade": "Поддержка: Каскад чар",
+    "Metadata/Items/Gems/SupportGemSpellCascadePlus": "Пробуждённый - Поддержка: Каскад чар",
+    "Metadata/Items/Gems/SupportGemSpellCascadeRoyale": "Поддержка: Каскад чар",
+    "Metadata/Items/Gems/SupportGemSpellEchoPlus": "Пробуждённый - Поддержка: Эхо магии",
+    "Metadata/Items/Gems/SupportGemSpellTotem": "Поддержка: Колдующий тотем",
+    "Metadata/Items/Gems/SupportGemSpellTotemRoyale": "Поддержка: Колдующий тотем",
+    "Metadata/Items/Gems/SupportGemSpiritStrike": "Поддержка: Зов предков",
+    "Metadata/Items/Gems/SupportGemSpiritStrikeRoyale": "Поддержка: Зов предков",
+    "Metadata/Items/Gems/SupportGemSplit": "Поддержка: Разделение снарядов",
+    "Metadata/Items/Gems/SupportGemStormBarrier": "Поддержка: Усиленное поддержание",
+    "Metadata/Items/Gems/SupportGemStun": "Поддержка: Оглушение",
+    "Metadata/Items/Gems/SupportGemStunRoyale": "Поддержка: Оглушение",
+    "Metadata/Items/Gems/SupportGemSummonElementalResistance": "Поддержка: Стихийное войско",
+    "Metadata/Items/Gems/SupportGemSummonGhostOnKill": "Поддержка: Призыв фантома",
+    "Metadata/Items/Gems/SupportGemSummonGhostOnKillRoyale": "Поддержка: Призыв фантома",
+    "Metadata/Items/Gems/SupportGemSwiftAfflictionPlus": "Пробуждённый - Поддержка: Стремительный недуг",
+    "Metadata/Items/Gems/SupportGemSwiftAssembly": "Поддержка: Быстрая сборка",
+    "Metadata/Items/Gems/SupportGemSwiftbrand": "Поддержка: Быстрое клеймение",
+    "Metadata/Items/Gems/SupportGemTemporaryForTutorial": "Поддержка: Малое снижение расхода маны",
+    "Metadata/Items/Gems/SupportGemTransfusion": "Поддержка: Переливание",
+    "Metadata/Items/Gems/SupportGemTrap": "Поддержка: Ловушка",
+    "Metadata/Items/Gems/SupportGemTrapAndMineDamage": "Поддержка: Урон ловушек и мин",
+    "Metadata/Items/Gems/SupportGemTrapCooldown": "Поддержка: Улучшенные ловушки",
+    "Metadata/Items/Gems/SupportGemTrapCooldownRoyale": "Поддержка: Улучшенные ловушки",
+    "Metadata/Items/Gems/SupportGemTrapRoyale": "Поддержка: Ловушка",
+    "Metadata/Items/Gems/SupportGemTrauma": "Поддержка: Травма",
+    "Metadata/Items/Gems/SupportGemTrinity": "Поддержка: Триединство",
+    "Metadata/Items/Gems/SupportGemUnboundAilments": "Поддержка: Безграничные состояния",
+    "Metadata/Items/Gems/SupportGemUnboundAilmentsPlus": "Пробуждённый - Поддержка: Безграничные состояния",
+    "Metadata/Items/Gems/SupportGemUnholyTrinity": "Поддержка: Нечестивое триединство",
+    "Metadata/Items/Gems/SupportGemUnleashPlus": "Пробуждённый - Поддержка: Высвобождение",
+    "Metadata/Items/Gems/SupportGemUrgentOrders": "Поддержка: Срочные приказы",
+    "Metadata/Items/Gems/SupportGemVaalSacrifice": "Поддержка: Жертвоприношение ваал",
+    "Metadata/Items/Gems/SupportGemVaalSoulHarvesting": "Сбор душ ваал",
+    "Metadata/Items/Gems/SupportGemVaalTemptation": "Поддержка: Искушение ваал",
+    "Metadata/Items/Gems/SupportGemViciousProjectilesPlus": "Пробуждённый - Поддержка: Яростные снаряды",
+    "Metadata/Items/Gems/SupportGemVileToxins": "Поддержка: Едкие токсины",
+    "Metadata/Items/Gems/SupportGemVoidManipulation": "Поддержка: Манипуляция пустотой",
+    "Metadata/Items/Gems/SupportGemVoidManipulationPlus": "Пробуждённый - Поддержка: Манипуляция пустотой",
+    "Metadata/Items/Gems/SupportGemVoidShockwave": "Поддержка: Волна пустоты",
+    "Metadata/Items/Gems/SupportGemVoidstorm": "Поддержка: Буря пустоты",
+    "Metadata/Items/Gems/SupportGemVolatility": "Поддержка: Нестабильность",
+    "Metadata/Items/Gems/SupportGemWard": "Поддержка: Барьер",
+    "Metadata/Items/Gems/SupportGemWeaponElementalDamage": "Поддержка: Урон от стихий атаками",
+    "Metadata/Items/Gems/SupportGemWeaponElementalDamagePlus": "Пробуждённый - Поддержка: Урон от стихий атаками",
+    "Metadata/Items/Gems/SupportGemWindburst": "Поддержка: Порыв ветра"
+  },
+  "intentionalEnglishFallbacks": {
+    "areaMapNames": {
+      "1_1_11_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_1_7_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_2_6_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "1_3_14_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_6_7_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_7_5_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_8_12_1": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      },
+      "2_8_7_1_": {
+        "reason": "No audited Russian MapPins export or exact WorldArea name match is available.",
+        "source": "canonical English MapPins fallback"
+      }
+    },
+    "craftingRecipes": {
+      "1_2_14_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_2_14_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_10_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_14_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_15": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_17_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_3_8_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_3_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_3_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_4_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_5_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_6_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_4_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_5_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "1_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_4": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_10_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_11_endgame_town": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_14": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_7_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_7_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_6_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_10": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_12_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_4": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_5_1": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_5_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_7_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_12_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_2_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_5": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_8_7_2": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_6": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_7": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_8": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_9_9": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "2_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "3_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      },
+      "EndGame_Labyrinth_boss_3": {
+        "reason": "No audited Russian RecipeUnlockDisplay export is available.",
+        "source": "canonical English RecipeUnlockDisplay fallback"
+      }
+    },
+    "gems": {
+      "Metadata/Items/Gem/SkillGemCallMercenary": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru (audited exact-ID pages)"
+      },
+      "Metadata/Items/Gems/SkillGemCallOfTheWild": {
+        "reason": "The audited official-source record intentionally retains an English DNT/WIP value.",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      "Metadata/Items/Gems/SkillGemComboStrike": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru (audited exact-ID pages)"
+      },
+      "Metadata/Items/Gems/SkillGemDiscorectangleSlam": {
+        "reason": "The audited official-source record intentionally retains an English DNT/WIP value.",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      "Metadata/Items/Gems/SkillGemIgnite": {
+        "reason": "No usable exact Russian value exists for this technical/internal gem ID.",
+        "source": "https://poedb.tw/ru (audited exact-ID pages)"
+      },
+      "Metadata/Items/Gems/SkillGemWandTeleport": {
+        "reason": "The audited official-source record intentionally retains an English DNT/WIP value.",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      "Metadata/Items/Gems/SupportGemConflagration": {
+        "reason": "The audited official-source record intentionally retains an English DNT/WIP value.",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      "Metadata/Items/Gems/SupportGemEdify": {
+        "reason": "The audited official-source record intentionally retains an English DNT/WIP value.",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      }
+    },
+    "questNames": {
+      "bandit_respec": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      },
+      "d2c1": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      },
+      "d2c2": {
+        "reason": "Canonical synthetic quest bucket intentionally has no display name.",
+        "source": "canonical quest data"
+      }
+    },
+    "rewardNpcs": {
+      "a2q9/a2q9b_tencent": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      },
+      "d2c1/d2c1": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      },
+      "d2c2/d2c2": {
+        "reason": "Synthetic route label intentionally remains canonical English.",
+        "source": "canonical quest data"
+      }
+    },
+    "vendorNpcs": {}
+  },
+  "literals": {},
+  "quests": {
+    "a10q1": {
+      "name": "Безопасный путь",
+      "rewardNpcs": {
+        "a10q1": "Лани"
+      },
+      "vendorNpcs": {
+        "a10q1": {}
+      }
+    },
+    "a10q2": {
+      "name": "Смерть и перерождение",
+      "rewardNpcs": {
+        "a10q2": "Лани"
+      },
+      "vendorNpcs": {
+        "a10q2": {}
+      }
+    },
+    "a10q3": {
+      "name": "Конец голоду",
+      "rewardNpcs": {
+        "a10q3": "Лани"
+      },
+      "vendorNpcs": {
+        "a10q3": {}
+      }
+    },
+    "a10q3a11": {
+      "name": "Конец голоду",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a10q4": {
+      "name": "Старых призраков никто не любит",
+      "rewardNpcs": {
+        "a10q4": "Вейлам Рот"
+      },
+      "vendorNpcs": {
+        "a10q4": {}
+      }
+    },
+    "a10q5": {
+      "name": "Карта до Тсоаты",
+      "rewardNpcs": {
+        "a10q5": "Лилия Рот"
+      },
+      "vendorNpcs": {
+        "a10q5": {}
+      }
+    },
+    "a10q6": {
+      "name": "Месть Виленты",
+      "rewardNpcs": {
+        "a10q6": "Лани"
+      },
+      "vendorNpcs": {
+        "a10q6": {}
+      }
+    },
+    "A11q0": {
+      "name": "Навстречу будущему",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a11q1": {
+      "name": "Призыв к оружию",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a1q1": {
+      "name": "Враг у ворот",
+      "rewardNpcs": {
+        "a1q1": "Таркли"
+      },
+      "vendorNpcs": {
+        "a1q1": {
+          "Metadata/Items/Gems/SkillGemBlight": "Несса",
+          "Metadata/Items/Gems/SkillGemBurningArrow": "Несса",
+          "Metadata/Items/Gems/SkillGemCleave": "Несса",
+          "Metadata/Items/Gems/SkillGemCobraLash": "Несса",
+          "Metadata/Items/Gems/SkillGemDoubleStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemDualStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemEtherealKnives": "Несса",
+          "Metadata/Items/Gems/SkillGemFireball": "Несса",
+          "Metadata/Items/Gems/SkillGemFreezingPulse": "Несса",
+          "Metadata/Items/Gems/SkillGemFrostBlades": "Несса",
+          "Metadata/Items/Gems/SkillGemFrostBolt": "Несса",
+          "Metadata/Items/Gems/SkillGemGlacialHammer": "Несса",
+          "Metadata/Items/Gems/SkillGemGroundSlam": "Несса",
+          "Metadata/Items/Gems/SkillGemHeavyStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemHolyStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemIceShot": "Несса",
+          "Metadata/Items/Gems/SkillGemKineticBolt": "Несса",
+          "Metadata/Items/Gems/SkillGemLightningTendrils": "Несса",
+          "Metadata/Items/Gems/SkillGemMagmaOrb": "Несса",
+          "Metadata/Items/Gems/SkillGemMoltenStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemPerforate": "Несса",
+          "Metadata/Items/Gems/SkillGemPoisonArrow": "Несса",
+          "Metadata/Items/Gems/SkillGemRaiseZombie": "Несса",
+          "Metadata/Items/Gems/SkillGemSanctify": "Несса",
+          "Metadata/Items/Gems/SkillGemShieldCrush": "Несса",
+          "Metadata/Items/Gems/SkillGemShrapnelShot": "Несса",
+          "Metadata/Items/Gems/SkillGemShrapnelTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemSmite": "Несса",
+          "Metadata/Items/Gems/SkillGemSpark": "Несса",
+          "Metadata/Items/Gems/SkillGemSplitArrow": "Несса",
+          "Metadata/Items/Gems/SkillGemSplittingSteel": "Несса",
+          "Metadata/Items/Gems/SkillGemStormblastMine": "Несса",
+          "Metadata/Items/Gems/SkillGemThrownWeapon": "Несса",
+          "Metadata/Items/Gems/SkillGemViperStrike": "Несса",
+          "Metadata/Items/Gems/SupportGemArcaneSurge": "Несса",
+          "Metadata/Items/Gems/SupportGemChanceToBleed": "Несса",
+          "Metadata/Items/Gems/SupportGemHallow": "Несса",
+          "Metadata/Items/Gems/SupportGemLesserPoison": "Несса",
+          "Metadata/Items/Gems/SupportGemOnslaught": "Несса",
+          "Metadata/Items/Gems/SupportGemRuthless": "Несса"
+        }
+      }
+    },
+    "a1q2": {
+      "name": "Зверь в клетке",
+      "rewardNpcs": {
+        "a1q2": "Таркли",
+        "a1q2b": "Несса"
+      },
+      "vendorNpcs": {
+        "a1q2": {
+          "Metadata/Items/Gems/SkillGemBlinkArrow": "Несса",
+          "Metadata/Items/Gems/SkillGemBoneLance": "Несса",
+          "Metadata/Items/Gems/SkillGemClarity": "Несса",
+          "Metadata/Items/Gems/SkillGemCorpseWarp": "Несса",
+          "Metadata/Items/Gems/SkillGemEnduringCry": "Несса",
+          "Metadata/Items/Gems/SkillGemFlameDash": "Несса",
+          "Metadata/Items/Gems/SkillGemFlickerStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemIceSiphonTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemIntimidatingCry": "Несса",
+          "Metadata/Items/Gems/SkillGemLeapSlam": "Несса",
+          "Metadata/Items/Gems/SkillGemLightningWarp": "Несса",
+          "Metadata/Items/Gems/SkillGemPrecision": "Несса",
+          "Metadata/Items/Gems/SkillGemSmokeMine": "Несса",
+          "Metadata/Items/Gems/SkillGemSummonSkeletons": "Несса",
+          "Metadata/Items/Gems/SkillGemVitality": "Несса",
+          "Metadata/Items/Gems/SkillGemWhirlingBlades": "Несса",
+          "Metadata/Items/Gems/SkillGemWither": "Несса",
+          "Metadata/Items/Gems/SkillGemWitheringStep": "Несса"
+        },
+        "a1q2b": {
+          "Metadata/Items/Gems/SupportGemAddedColdDamage": "Несса",
+          "Metadata/Items/Gems/SupportGemAddedFireDamage": "Несса",
+          "Metadata/Items/Gems/SupportGemAddedLightningDamage": "Несса",
+          "Metadata/Items/Gems/SupportGemAdditionalAccuracy": "Несса",
+          "Metadata/Items/Gems/SupportGemArrowNova": "Несса",
+          "Metadata/Items/Gems/SupportGemBlind": "Несса",
+          "Metadata/Items/Gems/SupportGemChanceToFlee": "Несса",
+          "Metadata/Items/Gems/SupportGemChanceToIgnite": "Несса",
+          "Metadata/Items/Gems/SupportGemDevour": "Несса",
+          "Metadata/Items/Gems/SupportGemEfficacy": "Несса",
+          "Metadata/Items/Gems/SupportGemFasterAttack": "Несса",
+          "Metadata/Items/Gems/SupportGemFlamewood": "Несса",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalStrikes": "Несса",
+          "Metadata/Items/Gems/SupportGemInfernalLegion": "Несса",
+          "Metadata/Items/Gems/SupportGemKnockback": "Несса",
+          "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles": "Несса",
+          "Metadata/Items/Gems/SupportGemLifeGainOnHit": "Несса",
+          "Metadata/Items/Gems/SupportGemLifetap": "Несса",
+          "Metadata/Items/Gems/SupportGemLocusMine": "Несса",
+          "Metadata/Items/Gems/SupportGemMaim": "Несса",
+          "Metadata/Items/Gems/SupportGemManaforgedArrows": "Несса",
+          "Metadata/Items/Gems/SupportGemMeleeSplash": "Несса",
+          "Metadata/Items/Gems/SupportGemMinionDamage": "Несса",
+          "Metadata/Items/Gems/SupportGemMultiTrap": "Несса",
+          "Metadata/Items/Gems/SupportGemRangedAttackTotem": "Несса",
+          "Metadata/Items/Gems/SupportGemRemoteMine": "Несса",
+          "Metadata/Items/Gems/SupportGemSpellTotem": "Несса",
+          "Metadata/Items/Gems/SupportGemStun": "Несса",
+          "Metadata/Items/Gems/SupportGemTrap": "Несса",
+          "Metadata/Items/Gems/SupportGemUnboundAilments": "Несса",
+          "Metadata/Items/Gems/SupportGemVoidManipulation": "Несса"
+        }
+      }
+    },
+    "a1q3": {
+      "name": "Зов сирены",
+      "rewardNpcs": {
+        "a1q3": "Несса"
+      },
+      "vendorNpcs": {
+        "a1q3": {
+          "Metadata/Items/Gems/SkillGemAbsolution": "Несса",
+          "Metadata/Items/Gems/SkillGemArc": "Несса",
+          "Metadata/Items/Gems/SkillGemArcticBreath": "Несса",
+          "Metadata/Items/Gems/SkillGemBarrage": "Несса",
+          "Metadata/Items/Gems/SkillGemBladeTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemBladeVortex": "Несса",
+          "Metadata/Items/Gems/SkillGemBlazingSalvo": "Несса",
+          "Metadata/Items/Gems/SkillGemBoneOffering": "Несса",
+          "Metadata/Items/Gems/SkillGemChainHook": "Несса",
+          "Metadata/Items/Gems/SkillGemEarthshatter": "Несса",
+          "Metadata/Items/Gems/SkillGemElementalHit": "Несса",
+          "Metadata/Items/Gems/SkillGemEssenceDrain": "Несса",
+          "Metadata/Items/Gems/SkillGemExsanguinate": "Несса",
+          "Metadata/Items/Gems/SkillGemFireBeam": "Несса",
+          "Metadata/Items/Gems/SkillGemFireTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemFlameWhip": "Несса",
+          "Metadata/Items/Gems/SkillGemFleshOffering": "Несса",
+          "Metadata/Items/Gems/SkillGemFreezeMine": "Несса",
+          "Metadata/Items/Gems/SkillGemIceNova": "Несса",
+          "Metadata/Items/Gems/SkillGemIceSpear": "Несса",
+          "Metadata/Items/Gems/SkillGemIncinerate": "Несса",
+          "Metadata/Items/Gems/SkillGemInfernalBlow": "Несса",
+          "Metadata/Items/Gems/SkillGemKineticFusillade": "Несса",
+          "Metadata/Items/Gems/SkillGemLacerate": "Несса",
+          "Metadata/Items/Gems/SkillGemLightningArrow": "Несса",
+          "Metadata/Items/Gems/SkillGemLightningStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemLightningTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemManabond": "Несса",
+          "Metadata/Items/Gems/SkillGemPoisonousConcoction": "Несса",
+          "Metadata/Items/Gems/SkillGemPowerSiphon": "Несса",
+          "Metadata/Items/Gems/SkillGemRainOfArrows": "Несса",
+          "Metadata/Items/Gems/SkillGemReave": "Несса",
+          "Metadata/Items/Gems/SkillGemSearingBond": "Несса",
+          "Metadata/Items/Gems/SkillGemShatteringSteel": "Несса",
+          "Metadata/Items/Gems/SkillGemSiegeBallista": "Несса",
+          "Metadata/Items/Gems/SkillGemSpectralHelix": "Несса",
+          "Metadata/Items/Gems/SkillGemSpiritOffering": "Несса",
+          "Metadata/Items/Gems/SkillGemStaticStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemStormBrand": "Несса",
+          "Metadata/Items/Gems/SkillGemStormBurst": "Несса",
+          "Metadata/Items/Gems/SkillGemStormCall": "Несса",
+          "Metadata/Items/Gems/SkillGemSunder": "Несса",
+          "Metadata/Items/Gems/SkillGemSweep": "Несса",
+          "Metadata/Items/Gems/SkillGemToxicRain": "Несса",
+          "Metadata/Items/Gems/SkillGemVenomGyre": "Несса",
+          "Metadata/Items/Gems/SkillGemVolatileDead": "Несса",
+          "Metadata/Items/Gems/SkillGemVoltaxicBurst": "Несса",
+          "Metadata/Items/Gems/SkillGemWintertideBrand": "Несса"
+        }
+      }
+    },
+    "a1q4": {
+      "name": "Разорение гнёзд",
+      "rewardNpcs": {
+        "a1q4": "Таркли",
+        "a1q4b": "Таркли"
+      },
+      "vendorNpcs": {
+        "a1q4": {
+          "Metadata/Items/Gems/SkillGemAnimateWeapon": "Несса",
+          "Metadata/Items/Gems/SkillGemBearTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemBloodAndSand": "Несса",
+          "Metadata/Items/Gems/SkillGemContagion": "Несса",
+          "Metadata/Items/Gems/SkillGemConversionTrap": "Несса",
+          "Metadata/Items/Gems/SkillGemDecoyTotem": "Несса",
+          "Metadata/Items/Gems/SkillGemDetonateDead": "Несса",
+          "Metadata/Items/Gems/SkillGemDevouringTotem": "Несса",
+          "Metadata/Items/Gems/SkillGemFlameTotem": "Несса",
+          "Metadata/Items/Gems/SkillGemFlameWall": "Несса",
+          "Metadata/Items/Gems/SkillGemFrostBomb": "Несса",
+          "Metadata/Items/Gems/SkillGemFrostWall": "Несса",
+          "Metadata/Items/Gems/SkillGemOrbOfStorms": "Несса",
+          "Metadata/Items/Gems/SkillGemProjectileWeakness": "Несса",
+          "Metadata/Items/Gems/SkillGemPuncture": "Несса",
+          "Metadata/Items/Gems/SkillGemRejuvenationTotem": "Несса",
+          "Metadata/Items/Gems/SkillGemShieldCharge": "Несса",
+          "Metadata/Items/Gems/SkillGemShrapnelBallista": "Несса",
+          "Metadata/Items/Gems/SkillGemSummonRagingSpirit": "Несса",
+          "Metadata/Items/Gems/SkillGemSummonRelic": "Несса",
+          "Metadata/Items/Gems/SkillGemVengeance": "Несса",
+          "Metadata/Items/Gems/SkillGemVigilantStrike": "Несса",
+          "Metadata/Items/Gems/SkillGemWarBanner": "Несса"
+        },
+        "a1q4b": {
+          "Metadata/Items/Gems/SkillGemDash": "Несса",
+          "Metadata/Items/Gems/SkillGemFrostblink": "Несса",
+          "Metadata/Items/Gems/SkillGemSteelskin": "Несса"
+        }
+      }
+    },
+    "a1q5": {
+      "name": "Любовь к ближнему",
+      "rewardNpcs": {
+        "a1q5": "Несса",
+        "a1q5b": "Несса"
+      },
+      "vendorNpcs": {
+        "a1q5": {
+          "Metadata/Items/Gems/SupportGemArcaneSurge": "Несса",
+          "Metadata/Items/Gems/SupportGemChanceToBleed": "Несса",
+          "Metadata/Items/Gems/SupportGemElementalProliferation": "Несса",
+          "Metadata/Items/Gems/SupportGemHallow": "Несса",
+          "Metadata/Items/Gems/SupportGemLesserPoison": "Несса",
+          "Metadata/Items/Gems/SupportGemMirageArcher": "Несса",
+          "Metadata/Items/Gems/SupportGemOnslaught": "Несса",
+          "Metadata/Items/Gems/SupportGemParallelProjectiles": "Несса",
+          "Metadata/Items/Gems/SupportGemPierce": "Несса",
+          "Metadata/Items/Gems/SupportGemPrismaticBurst": "Несса",
+          "Metadata/Items/Gems/SupportGemRuthless": "Несса",
+          "Metadata/Items/Gems/SupportGemSpellCascade": "Несса",
+          "Metadata/Items/Gems/SupportGemSpiritStrike": "Несса",
+          "Metadata/Items/Gems/SupportGemStormBarrier": "Несса",
+          "Metadata/Items/Gems/SupportGemSummonGhostOnKill": "Несса",
+          "Metadata/Items/Gems/SupportGemSwiftAssembly": "Несса"
+        },
+        "a1q5b": {}
+      }
+    },
+    "a1q6": {
+      "name": "Обманутый моряк",
+      "rewardNpcs": {
+        "a1q6": "Бестель"
+      },
+      "vendorNpcs": {
+        "a1q6": {}
+      }
+    },
+    "a1q7": {
+      "name": "Обитатель глубин",
+      "rewardNpcs": {
+        "a1q7": "Таркли"
+      },
+      "vendorNpcs": {
+        "a1q7": {}
+      }
+    },
+    "a1q8": {
+      "name": "Грязная работа",
+      "rewardNpcs": {
+        "a1q8": "Таркли"
+      },
+      "vendorNpcs": {
+        "a1q8": {}
+      }
+    },
+    "a1q9": {
+      "name": "Путь вперёд",
+      "rewardNpcs": {
+        "a1q9": "Бестель"
+      },
+      "vendorNpcs": {
+        "a1q9": {}
+      }
+    },
+    "a2q1": {
+      "name": "Главарь разбойников Крайтин",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q10": {
+      "name": "Великий белый зверь",
+      "rewardNpcs": {
+        "a2q10": "Йина"
+      },
+      "vendorNpcs": {
+        "a2q10": {}
+      }
+    },
+    "a2q11": {
+      "name": "Путь вперёд",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q2": {
+      "name": "Главарь разбойников Алира",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q3": {
+      "name": "Главарь разбойников Дуб",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q4": {
+      "name": "Мучительно острый",
+      "rewardNpcs": {
+        "a2q4": "Шёлк"
+      },
+      "vendorNpcs": {
+        "a2q4": {
+          "Metadata/Items/Gems/SupportGemBloodlust": "Йина",
+          "Metadata/Items/Gems/SupportGemCloseCombat": "Йина",
+          "Metadata/Items/Gems/SupportGemColdToFire": "Йина",
+          "Metadata/Items/Gems/SupportGemConcentratedEffect": "Йина",
+          "Metadata/Items/Gems/SupportGemControlledDestruction": "Йина",
+          "Metadata/Items/Gems/SupportGemCruelty": "Йина",
+          "Metadata/Items/Gems/SupportGemCullingStrike": "Йина",
+          "Metadata/Items/Gems/SupportGemDeadlyAilments": "Йина",
+          "Metadata/Items/Gems/SupportGemDeathmark": "Йина",
+          "Metadata/Items/Gems/SupportGemElementalFocus": "Йина",
+          "Metadata/Items/Gems/SupportGemEnduranceChargeOnMeleeStun": "Йина",
+          "Metadata/Items/Gems/SupportGemExemplar": "Йина",
+          "Metadata/Items/Gems/SupportGemFasterCast": "Йина",
+          "Metadata/Items/Gems/SupportGemFreshMeat": "Йина",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalDamage": "Йина",
+          "Metadata/Items/Gems/SupportGemIronGrip": "Йина",
+          "Metadata/Items/Gems/SupportGemIronWill": "Йина",
+          "Metadata/Items/Gems/SupportGemKineticInstability": "Йина",
+          "Metadata/Items/Gems/SupportGemLivingLightning": "Йина",
+          "Metadata/Items/Gems/SupportGemMeleeDamageOnFullLife": "Йина",
+          "Metadata/Items/Gems/SupportGemMeleePhysicalDamage": "Йина",
+          "Metadata/Items/Gems/SupportGemMinionLife": "Йина",
+          "Metadata/Items/Gems/SupportGemMinionSpeed": "Йина",
+          "Metadata/Items/Gems/SupportGemNightblade": "Йина",
+          "Metadata/Items/Gems/SupportGemOvercharge": "Йина",
+          "Metadata/Items/Gems/SupportGemPhysicalProjectileAttackDamage": "Йина",
+          "Metadata/Items/Gems/SupportGemPhysicalToLightning": "Йина",
+          "Metadata/Items/Gems/SupportGemPointBlank": "Йина",
+          "Metadata/Items/Gems/SupportGemPowerChargeOnCrit": "Йина",
+          "Metadata/Items/Gems/SupportGemRage": "Йина",
+          "Metadata/Items/Gems/SupportGemSacredWisps": "Йина",
+          "Metadata/Items/Gems/SupportGemSadism": "Йина",
+          "Metadata/Items/Gems/SupportGemShockwave": "Йина",
+          "Metadata/Items/Gems/SupportGemTrapAndMineDamage": "Йина",
+          "Metadata/Items/Gems/SupportGemTrinity": "Йина",
+          "Metadata/Items/Gems/SupportGemVolatility": "Йина",
+          "Metadata/Items/Gems/SupportGemWeaponElementalDamage": "Йина"
+        }
+      }
+    },
+    "a2q5": {
+      "name": "По святой земле",
+      "rewardNpcs": {
+        "a2q5": "Йина"
+      },
+      "vendorNpcs": {
+        "a2q5": {}
+      }
+    },
+    "a2q6": {
+      "name": "Захватчики в чёрном",
+      "rewardNpcs": {
+        "a2q6": "Груст"
+      },
+      "vendorNpcs": {
+        "a2q6": {
+          "Metadata/Items/Gems/SkillGemAncestralCry": "Йина",
+          "Metadata/Items/Gems/SkillGemArcaneCloak": "Йина",
+          "Metadata/Items/Gems/SkillGemArcticArmour": "Йина",
+          "Metadata/Items/Gems/SkillGemBladeBlast": "Йина",
+          "Metadata/Items/Gems/SkillGemBloodRage": "Йина",
+          "Metadata/Items/Gems/SkillGemColdSnap": "Йина",
+          "Metadata/Items/Gems/SkillGemCorruptingFever": "Йина",
+          "Metadata/Items/Gems/SkillGemCriticalWeakness": "Йина",
+          "Metadata/Items/Gems/SkillGemDefianceBanner": "Йина",
+          "Metadata/Items/Gems/SkillGemDesecrate": "Йина",
+          "Metadata/Items/Gems/SkillGemDivineRetribution": "Йина",
+          "Metadata/Items/Gems/SkillGemEnsnaringArrow": "Йина",
+          "Metadata/Items/Gems/SkillGemEviscerate": "Йина",
+          "Metadata/Items/Gems/SkillGemFleshAndStone": "Йина",
+          "Metadata/Items/Gems/SkillGemForbiddenRite": "Йина",
+          "Metadata/Items/Gems/SkillGemFrenzy": "Йина",
+          "Metadata/Items/Gems/SkillGemGalvanicField": "Йина",
+          "Metadata/Items/Gems/SkillGemHeraldOfAgony": "Йина",
+          "Metadata/Items/Gems/SkillGemHeraldOfAsh": "Йина",
+          "Metadata/Items/Gems/SkillGemHeraldOfIce": "Йина",
+          "Metadata/Items/Gems/SkillGemHeraldOfPurity": "Йина",
+          "Metadata/Items/Gems/SkillGemHeraldOfThunder": "Йина",
+          "Metadata/Items/Gems/SkillGemMoltenShell": "Йина",
+          "Metadata/Items/Gems/SkillGemPoachersMark": "Йина",
+          "Metadata/Items/Gems/SkillGemPurge": "Йина",
+          "Metadata/Items/Gems/SkillGemRecallBrands": "Йина",
+          "Metadata/Items/Gems/SkillGemReckoning": "Йина",
+          "Metadata/Items/Gems/SkillGemRighteousFire": "Йина",
+          "Metadata/Items/Gems/SkillGemRiposte": "Йина",
+          "Metadata/Items/Gems/SkillGemSeismicCry": "Йина",
+          "Metadata/Items/Gems/SkillGemShieldOfLight": "Йина",
+          "Metadata/Items/Gems/SkillGemSummonSkitterbots": "Йина",
+          "Metadata/Items/Gems/SkillGemTempestShield": "Йина",
+          "Metadata/Items/Gems/SkillGemWallOfForce": "Йина",
+          "Metadata/Items/Gems/SkillGemWarlordsMark": "Йина"
+        }
+      }
+    },
+    "a2q7": {
+      "name": "Разбойничьи дрязги",
+      "rewardNpcs": {
+        "a2q7": "Эрамир"
+      },
+      "vendorNpcs": {
+        "a2q7": {}
+      }
+    },
+    "a2q8": {
+      "name": "Сумерки ваал",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q8a3": {
+      "name": "Сумерки ваал",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a2q9": {
+      "name": "Корень бед",
+      "rewardNpcs": {
+        "a2q9b_tencent": "Tutorial NPC"
+      },
+      "vendorNpcs": {
+        "a2q9b_tencent": {}
+      }
+    },
+    "a3q1": {
+      "name": "Разлучённые влюблённые",
+      "rewardNpcs": {
+        "a3q1": "Марамоа"
+      },
+      "vendorNpcs": {
+        "a3q1": {
+          "Metadata/Items/Gems/SkillGemAbyssalCry": "Кларисса",
+          "Metadata/Items/Gems/SkillGemAlchemistsMark": "Кларисса",
+          "Metadata/Items/Gems/SkillGemAnger": "Кларисса",
+          "Metadata/Items/Gems/SkillGemAutomation": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBattlemagesCry": "Кларисса",
+          "Metadata/Items/Gems/SkillGemCallToArms": "Кларисса",
+          "Metadata/Items/Gems/SkillGemColdResistAura": "Кларисса",
+          "Metadata/Items/Gems/SkillGemConductivity": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDamageOverTimeAura": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDarkRitual": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDetermination": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDiscipline": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDreadBanner": "Кларисса",
+          "Metadata/Items/Gems/SkillGemElementalWeakness": "Кларисса",
+          "Metadata/Items/Gems/SkillGemEnergyBlade": "Кларисса",
+          "Metadata/Items/Gems/SkillGemEnfeeble": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFireResistAura": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFlammability": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFrostbite": "Кларисса",
+          "Metadata/Items/Gems/SkillGemGeneralsCry": "Кларисса",
+          "Metadata/Items/Gems/SkillGemGrace": "Кларисса",
+          "Metadata/Items/Gems/SkillGemHaste": "Кларисса",
+          "Metadata/Items/Gems/SkillGemHatred": "Кларисса",
+          "Metadata/Items/Gems/SkillGemLightningResistAura": "Кларисса",
+          "Metadata/Items/Gems/SkillGemNewVulnerability": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPetrifiedBlood": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPlagueBearer": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPride": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPunishment": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPurity": "Кларисса",
+          "Metadata/Items/Gems/SkillGemRallyingCry": "Кларисса",
+          "Metadata/Items/Gems/SkillGemSpellDamageAura": "Кларисса",
+          "Metadata/Items/Gems/SkillGemSpellslinger": "Кларисса",
+          "Metadata/Items/Gems/SkillGemTemporalChains": "Кларисса",
+          "Metadata/Items/Gems/SkillGemVengefulCry": "Кларисса",
+          "Metadata/Items/Gems/SkillGemVulnerability": "Кларисса",
+          "Metadata/Items/Gems/SkillGemWrath": "Кларисса"
+        }
+      }
+    },
+    "a3q10": {
+      "name": "Перст Господень",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a3q11": {
+      "name": "Секреты Виктарио",
+      "rewardNpcs": {
+        "a3q11": "Харган"
+      },
+      "vendorNpcs": {
+        "a3q11": {}
+      }
+    },
+    "a3q12": {
+      "name": "Разгадка судьбы",
+      "rewardNpcs": {
+        "a3q12": "Сиоса"
+      },
+      "vendorNpcs": {
+        "a3q12": {
+          "Metadata/Items/Gems/SkillGemAbsolution": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAbyssalCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAncestralCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAnger": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAnimateArmour": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAnimateWeapon": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArc": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArcaneCloak": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArcticArmour": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArcticBreath": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArmageddonBrand": "Сиоса",
+          "Metadata/Items/Gems/SkillGemArtilleryBallista": "Сиоса",
+          "Metadata/Items/Gems/SkillGemAutomation": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBallLightning": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBarrage": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBattlemagesCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBearTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBladeBlast": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBladefall": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBladestorm": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBladeTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBladeVortex": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBlastRain": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBlazingSalvo": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBlight": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBlinkArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBloodAndSand": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBloodRage": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBloodreap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBoneLance": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBoneOffering": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBoneshatter": "Сиоса",
+          "Metadata/Items/Gems/SkillGemBurningArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCallToArms": "Сиоса",
+          "Metadata/Items/Gems/SkillGemChainHook": "Сиоса",
+          "Metadata/Items/Gems/SkillGemChargedAttack": "Сиоса",
+          "Metadata/Items/Gems/SkillGemChargedDash": "Сиоса",
+          "Metadata/Items/Gems/SkillGemClarity": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCleave": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCobraLash": "Сиоса",
+          "Metadata/Items/Gems/SkillGemColdResistAura": "Сиоса",
+          "Metadata/Items/Gems/SkillGemColdSnap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemConductivity": "Сиоса",
+          "Metadata/Items/Gems/SkillGemConflagration": "Сиоса",
+          "Metadata/Items/Gems/SkillGemConsecratedPath": "Сиоса",
+          "Metadata/Items/Gems/SkillGemContagion": "Сиоса",
+          "Metadata/Items/Gems/SkillGemConversionTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemConvocationNew": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCorpseEruption": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCorpseWarp": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCorruptingFever": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCracklingLance": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCriticalWeakness": "Сиоса",
+          "Metadata/Items/Gems/SkillGemCyclone": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDamageOverTimeAura": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDarkPact": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDarkRitual": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDash": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDecoyTotem": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDefianceBanner": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDesecrate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDetermination": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDetonateDead": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDetonateMines": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDevouringTotem": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDischarge": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDiscipline": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDivineBlast": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDivineRetribution": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDivineTempest": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDominatingBlow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDoubleStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDreadBanner": "Сиоса",
+          "Metadata/Items/Gems/SkillGemDualStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEarthquake": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEarthshatter": "Сиоса",
+          "Metadata/Items/Gems/SkillGemElementalHit": "Сиоса",
+          "Metadata/Items/Gems/SkillGemElementalWeakness": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEnduringCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEnergyBlade": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEnfeeble": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEnsnaringArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEssenceDrain": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEtherealKnives": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEviscerate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemExplosiveArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemExplosiveConcoction": "Сиоса",
+          "Metadata/Items/Gems/SkillGemExsanguinate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemEyeOfWinter": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFireball": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFireBeam": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFireNovaMine": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFireResistAura": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFirestorm": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFireTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlameblast": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlameDash": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlamethrowerTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlameTotem": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlameWall": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlameWhip": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlammability": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFleshAndStone": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFleshOffering": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFlickerStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemForbiddenRite": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFreezeMine": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFreezingPulse": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrenzy": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostbite": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostBlades": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostblink": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostBolt": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostBoltNova": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostBomb": "Сиоса",
+          "Metadata/Items/Gems/SkillGemFrostWall": "Сиоса",
+          "Metadata/Items/Gems/SkillGemGeneralsCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemGlacialCascade": "Сиоса",
+          "Metadata/Items/Gems/SkillGemGlacialHammer": "Сиоса",
+          "Metadata/Items/Gems/SkillGemGrace": "Сиоса",
+          "Metadata/Items/Gems/SkillGemGroundSlam": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHaste": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHatred": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeavyStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeraldOfAgony": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeraldOfAsh": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeraldOfIce": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeraldOfPurity": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHeraldOfThunder": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHexblast": "Сиоса",
+          "Metadata/Items/Gems/SkillGemHolyStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceCrash": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceNova": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceShot": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceSiphonTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceSpear": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIceTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIncinerate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemInfernalBlow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemIntimidatingCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemKineticBlast": "Сиоса",
+          "Metadata/Items/Gems/SkillGemKineticBolt": "Сиоса",
+          "Metadata/Items/Gems/SkillGemKineticFusillade": "Сиоса",
+          "Metadata/Items/Gems/SkillGemKineticRain": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLacerate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLancingSteel": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLeapSlam": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningResistAura": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningTendrils": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningTowerTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemLightningWarp": "Сиоса",
+          "Metadata/Items/Gems/SkillGemMagmaOrb": "Сиоса",
+          "Metadata/Items/Gems/SkillGemManabond": "Сиоса",
+          "Metadata/Items/Gems/SkillGemMirrorArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemMoltenShell": "Сиоса",
+          "Metadata/Items/Gems/SkillGemMoltenStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemNewVulnerability": "Сиоса",
+          "Metadata/Items/Gems/SkillGemOrbOfStorms": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPenanceBrand": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPerforate": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPestilentStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPetrifiedBlood": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPhysCascadeTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPlagueBearer": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPoachersMark": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPoisonArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPoisonousConcoction": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPowerSiphon": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPrecision": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPride": "Сиоса",
+          "Metadata/Items/Gems/SkillGemProjectileWeakness": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPuncture": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPunishment": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPurge": "Сиоса",
+          "Metadata/Items/Gems/SkillGemPurity": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRageVortex": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRainOfArrows": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRaiseSpectre": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRaiseZombie": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRallyingCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemReave": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRecallBrands": "Сиоса",
+          "Metadata/Items/Gems/SkillGemReckoning": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRejuvenationTotem": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRighteousFire": "Сиоса",
+          "Metadata/Items/Gems/SkillGemRiposte": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSanctify": "Сиоса",
+          "Metadata/Items/Gems/SkillGemScourgeArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSearingBond": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSeismicCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShatteringSteel": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShieldCharge": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShieldCrush": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShieldOfLight": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShockNova": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShockwaveTotem": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShrapnelBallista": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShrapnelShot": "Сиоса",
+          "Metadata/Items/Gems/SkillGemShrapnelTrap": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSiegeBallista": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSmite": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSmokeMine": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSomaticShell": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSoulrend": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSpark": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSpectralHelix": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSpellDamageAura": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSpellslinger": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSpiritOffering": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSplitArrow": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSplittingSteel": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStaticStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSteelskin": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormBind": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormblastMine": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormBrand": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormBurst": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormCall": "Сиоса",
+          "Metadata/Items/Gems/SkillGemStormRain": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSummonRagingSpirit": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSummonReaper": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSummonRelic": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSummonSkeletons": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSummonSkitterbots": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSunder": "Сиоса",
+          "Metadata/Items/Gems/SkillGemSweep": "Сиоса",
+          "Metadata/Items/Gems/SkillGemTectonicSlam": "Сиоса",
+          "Metadata/Items/Gems/SkillGemTempestShield": "Сиоса",
+          "Metadata/Items/Gems/SkillGemTemporalChains": "Сиоса",
+          "Metadata/Items/Gems/SkillGemThrownShieldProjectile": "Сиоса",
+          "Metadata/Items/Gems/SkillGemThrownWeapon": "Сиоса",
+          "Metadata/Items/Gems/SkillGemThunderstorm": "Сиоса",
+          "Metadata/Items/Gems/SkillGemTornadoShot": "Сиоса",
+          "Metadata/Items/Gems/SkillGemToxicRain": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVengeance": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVengefulCry": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVenomGyre": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVigilantStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemViperStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVitality": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVolatileDead": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVoltaxicBurst": "Сиоса",
+          "Metadata/Items/Gems/SkillGemVulnerability": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWallOfForce": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWarBanner": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWarlordsMark": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWhirlingBlades": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWildStrike": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWinterOrb": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWintertideBrand": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWither": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWitheringStep": "Сиоса",
+          "Metadata/Items/Gems/SkillGemWrath": "Сиоса",
+          "Metadata/Items/Gems/SupportGemAddedChaosDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemAddedColdDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemAddedFireDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemAddedLightningDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemAdditionalAccuracy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemArcaneSurge": "Сиоса",
+          "Metadata/Items/Gems/SupportGemArchmage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemArrowNova": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBlasphemy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBlessedCall": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBlind": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBloodlust": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBloodMagic": "Сиоса",
+          "Metadata/Items/Gems/SupportGemBloodthirst": "Сиоса",
+          "Metadata/Items/Gems/SupportGemChanceToBleed": "Сиоса",
+          "Metadata/Items/Gems/SupportGemChanceToFlee": "Сиоса",
+          "Metadata/Items/Gems/SupportGemChanceToIgnite": "Сиоса",
+          "Metadata/Items/Gems/SupportGemChargedMines": "Сиоса",
+          "Metadata/Items/Gems/SupportGemCloseCombat": "Сиоса",
+          "Metadata/Items/Gems/SupportGemColdPenetration": "Сиоса",
+          "Metadata/Items/Gems/SupportGemColdToFire": "Сиоса",
+          "Metadata/Items/Gems/SupportGemConcentratedEffect": "Сиоса",
+          "Metadata/Items/Gems/SupportGemControlledBlaze": "Сиоса",
+          "Metadata/Items/Gems/SupportGemControlledDestruction": "Сиоса",
+          "Metadata/Items/Gems/SupportGemCorruptingCry": "Сиоса",
+          "Metadata/Items/Gems/SupportGemCruelty": "Сиоса",
+          "Metadata/Items/Gems/SupportGemCullingStrike": "Сиоса",
+          "Metadata/Items/Gems/SupportGemCursedGround": "Сиоса",
+          "Metadata/Items/Gems/SupportGemDamageAgainstChilled": "Сиоса",
+          "Metadata/Items/Gems/SupportGemDeadlyAilments": "Сиоса",
+          "Metadata/Items/Gems/SupportGemDeathmark": "Сиоса",
+          "Metadata/Items/Gems/SupportGemDevour": "Сиоса",
+          "Metadata/Items/Gems/SupportGemEfficacy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemElementalFocus": "Сиоса",
+          "Metadata/Items/Gems/SupportGemElementalProliferation": "Сиоса",
+          "Metadata/Items/Gems/SupportGemEnduranceChargeOnMeleeStun": "Сиоса",
+          "Metadata/Items/Gems/SupportGemEnergyShieldLeech": "Сиоса",
+          "Metadata/Items/Gems/SupportGemExcommunicate": "Сиоса",
+          "Metadata/Items/Gems/SupportGemExemplar": "Сиоса",
+          "Metadata/Items/Gems/SupportGemExpertRetaliation": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFasterAttack": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFasterCast": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFasterProjectiles": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFeedingFrenzy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFirePenetration": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFlamewood": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFocusedBallista": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFocusedChannelling": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFork": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFortify": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFrenzyChargeOnSlayingFrozenEnemy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFrenzyPowerOnTrapTrigger": "Сиоса",
+          "Metadata/Items/Gems/SupportGemFreshMeat": "Сиоса",
+          "Metadata/Items/Gems/SupportGemGenerosity": "Сиоса",
+          "Metadata/Items/Gems/SupportGemGuardiansBlessing": "Сиоса",
+          "Metadata/Items/Gems/SupportGemHallow": "Сиоса",
+          "Metadata/Items/Gems/SupportGemHandcastSpellBoost": "Сиоса",
+          "Metadata/Items/Gems/SupportGemHighImpactMineSupport": "Сиоса",
+          "Metadata/Items/Gems/SupportGemImpale": "Сиоса",
+          "Metadata/Items/Gems/SupportGemImpendingDoom": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIncreasedBurningDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalStrikes": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIncreasedDuration": "Сиоса",
+          "Metadata/Items/Gems/SupportGemInfernalLegion": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIronGrip": "Сиоса",
+          "Metadata/Items/Gems/SupportGemIronWill": "Сиоса",
+          "Metadata/Items/Gems/SupportGemItemRarity": "Сиоса",
+          "Metadata/Items/Gems/SupportGemKineticInstability": "Сиоса",
+          "Metadata/Items/Gems/SupportGemKnockback": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLesserPoison": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLifeGainOnHit": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLifeLeech": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLifetap": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLightningPenetration": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLivingLightning": "Сиоса",
+          "Metadata/Items/Gems/SupportGemLocusMine": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMaim": "Сиоса",
+          "Metadata/Items/Gems/SupportGemManaforgedArrows": "Сиоса",
+          "Metadata/Items/Gems/SupportGemManaLeech": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMeatShield": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMeleeDamageOnFullLife": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMeleePhysicalDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMeleeSplash": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMinionDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMinionLife": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMinionSpeed": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMirageArcher": "Сиоса",
+          "Metadata/Items/Gems/SupportGemMultiTrap": "Сиоса",
+          "Metadata/Items/Gems/SupportGemNightblade": "Сиоса",
+          "Metadata/Items/Gems/SupportGemOnslaught": "Сиоса",
+          "Metadata/Items/Gems/SupportGemOnslaughtOnSlayingShockedEnemy": "Сиоса",
+          "Metadata/Items/Gems/SupportGemParallelProjectiles": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPhysicalProjectileAttackDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPhysicalToLightning": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPierce": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPinpoint": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPointBlank": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPoison": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPowerChargeOnCrit": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPrismaticBurst": "Сиоса",
+          "Metadata/Items/Gems/SupportGemPulverise": "Сиоса",
+          "Metadata/Items/Gems/SupportGemRage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemRangedAttackTotem": "Сиоса",
+          "Metadata/Items/Gems/SupportGemRapidDecay": "Сиоса",
+          "Metadata/Items/Gems/SupportGemReducedDuration": "Сиоса",
+          "Metadata/Items/Gems/SupportGemReducedMana": "Сиоса",
+          "Metadata/Items/Gems/SupportGemRemoteMine": "Сиоса",
+          "Metadata/Items/Gems/SupportGemRuthless": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSacredWisps": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSacrifice": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSadism": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSecondWind": "Сиоса",
+          "Metadata/Items/Gems/SupportGemShockwave": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSlowerProjectiles": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSpellCascade": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSpellTotem": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSpiritStrike": "Сиоса",
+          "Metadata/Items/Gems/SupportGemStormBarrier": "Сиоса",
+          "Metadata/Items/Gems/SupportGemStun": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSummonElementalResistance": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSummonGhostOnKill": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSwiftAssembly": "Сиоса",
+          "Metadata/Items/Gems/SupportGemSwiftbrand": "Сиоса",
+          "Metadata/Items/Gems/SupportGemTrap": "Сиоса",
+          "Metadata/Items/Gems/SupportGemTrapAndMineDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemTrapCooldown": "Сиоса",
+          "Metadata/Items/Gems/SupportGemTrinity": "Сиоса",
+          "Metadata/Items/Gems/SupportGemUnboundAilments": "Сиоса",
+          "Metadata/Items/Gems/SupportGemUrgentOrders": "Сиоса",
+          "Metadata/Items/Gems/SupportGemVoidManipulation": "Сиоса",
+          "Metadata/Items/Gems/SupportGemVolatility": "Сиоса",
+          "Metadata/Items/Gems/SupportGemWeaponElementalDamage": "Сиоса",
+          "Metadata/Items/Gems/SupportGemWindburst": "Сиоса"
+        }
+      }
+    },
+    "a3q13": {
+      "name": "Глоток надежды",
+      "rewardNpcs": {
+        "a3q13": "Капитан Фейргрейвс"
+      },
+      "vendorNpcs": {
+        "a3q13": {}
+      }
+    },
+    "a3q2": {
+      "name": "Разлучённые влюблённые",
+      "rewardNpcs": {
+        "a3q2": "Кларисса"
+      },
+      "vendorNpcs": {
+        "a3q2": {}
+      }
+    },
+    "a3q3": {
+      "name": "Царица каменитов",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a3q4": {
+      "name": "Катушка для лент",
+      "rewardNpcs": {
+        "a3q4": "Госпожа Диалла"
+      },
+      "vendorNpcs": {
+        "a3q4": {}
+      }
+    },
+    "a3q5": {
+      "name": "Пылающая пыль",
+      "rewardNpcs": {
+        "a3q5": "Госпожа Диалла"
+      },
+      "vendorNpcs": {
+        "a3q5": {}
+      }
+    },
+    "a3q8": {
+      "name": "Отсечение правой руки",
+      "rewardNpcs": {
+        "a3q8": "Марамоа"
+      },
+      "vendorNpcs": {
+        "a3q8": {
+          "Metadata/Items/Gems/SkillGemAnimateArmour": "Кларисса",
+          "Metadata/Items/Gems/SkillGemArmageddonBrand": "Кларисса",
+          "Metadata/Items/Gems/SkillGemArtilleryBallista": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBallLightning": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBladefall": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBladestorm": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBlastRain": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBloodreap": "Кларисса",
+          "Metadata/Items/Gems/SkillGemBoneshatter": "Кларисса",
+          "Metadata/Items/Gems/SkillGemChargedAttack": "Кларисса",
+          "Metadata/Items/Gems/SkillGemChargedDash": "Кларисса",
+          "Metadata/Items/Gems/SkillGemConflagration": "Кларисса",
+          "Metadata/Items/Gems/SkillGemConsecratedPath": "Кларисса",
+          "Metadata/Items/Gems/SkillGemCorpseEruption": "Кларисса",
+          "Metadata/Items/Gems/SkillGemCracklingLance": "Кларисса",
+          "Metadata/Items/Gems/SkillGemCyclone": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDarkPact": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDischarge": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDivineBlast": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDivineTempest": "Кларисса",
+          "Metadata/Items/Gems/SkillGemDominatingBlow": "Кларисса",
+          "Metadata/Items/Gems/SkillGemEarthquake": "Кларисса",
+          "Metadata/Items/Gems/SkillGemExplosiveArrow": "Кларисса",
+          "Metadata/Items/Gems/SkillGemExplosiveConcoction": "Кларисса",
+          "Metadata/Items/Gems/SkillGemEyeOfWinter": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFireNovaMine": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFirestorm": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFlameblast": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFlamethrowerTrap": "Кларисса",
+          "Metadata/Items/Gems/SkillGemFrostBoltNova": "Кларисса",
+          "Metadata/Items/Gems/SkillGemGlacialCascade": "Кларисса",
+          "Metadata/Items/Gems/SkillGemHexblast": "Кларисса",
+          "Metadata/Items/Gems/SkillGemIceCrash": "Кларисса",
+          "Metadata/Items/Gems/SkillGemIceTrap": "Кларисса",
+          "Metadata/Items/Gems/SkillGemKineticBlast": "Кларисса",
+          "Metadata/Items/Gems/SkillGemKineticRain": "Кларисса",
+          "Metadata/Items/Gems/SkillGemLancingSteel": "Кларисса",
+          "Metadata/Items/Gems/SkillGemLightningConduit": "Кларисса",
+          "Metadata/Items/Gems/SkillGemLightningTowerTrap": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPenanceBrand": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPestilentStrike": "Кларисса",
+          "Metadata/Items/Gems/SkillGemPhysCascadeTrap": "Кларисса",
+          "Metadata/Items/Gems/SkillGemRageVortex": "Кларисса",
+          "Metadata/Items/Gems/SkillGemRaiseSpectre": "Кларисса",
+          "Metadata/Items/Gems/SkillGemScourgeArrow": "Кларисса",
+          "Metadata/Items/Gems/SkillGemShockNova": "Кларисса",
+          "Metadata/Items/Gems/SkillGemShockwaveTotem": "Кларисса",
+          "Metadata/Items/Gems/SkillGemSomaticShell": "Кларисса",
+          "Metadata/Items/Gems/SkillGemSoulrend": "Кларисса",
+          "Metadata/Items/Gems/SkillGemStormBind": "Кларисса",
+          "Metadata/Items/Gems/SkillGemStormRain": "Кларисса",
+          "Metadata/Items/Gems/SkillGemSummonReaper": "Кларисса",
+          "Metadata/Items/Gems/SkillGemTectonicSlam": "Кларисса",
+          "Metadata/Items/Gems/SkillGemThrownShieldProjectile": "Марамоа",
+          "Metadata/Items/Gems/SkillGemThunderstorm": "Кларисса",
+          "Metadata/Items/Gems/SkillGemTornadoShot": "Кларисса",
+          "Metadata/Items/Gems/SkillGemWildStrike": "Кларисса",
+          "Metadata/Items/Gems/SkillGemWinterOrb": "Кларисса"
+        }
+      }
+    },
+    "a3q9": {
+      "name": "Питомцы Веры",
+      "rewardNpcs": {
+        "a3q9": "Григор"
+      },
+      "vendorNpcs": {
+        "a3q9": {}
+      }
+    },
+    "a4q1": {
+      "name": "Вечный кошмар",
+      "rewardNpcs": {
+        "a4q1": "Диалла"
+      },
+      "vendorNpcs": {
+        "a4q1": {
+          "Metadata/Items/Gems/SkillGemArcanistBrand": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemBarrage": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemBehead": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemBonechill": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemBrutality": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastOnCrit": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastOnDamageTaken": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastOnDeath": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastOnKill": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastOnStunned": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCastWhileChannelling": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemChain": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemChaosAttacks": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemClusterTrap": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemCurseOnHit": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemDecay": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemEternalBlessing": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemFistOfWar": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemFrigidBond": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemGreaterMultipleProjectiles": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemGreaterVolley": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemHandcastAnticipation": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemHexBloom": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemIgniteProliferation": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemImmolate": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemIncreasedAreaOfEffect": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemMarkOnHit": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemMinefield": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemMulticast": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemMultistrike": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemMultiTotem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemOverexertion": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemReturningProjectiles": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemRupture": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemSpellblade": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemTrauma": "Петарус и Ваня",
+          "Metadata/Items/Gems/SupportGemVileToxins": "Петарус и Ваня"
+        }
+      }
+    },
+    "a4q2": {
+      "name": "Снятие печати",
+      "rewardNpcs": {
+        "a4q2": "Оюн"
+      },
+      "vendorNpcs": {
+        "a4q2": {
+          "Metadata/Items/Gems/SkillGemAmbush": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemBerserk": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemChannelledSnipe": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemDestructiveLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemFlameLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemFrostShield": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemFrozenLegion": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemHydrosphere": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemImmortalCall": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemIntuitiveLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemPhaseRun": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemProtectiveLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSigilOfPower": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSoulLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonCarrionGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonChaosGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonFlameGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonIceGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonLightningGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemSummonRockGolem": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemTemporalRift": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemTornado": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemVampiricLink": "Петарус и Ваня",
+          "Metadata/Items/Gems/SkillGemVoidSphere": "Петарус и Ваня"
+        }
+      }
+    },
+    "a4q3": {
+      "name": "Вождь ярости",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a4q4": {
+      "name": "Повелитель желания",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a4q5": {
+      "name": "Корпус Малахус",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a4q6": {
+      "name": "Неукротимый дух",
+      "rewardNpcs": {
+        "a4q6": "Тасуни"
+      },
+      "vendorNpcs": {
+        "a4q6": {}
+      }
+    },
+    "a5q1a": {
+      "name": "Возвращение на Ориат",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a5q1b": {
+      "name": "Возвращение на Ориат",
+      "rewardNpcs": {
+        "a5q1b": "Лани"
+      },
+      "vendorNpcs": {
+        "a5q1b": {}
+      }
+    },
+    "a5q2": {
+      "name": "Ключ к свободе",
+      "rewardNpcs": {
+        "a5q2": "Лани"
+      },
+      "vendorNpcs": {
+        "a5q2": {}
+      }
+    },
+    "a5q3": {
+      "name": "В служении науке",
+      "rewardNpcs": {
+        "a5q3": "Вилента"
+      },
+      "vendorNpcs": {
+        "a5q3": {}
+      }
+    },
+    "a5q4": {
+      "name": "Смерть Чистоте",
+      "rewardNpcs": {
+        "a5q4": "Лани"
+      },
+      "vendorNpcs": {
+        "a5q4": {}
+      }
+    },
+    "a5q5": {
+      "name": "Пир вождя",
+      "rewardNpcs": {
+        "a5q5": "Бэннон"
+      },
+      "vendorNpcs": {
+        "a5q5": {}
+      }
+    },
+    "a5q6": {
+      "name": "Ненасытный бог",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a5q7": {
+      "name": "Мучения Китавы",
+      "rewardNpcs": {
+        "a5q7": "Лани"
+      },
+      "vendorNpcs": {
+        "a5q7": {}
+      }
+    },
+    "a6q1": {
+      "name": "Морской царь",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a6q2": {
+      "name": "Сущность тьмы",
+      "rewardNpcs": {
+        "a6q2": "Таркли"
+      },
+      "vendorNpcs": {
+        "a6q2": {}
+      }
+    },
+    "a6q3": {
+      "name": "Отец войны",
+      "rewardNpcs": {
+        "a6q3": "Таркли"
+      },
+      "vendorNpcs": {
+        "a6q3": {}
+      }
+    },
+    "a6q4": {
+      "name": "Впавшие в немилость",
+      "rewardNpcs": {
+        "a6q4": "Лилия Рот"
+      },
+      "vendorNpcs": {
+        "a6q4": {
+          "Metadata/Items/Gems/SkillGemAbsolution": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAbyssalCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAmbush": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAncestralCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAnger": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAnimateArmour": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAnimateWeapon": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArc": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArcaneCloak": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArcanistBrand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArcticArmour": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArcticBreath": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArmageddonBrand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemArtilleryBallista": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemAutomation": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBallLightning": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBarrage": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBattlemagesCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBearTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBerserk": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBladeBlast": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBladefall": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBladestorm": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBladeTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBladeVortex": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBlastRain": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBlazingSalvo": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBlight": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBlinkArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBloodAndSand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBloodRage": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBloodreap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBoneLance": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBoneOffering": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBoneshatter": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemBurningArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCallToArms": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemChainHook": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemChannelledSnipe": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemChargedAttack": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemChargedDash": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemClarity": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCleave": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCobraLash": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemColdResistAura": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemColdSnap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemConductivity": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemConflagration": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemConsecratedPath": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemContagion": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemConversionTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemConvocationNew": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCorpseEruption": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCorpseWarp": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCorruptingFever": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCracklingLance": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCriticalWeakness": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemCyclone": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDamageOverTimeAura": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDarkPact": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDarkRitual": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDash": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDecoyTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDefianceBanner": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDesecrate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDestructiveLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDetermination": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDetonateDead": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDetonateMines": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDevouringTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDischarge": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDiscipline": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDivineBlast": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDivineRetribution": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDivineTempest": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDominatingBlow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDoubleStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDreadBanner": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemDualStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEarthquake": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEarthshatter": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemElementalHit": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemElementalWeakness": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEnduringCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEnergyBlade": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEnfeeble": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEnsnaringArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEssenceDrain": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEtherealKnives": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEviscerate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemExplosiveArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemExplosiveConcoction": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemExsanguinate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemEyeOfWinter": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFireball": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFireBeam": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFireNovaMine": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFireResistAura": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFirestorm": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFireTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameblast": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameDash": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlamethrowerTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameWall": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlameWhip": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlammability": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFleshAndStone": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFleshOffering": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFlickerStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemForbiddenRite": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFreezeMine": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFreezingPulse": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrenzy": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostbite": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostBlades": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostblink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostBolt": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostBoltNova": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostBomb": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostShield": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrostWall": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemFrozenLegion": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemGeneralsCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemGlacialCascade": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemGlacialHammer": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemGrace": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemGroundSlam": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHaste": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHatred": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeavyStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeraldOfAgony": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeraldOfAsh": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeraldOfIce": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeraldOfPurity": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHeraldOfThunder": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHexblast": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHolyStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemHydrosphere": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceCrash": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceNova": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceShot": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceSiphonTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceSpear": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIceTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemImmortalCall": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIncinerate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemInfernalBlow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIntimidatingCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemIntuitiveLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemKineticBlast": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemKineticBolt": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemKineticFusillade": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemKineticRain": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLacerate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLancingSteel": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLeapSlam": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningResistAura": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningTendrils": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningTowerTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemLightningWarp": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemMagmaOrb": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemManabond": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemMirrorArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemMoltenShell": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemMoltenStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemNewVulnerability": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemOrbOfStorms": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPenanceBrand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPerforate": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPestilentStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPetrifiedBlood": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPhaseRun": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPhysCascadeTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPoachersMark": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPoisonArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPoisonousConcoction": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPowerSiphon": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPrecision": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPride": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemProjectileWeakness": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemProtectiveLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPuncture": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPunishment": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPurge": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemPurity": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRageVortex": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRainOfArrows": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRaiseSpectre": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRaiseZombie": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRallyingCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemReave": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRecallBrands": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemReckoning": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRejuvenationTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRighteousFire": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemRiposte": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSanctify": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemScourgeArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSearingBond": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSeismicCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShatteringSteel": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShieldCharge": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShieldCrush": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShieldOfLight": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShockNova": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShockwaveTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShrapnelBallista": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShrapnelShot": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemShrapnelTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSiegeBallista": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSigilOfPower": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSmite": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSmokeMine": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSomaticShell": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSoulLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSoulrend": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSpark": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSpectralHelix": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSpellDamageAura": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSpellslinger": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSpiritOffering": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSplitArrow": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSplittingSteel": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStaticStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSteelskin": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormBind": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormblastMine": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormBrand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormBurst": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormCall": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemStormRain": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonCarrionGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonChaosGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonFlameGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonIceGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonLightningGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonRagingSpirit": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonReaper": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonRelic": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonRockGolem": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonSkeletons": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSummonSkitterbots": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSunder": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemSweep": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTectonicSlam": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTempestShield": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTemporalChains": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTemporalRift": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemThrownShieldProjectile": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemThrownWeapon": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemThunderstorm": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTornado": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemTornadoShot": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemToxicRain": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVampiricLink": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVengeance": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVengefulCry": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVenomGyre": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVigilantStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemViperStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVitality": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVoidSphere": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVolatileDead": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVoltaxicBurst": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemVulnerability": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWallOfForce": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWarBanner": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWarlordsMark": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWhirlingBlades": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWildStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWinterOrb": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWintertideBrand": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWither": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWitheringStep": "Лилия Рот",
+          "Metadata/Items/Gems/SkillGemWrath": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemAddedChaosDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemAddedColdDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemAddedFireDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemAddedLightningDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemAdditionalAccuracy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemArchmage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemArrowNova": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBarrage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBehead": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBlasphemy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBlessedCall": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBlind": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBloodlust": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBloodMagic": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBloodthirst": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBonechill": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemBrutality": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastOnCrit": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastOnDamageTaken": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastOnDeath": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastOnKill": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastOnStunned": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCastWhileChannelling": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemChain": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemChanceToFlee": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemChanceToIgnite": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemChaosAttacks": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemChargedMines": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemClusterTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemColdPenetration": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemColdToFire": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemConcentratedEffect": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemControlledBlaze": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCorruptingCry": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCruelty": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCullingStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCursedGround": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemCurseOnHit": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemDamageAgainstChilled": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemDecay": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemDevour": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemEfficacy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemElementalFocus": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemEnduranceChargeOnMeleeStun": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemEnergyShieldLeech": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemEternalBlessing": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemExcommunicate": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemExemplar": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemExpertRetaliation": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFasterProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFeedingFrenzy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFirePenetration": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFistOfWar": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFlamewood": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFocusedBallista": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFocusedChannelling": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFork": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFortify": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFrenzyChargeOnSlayingFrozenEnemy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFrenzyPowerOnTrapTrigger": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFreshMeat": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemFrigidBond": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemGenerosity": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemGreaterMultipleProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemGreaterVolley": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemGuardiansBlessing": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemHandcastAnticipation": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemHandcastSpellBoost": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemHexBloom": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemHighImpactMineSupport": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIgniteProliferation": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemImmolate": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemImpale": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemImpendingDoom": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIncreasedAreaOfEffect": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIncreasedBurningDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIncreasedCriticalStrikes": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIncreasedDuration": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemInfernalLegion": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIronGrip": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemIronWill": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemItemRarity": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemKineticInstability": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemKnockback": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLifeGainOnHit": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLifeLeech": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLifetap": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLightningPenetration": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLivingLightning": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemLocusMine": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMaim": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemManaforgedArrows": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemManaLeech": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMarkOnHit": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMeatShield": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMeleeDamageOnFullLife": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMeleePhysicalDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMeleeSplash": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMinefield": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMinionDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMinionLife": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMirageArcher": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMulticast": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMultistrike": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMultiTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemMultiTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemOnslaughtOnSlayingShockedEnemy": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemOverexertion": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemParallelProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPhysicalProjectileAttackDamage": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPhysicalToLightning": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPierce": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPinpoint": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPointBlank": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPoison": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPowerChargeOnCrit": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPrismaticBurst": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemPulverise": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemRangedAttackTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemRapidDecay": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemReducedDuration": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemReducedMana": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemRemoteMine": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemReturningProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemRupture": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSacredWisps": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSacrifice": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSadism": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSecondWind": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemShockwave": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSlowerProjectiles": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSpellblade": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSpellCascade": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSpellTotem": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSpiritStrike": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemStormBarrier": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemStun": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSummonElementalResistance": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSummonGhostOnKill": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSwiftAssembly": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemSwiftbrand": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemTrap": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemTrapCooldown": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemTrauma": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemTrinity": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemUnboundAilments": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemUrgentOrders": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemVileToxins": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemVoidManipulation": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemVolatility": "Лилия Рот",
+          "Metadata/Items/Gems/SupportGemWindburst": "Лилия Рот"
+        }
+      }
+    },
+    "a6q5": {
+      "name": "Эпопея Бестеля",
+      "rewardNpcs": {
+        "a6q5": "Бестель"
+      },
+      "vendorNpcs": {
+        "a6q5": {}
+      }
+    },
+    "a6q6": {
+      "name": "Госпожа марионеток",
+      "rewardNpcs": {
+        "a6q6": "Таркли"
+      },
+      "vendorNpcs": {
+        "a6q6": {}
+      }
+    },
+    "a6q7": {
+      "name": "Раздвоенный",
+      "rewardNpcs": {
+        "a6q7": "Бестель"
+      },
+      "vendorNpcs": {
+        "a6q7": {}
+      }
+    },
+    "a7q1": {
+      "name": "Хозяин миллиона лиц",
+      "rewardNpcs": {
+        "a7q1": "Эрамир"
+      },
+      "vendorNpcs": {
+        "a7q1": {}
+      }
+    },
+    "a7q2": {
+      "name": "Сущность Творца",
+      "rewardNpcs": {
+        "a7q2": "Елена"
+      },
+      "vendorNpcs": {
+        "a7q2": {}
+      }
+    },
+    "a7q3": {
+      "name": "Паутина тайн",
+      "rewardNpcs": {
+        "a7q3": "Шёлк"
+      },
+      "vendorNpcs": {
+        "a7q3": {}
+      }
+    },
+    "a7q4": {
+      "name": "Мать пауков",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a7q5": {
+      "name": "Серебряный медальон",
+      "rewardNpcs": {
+        "a7q5": "Вейлам Рот"
+      },
+      "vendorNpcs": {
+        "a7q5": {}
+      }
+    },
+    "a7q6": {
+      "name": "Звезда Кишары",
+      "rewardNpcs": {
+        "a7q6": "Вейлам Рот"
+      },
+      "vendorNpcs": {
+        "a7q6": {}
+      }
+    },
+    "a7q7": {
+      "name": "Освещая путь",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a7q8": {
+      "name": "В память о Грусте",
+      "rewardNpcs": {
+        "a7q8": "Елена",
+        "a7q8_offer": "Елена"
+      },
+      "vendorNpcs": {
+        "a7q8": {},
+        "a7q8_offer": {}
+      }
+    },
+    "a7q9": {
+      "name": "Царица отчаяния",
+      "rewardNpcs": {
+        "a7q9": "Эрамир"
+      },
+      "vendorNpcs": {
+        "a7q9": {}
+      }
+    },
+    "a8q1": {
+      "name": "Сущность Колдуньи",
+      "rewardNpcs": {
+        "a8q1": "Харган"
+      },
+      "vendorNpcs": {
+        "a8q1": {}
+      }
+    },
+    "a8q2": {
+      "name": "Лунное затмение",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a8q3": {
+      "name": "Солнечное затмение",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a8q4": {
+      "name": "Отражение ужаса",
+      "rewardNpcs": {
+        "a8q4": "Харган"
+      },
+      "vendorNpcs": {
+        "a8q4": {}
+      }
+    },
+    "a8q5": {
+      "name": "Крылья Вастири",
+      "rewardNpcs": {
+        "a8q5": "Харган"
+      },
+      "vendorNpcs": {
+        "a8q5": {}
+      }
+    },
+    "a8q6": {
+      "name": "Любовь мертва",
+      "rewardNpcs": {
+        "a8q6": "Кларисса"
+      },
+      "vendorNpcs": {
+        "a8q6": {}
+      }
+    },
+    "a8q7": {
+      "name": "Легион каменитов",
+      "rewardNpcs": {
+        "a8q7": "Марамоа"
+      },
+      "vendorNpcs": {
+        "a8q7": {}
+      }
+    },
+    "a9q1": {
+      "name": "Повторяющийся кошмар",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "a9q2": {
+      "name": "Правитель Макед",
+      "rewardNpcs": {
+        "a9q2": "Ираша"
+      },
+      "vendorNpcs": {
+        "a9q2": {}
+      }
+    },
+    "a9q3": {
+      "name": "Клинок бури",
+      "rewardNpcs": {
+        "a9q3": "Петарус и Ваня"
+      },
+      "vendorNpcs": {
+        "a9q3": {}
+      }
+    },
+    "a9q4": {
+      "name": "Фастис Фортуна",
+      "rewardNpcs": {
+        "a9q4": "Петарус и Ваня"
+      },
+      "vendorNpcs": {
+        "a9q4": {}
+      }
+    },
+    "a9q5": {
+      "name": "Царица песков",
+      "rewardNpcs": {
+        "a9q5": "Ираша",
+        "a9q5_offer": "Петарус и Ваня"
+      },
+      "vendorNpcs": {
+        "a9q5": {},
+        "a9q5_offer": {}
+      }
+    },
+    "bandit_respec": {
+      "name": "",
+      "rewardNpcs": {
+        "bandit_respec": "Эрамир"
+      },
+      "vendorNpcs": {
+        "bandit_respec": {}
+      }
+    },
+    "cleansing_fire": {
+      "name": "Пламенный экзарх",
+      "rewardNpcs": {
+        "cleansing_fire": "Командир Кирак",
+        "cleansing_fire_black_star": "Командир Кирак"
+      },
+      "vendorNpcs": {
+        "cleansing_fire": {},
+        "cleansing_fire_black_star": {}
+      }
+    },
+    "d2c1": {
+      "name": "",
+      "rewardNpcs": {
+        "d2c1": "Chest 1"
+      },
+      "vendorNpcs": {
+        "d2c1": {}
+      }
+    },
+    "d2c2": {
+      "name": "",
+      "rewardNpcs": {
+        "d2c2": "Chest 2"
+      },
+      "vendorNpcs": {
+        "d2c2": {}
+      }
+    },
+    "kirac_atlas": {
+      "name": "Атлас миров",
+      "rewardNpcs": {
+        "atlas": "Командир Кирак"
+      },
+      "vendorNpcs": {
+        "atlas": {}
+      }
+    },
+    "maven_atlas": {
+      "name": "Мейвен",
+      "rewardNpcs": {},
+      "vendorNpcs": {}
+    },
+    "maven_boss": {
+      "name": "Игра Мейвен",
+      "rewardNpcs": {
+        "maven": "Командир Кирак"
+      },
+      "vendorNpcs": {
+        "maven": {}
+      }
+    },
+    "tangle": {
+      "name": "Пожиратель миров",
+      "rewardNpcs": {
+        "tangle": "Командир Кирак",
+        "tangle_infinite_hunger": "Командир Кирак"
+      },
+      "vendorNpcs": {
+        "tangle": {},
+        "tangle_infinite_hunger": {}
+      }
+    },
+    "ThreadsOfTheOriginator": {
+      "name": "Нити Источника",
+      "rewardNpcs": {
+        "memory_astrolabe": "Игон Цезерий",
+        "memory_boss1": "Игон Цезерий",
+        "memory_boss2": "Игон Цезерий",
+        "memory_boss3": "Игон Цезерий"
+      },
+      "vendorNpcs": {
+        "memory_astrolabe": {},
+        "memory_boss1": {},
+        "memory_boss2": {},
+        "memory_boss3": {}
+      }
+    },
+    "uberelder": {
+      "name": "Древний",
+      "rewardNpcs": {
+        "uberelder": "Командир Кирак"
+      },
+      "vendorNpcs": {
+        "uberelder": {}
+      }
+    }
+  },
+  "sourceMetadata": {
+    "schemaVersion": 1,
+    "sources": [
+      {
+        "kind": "gems",
+        "revision": "696d36aabaffb88f9c75ee424a1b4433b3233597",
+        "source": "https://gitverse.ru/pathofbuilding/PathOfBuilding.git@696d36aabaffb88f9c75ee424a1b4433b3233597"
+      },
+      {
+        "kind": "poedb",
+        "source": "https://poedb.tw/ru (audited exact-ID pages)"
+      }
+    ]
+  }
+}
