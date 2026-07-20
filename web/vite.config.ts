@@ -16,7 +16,7 @@ export default defineConfig({
         name: "Exile Leveling",
         short_name: "Exile Leveling",
         description:
-          "Exile Leveling is a Path of Exile leveling guide with Path of Building integration",
+          "Path of Exile leveling guide with PoB integration / Русский гайд по прокачке с интеграцией PoB",
         theme_color: "#000000",
         background_color: "#000000",
         icons: [
