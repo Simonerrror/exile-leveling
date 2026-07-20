@@ -1,7 +1,7 @@
 #section Акт 3
 ➞ {enter|1_3_1} #The City of Sarn
-Возьми {crafting}
-Помоги {generic|Кларисса} и поговори с ней
+Получи рецепт {crafting}
+Помоги {generic|Клариссе} и поговори с ней
 ➞ {enter|1_3_town} #The Sarn Encampment
 ➞ {enter|1_3_2} #The Slums
     #sub Иди {dir|0}
@@ -11,9 +11,9 @@
     Пройди {trial}
 #endif
 Найди и убей {kill|Piety}, возьми {quest_text|Браслет Толмана}
-Возьми {crafting}
+Получи рецепт {crafting}
 {logout}
-Поговори с {generic|Кларисса}, возьми {quest_text|Ключи от канализации}
+Поговори с {generic|Клариссой}, возьми {quest_text|Ключи от канализации}
 Сдай {quest|a3q1} #Lost in Love
 ➞ {enter|1_3_2} #The Slums
     #sub Иди {dir|0}
@@ -27,7 +27,7 @@
     ➞ {enter|1_3_6} #The Catacombs
         #sub Ищи поблизости
     Пройди {trial}
-    Возьми {crafting}
+    Получи рецепт {crafting}
 #endif
 {logout}
 Сдай {quest|a3q11} #Victario's Secrets
@@ -41,19 +41,19 @@
 ➞ {enter|1_3_8_1} #The Solaris Temple Level 1
     #sub Иди {dir|45}
 ➞ {enter|1_3_8_2} #The Solaris Temple Level 2
-➞ {arena|Вечная лаборатория}, возьми {crafting}
+➞ {arena|Вечная лаборатория}, получи рецепт {crafting}
 {waypoint|1_3_7} #The Battlefront
 ➞ {enter|1_3_9} #The Docks
     #sub Иди {dir|315}
 Найди и возьми {quest_text|Волшебная соль}
 {logout}
 {waypoint|1_3_8_2} #The Solaris Temple Level 2
-Поговори с {generic|Госпожа Диалла}
+Поговори с {generic|госпожой Диаллой}
 Сдай {quest|a3q4} #The Ribbon Spool
 Сдай {quest|a3q5}, возьми {quest_text|Пылающий тальк} #Fiery Dust
 {waypoint|1_3_10_1} #The Sewers
 Сожги {quest_text|Бессмертная преграда}
-Возьми {crafting}
+Получи рецепт {crafting}
 ➞ {enter|1_3_13} #The Ebony Barracks
 Активируй {waypoint_get}
 Убей {kill|General Gravicius}
@@ -63,7 +63,7 @@
 Найди и убей {kill|Piety}, возьми {quest_text|Ключ от башни}
     #sub Иди по лестницам, ведущим вверх
     #sub На развилке с повозками иди туда, где 1 повозка, а не 2
-Возьми {crafting}
+Получи рецепт {crafting}
 {logout}
 Сдай {quest|a3q9} #Piety's Pets
 Сдай {quest|a3q8} #Sever the Right Hand
@@ -75,7 +75,7 @@
 #ifdef LEAGUE_START
     Пройди {trial}
         #sub Иди {dir|0}
-    Возьми {crafting}
+    Получи рецепт {crafting}
     {logout}
     {waypoint|1_3_15} #The Imperial Gardens
 #endif
@@ -84,7 +84,7 @@
         #sub Иди {dir|315}
     Активируй {waypoint_get}
     Найди {generic|Незакреплённая свеча} ➞ {enter|1_3_17_2} #The Archives
-    Возьми {crafting}
+    Получи рецепт {crafting}
         #sub Ищи свечу в узком коридоре
     Найди 4×{quest_text|Золотая страница}
     {logout}

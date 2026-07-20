@@ -14,7 +14,7 @@
     #sub Иди по дороге
 #ifdef LEAGUE_START
     Пройди {trial}
-    Получи {crafting}
+    Получи рецепт {crafting}
 #endif
 Найди {generic|Саркофаг} и спустись ниже
 Найди и забери {quest_text|Карта Малигаро}
@@ -22,9 +22,9 @@
 {waypoint|2_7_2} #The Crossroads
 ➞ {enter|2_7_5_1} #The Chamber of Sins Level 1
     #sub Иди {dir|315}
-Получи {crafting}
+Получи рецепт {crafting}
 Активируй {waypoint_get}
-Активируй {quest_text|Машина картоходца} с {quest_text|Карта Малигаро}
+Активируй {quest_text|машину картоходца} с помощью {quest_text|карты Малигаро}
 ➞ {enter|2_7_5_map} #Maligaro's Sanctum
 ➞ {arena|Мастерская Малигаро}, убей {kill|Maligaro, the Artist}, забери {quest_text|Чёрный яд}
     #sub Иди вдоль границ локации и переходи мосты в углах
@@ -40,7 +40,7 @@
     #sub Иди в том же направлении, что и {waypoint}
 #ifdef LEAGUE_START
     Пройди {trial}
-    Получи {crafting}
+    Получи рецепт {crafting}
 #endif
 Открой {generic|Тайный проход} ➞ {enter|2_7_6} #The Den
 ➞ {enter|2_7_7} #The Ashen Fields
@@ -56,24 +56,24 @@
 Сдай {quest|a6q7} #The Cloven One
 {waypoint|2_7_8} #The Northern Forest
 ➞ {enter|2_7_10} #The Causeway
-Получи {crafting}
+Получи рецепт {crafting}
 Найди и забери {quest_text|Звезда Кишары}
 ➞ {enter|2_7_11} #The Vaal City
 Найди {waypoint_get}
 {waypoint|2_7_8} #The Northern Forest
 ➞ {enter|2_7_9} #The Dread Thicket
 Найди и забери 7×{quest_text|Светлячок}
-Получи {crafting}
+Получи рецепт {crafting}
 ➞ {arena|Логово отчаяния}, убей {kill|Gruthkul, Mother of Despair}
 {portal|use}
 Сдай {quest|a7q9} #Queen of Despair
 Сдай {quest|a7q6} #Kishara's Star
 {waypoint|Labyrinth_Airlock} #Aspirants' Plaza
 {ascend|cruel}
-Получи {crafting|2_Labyrinth_boss_3}
+Получи рецепт {crafting|2_Labyrinth_boss_3}
 {waypoint|2_7_11} #The Vaal City
 Сдай {quest|a7q7} #Lighting the Way
 ➞ {enter|2_7_12_1} #The Temple of Decay Level 1
 ➞ {enter|2_7_12_2} #The Temple of Decay Level 2
-Получи {crafting}
+Получи рецепт {crafting}
 ➞ {arena|Паутина Аракаали}, убей {kill|Arakaali, Spinner of Shadows}

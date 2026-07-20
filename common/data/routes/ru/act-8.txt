@@ -7,14 +7,14 @@
     #sub Чёрные пятна краски на земле указывают верный путь
 ➞ {arena|Котёл}, убей {kill|Doedre the Vile}
 ➞ {arena|Выход из канализации}
-Получи {crafting}
+Получи рецепт {crafting}
 ➞ {enter|2_8_8} #The Quay
     #sub Иди {dir|45}
 Найди и возьми {quest_text|Анкх Вечности}
     #sub Держись стены в направлении {dir|270}
 ➞ {arena|Место воскрешения}
     #sub Иди {dir|135}
-Поговори с {generic|Кларисса}, убей {kill|Tolman}
+Поговори с {generic|Клариссой}, убей {kill|Tolman}
 ➞ {enter|2_8_9} #The Grain Gate
 Найди и убей {kill|Gemling Legionnaires}
     #sub Иди по следу мёртвых стражников у дверей
@@ -27,7 +27,7 @@
 Активируй {waypoint_get}
 ➞ {enter|2_8_12_2} #The Solaris Temple Level 2
 Найди и убей {kill|Dawn, Harbinger of Solaris}, возьми {quest_text|Сфера Солнца}
-Получи {crafting}
+Получи рецепт {crafting}
 {logout}
 Сдай {quest|a8q1} #Essence of the Hag
 Сдай {quest|a8q7} #The Gemling Legion
@@ -42,7 +42,7 @@
 ➞ {enter|2_8_7_1_} #The Lunaris Temple Level 1
 ➞ {enter|2_8_7_2} #The Lunaris Temple Level 2
 Найди и убей {kill|Dusk, Harbinger of Lunaris}, возьми {quest_text|Сфера Луны}
-Получи {crafting}
+Получи рецепт {crafting}
 {logout}
 {waypoint|2_8_6} #The Lunaris Concourse
 ➞ {enter|2_8_13} #The Harbour Bridge
@@ -58,7 +58,7 @@
 #ifdef LEAGUE_START
     Пройди {trial}
         #sub Ищи со стороны {dir|270}
-    Получи {crafting}
+    Получи рецепт {crafting}
 #endif
 ➞ {enter|2_8_4} #The High Gardens
     #sub Ищи со стороны {dir|270}

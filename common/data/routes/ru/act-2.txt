@@ -163,10 +163,10 @@
 ➞ {enter|1_2_8} #The Northern Forest
     #sub К выходу ведёт проход в форме S или L
 ➞ {enter|1_2_14_2} #The Caverns
-Возьми {crafting}
+Получи рецепт {crafting}
 ➞ {enter|1_2_14_3} #The Ancient Pyramid
 ➞ {arena|Вершина пирамиды}, убей {kill|Vaal Oversoul}
     #sub На первом этаже выход будет в одном из 3 углов
     #sub На остальных этажах выход будет по диагонали от входа
     #sub Рекомендуемый уровень: 20–22
-Возьми {crafting}
+Получи рецепт {crafting}

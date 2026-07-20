@@ -15,8 +15,8 @@
     #sub Иди {dir|45}
 ➞ {enter|1_5_5} #The Chamber of Innocence
     #sub Обойди по часовой стрелке
-    #sub Уровень для фарма: 40-42
-Получи {crafting}
+    #sub Уровень для фарма: 40–42
+Получи рецепт {crafting}
 ➞ {arena|Святилище Невинности}, убей {kill|High Templar Avarius}
     #sub Иди {dir|315} по спирали против часовой стрелки
 {logout}
@@ -31,18 +31,18 @@
     #sub Иди {dir|315}
 ➞ {enter|1_5_6} #The Ossuary
 Найди и забери {quest_text|Символ Чистоты}
-Получи {crafting}
+Получи рецепт {crafting}
 {logout}
 {waypoint|1_5_3b} #The Ruined Square
 ➞ {enter|1_5_7} #The Reliquary
     #sub Иди {dir|225}, найди площадь
     #sub Иди {dir|180}
 Найди 3×{quest_text|Мучение Китавы}, проверяй углы локации
-Получи {crafting}
+Получи рецепт {crafting}
 {logout}
 Сдай {quest|a5q7} #Kitava's Torments
 {waypoint|1_5_3b} #The Ruined Square
 ➞ {enter|1_5_8} #The Cathedral Rooftop
     #sub Иди {dir|225}
 ➞ {arena|Вершина собора}, убей {kill|Kitava, the Insatiable}
-Поговори с {generic|Лилия Рот}, отплыви в Рэкласт
+Поговори с {generic|Лилией Рот}, отплыви в Рэкласт
