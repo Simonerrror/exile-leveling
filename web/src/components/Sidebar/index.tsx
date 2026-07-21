@@ -9,18 +9,28 @@ import { SearchStrings } from "../SearchStrings";
 import { SkillTreeViewer } from "../SkillTreeViewer";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import { FaLink, FaListUl } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight, FiSearch } from "react-icons/fi";
 import { TbHierarchy } from "react-icons/tb";
 import flattenChildren from "react-keyed-flatten-children";
+import { useSearchParams } from "react-router-dom";
 
 export function Sidebar() {
   const [expand, setExpand] = useState(true);
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [searchParams] = useSearchParams();
 
   const sections = useSections();
+  useEffect(() => {
+    const requestedView = searchParams.get("view");
+    const requestedIndex = sections.findIndex(
+      (section) => section.id === requestedView,
+    );
+    setActiveTab(requestedIndex >= 0 ? requestedIndex : 0);
+  }, [searchParams, sections]);
+
   if (sections.length === 0) return <></>;
 
   return (
@@ -57,6 +67,7 @@ export function Sidebar() {
 }
 
 interface Section {
+  id: "tree" | "gems" | "search";
   tab: React.ReactNode;
   content: React.ReactNode;
 }
@@ -68,10 +79,11 @@ function useSections() {
   const gemLinks = useAtomValue(gemLinksSelector);
 
   return useMemo(() => {
-    const sections: { tab: React.ReactNode; content: React.ReactNode }[] = [];
+    const sections: Section[] = [];
 
     if (urlTrees.length > 0) {
       sections.push({
+        id: "tree",
         tab: (
           <>
             <TbHierarchy className={classNames("inlineIcon")} />
@@ -84,6 +96,7 @@ function useSections() {
 
     if (gemLinks.length > 0) {
       sections.push({
+        id: "gems",
         tab: (
           <>
             <FaLink className={classNames("inlineIcon")} />
@@ -96,6 +109,7 @@ function useSections() {
 
     if (searchStrings !== null && searchStrings.length > 0) {
       sections.push({
+        id: "search",
         tab: (
           <>
             <FiSearch className={classNames("inlineIcon")} />

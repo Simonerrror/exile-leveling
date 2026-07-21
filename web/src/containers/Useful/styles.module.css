@@ -12,6 +12,178 @@
   user-select: text;
 }
 
+.catalogHeader {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.catalogHeader h1 {
+  color: var(--useful-title);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.catalogHeader > div > p:last-child {
+  color: var(--useful-muted);
+  max-width: 48rem;
+}
+
+.eyebrow {
+  color: var(--useful-gold);
+  font-size: 0.72rem;
+  font-weight: var(--font-heavy);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.searchBox {
+  color: var(--useful-muted);
+  display: grid;
+  flex: 0 1 24rem;
+  font-size: 0.75rem;
+  gap: 0.25rem;
+  min-width: min(100%, 16rem);
+}
+
+.searchBox input {
+  background: var(--secondary);
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: 0.35rem;
+  color: var(--useful-text);
+  min-height: 2.55rem;
+  padding: 0.45rem 0.65rem;
+  width: 100%;
+}
+
+.searchBox input:focus-visible {
+  border-color: var(--useful-gold);
+  outline: 0.12rem solid rgba(214, 168, 95, 0.28);
+}
+
+.catalogLayout {
+  align-items: start;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: minmax(9rem, 0.25fr) minmax(0, 1fr);
+}
+
+.categoryRail {
+  background: rgba(255, 255, 255, 0.018);
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: 0.4rem;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.35rem;
+  position: sticky;
+  top: 3.5rem;
+}
+
+.categoryRail a {
+  border-radius: 0.25rem;
+  color: var(--useful-muted);
+  font-size: 0.82rem;
+  padding: 0.42rem 0.5rem;
+  text-decoration: none;
+}
+
+.categoryRail a:hover,
+.categoryRail a:focus-visible {
+  background: var(--secondary);
+  color: var(--useful-title);
+}
+
+.catalogContent {
+  display: grid;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.page .catalogSection {
+  padding: 0.75rem;
+}
+
+.catalogSection > h2 {
+  color: var(--useful-title);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.internalGrid {
+  display: grid;
+  gap: 0.42rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.internalCard,
+.continuationCard {
+  background: var(--secondary);
+  border: var(--border-width) solid var(--accent-secondary);
+  border-left: 0.2rem solid var(--tool-accent, var(--useful-gold));
+  border-radius: 0.35rem;
+  color: var(--useful-title);
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.62rem 0.72rem;
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.internalCard[data-accent="planning"] {
+  --tool-accent: #68a8d8;
+}
+
+.internalCard[data-accent="regex"] {
+  --tool-accent: #d6a85f;
+}
+
+.internalCard[data-accent="reference"] {
+  --tool-accent: #7ebc87;
+}
+
+.internalCard:hover,
+.internalCard:focus-visible,
+.continuationCard:hover,
+.continuationCard:focus-visible {
+  border-color: var(--tool-accent, var(--useful-gold));
+  transform: translateY(-1px);
+}
+
+.internalCard span,
+.continuationCard small {
+  color: var(--useful-description);
+  display: -webkit-box;
+  font-size: 0.84rem;
+  line-height: 1.28;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.continuationCard {
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.continuationCard > span:first-child {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.progressText {
+  color: #8ab3ff;
+  font-size: 0.78rem;
+  font-weight: var(--font-heavy);
+}
+
+.emptyState {
+  border: var(--border-width) dashed var(--accent-secondary);
+  color: var(--useful-muted);
+  padding: 1rem;
+  text-align: center;
+}
+
 .sectionHeading p {
   color: var(--useful-muted);
   font-size: 0.92rem;
@@ -315,8 +487,41 @@
   }
 }
 
+@media (max-width: 48rem) {
+  .catalogHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .searchBox {
+    flex-basis: auto;
+  }
+
+  .catalogLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .categoryRail {
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    position: static;
+    scrollbar-width: thin;
+  }
+
+  .categoryRail a {
+    flex: 0 0 auto;
+  }
+
+  .internalGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .resourceCard,
+  .internalCard,
+  .continuationCard,
   .sheetPreview {
     transition: none;
   }

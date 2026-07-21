@@ -54,13 +54,6 @@ export const resources = [
     domain: "www.filterblade.xyz",
   },
   {
-    id: "poe-re",
-    category: "planning",
-    name: "PoE.re",
-    url: "https://poe.re/",
-    domain: "poe.re",
-  },
-  {
     id: "poe-planner",
     category: "planning",
     name: "PoE Planner",
@@ -141,7 +134,7 @@ export const resourceCategories = [
   },
   {
     id: "planning",
-    resourceIds: ["filterblade", "poe-re", "poe-planner"],
+    resourceIds: ["filterblade", "poe-planner"],
   },
   {
     id: "trade",

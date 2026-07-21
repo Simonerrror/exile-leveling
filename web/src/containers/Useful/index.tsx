@@ -1,81 +1,200 @@
+import { useAtom, useAtomValue } from "jotai";
+import { Suspense, useMemo, useState } from "react";
+import { FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
-import styles from "./styles.module.css";
-import classNames from "classnames";
-import { FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
+import {
+  normalizeRecentToolIds,
+  pushRecentToolId,
+  recentToolsAtom,
+} from "../../state/recent-tools";
+import { routeSelector } from "../../state/route";
+import { routeProgressFamily } from "../../state/route-progress";
 import { CheatSheetGallery } from "./CheatSheetGallery";
+import { summarizeLevelingProgress } from "./progress";
 import {
   heistBranches,
   resourceCategories,
   resources,
-  type ResourceCategoryId,
   type ResourceId,
 } from "./resources";
+import {
+  internalToolCategories,
+  internalTools,
+  matchesToolQuery,
+  type InternalTool,
+  type InternalToolId,
+} from "./tools";
+import styles from "./styles.module.css";
 
 const resourcesById = new Map(
   resources.map((resource) => [resource.id, resource] as const),
 );
+const internalToolsById = new Map(
+  internalTools.map((tool) => [tool.id, tool] as const),
+);
 
 export default function UsefulContainer() {
   const { t } = useI18n();
-  const categoryText = (id: ResourceCategoryId) =>
-    t(`useful.category.${id}` as MessageKey);
-  const resourceText = (id: ResourceId) =>
-    t(`useful.resource.${id}.description` as MessageKey);
+  const [query, setQuery] = useState("");
+  const [storedRecentTools, setRecentTools] = useAtom(recentToolsAtom);
+  const recentToolIds = normalizeRecentToolIds(storedRecentTools);
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+
+  const visibleInternalTools = useMemo(
+    () =>
+      internalTools.filter((tool) =>
+        matchesToolQuery(tool, query, {
+          [tool.titleKey]: t(tool.titleKey),
+          [tool.descriptionKey]: t(tool.descriptionKey),
+          [tool.keywordsKey]: t(tool.keywordsKey),
+        }),
+      ),
+    [query, t],
+  );
+  const visibleResources = useMemo(
+    () =>
+      resources.filter((resource) => {
+        if (normalizedQuery === "") return true;
+        const description = t(
+          `useful.resource.${resource.id}.description` as MessageKey,
+        );
+        return `${resource.name} ${resource.domain} ${description}`
+          .toLocaleLowerCase()
+          .includes(normalizedQuery);
+      }),
+    [normalizedQuery, t],
+  );
+  const visibleResourceIds = new Set(
+    visibleResources.map(({ id }) => id as ResourceId),
+  );
+
+  const rememberTool = (id: InternalToolId) => {
+    setRecentTools(pushRecentToolId(recentToolIds, id));
+  };
 
   return (
     <main className={styles.page}>
-      <section id="useful-tools" aria-labelledby="useful-tools-title">
-        <div className={styles.sectionHeading}>
-          <h1 id="useful-tools-title">{t("useful.tools.title")}</h1>
-          <p>{t("useful.tools.description")}</p>
+      <header className={styles.catalogHeader}>
+        <div>
+          <p className={styles.eyebrow}>PoE Tools</p>
+          <h1>{t("useful.title")}</h1>
+          <p>{t("useful.intro")}</p>
         </div>
-        {resourceCategories.map((category) => (
-          <div
-            className={styles.category}
-            data-category={category.id}
-            key={category.id}
-          >
-            <h3>{categoryText(category.id)}</h3>
-            <div className={styles.resourceGrid}>
-              {category.resourceIds.map((resourceId) => {
-                const resource = resourcesById.get(resourceId);
-                if (!resource) return null;
-                const note = "note" in resource ? resource.note : null;
-                const description = resourceText(resource.id);
+        <label className={styles.searchBox}>
+          <span>{t("tools.search")}</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={t("tools.search")}
+          />
+        </label>
+      </header>
 
+      <div className={styles.catalogLayout}>
+        <nav className={styles.categoryRail} aria-label={t("useful.jumpLabel")}>
+          {internalToolCategories.map((category) => (
+            <a href={`#catalog-${category.id}`} key={category.id}>
+              {t(category.titleKey)}
+            </a>
+          ))}
+          <a href="#catalog-external">{t("tools.external.title")}</a>
+          <a href="#useful-heist">{t("useful.heist.title")}</a>
+          <a href="#useful-sheets">{t("useful.sheets.title")}</a>
+        </nav>
+
+        <div className={styles.catalogContent}>
+          <section id="catalog-continue" className={styles.catalogSection}>
+            <Suspense fallback={<p>{t("tools.continue.loading")}</p>}>
+              <ContinuationCard />
+            </Suspense>
+          </section>
+
+          {recentToolIds.length > 0 && normalizedQuery === "" && (
+            <section className={styles.catalogSection}>
+              <h2>{t("tools.recent")}</h2>
+              <div className={styles.internalGrid}>
+                {recentToolIds.map((id) => {
+                  const tool = internalToolsById.get(id);
+                  return tool ? (
+                    <InternalToolCard
+                      key={id}
+                      tool={tool}
+                      onOpen={rememberTool}
+                    />
+                  ) : null;
+                })}
+              </div>
+            </section>
+          )}
+
+          {(["tools", "reference"] as const).map((category) => {
+            const tools = visibleInternalTools.filter(
+              (tool) => tool.category === category,
+            );
+            if (tools.length === 0) return null;
+            return (
+              <section
+                id={`catalog-${category}`}
+                className={styles.catalogSection}
+                key={category}
+              >
+                <h2>{t(`tools.category.${category}` as MessageKey)}</h2>
+                <div className={styles.internalGrid}>
+                  {tools.map((tool) => (
+                    <InternalToolCard
+                      key={tool.id}
+                      tool={tool}
+                      onOpen={rememberTool}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+
+          {visibleInternalTools.length === 0 &&
+            visibleResources.length === 0 && (
+              <p className={styles.emptyState}>{t("tools.noResults")}</p>
+            )}
+
+          {visibleResources.length > 0 && (
+            <section id="catalog-external" className={styles.catalogSection}>
+              <div className={styles.sectionHeading}>
+                <h2>{t("tools.external.title")}</h2>
+                <p>{t("tools.external.description")}</p>
+              </div>
+              {resourceCategories.map((category) => {
+                const resourceIds = category.resourceIds.filter((id) =>
+                  visibleResourceIds.has(id),
+                );
+                if (resourceIds.length === 0) return null;
                 return (
-                  <a
-                    className={classNames(styles.resourceCard, {
-                      [styles.featuredCard]: note === "featured",
-                    })}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${resource.name}. ${description}. ${t("useful.externalLink")}`}
-                    key={resource.id}
+                  <div
+                    className={styles.category}
+                    data-category={category.id}
+                    key={category.id}
                   >
-                    <span className={styles.resourceTitle}>
-                      <strong>{resource.name}</strong>
-                      <FaExternalLinkAlt aria-hidden={true} />
-                    </span>
-                    <span className={styles.resourceDescription}>
-                      {description}
-                    </span>
-                    {note && (
-                      <span className={styles.resourceFooter}>
-                        <span className={styles.badge}>
-                          {t(`useful.note.${note}` as MessageKey)}
-                        </span>
-                      </span>
-                    )}
-                  </a>
+                    <h3>
+                      {t(`useful.category.${category.id}` as MessageKey)}
+                    </h3>
+                    <div className={styles.resourceGrid}>
+                      {resourceIds.map((resourceId) => (
+                        <ExternalResourceCard
+                          id={resourceId}
+                          key={resourceId}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 );
               })}
-            </div>
-          </div>
-        ))}
-      </section>
+            </section>
+          )}
+        </div>
+      </div>
 
       <section id="useful-heist" aria-labelledby="useful-heist-title">
         <div className={styles.sectionHeading}>
@@ -120,5 +239,91 @@ export default function UsefulContainer() {
         <CheatSheetGallery />
       </section>
     </main>
+  );
+}
+
+function ContinuationCard() {
+  const { t } = useI18n();
+  const route = useAtomValue(routeSelector);
+  const completedKeys = useAtomValue(routeProgressFamily.keys);
+  const summary = summarizeLevelingProgress(route, completedKeys);
+  if (summary === null) return null;
+  const sectionName = route[summary.sectionIndex]?.name ?? "";
+
+  return (
+    <>
+      <h2>{t("tools.category.continue")}</h2>
+      <Link
+        className={styles.continuationCard}
+        to={`/leveling#section-${summary.sectionIndex}`}
+      >
+        <span>
+          <strong>
+            {summary.done
+              ? t("tools.continue.done")
+              : t("tools.continue.title")}
+          </strong>
+          <small>{sectionName}</small>
+        </span>
+        <span className={styles.progressText}>
+          {t("tools.continue.progress", {
+            completed: summary.completed,
+            total: summary.total,
+          })}
+        </span>
+      </Link>
+    </>
+  );
+}
+
+function InternalToolCard({
+  tool,
+  onOpen,
+}: {
+  tool: InternalTool;
+  onOpen: (id: InternalToolId) => void;
+}) {
+  const { t } = useI18n();
+  return (
+    <Link
+      className={styles.internalCard}
+      data-accent={tool.accent}
+      to={tool.href}
+      onClick={() => onOpen(tool.id)}
+    >
+      <strong>{t(tool.titleKey)}</strong>
+      <span>{t(tool.descriptionKey)}</span>
+    </Link>
+  );
+}
+
+function ExternalResourceCard({ id }: { id: ResourceId }) {
+  const { t } = useI18n();
+  const resource = resourcesById.get(id);
+  if (!resource) return null;
+  const note = "note" in resource ? resource.note : null;
+  const description = t(`useful.resource.${resource.id}.description` as MessageKey);
+
+  return (
+    <a
+      className={styles.resourceCard}
+      href={resource.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${resource.name}. ${description}. ${t("useful.externalLink")}`}
+    >
+      <span className={styles.resourceTitle}>
+        <strong>{resource.name}</strong>
+        <FaExternalLinkAlt aria-hidden={true} />
+      </span>
+      <span className={styles.resourceDescription}>{description}</span>
+      {note && (
+        <span className={styles.resourceFooter}>
+          <span className={styles.badge}>
+            {t(`useful.note.${note}` as MessageKey)}
+          </span>
+        </span>
+      )}
+    </a>
   );
 }

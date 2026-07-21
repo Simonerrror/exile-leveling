@@ -112,3 +112,14 @@ test("orders the primary PoE Tools navigation and uses the canonical repository"
     /https:\/\/github\.com\/Simonerrror\/exile-leveling/,
   );
 });
+
+test("homepage exposes search, continuation, recent tools, and safe links", () => {
+  const useful = readSource("../../../web/src/containers/Useful/index.tsx");
+  assert.match(useful, /type="search"/);
+  assert.match(useful, /internalTools/);
+  assert.match(useful, /recentToolsAtom/);
+  assert.match(useful, /routeProgressFamily\.keys/);
+  assert.match(useful, /categoryRail/);
+  assert.match(useful, /<Link/);
+  assert.match(useful, /target="_blank"/);
+});

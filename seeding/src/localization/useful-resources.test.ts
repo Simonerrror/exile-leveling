@@ -19,7 +19,7 @@ const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("defines all useful resources with unique IDs", () => {
-  assert.equal(resources.length, 16);
+  assert.equal(resources.length, 15);
   assert.equal(new Set(resources.map(({ id }) => id)).size, resources.length);
 });
 
@@ -33,7 +33,6 @@ test("defines the canonical resource names in catalog order", () => {
       "Cluster Jewel Calculator",
       "Craft of Exile",
       "FilterBlade",
-      "PoE.re",
       "PoE Planner",
       "TFT Bulk Selling Tool",
       "PoE Trade Extension",
@@ -80,9 +79,7 @@ test("compact useful layout keeps the important content dense", () => {
   const enMessages = en as Record<string, string>;
   const ruMessages = ru as Record<string, string>;
 
-  assert.ok(
-    navbar.indexOf('t("nav.useful")') < navbar.indexOf('t("nav.build")'),
-  );
+  assert.ok(navbar.indexOf('t("nav.home")') < navbar.indexOf('t("nav.build")'));
   assert.doesNotMatch(useful, /jumpNav/);
   assert.doesNotMatch(useful, /styles\.hero/);
   assert.doesNotMatch(styles, /\.resourceCard\s*\{[^}]*min-height:/s);
