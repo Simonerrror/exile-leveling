@@ -15,7 +15,6 @@ const REGEX_SHARD_FAMILIES = [
   "vendor",
   "maps",
   "items",
-  "mapnames",
   "expedition",
   "heist",
   "flasks",

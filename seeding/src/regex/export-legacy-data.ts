@@ -203,11 +203,6 @@ function buildPayload(
         } : {},
       };
     }
-    case "mapnames":
-      return {
-        entries: objectValue(moduleAt(modules, "src/generated/GeneratedMapNames.ts"), "mapNames"),
-        translations: translations("mapNames"),
-      };
     case "flasks": {
       const english = moduleAt(modules, "src/generated/GeneratedFlaskMods.ts");
       const russian = moduleAt(modules, "src/generated/repoe/GeneratedRussianFlaskMods.ts");
@@ -283,7 +278,6 @@ function payloadRecords(tool: RegexToolId, payload: unknown): number {
     case "vendor": return collectionSize(value.gems?.tokens);
     case "maps": return collectionSize(value.mods?.tokens);
     case "items": return collectionSize(value.bases) + collectionSize(value.mods) + collectionSize(value.translations?.mods);
-    case "mapnames": return collectionSize(value.entries);
     case "flasks": return collectionSize(value.prefix) + collectionSize(value.suffix);
     case "heist": return collectionSize(value.contractTypes) + collectionSize(value.modifiers) + collectionSize(value.targetValues);
     case "expedition": return collectionSize(value.baseTypeRegex) + collectionSize(value.uniquesSeen);
@@ -336,7 +330,7 @@ async function main(): Promise<void> {
     generatedAt?: unknown; league?: unknown; schemaVersion?: unknown;
   };
   if (
-    economy.schemaVersion !== 1 || typeof economy.generatedAt !== "string" ||
+    economy.schemaVersion !== 3 || typeof economy.generatedAt !== "string" ||
     typeof economy.league !== "string"
   ) throw new TypeError("Economy snapshot metadata has an invalid shape");
   validated.inputs.push({ path: "seeding/src/regex/data/poe1-economy.json", sha256: sha256(economyContents) });

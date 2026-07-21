@@ -22,7 +22,6 @@
   "regex.tool.vendor": "Камни у торговцев",
   "regex.tool.maps": "Модификаторы карт",
   "regex.tool.items": "Предметы",
-  "regex.tool.mapnames": "Названия карт",
   "regex.tool.expedition": "Экспедиция",
   "regex.tool.heist": "Контракты Heist",
   "regex.tool.flasks": "Флаконы",

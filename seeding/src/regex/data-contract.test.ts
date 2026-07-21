@@ -18,7 +18,6 @@ const tools = [
   "vendor",
   "maps",
   "items",
-  "mapnames",
   "flasks",
   "heist",
   "expedition",
@@ -32,7 +31,7 @@ const expectedShards = tools.flatMap((tool) =>
   ["en", "ru"].map((locale) => `${tool}.${locale}.json`),
 ).sort();
 
-test("commits exactly twelve EN/RU shards plus a deterministic manifest", () => {
+test("commits exactly eleven EN/RU shards plus a deterministic manifest", () => {
   const files = readdirSync(generatedUrl).sort();
   assert.deepEqual(files, [...expectedShards, "manifest.json"].sort());
 
@@ -52,7 +51,7 @@ test("commits exactly twelve EN/RU shards plus a deterministic manifest", () => 
   };
   assert.equal(manifest.generatorVersion, 3);
   assert.deepEqual(manifest.shards.map(({ file }) => file), expectedShards);
-  assert.equal(manifest.inputs.length, 21);
+  assert.equal(manifest.inputs.length, 20);
   assert.ok(manifest.inputs.some(({ path }) => path === "common/data/json/gems.json"));
 
   for (const entry of manifest.shards) {
@@ -66,7 +65,7 @@ test("commits exactly twelve EN/RU shards plus a deterministic manifest", () => 
 
 test("manifest verification is source-independent and rejects forbidden payloads", () => {
   const result = verifyGeneratedRegexData(fileURLToPath(generatedUrl));
-  assert.equal(result.shards, 24);
+  assert.equal(result.shards, 22);
   assert.ok(result.bytes > 0);
 
   const corpus = readdirSync(generatedUrl)
@@ -111,4 +110,15 @@ test("uses an explicit literal import cell for every shard", () => {
     assert.match(source, new RegExp(`generated/${file.replaceAll(".", "\\.")}`));
   }
   assert.doesNotMatch(source, /generated\/.*\$\{/);
+});
+
+test("legacy export accepts the checked-in economy schema", () => {
+  const source = readFileSync(
+    new URL("./export-legacy-data.ts", import.meta.url),
+    "utf8",
+  );
+  const snapshot = JSON.parse(
+    readFileSync(new URL("./data/poe1-economy.json", import.meta.url), "utf8"),
+  ) as { schemaVersion: number };
+  assert.match(source, new RegExp(`economy\\.schemaVersion !== ${snapshot.schemaVersion}`));
 });

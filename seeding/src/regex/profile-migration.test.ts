@@ -104,7 +104,7 @@ test("migrates selected 2–6 link counts and recognized vendor settings", () =>
   };
 
   const migrated = migrateLegacyProfiles(legacy, "default");
-  assert.equal(migrated.version, 2);
+  assert.equal(migrated.version, 3);
   assert.equal(migrated.selectedProfile, "default");
   assert.equal(migrated.profiles[0]?.locale, "ru");
   assert.deepEqual(migrated.profiles[0]?.tools.vendor, {
@@ -149,7 +149,7 @@ test("migrates selected 2–6 link counts and recognized vendor settings", () =>
 
 test("normalization is idempotent, deterministic, and rejects unsafe values", () => {
   const unsafe = JSON.parse(`{
-    "version": 2,
+    "version": 3,
     "selectedProfile": "missing",
     "profiles": [
       {"name":" same ","locale":"xx","tools":{"vendor":{"linkCounts":[6,4,6,3],"gems":[2,1]},"beast":{"minChaosValue":999999999},"__proto__":{"polluted":true}}},
@@ -168,6 +168,7 @@ test("normalization is idempotent, deterministic, and rejects unsafe values", ()
   assert.equal(JSON.stringify(normalizeProfileStore(normalized)), JSON.stringify(normalized));
   assert.equal(({} as { polluted?: boolean }).polluted, undefined);
   assert.throws(() => normalizeProfileStore(null), /profile store/i);
+  assert.equal("mapnames" in normalized.profiles[0]!.tools, false);
 });
 
 class MemoryStorage {

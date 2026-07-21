@@ -1,7 +1,7 @@
 import type { RegexLocale } from "../core/types.js";
 
 export type RegexDataToolId =
-  | "vendor" | "maps" | "items" | "mapnames" | "flasks" | "heist"
+  | "vendor" | "maps" | "items" | "flasks" | "heist"
   | "expedition" | "beast" | "scarabs" | "tattoos" | "runegrafts" | "jewels";
 
 export type RegexDataLocale = RegexLocale;
@@ -34,10 +34,6 @@ export interface MapRegexData {
 export interface ItemRegexData {
   bases: unknown[];
   mods: Record<string, unknown>;
-  translations: Record<string, unknown>;
-}
-export interface MapNameRegexData {
-  entries: Record<string, unknown>;
   translations: Record<string, unknown>;
 }
 export interface FlaskRegexData {
@@ -83,7 +79,6 @@ export interface RegexDataByTool {
   vendor: VendorRegexData;
   maps: MapRegexData;
   items: ItemRegexData;
-  mapnames: MapNameRegexData;
   flasks: FlaskRegexData;
   heist: HeistRegexData;
   expedition: ExpeditionRegexData;

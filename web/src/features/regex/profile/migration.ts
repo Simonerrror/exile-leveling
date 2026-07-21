@@ -14,7 +14,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 const legacyToolNames = {
   map: "maps",
   itemCrafting: "items",
-  mapNames: "mapnames",
   expedition: "expedition",
   heist: "heist",
   flask: "flasks",

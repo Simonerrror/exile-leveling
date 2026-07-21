@@ -11,7 +11,6 @@ const shardFamilies = [
   "vendor",
   "maps",
   "items",
-  "mapnames",
   "expedition",
   "heist",
   "flasks",

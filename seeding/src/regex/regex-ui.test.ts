@@ -6,11 +6,11 @@ import ru from "../../../web/src/i18n/messages/ru.json" with { type: "json" };
 
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
 const toolIds = [
-  "vendor", "maps", "items", "mapnames", "expedition", "heist",
+  "vendor", "maps", "items", "expedition", "heist",
   "flasks", "beast", "tattoo", "runegraft", "scarabs", "jewels",
 ];
 
-test("routes the catalog and twelve stable regex workspaces lazily", () => {
+test("routes the catalog and eleven current regex workspaces lazily", () => {
   const routes = read("../../../web/src/containers/index.tsx");
   assert.match(routes, /lazy\(\(\) => import\("\.\/RegexWorkspace"\)\)/);
   assert.match(routes, /path="\/regex\/:toolId"/);
@@ -19,8 +19,7 @@ test("routes the catalog and twelve stable regex workspaces lazily", () => {
   const catalog = read("../../../web/src/containers/RegexCatalog/index.tsx");
   for (const id of toolIds) assert.match(catalog, new RegExp(`to=\\{?\`?/regex/.*${id}|${id}`));
   assert.match(catalog, /<Link/);
-  assert.match(catalog, /requestIdleCallback/);
-  assert.match(catalog, /loadRegexData\("mapnames", locale\)/);
+  assert.doesNotMatch(catalog, /mapnames/);
   assert.match(catalog, /regexToolIcons/);
   assert.match(catalog, /<img/);
   assert.match(catalog, /loading="lazy"/);

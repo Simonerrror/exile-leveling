@@ -1,6 +1,6 @@
 import type { RegexLocale } from "../core/types.js";
 
-export const PROFILE_SCHEMA_VERSION = 2 as const;
+export const PROFILE_SCHEMA_VERSION = 3 as const;
 
 export type LinkCount = 2 | 3 | 4 | 5 | 6;
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
@@ -53,7 +53,6 @@ export interface RegexToolProfileSettings {
   vendor: VendorProfileSettings;
   maps: JsonObject;
   items: JsonObject;
-  mapnames: JsonObject;
   expedition: JsonObject;
   heist: JsonObject;
   flasks: FlaskProfileSettings;
@@ -105,7 +104,6 @@ export const createDefaultToolSettings = (): RegexToolProfileSettings => ({
   vendor: defaultVendor(),
   maps: {},
   items: {},
-  mapnames: {},
   expedition: {},
   heist: {},
   flasks: defaultFlasks(),
@@ -130,7 +128,6 @@ const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor" |
     "itembase", "selectedRareMods", "selectedMagicMods", "rareSettings",
     "magicSettings", "customText",
   ],
-  mapnames: ["selected", "mapTabSearch"],
   expedition: ["selected", "selectedBaseTypes", "league", "addFillerItems", "minValueToDisplay", "minAddValue"],
   heist: ["selected", "targetValue", "requireCoinValue", "contractLevels"],
   beast: ["selected", "includeHarvest", "minChaosValue", "maxChaosValue", "menagerieLimit", "redBeastsOnly"],
@@ -284,7 +281,10 @@ function normalizeName(value: unknown): string | null {
 }
 
 export function normalizeProfileStore(value: unknown): RegexProfileStore {
-  if (!isRecord(value) || value.version !== PROFILE_SCHEMA_VERSION || !Array.isArray(value.profiles)) {
+  if (
+    !isRecord(value) || (value.version !== 2 && value.version !== PROFILE_SCHEMA_VERSION) ||
+    !Array.isArray(value.profiles)
+  ) {
     throw new TypeError("Invalid profile store");
   }
 

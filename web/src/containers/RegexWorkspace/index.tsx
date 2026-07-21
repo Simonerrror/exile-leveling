@@ -10,7 +10,6 @@ import type {
   HeistRegexData,
   ItemRegexData,
   JewelRegexData,
-  MapNameRegexData,
   MapRegexData,
   PricedEntriesRegexData,
   RegexDataByTool,
@@ -23,7 +22,6 @@ import {
   compileExpeditionRegex,
   compileHeistRegex,
   compileJewelRegex,
-  compileMapNameRegex,
   compilePricedBeastRegex,
   compilePricedTattooRegex,
   compileRunegraftRegex,
@@ -57,19 +55,19 @@ import type { RegexCompileResult } from "../../features/regex/core/types";
 import styles from "./styles.module.css";
 
 const toolIds = [
-  "vendor", "maps", "items", "mapnames", "expedition", "heist",
+  "vendor", "maps", "items", "expedition", "heist",
   "flasks", "beast", "tattoo", "runegraft", "scarabs", "jewels",
 ] as const;
 type ToolId = (typeof toolIds)[number];
 
 const dataToolByRoute: Record<ToolId, RegexDataToolId> = {
-  vendor: "vendor", maps: "maps", items: "items", mapnames: "mapnames",
+  vendor: "vendor", maps: "maps", items: "items",
   expedition: "expedition", heist: "heist", flasks: "flasks", beast: "beast",
   tattoo: "tattoos", runegraft: "runegrafts", scarabs: "scarabs", jewels: "jewels",
 };
 
 const profileToolByRoute: Record<ToolId, keyof RegexToolProfileSettings> = {
-  vendor: "vendor", maps: "maps", items: "items", mapnames: "mapnames",
+  vendor: "vendor", maps: "maps", items: "items",
   expedition: "expedition", heist: "heist", flasks: "flasks", beast: "beast",
   tattoo: "tattoos", runegraft: "runegrafts", scarabs: "scarabs", jewels: "jewels",
 };
@@ -171,10 +169,6 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
         id: `${index}:${valueText(entry, "baseType") ?? valueText(entry, "name") ?? index}`,
         label: valueText(entry, "baseType") ?? valueText(entry, "name") ?? `#${index + 1}`,
       }));
-    case "mapnames": {
-      const value = data as MapNameRegexData;
-      return Object.entries(value.entries).map(([id, entry]) => ({ id, label: translatedLabel(id, entry, value.translations) }));
-    }
     case "expedition": {
       const value = data as ExpeditionRegexData;
       const translations = isRecord(value.translations.bases) ? value.translations.bases : {};
@@ -264,7 +258,6 @@ function compile(
         selected: selected.map((id) => ({ pattern: id.split(":").slice(1).join(":"), kind: "prefix" as const })),
         mode: "any", matchOpenAffix: false,
       });
-    case "mapnames": return compileMapNameRegex(selected, false, data as MapNameRegexData);
     case "expedition": return compileExpeditionRegex(selected, [], data as ExpeditionRegexData);
     case "heist": return compileHeistRegex(selected.map((name) => ({ name, start: 1, end: 1 })), 0, false, data as HeistRegexData);
     case "flasks": return compileFlaskRegex(normalizeFlaskSettings({
@@ -309,7 +302,7 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
   }
   const settings = profile.tools[profileToolByRoute[tool]] as JsonObject;
   const fallbackKey: Partial<Record<ToolId, string>> = {
-    maps: "badIds", mapnames: "selected", expedition: "selectedBaseTypes",
+    maps: "badIds", expedition: "selectedBaseTypes",
     heist: "contractLevels", flasks: "selectedPrefix", scarabs: "selected",
     jewels: "selectedRegular",
   };

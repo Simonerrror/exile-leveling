@@ -22,7 +22,6 @@
   "regex.tool.vendor": "Vendor gems",
   "regex.tool.maps": "Map modifiers",
   "regex.tool.items": "Items",
-  "regex.tool.mapnames": "Map names",
   "regex.tool.expedition": "Expedition",
   "regex.tool.heist": "Heist contracts",
   "regex.tool.flasks": "Flasks",

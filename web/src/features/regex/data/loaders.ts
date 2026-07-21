@@ -22,10 +22,6 @@ const importers: Record<RegexDataToolId, Record<RegexDataLocale, JsonImporter>> 
     en: () => import("./generated/items.en.json"),
     ru: () => import("./generated/items.ru.json"),
   },
-  mapnames: {
-    en: () => import("./generated/mapnames.en.json"),
-    ru: () => import("./generated/mapnames.ru.json"),
-  },
   flasks: {
     en: () => import("./generated/flasks.en.json"),
     ru: () => import("./generated/flasks.ru.json"),
@@ -119,10 +115,6 @@ function validateRegexData<T extends RegexDataToolId>(
       requireArray(data.bases, "items.bases");
       requireRecord(data.mods, "items.mods");
       requireRecord(data.translations, "items.translations");
-      break;
-    case "mapnames":
-      requireRecord(data.entries, "mapnames.entries");
-      requireRecord(data.translations, "mapnames.translations");
       break;
     case "flasks":
       requireArray(data.prefix, "flasks.prefix");

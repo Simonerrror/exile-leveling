@@ -1,5 +1,5 @@
 export const REGEX_TOOL_IDS = [
-  "vendor", "maps", "items", "mapnames", "flasks", "heist",
+  "vendor", "maps", "items", "flasks", "heist",
   "expedition", "beast", "scarabs", "tattoos", "runegrafts", "jewels",
 ] as const;
 
@@ -23,7 +23,6 @@ export const LEGACY_SOURCE_ALLOWLIST = [
   "src/generated/GeneratedTattoo.ts",
   "src/generated/GeneratedRunegraft.ts",
   "src/generated/GeneratedJewel.ts",
-  "src/generated/GeneratedMapNames.ts",
   "src/generated/repoe/GeneratedRussianContent.ts",
   "src/generated/mapmods/trade/TradeStatIdMatching.json",
 ] as const;

@@ -6,7 +6,6 @@ import {
   compileExpeditionRegex,
   compileHeistRegex,
   compileJewelRegex,
-  compileMapNameRegex,
   compilePricedBeastRegex,
   compilePricedTattooRegex,
   compileRunegraftRegex,
@@ -25,15 +24,7 @@ const assertResult = (result: { primary: string; length: number; diagnostics: un
 };
 
 for (const locale of ["en", "ru"] as const) {
-  test(`${locale} map names and expedition compile empty and selected scenarios`, async () => {
-    const mapnames = await loadRegexData("mapnames", locale);
-    assert.equal(compileMapNameRegex([], false, mapnames).primary, "");
-    const mapName = Object.keys(mapnames.entries)[0];
-    assert.ok(mapName);
-    const mapResult = compileMapNameRegex([mapName], false, mapnames);
-    assertResult(mapResult);
-    assert.notEqual(mapResult.primary, "");
-
+  test(`${locale} expedition compiles empty and selected scenarios`, async () => {
     const expedition = await loadRegexData("expedition", locale);
     assert.equal(compileExpeditionRegex([], [], expedition).primary, "");
     const base = Object.keys(expedition.baseTypeRegex)[0];

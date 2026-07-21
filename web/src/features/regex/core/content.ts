@@ -3,7 +3,6 @@ import type {
   ExpeditionRegexData,
   HeistRegexData,
   JewelRegexData,
-  MapNameRegexData,
 } from "../data/types.js";
 import { splitRegexIntoTwoPasses } from "./two-pass.js";
 import type { RegexCompileResult } from "./types.js";
@@ -39,16 +38,6 @@ function compilePatterns(
     .map((value) => value.replaceAll('"', ""));
   const body = unique.join("|");
   return splitRegexIntoTwoPasses(body && quoted ? `"${body}"` : body, maxLength);
-}
-
-export function compileMapNameRegex(
-  selected: string[],
-  mapTabSearch: boolean,
-  data: MapNameRegexData,
-): RegexCompileResult {
-  return compilePatterns(selected.map((name) =>
-    localizedRegex(data.entries[name], data.translations, name),
-  ), !mapTabSearch);
 }
 
 export function compileExpeditionRegex(
