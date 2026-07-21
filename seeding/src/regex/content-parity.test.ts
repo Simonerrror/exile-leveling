@@ -11,6 +11,7 @@ import {
   compileRunegraftRegex,
   compileScarabRegex,
 } from "../../../web/src/features/regex/core/content.js";
+import { heistContractLabels } from "../../../web/src/features/regex/heist-contract-labels.js";
 
 const assertResult = (result: { primary: string; length: number; diagnostics: unknown[] }) => {
   assert.equal(result.length, result.primary.length);
@@ -90,3 +91,15 @@ for (const locale of ["en", "ru"] as const) {
     assertResult(compileJewelRegex({ selected: [jewel.mod], abyss: false, allMatch: false }, jewels));
   });
 }
+
+test("Russian Heist contract labels are concise and bilingual", async () => {
+  const data = await loadRegexData("heist", "ru");
+  const labels = heistContractLabels(data);
+  assert.equal(labels.length, 9);
+  assert.deepEqual(labels.find(({ id }) => id === "Counter-Thaumaturgy"), {
+    id: "Counter-Thaumaturgy",
+    primary: "Контрмагия",
+    secondary: "Counter-Thaumaturgy",
+  });
+  assert.ok(labels.every(({ primary, secondary }) => primary && secondary));
+});

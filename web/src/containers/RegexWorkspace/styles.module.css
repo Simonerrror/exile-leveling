@@ -58,6 +58,8 @@
 .option { align-items: start; background: #272c31; border: 1px solid #394149; border-radius: 0.28rem; display: flex; gap: 0.45rem; line-height: 1.25; min-height: 2.65rem; padding: 0.45rem; }
 .option input { flex: 0 0 auto; margin-top: 0.12rem; }
 .option span { overflow-wrap: anywhere; }
+.optionText { display: grid; gap: 0.08rem; }
+.optionText small { color: #8f99a3; font-size: 0.72rem; }
 .showAll { grid-column: 1 / -1; }
 .notice { color: #8db8df; }
 .error { color: #e0a15d; }

@@ -31,6 +31,7 @@ import {
 import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
 import { groupVendorGems } from "../../features/regex/vendor-gem-catalog";
+import { heistContractLabels } from "../../features/regex/heist-contract-labels";
 import {
   createDefaultToolSettings,
   normalizeFlaskSettings,
@@ -72,7 +73,13 @@ const vendorGroups = [
   { key: "weapon", title: "regex.workspace.vendor.weapon", options: [["sceptre", "regex.workspace.vendor.weapon.sceptre"], ["mace", "regex.workspace.vendor.weapon.mace"], ["axe", "regex.workspace.vendor.weapon.axe"], ["sword", "regex.workspace.vendor.weapon.sword"], ["bow", "regex.workspace.vendor.weapon.bow"], ["claw", "regex.workspace.vendor.weapon.claw"], ["dagger", "regex.workspace.vendor.weapon.dagger"], ["staff", "regex.workspace.vendor.weapon.staff"], ["wand", "regex.workspace.vendor.weapon.wand"], ["shield", "regex.workspace.vendor.weapon.shield"]] },
 ] as const;
 
-interface Option { id: string; label: string; pattern?: string; affix?: "prefix" | "suffix" }
+interface Option {
+  id: string;
+  label: string;
+  secondaryLabel?: string;
+  pattern?: string;
+  affix?: "prefix" | "suffix";
+}
 interface LoadedData {
   tool: ToolId;
   locale: "en" | "ru";
@@ -148,8 +155,11 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
     }
     case "heist": {
       const value = data as HeistRegexData;
-      const translations = isRecord(value.translations.contractTypes) ? value.translations.contractTypes : {};
-      return Object.entries(value.contractTypes).map(([id, entry]) => ({ id, label: translatedLabel(id, entry, translations) }));
+      return heistContractLabels(value).map(({ id, primary, secondary }) => ({
+        id,
+        label: primary,
+        secondaryLabel: secondary,
+      }));
     }
     case "flasks": {
       return flaskOptions(data as FlaskRegexData);
@@ -538,7 +548,10 @@ export default function RegexWorkspace() {
               {visible.map((option) => (
                 <label className={styles.option} key={option.id}>
                   <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
-                  <span>{option.label}</span>
+                  <span className={styles.optionText}>
+                    <span>{option.label}</span>
+                    {option.secondaryLabel && <small>{option.secondaryLabel}</small>}
+                  </span>
                 </label>
               ))}
               {!showAll && filtered.length > visible.length && (
