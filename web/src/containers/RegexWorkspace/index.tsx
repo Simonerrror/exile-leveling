@@ -37,6 +37,7 @@ import {
 } from "../../features/regex/vendor-gem-catalog";
 import { requiredGemsSelector } from "../../state/gem";
 import { heistContractLabels } from "../../features/regex/heist-contract-labels";
+import { bestiaryCatalog } from "../../features/regex/bestiary-catalog";
 import {
   heistCompileInput,
   normalizeHeistSettings,
@@ -231,7 +232,13 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
       const key = tool === "beast" ? "beast" : "tattoo";
       return entries.map((entry, index) => {
         const id = valueText(entry, key) ?? valueText(entry, "name") ?? String(index);
-        return { id, label: translatedLabel(id, entry, value.translations) };
+        return {
+          id,
+          label: translatedLabel(id, entry, value.translations),
+          secondaryLabel: tool === "tattoo"
+            ? translatedDescription(id, entry, value.translations)
+            : valueText(entry, "recipe"),
+        };
       });
     }
     case "jewels": {
@@ -411,6 +418,12 @@ export default function RegexWorkspace() {
     if (tool !== "expedition" || data === null || !expeditionSettings.addFillerItems) return [];
     return valuableExpeditionFillers(selected, expeditionSettings.minAddValue, data as ExpeditionRegexData);
   }, [data, expeditionSettings.addFillerItems, expeditionSettings.minAddValue, selected, tool]);
+  const beastEntries = useMemo(() => {
+    if (tool !== "beast" || data === null) return [];
+    const needle = query.trim().toLocaleLowerCase();
+    return bestiaryCatalog(data as EntriesRegexData, locale).filter(({ searchText }) =>
+      needle === "" || searchText.includes(needle));
+  }, [data, locale, query, tool]);
   const result = useMemo(() => {
     if (!tool || !data) return emptyResult;
     if (tool === "expedition") {
@@ -800,6 +813,25 @@ export default function RegexWorkspace() {
                     ))}
                   </div>
                 </section>
+              ))}
+            </div>
+          ) : tool === "beast" ? (
+            <div className={styles.beastGrid}>
+              {beastEntries.map((entry) => (
+                <article className={styles.beastOption} key={entry.id}>
+                  <label>
+                    <input type="checkbox" checked={selected.includes(entry.id)} onChange={() => toggle(entry.id)} />
+                    <span className={styles.optionText}>
+                      <strong>{entry.label}</strong>
+                      <small>{entry.id}</small>
+                      {entry.recipe && <span className={styles.beastRecipe}>{entry.recipe}</span>}
+                    </span>
+                  </label>
+                  <div className={styles.beastLinks}>
+                    <a href={entry.tradeUrl} target="_blank" rel="noreferrer">{t("regex.workspace.beast.priceCheck")}</a>
+                    <a href={entry.wikiUrl} target="_blank" rel="noreferrer">Wiki</a>
+                  </div>
+                </article>
               ))}
             </div>
           ) : tool === "heist" ? (

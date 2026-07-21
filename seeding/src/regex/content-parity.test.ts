@@ -13,6 +13,11 @@ import {
 } from "../../../web/src/features/regex/core/content.js";
 import { heistContractLabels } from "../../../web/src/features/regex/heist-contract-labels.js";
 import {
+  bestiaryCatalog,
+  beastTradeUrl,
+  beastWikiUrl,
+} from "../../../web/src/features/regex/bestiary-catalog.js";
+import {
   heistCompileInput,
   normalizeHeistSettings,
 } from "../../../web/src/features/regex/heist-settings.js";
@@ -168,6 +173,33 @@ test("Expedition thumbnails are limited to valuable outcomes with real art", asy
   const outcomes = expeditionCatalog(data).flatMap((entry) => visibleExpeditionOutcomes(entry, 100));
   assert.ok(outcomes.length > 0);
   assert.ok(outcomes.every(({ chaosValue, icon }) => chaosValue >= 100 && /^https:\/\//.test(icon)));
+});
+
+test("Bestiary recipes reflect the current league changes", async () => {
+  const data = await loadRegexData("beast", "en");
+  const entries = Array.isArray(data.entries) ? data.entries as Array<{ recipe?: string }> : [];
+  const recipes = entries.map(({ recipe }) => recipe ?? "").join("\n");
+  assert.doesNotMatch(recipes, /30% base Quality|Five Kirac Missions|Map Crafting Option|Orbs of Horizons/i);
+  assert.match(recipes, /Implicit Modifier|Nightmare Map|valuable Scarab|Orbs of Unmaking/i);
+  const russian = bestiaryCatalog(await loadRegexData("beast", "ru"), "ru");
+  assert.ok(russian.some(({ recipe }) => recipe?.includes("карта кошмара")));
+  assert.ok(russian.filter(({ recipe }) => recipe).every(({ recipe }) => recipe?.trim()));
+  assert.match(beastTradeUrl("Craicic Chimeral"), /^https:\/\/www\.pathofexile\.com\/trade\/search\/Mirage\?q=/);
+  assert.equal(beastWikiUrl("Craicic Chimeral"), "https://www.poewiki.net/wiki/Craicic_Chimeral");
+});
+
+test("Every tattoo exposes a real localized effect", async () => {
+  for (const locale of ["en", "ru"] as const) {
+    const data = await loadRegexData("tattoos", locale);
+    const entries = Array.isArray(data.entries) ? data.entries as Array<{ tattoo?: string; description?: string }> : [];
+    assert.ok(entries.every((entry) => {
+      const translated = entry.tattoo && data.translations[entry.tattoo] as { displayDescription?: unknown } | undefined;
+      const description = typeof translated?.displayDescription === "string"
+        ? translated.displayDescription : entry.description;
+      return typeof description === "string" && description.trim() !== "" &&
+        !description.startsWith("Описание отсутствует");
+    }));
+  }
 });
 
 test("Expedition valuable fillers stay within a single copyable regex", async () => {

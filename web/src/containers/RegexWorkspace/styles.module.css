@@ -115,6 +115,12 @@
 .heistRange { align-items: center; display: flex; flex: 0 0 auto; gap: 0.2rem; }
 .heistRange select { background: #16191c; border: 1px solid #4b555e; color: #fff; min-height: 2rem; }
 .heistRange select:disabled { opacity: 0.4; }
+.beastGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+.beastOption { background: #272c31; border: 1px solid #394149; border-left: 0.2rem solid #c95d4b; border-radius: 0.28rem; display: grid; gap: 0.45rem; padding: 0.5rem; }
+.beastOption > label { align-items: start; display: flex; gap: 0.45rem; }
+.beastRecipe { color: #e0b26d; font-size: 0.78rem; line-height: 1.3; }
+.beastLinks { display: flex; gap: 0.4rem; margin-left: 1.55rem; }
+.beastLinks a { background: #1b2024; border: 1px solid #4b555e; border-radius: 0.25rem; color: #8db8df; font-size: 0.75rem; padding: 0.25rem 0.45rem; }
 .economyMeta { color: #8f99a3; font-size: 0.75rem; grid-column: 1 / -1; margin: 0; }
 .expeditionGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
 .expeditionOption {

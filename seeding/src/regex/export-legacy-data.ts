@@ -46,6 +46,43 @@ const colorByAttribute = {
   none: "w",
 } as const;
 
+const currentBeastRecipes: Record<string, string> = {
+  "Craicic Vassal": "Corrupt a Map - To have an Implicit Modifier",
+  "Farric Frost Hellion Alpha": "Create Currency Items - A Stack of 3 Orbs of Unmaking",
+  "Primal Crushclaw": "Create an Item - A valuable Scarab",
+  "Primal Cystcaller": "Create an Item - Nightmare Map",
+  "Vivid Watcher": "Transform an Item - Sacrifice an Exceptional Support Gem for 3 high Level, high Quality Support Gems",
+  "Wild Brambleback": "Transform an Item - Add 500m Experience to an Exceptional Support Gem",
+};
+
+function applyCurrentBeastRecipes(value: unknown): unknown {
+  if (!Array.isArray(value)) return value;
+  return value.map((candidate) => {
+    if (typeof candidate !== "object" || candidate === null || Array.isArray(candidate)) return candidate;
+    const entry = candidate as Record<string, unknown>;
+    const replacement = typeof entry.beast === "string" ? currentBeastRecipes[entry.beast] : undefined;
+    return replacement ? { ...entry, recipe: replacement } : entry;
+  });
+}
+
+const russianTattooEffectOverrides: Record<string, string> = {
+  "Tattoo of the Arohongui Scout": "10% шанс избежать охлаждения и заморозки",
+  "Tattoo of the Kitava Heart Eater": "Добивающие удары с 4% шансом поглощают трупы и восстанавливают 10% максимума здоровья",
+  "Tattoo of the Rongokurai Guard": "Умения защиты имеют 6% увеличение длительности",
+};
+
+function applyRussianTattooEffects(value: unknown): unknown {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return value;
+  const translations = value as Record<string, unknown>;
+  return Object.fromEntries(Object.entries(translations).map(([name, candidate]) => {
+    const description = russianTattooEffectOverrides[name];
+    if (!description || typeof candidate !== "object" || candidate === null || Array.isArray(candidate)) {
+      return [name, candidate];
+    }
+    return [name, { ...(candidate as Record<string, unknown>), displayDescription: description }];
+  }));
+}
+
 function gemIcon(gameId: string): string {
   const metadataName = gameId.slice("Metadata/Items/Gems/".length);
   const relative = metadataName.startsWith("SupportGem")
@@ -266,7 +303,9 @@ function buildPayload(
     }
     case "beast":
       return {
-        entries: objectValue(moduleAt(modules, "src/generated/GeneratedBeastRegex.ts"), "beastRegex"),
+        entries: applyCurrentBeastRecipes(
+          objectValue(moduleAt(modules, "src/generated/GeneratedBeastRegex.ts"), "beastRegex"),
+        ),
         translations: translations("beasts"),
       };
     case "scarabs":
@@ -277,7 +316,9 @@ function buildPayload(
     case "tattoos":
       return {
         entries: objectValue(moduleAt(modules, "src/generated/GeneratedTattoo.ts"), "tattooRegex"),
-        translations: translations("tattoos"),
+        translations: locale === "ru"
+          ? applyRussianTattooEffects(translations("tattoos"))
+          : translations("tattoos"),
       };
     case "runegrafts":
       return {

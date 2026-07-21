@@ -24,6 +24,7 @@
   "regex.tool.items": "Предметы",
   "regex.tool.expedition": "Экспедиция",
   "regex.tool.heist": "Контракты Heist",
+  "regex.workspace.beast.priceCheck": "Прайсчек",
   "regex.workspace.heist.targetValue": "Минимальная ценность цели",
   "regex.workspace.heist.requireBoth": "Требовать профессию и ценность цели",
   "regex.workspace.heist.giannaPreset": "Профессии Джианны",
