@@ -31,6 +31,17 @@ import {
 import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
 import {
+  itemCompileInput,
+  itemModCatalog,
+  jewelOptions,
+  normalizeItemEditorSettings,
+  normalizeJewelEditorSettings,
+  normalizeMapEditorSettings,
+  type ItemEditorSettings,
+  type JewelEditorSettings,
+} from "../../features/regex/editors/compile-input";
+import type { MapRegexSettings } from "../../features/regex/core/maps";
+import {
   groupVendorGems,
   matchBuildGems,
   type BuildGemMatch,
@@ -323,6 +334,12 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
   if (tool === "heist") {
     return Object.keys(normalizeHeistSettings(profile.tools.heist).contractLevels);
   }
+  if (tool === "maps") {
+    const settings = normalizeMapEditorSettings(profile.tools.maps);
+    return Array.from(new Set([...settings.badIds, ...settings.goodIds])).map(String);
+  }
+  if (tool === "items") return normalizeItemEditorSettings(profile.tools.items).selectedMods.map(({ id }) => id);
+  if (tool === "jewels") return normalizeJewelEditorSettings(profile.tools.jewels).selected;
   const settings = profile.tools[profileToolByRoute[tool]] as JsonObject;
   const fallbackKey: Partial<Record<ToolId, string>> = {
     maps: "badIds", expedition: "selectedBaseTypes",
@@ -341,6 +358,18 @@ function storedExpeditionSettings(store: RegexProfileStore): ExpeditionSettings 
 
 function storedHeistSettings(store: RegexProfileStore): HeistProfileSettings {
   return normalizeHeistSettings(selectedProfile(store)?.tools.heist);
+}
+
+function storedMapSettings(store: RegexProfileStore): MapRegexSettings {
+  return normalizeMapEditorSettings(selectedProfile(store)?.tools.maps);
+}
+
+function storedItemSettings(store: RegexProfileStore): ItemEditorSettings {
+  return normalizeItemEditorSettings(selectedProfile(store)?.tools.items);
+}
+
+function storedJewelSettings(store: RegexProfileStore): JewelEditorSettings {
+  return normalizeJewelEditorSettings(selectedProfile(store)?.tools.jewels);
 }
 
 export default function RegexWorkspace() {
@@ -368,6 +397,9 @@ export default function RegexWorkspace() {
   const [heistSettings, setHeistSettings] = useState<HeistProfileSettings>(() =>
     storedHeistSettings(profileStore),
   );
+  const [mapSettings, setMapSettings] = useState<MapRegexSettings>(() => storedMapSettings(profileStore));
+  const [itemSettings, setItemSettings] = useState<ItemEditorSettings>(() => storedItemSettings(profileStore));
+  const [jewelSettings, setJewelSettings] = useState<JewelEditorSettings>(() => storedJewelSettings(profileStore));
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
@@ -385,6 +417,9 @@ export default function RegexWorkspace() {
     setFlaskSettings(normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks));
     setExpeditionSettings(storedExpeditionSettings(profileStore));
     setHeistSettings(storedHeistSettings(profileStore));
+    setMapSettings(storedMapSettings(profileStore));
+    setItemSettings(storedItemSettings(profileStore));
+    setJewelSettings(storedJewelSettings(profileStore));
     setQuery("");
     setBuildGemReport(null);
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
@@ -424,6 +459,25 @@ export default function RegexWorkspace() {
     return bestiaryCatalog(data as EntriesRegexData, locale).filter(({ searchText }) =>
       needle === "" || searchText.includes(needle));
   }, [data, locale, query, tool]);
+  const itemCategories = useMemo(() => {
+    if (tool !== "items" || data === null) return [];
+    return (data as ItemRegexData).bases.flatMap((candidate) => {
+      const name = valueText(candidate, "name");
+      return name ? [name] : [];
+    });
+  }, [data, tool]);
+  const itemMods = useMemo(() => {
+    if (tool !== "items" || data === null || !itemSettings.baseCategory) return [];
+    const needle = query.trim().toLocaleLowerCase();
+    return itemModCatalog(data as ItemRegexData, itemSettings.baseCategory).filter(({ label }) =>
+      needle === "" || label?.toLocaleLowerCase().includes(needle));
+  }, [data, itemSettings.baseCategory, query, tool]);
+  const visibleJewelOptions = useMemo(() => {
+    if (tool !== "jewels" || data === null) return [];
+    const needle = query.trim().toLocaleLowerCase();
+    return jewelOptions(data as JewelRegexData, jewelSettings).filter(({ id, label }) =>
+      needle === "" || `${label} ${id}`.toLocaleLowerCase().includes(needle));
+  }, [data, jewelSettings, query, tool]);
   const result = useMemo(() => {
     if (!tool || !data) return emptyResult;
     if (tool === "expedition") {
@@ -433,8 +487,11 @@ export default function RegexWorkspace() {
       const input = heistCompileInput(heistSettings);
       return compileHeistRegex(input.contracts, input.targetValue, input.requireBoth, data as HeistRegexData);
     }
+    if (tool === "maps") return compileMapRegex(mapSettings, (data as MapRegexData).mods, locale);
+    if (tool === "items") return compileItemRegex(itemCompileInput(itemSettings));
+    if (tool === "jewels") return compileJewelRegex(jewelSettings, data as JewelRegexData);
     return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
-  }, [data, expeditionFillers, flaskSettings, heistSettings, locale, selected, tool, vendorSettings]);
+  }, [data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, selected, tool, vendorSettings]);
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);
@@ -520,6 +577,41 @@ export default function RegexWorkspace() {
     else contractLevels[name] = { start: 1, end: 5 };
     updateHeist({ ...heistSettings, contractLevels });
   };
+  const saveJsonTool = (key: "maps" | "items" | "jewels", value: JsonObject) => {
+    const draft = JSON.parse(JSON.stringify(profileStore)) as RegexProfileStore;
+    const profile = selectedProfile(draft);
+    if (!profile) return;
+    profile.tools[key] = value;
+    try {
+      setProfileStore(saveProfileStore(window.localStorage, draft));
+    } catch {
+      // Browsing stays functional when storage is disabled or full.
+    }
+  };
+  const updateMaps = (value: unknown) => {
+    const next = normalizeMapEditorSettings(value);
+    setMapSettings(next);
+    setSelected(Array.from(new Set([...next.badIds, ...next.goodIds])).map(String));
+    saveJsonTool("maps", next as unknown as JsonObject);
+  };
+  const updateItems = (value: unknown) => {
+    const next = normalizeItemEditorSettings(value);
+    setItemSettings(next);
+    setSelected(next.selectedMods.map(({ id }) => id));
+    saveJsonTool("items", next as unknown as JsonObject);
+  };
+  const updateJewels = (value: unknown) => {
+    const next = normalizeJewelEditorSettings(value);
+    setJewelSettings(next);
+    setSelected(next.selected);
+    saveJsonTool("jewels", {
+      abyssJewel: next.abyss,
+      allMatch: next.allMatch,
+      magicOnly: next.magicOnly,
+      selected: next.selected,
+      [next.abyss ? "selectedAbyss" : "selectedRegular"]: next.selected,
+    });
+  };
   const toggleVendorGroup = (group: VendorBooleanGroup, key: string) => {
     const values = vendorSettings[group] as Record<string, boolean>;
     updateVendor({
@@ -536,9 +628,15 @@ export default function RegexWorkspace() {
     setFlaskSettings(nextFlasks);
     setExpeditionSettings(nextExpedition);
     setHeistSettings(normalizeHeistSettings({}));
+    setMapSettings(normalizeMapEditorSettings({}));
+    setItemSettings(normalizeItemEditorSettings({}));
+    setJewelSettings(normalizeJewelEditorSettings({}));
     setBuildGemReport(null);
     if (tool === "expedition") updateExpedition(nextExpedition);
     if (tool === "heist") updateHeist(normalizeHeistSettings({}));
+    if (tool === "maps") updateMaps({});
+    if (tool === "items") updateItems({});
+    if (tool === "jewels") updateJewels({});
     persist([], nextVendor);
   };
   const copy = async (value: string, pass: "A" | "B") => {
@@ -744,6 +842,125 @@ export default function RegexWorkspace() {
               </button>
             </div>
           )}
+          {tool === "maps" && (
+            <div className={styles.advancedSettings}>
+              {([
+                ["quantity", "regex.workspace.maps.quantity"],
+                ["packsize", "regex.workspace.maps.packsize"],
+                ["itemRarity", "regex.workspace.maps.itemRarity"],
+                ["mapDropChance", "regex.workspace.maps.mapDropChance"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.numberField} key={key}>
+                  <span>{t(label)}</span>
+                  <input value={mapSettings[key]} inputMode="numeric" onChange={(event) => updateMaps({
+                    ...mapSettings, [key]: event.target.value,
+                  })} />
+                </label>
+              ))}
+              {([
+                ["allGoodMods", "regex.workspace.maps.allGood"],
+                ["displayNightmareMods", "regex.workspace.maps.nightmare"],
+                ["optimizeQuant", "regex.workspace.maps.optimizeQuant"],
+                ["optimizePacksize", "regex.workspace.maps.optimizePacksize"],
+                ["optimizeQuality", "regex.workspace.maps.optimizeQuality"],
+                ["anyQuality", "regex.workspace.maps.anyQuality"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.settingToggle} key={key}>
+                  <input type="checkbox" checked={mapSettings[key]} onChange={() => updateMaps({
+                    ...mapSettings, [key]: !mapSettings[key],
+                  })} />
+                  <span>{t(label)}</span>
+                </label>
+              ))}
+              {(["corrupted", "unidentified"] as const).map((key) => (
+                <fieldset className={styles.inlineFieldset} key={key}>
+                  <legend>{t(`regex.workspace.maps.${key}`)}</legend>
+                  <label><input type="checkbox" checked={mapSettings[key].enabled} onChange={() => updateMaps({
+                    ...mapSettings, [key]: { ...mapSettings[key], enabled: !mapSettings[key].enabled },
+                  })} />{t("regex.workspace.maps.enabled")}</label>
+                  <label><input type="checkbox" checked={mapSettings[key].include} onChange={() => updateMaps({
+                    ...mapSettings, [key]: { ...mapSettings[key], include: !mapSettings[key].include },
+                  })} />{t("regex.workspace.maps.include")}</label>
+                </fieldset>
+              ))}
+              <fieldset className={styles.inlineFieldset}>
+                <legend>{t("regex.workspace.maps.rarity")}</legend>
+                {(["normal", "magic", "rare"] as const).map((key) => (
+                  <label key={key}><input type="checkbox" checked={mapSettings.rarity[key]} onChange={() => updateMaps({
+                    ...mapSettings, rarity: { ...mapSettings.rarity, [key]: !mapSettings.rarity[key] },
+                  })} />{t(`regex.workspace.maps.rarity.${key}`)}</label>
+                ))}
+                <label><input type="checkbox" checked={mapSettings.rarity.include} onChange={() => updateMaps({
+                  ...mapSettings, rarity: { ...mapSettings.rarity, include: !mapSettings.rarity.include },
+                })} />{t("regex.workspace.maps.include")}</label>
+              </fieldset>
+              {Object.entries(mapSettings.quality).map(([key, value]) => (
+                <label className={styles.numberField} key={key}>
+                  <span>{t(`regex.workspace.maps.quality.${key}` as MessageKey)}</span>
+                  <input value={value} inputMode="numeric" onChange={(event) => updateMaps({
+                    ...mapSettings, quality: { ...mapSettings.quality, [key]: event.target.value },
+                  })} />
+                </label>
+              ))}
+              <label className={styles.wideField}>
+                <span>{t("regex.workspace.maps.custom")}</span>
+                <input value={mapSettings.customText.value} onChange={(event) => updateMaps({
+                  ...mapSettings, customText: { enabled: true, value: event.target.value },
+                })} />
+              </label>
+            </div>
+          )}
+          {tool === "items" && (
+            <div className={styles.advancedSettings}>
+              <label className={styles.wideField}>
+                <span>{t("regex.workspace.items.category")}</span>
+                <select value={itemSettings.baseCategory} onChange={(event) => updateItems({
+                  ...itemSettings, baseCategory: event.target.value, selectedMods: [],
+                })}>
+                  <option value="">—</option>
+                  {itemCategories.map((category) => <option key={category} value={category}>{category}</option>)}
+                </select>
+              </label>
+              <label className={styles.wideField}>
+                <span>{t("regex.workspace.items.base")}</span>
+                <input value={itemSettings.baseName} onChange={(event) => updateItems({
+                  ...itemSettings, baseName: event.target.value,
+                })} />
+              </label>
+              <label className={styles.wideField}>
+                <span>{t("regex.workspace.items.mode")}</span>
+                <select value={itemSettings.mode} onChange={(event) => updateItems({
+                  ...itemSettings, mode: event.target.value,
+                })}>
+                  <option value="any">{t("regex.workspace.mode.any")}</option>
+                  <option value="all">{t("regex.workspace.mode.all")}</option>
+                  <option value="prefix-and-suffix">{t("regex.workspace.mode.prefixSuffix")}</option>
+                </select>
+              </label>
+              <label className={styles.settingToggle}>
+                <input type="checkbox" checked={itemSettings.matchOpenAffix} onChange={() => updateItems({
+                  ...itemSettings, matchOpenAffix: !itemSettings.matchOpenAffix,
+                })} />
+                <span>{t("regex.workspace.items.openAffix")}</span>
+              </label>
+            </div>
+          )}
+          {tool === "jewels" && (
+            <div className={styles.advancedSettings}>
+              {([
+                ["abyss", "regex.workspace.jewels.abyss"],
+                ["allMatch", "regex.workspace.mode.all"],
+                ["magicOnly", "regex.workspace.jewels.magicOnly"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.settingToggle} key={key}>
+                  <input type="checkbox" checked={jewelSettings[key]} onChange={() => updateJewels({
+                    ...jewelSettings, [key]: !jewelSettings[key], selected: key === "abyss" ? [] : jewelSettings.selected,
+                  })} />
+                  <span>{t(label)}</span>
+                </label>
+              ))}
+            </div>
+          )}
           {(tool === "scarabs" || tool === "runegraft") && data !== null && (
             <p className={styles.economyMeta}>
               {t("regex.workspace.expedition.economy", {
@@ -813,6 +1030,66 @@ export default function RegexWorkspace() {
                     ))}
                   </div>
                 </section>
+              ))}
+            </div>
+          ) : tool === "maps" ? (
+            <div className={styles.mapGrid}>
+              {visible.map((option) => {
+                const id = Number(option.id);
+                return (
+                  <article className={styles.mapOption} key={option.id}>
+                    <span>{option.label}</span>
+                    <label><input type="checkbox" checked={mapSettings.badIds.includes(id)} onChange={() => updateMaps({
+                      ...mapSettings,
+                      badIds: mapSettings.badIds.includes(id)
+                        ? mapSettings.badIds.filter((value) => value !== id)
+                        : [...mapSettings.badIds, id],
+                      goodIds: mapSettings.goodIds.filter((value) => value !== id),
+                    })} />{t("regex.workspace.maps.exclude")}</label>
+                    <label><input type="checkbox" checked={mapSettings.goodIds.includes(id)} onChange={() => updateMaps({
+                      ...mapSettings,
+                      goodIds: mapSettings.goodIds.includes(id)
+                        ? mapSettings.goodIds.filter((value) => value !== id)
+                        : [...mapSettings.goodIds, id],
+                      badIds: mapSettings.badIds.filter((value) => value !== id),
+                    })} />{t("regex.workspace.maps.require")}</label>
+                  </article>
+                );
+              })}
+            </div>
+          ) : tool === "items" ? (
+            <div className={styles.options}>
+              {itemMods.slice(0, showAll ? itemMods.length : 160).map((option) => (
+                <label className={styles.option} key={option.id}>
+                  <input
+                    type="checkbox"
+                    checked={itemSettings.selectedMods.some(({ id }) => id === option.id)}
+                    onChange={() => updateItems({
+                      ...itemSettings,
+                      selectedMods: itemSettings.selectedMods.some(({ id }) => id === option.id)
+                        ? itemSettings.selectedMods.filter(({ id }) => id !== option.id)
+                        : [...itemSettings.selectedMods, option],
+                    })}
+                  />
+                  <span className={styles.optionText}><span>{option.label}</span><small>{option.kind}</small></span>
+                </label>
+              ))}
+              {!showAll && itemMods.length > 160 && <button className={styles.showAll} type="button" onClick={() => setShowAll(true)}>
+                {t("regex.workspace.showAll")} ({itemMods.length})
+              </button>}
+            </div>
+          ) : tool === "jewels" ? (
+            <div className={styles.options}>
+              {visibleJewelOptions.slice(0, showAll ? visibleJewelOptions.length : 160).map((option) => (
+                <label className={styles.option} key={option.id}>
+                  <input type="checkbox" checked={jewelSettings.selected.includes(option.id)} onChange={() => updateJewels({
+                    ...jewelSettings,
+                    selected: jewelSettings.selected.includes(option.id)
+                      ? jewelSettings.selected.filter((id) => id !== option.id)
+                      : [...jewelSettings.selected, option.id],
+                  })} />
+                  <span>{option.label}</span>
+                </label>
               ))}
             </div>
           ) : tool === "beast" ? (

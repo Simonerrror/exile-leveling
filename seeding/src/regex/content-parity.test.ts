@@ -18,6 +18,12 @@ import {
   beastWikiUrl,
 } from "../../../web/src/features/regex/bestiary-catalog.js";
 import {
+  itemCompileInput,
+  itemModCatalog,
+  normalizeJewelEditorSettings,
+  normalizeMapEditorSettings,
+} from "../../../web/src/features/regex/editors/compile-input.js";
+import {
   heistCompileInput,
   normalizeHeistSettings,
 } from "../../../web/src/features/regex/heist-settings.js";
@@ -200,6 +206,41 @@ test("Every tattoo exposes a real localized effect", async () => {
         !description.startsWith("Описание отсутствует");
     }));
   }
+});
+
+test("Map, item, and jewel editor adapters preserve distinct compiler fields", () => {
+  const map = normalizeMapEditorSettings({
+    badIds: [7], goodIds: [9], allGoodMods: false, quantity: "100",
+    corrupted: { enabled: true, include: false },
+  });
+  assert.deepEqual(map.badIds, [7]);
+  assert.deepEqual(map.goodIds, [9]);
+  assert.equal(map.quantity, "100");
+  assert.deepEqual(map.corrupted, { enabled: true, include: false });
+
+  assert.deepEqual(itemCompileInput({
+    baseName: "Hubris Circlet",
+    selectedMods: [{ id: "life", pattern: "o maximum lif", kind: "prefix" }],
+    mode: "all",
+    matchOpenAffix: true,
+  }), {
+    baseName: "Hubris Circlet",
+    selected: [{ pattern: "o maximum lif", kind: "prefix" }],
+    mode: "all",
+    matchOpenAffix: true,
+  });
+
+  assert.deepEqual(normalizeJewelEditorSettings({ abyss: true, allMatch: true, magicOnly: true }), {
+    abyss: true, allMatch: true, magicOnly: true, selected: [],
+  });
+});
+
+test("Russian item modifier catalog uses localized labels and regex patterns", async () => {
+  const data = await loadRegexData("items", "ru");
+  const options = itemModCatalog(data, "Helmets");
+  assert.ok(options.length > 0);
+  assert.ok(options.some(({ label }) => label && /[А-Яа-яЁё]/.test(label)));
+  assert.ok(options.some(({ pattern }) => /[А-Яа-яЁё]/.test(pattern)));
 });
 
 test("Expedition valuable fillers stay within a single copyable regex", async () => {

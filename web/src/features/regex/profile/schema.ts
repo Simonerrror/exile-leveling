@@ -126,7 +126,7 @@ const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor" |
   items: [
     "selected",
     "itembase", "selectedRareMods", "selectedMagicMods", "rareSettings",
-    "magicSettings", "customText",
+    "magicSettings", "customText", "baseCategory", "baseName", "selectedMods", "mode", "matchOpenAffix",
   ],
   expedition: ["selected", "selectedBaseTypes", "league", "addFillerItems", "minValueToDisplay", "minAddValue"],
   heist: ["selected", "targetValue", "requireCoinValue", "contractLevels"],
