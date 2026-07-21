@@ -1,10 +1,16 @@
-# Exile Leveling
+# PoE Tools
 
-Path of Exile campaign guide with Path of Building integration and an
-English/Russian interface.
+Compact English/Russian Path of Exile toolkit: campaign leveling, Path of
+Building import, passive-tree and gem references, curated resources, and
+twelve regex generators for vendors, maps, items, and league mechanics.
 
-This fork adds Russian localization and a curated Path of Exile resources
-section. The original project was created by
+The useful-resources catalog is the home page. Regex tools are loaded by route,
+keep EN/RU data in separate shards, enforce the in-game 250-character limit,
+and produce a safe A/B fallback when one expression cannot fit. Vendor socket
+filters use linked-socket counts only: 4L, 5L, and 6L. Saved legacy profiles are
+migrated without colored-link or six-socket filters.
+
+PoE Tools is based on the campaign guide originally created by
 [HeartofPhos](https://github.com/HeartofPhos):
 [HeartofPhos/exile-leveling](https://github.com/HeartofPhos/exile-leveling).
 
@@ -35,13 +41,16 @@ Use the committed lockfile for a deterministic install:
 npm ci --ignore-scripts
 ```
 
-Run the development server with `npm run dev -w web`. The release gates are:
+Run the development server with `npm run dev -w web`. Run the complete release
+gate with:
 
 ```sh
-npm run test:i18n
-npm run validate:i18n
-npm run build -w web
+npm run verify
 ```
+
+It checks EN/RU parity, localization provenance, regex parity and profile
+migration, all 24 regex data shards, TypeScript, the production build,
+sourcemaps, lazy-route isolation, PWA precache isolation, and bundle budgets.
 
 The passive tree can be refreshed with `npm run seed tree -w seeding`. For the
 other canonical game data, see the required DAT files in
@@ -97,19 +106,16 @@ gates verify coverage and provenance before a production build.
 
 ## Syncing upstream
 
-Keep localization work on `codex/russian-localization` and merge upstream into
-that branch without rewriting its history:
+Merge upstream into a feature branch without rewriting published history:
 
 ```sh
 git remote add upstream https://github.com/HeartofPhos/exile-leveling.git
 git fetch upstream
-git switch codex/russian-localization
+git switch -c codex/upstream-sync
 git merge upstream/main
 npm ci --ignore-scripts
-npm run test:i18n
-npm run validate:i18n
-npm run build -w web
-git push origin codex/russian-localization
+npm run verify
+git push origin codex/upstream-sync
 ```
 
 If `upstream` already exists, verify it with `git remote -v` instead of adding

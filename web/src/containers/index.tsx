@@ -19,6 +19,7 @@ const BuildContainer = withBlank(lazy(() => import("./Build")));
 const EditRouteContainer = withBlank(lazy(() => import("./EditRoute")));
 const UsefulContainer = withBlank(lazy(() => import("./Useful")));
 const RegexCatalog = withBlank(lazy(() => import("./RegexCatalog")));
+const RegexWorkspace = withBlank(lazy(() => import("./RegexWorkspace")));
 
 export function App() {
   const { locale, t } = useI18n();
@@ -76,6 +77,15 @@ export function App() {
                 <Page
                   title={t("app.regexTitle")}
                   component={<RegexCatalog />}
+                />
+              }
+            />
+            <Route
+              path="/regex/:toolId"
+              element={
+                <Page
+                  title={t("app.regexTitle")}
+                  component={<RegexWorkspace />}
                 />
               }
             />

@@ -26,14 +26,9 @@ jobs:
       - name: Seed passive tree
         run: npm -w seeding run seed tree
 
-      - name: Validate localization
+      - name: Verify production release
         run: |
-          npm run test:i18n
-          npm run validate:i18n
-
-      - name: Build
-        run: |
-          npm -w web run build
+          npm run verify
           touch web/dist/.nojekyll
 
       - name: Deploy

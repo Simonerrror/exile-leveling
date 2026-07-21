@@ -16,6 +16,26 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globIgnores: [
+          "**/RegexCatalog-*.js",
+          "**/RegexCatalog-*.css",
+          "**/RegexWorkspace-*.js",
+          "**/RegexWorkspace-*.css",
+          "**/vendor.*.js",
+          "**/maps.*.js",
+          "**/items.*.js",
+          "**/mapnames.*.js",
+          "**/expedition.*.js",
+          "**/heist.*.js",
+          "**/flasks.*.js",
+          "**/beast.*.js",
+          "**/tattoos.*.js",
+          "**/runegrafts.*.js",
+          "**/scarabs.*.js",
+          "**/jewels.*.js",
+        ],
+      },
       manifest: {
         name: "PoE Tools",
         short_name: "PoE Tools",

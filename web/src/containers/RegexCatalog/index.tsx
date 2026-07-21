@@ -3,7 +3,7 @@ import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
 import styles from "./styles.module.css";
 
-const regexToolIds = [
+export const regexToolIds = [
   "vendor",
   "maps",
   "items",
@@ -35,10 +35,10 @@ export default function RegexCatalog() {
       </header>
       <section className={styles.grid} aria-label={t("regex.catalog.title")}>
         {regexToolIds.map((id) => (
-          <div className={styles.tool} key={id}>
+          <Link className={styles.tool} key={id} to={`/regex/${id}`}>
             <strong>{t(`regex.tool.${id}` as MessageKey)}</strong>
-            <span>{t("regex.catalog.upcoming")}</span>
-          </div>
+            <span>{t("regex.catalog.open")}</span>
+          </Link>
         ))}
       </section>
     </main>

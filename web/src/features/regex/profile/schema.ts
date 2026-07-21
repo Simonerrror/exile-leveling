@@ -96,6 +96,7 @@ export const createDefaultToolSettings = (): RegexToolProfileSettings => ({
 
 const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor">, readonly string[]> = {
   maps: [
+    "selected",
     "badIds", "goodIds", "allGoodMods", "quantity", "packsize", "itemRarity",
     "optimizeQuant", "optimizePacksize", "optimizeQuality", "displayNightmareMods",
     "displayAffixBadges", "groupByAffix", "tradeEightModOnly", "tradeExcludeValdo",
@@ -103,22 +104,25 @@ const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor">,
     "anyQuality", "customText", "mapDropChance",
   ],
   items: [
+    "selected",
     "itembase", "selectedRareMods", "selectedMagicMods", "rareSettings",
     "magicSettings", "customText",
   ],
   mapnames: ["selected", "mapTabSearch"],
-  expedition: ["selectedBaseTypes", "league", "addFillerItems", "minValueToDisplay", "minAddValue"],
-  heist: ["targetValue", "requireCoinValue", "contractLevels"],
+  expedition: ["selected", "selectedBaseTypes", "league", "addFillerItems", "minValueToDisplay", "minAddValue"],
+  heist: ["selected", "targetValue", "requireCoinValue", "contractLevels"],
   flasks: [
+    "selected",
     "selectedPrefix", "selectedSuffix", "ilevel", "onlyMaxPrefixTierMod",
     "onlyMaxSuffixTierMod", "matchBothPrefixAndSuffix", "ignoreEffectTiers",
     "matchOpenPrefixSuffix",
   ],
-  beast: ["includeHarvest", "minChaosValue", "maxChaosValue", "menagerieLimit", "redBeastsOnly"],
-  tattoos: ["minValue", "maxValue"],
-  runegrafts: ["minValue", "maxValue"],
+  beast: ["selected", "includeHarvest", "minChaosValue", "maxChaosValue", "menagerieLimit", "redBeastsOnly"],
+  tattoos: ["selected", "minValue", "maxValue"],
+  runegrafts: ["selected", "minValue", "maxValue"],
   scarabs: ["selected", "maxPrice", "minPrice"],
   jewels: [
+    "selected",
     "allMatch", "magicOnly", "abyssJewel", "selectedRegular", "selectedAbyss",
     "matchBothPrefixAndSuffix", "matchOpenPrefixSuffix",
   ],
@@ -188,7 +192,9 @@ export function normalizeVendorSettings(value: unknown): VendorProfileSettings {
     : [];
   const gems = Array.isArray(record.gems)
     ? Array.from(new Set(record.gems.filter(
-        (id): id is number => Number.isSafeInteger(id) && id >= 0,
+        (id): id is number => Number.isSafeInteger(id)
+          && id >= -2_147_483_648
+          && id <= 2_147_483_647,
       ))).sort((left, right) => left - right).slice(0, 1_000)
     : [];
 

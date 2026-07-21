@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   DEFAULT_PROFILE_STORE,
   normalizeProfileStore,
+  normalizeVendorSettings,
 } from "../../../web/src/features/regex/profile/schema.js";
 import { migrateLegacyProfiles } from "../../../web/src/features/regex/profile/migration.js";
 import {
@@ -26,6 +27,13 @@ const forbiddenVendorKeys = [
   "specLink",
   "specLinkColors",
 ];
+
+test("profile normalization preserves signed catalog gem ids", () => {
+  assert.deepEqual(
+    normalizeVendorSettings({ gems: [-2137186526, 12, -2137186526, "bad"] }).gems,
+    [-2137186526, 12],
+  );
+});
 
 test("migrates only selected 4/5/6 link counts and recognized vendor settings", () => {
   const legacy = {
@@ -93,7 +101,7 @@ test("migrates only selected 4/5/6 link counts and recognized vendor settings", 
       wand: true,
       shield: false,
     },
-    gems: [12],
+    gems: [-1, 12],
   });
   assert.deepEqual(migrated.profiles[0]?.tools.maps, {
     badIds: [3, 1],
