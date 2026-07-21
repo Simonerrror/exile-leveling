@@ -137,10 +137,14 @@ function validateRegexData<T extends RegexDataToolId>(
       break;
     case "expedition":
       requireRecord(data.baseTypeRegex, "expedition.baseTypeRegex");
+      requireRecord(data.fallbackPrices, "expedition.fallbackPrices");
       requireArray(data.uniquesSeen, "expedition.uniquesSeen");
       requireRecord(data.translations, "expedition.translations");
-      if (typeof data.numberOfUniques !== "number" || typeof data.obtainableItems !== "number") {
-        throw new TypeError("expedition counts must be numbers");
+      if (
+        typeof data.numberOfUniques !== "number" || typeof data.obtainableItems !== "number" ||
+        typeof data.priceLeague !== "string" || typeof data.priceUpdatedAt !== "string"
+      ) {
+        throw new TypeError("expedition metadata has an invalid shape");
       }
       break;
     case "beast":

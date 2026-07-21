@@ -12,6 +12,11 @@ import {
   compileScarabRegex,
 } from "../../../web/src/features/regex/core/content.js";
 import { heistContractLabels } from "../../../web/src/features/regex/heist-contract-labels.js";
+import {
+  expeditionCatalog,
+  formatChaosValue,
+  valuableExpeditionFillers,
+} from "../../../web/src/features/regex/expedition-catalog.js";
 
 const assertResult = (result: { primary: string; length: number; diagnostics: unknown[] }) => {
   assert.equal(result.length, result.primary.length);
@@ -102,4 +107,33 @@ test("Russian Heist contract labels are concise and bilingual", async () => {
     secondary: "Counter-Thaumaturgy",
   });
   assert.ok(labels.every(({ primary, secondary }) => primary && secondary));
+});
+
+test("Expedition catalog ranks bases by valuable unique outcomes", async () => {
+  const data = await loadRegexData("expedition", "ru");
+  const catalog = expeditionCatalog(data);
+  const heavyBelt = catalog.find(({ id }) => id === "Heavy Belt");
+  assert.ok(Object.keys(data.fallbackPrices).length > 500);
+  assert.ok(heavyBelt);
+  assert.ok(heavyBelt.maxChaosValue > 0);
+  assert.ok(heavyBelt.uniques.some(({ name, label }) => name === "Mageblood" && label === "Волшебная кровь"));
+  assert.ok(catalog.every((entry, index) => index === 0 || catalog[index - 1].maxChaosValue >= entry.maxChaosValue));
+});
+
+test("Expedition valuable fillers stay within a single copyable regex", async () => {
+  const data = await loadRegexData("expedition", "en");
+  const selected = ["Heavy Belt"];
+  const fillers = valuableExpeditionFillers(selected, 100, data);
+  assert.ok(fillers.length > 0);
+  assert.ok(!fillers.includes("Heavy Belt"));
+  assert.ok(fillers.every((id) => expeditionCatalog(data).find((entry) => entry.id === id)!.maxChaosValue >= 100));
+  const result = compileExpeditionRegex(selected, fillers, data);
+  assert.equal(result.secondary, undefined);
+  assert.ok(result.primary.length <= 250);
+});
+
+test("Expedition prices stay compact in dense cards", () => {
+  assert.equal(formatChaosValue(6_686_190, "en"), "6.7Mc");
+  assert.match(formatChaosValue(6_686_190, "ru"), /^6,7\s*млнc$/);
+  assert.equal(formatChaosValue(99, "ru"), "99c");
 });

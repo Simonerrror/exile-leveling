@@ -19,6 +19,8 @@ test("routes the catalog and twelve stable regex workspaces lazily", () => {
   const catalog = read("../../../web/src/containers/RegexCatalog/index.tsx");
   for (const id of toolIds) assert.match(catalog, new RegExp(`to=\\{?\`?/regex/.*${id}|${id}`));
   assert.match(catalog, /<Link/);
+  assert.match(catalog, /requestIdleCallback/);
+  assert.match(catalog, /loadRegexData\("mapnames", locale\)/);
   assert.doesNotMatch(catalog, /upcoming/);
 });
 

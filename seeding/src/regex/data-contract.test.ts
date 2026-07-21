@@ -50,9 +50,9 @@ test("commits exactly twelve EN/RU shards plus a deterministic manifest", () => 
       sha256: string;
     }>;
   };
-  assert.equal(manifest.generatorVersion, 2);
+  assert.equal(manifest.generatorVersion, 3);
   assert.deepEqual(manifest.shards.map(({ file }) => file), expectedShards);
-  assert.equal(manifest.inputs.length, 20);
+  assert.equal(manifest.inputs.length, 21);
   assert.ok(manifest.inputs.some(({ path }) => path === "common/data/json/gems.json"));
 
   for (const entry of manifest.shards) {

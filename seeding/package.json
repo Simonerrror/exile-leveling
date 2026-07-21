@@ -8,6 +8,7 @@
     "generate:ru-display-data": "tsx src/localization/generate-ru-display-data.ts",
     "regex:data:export": "tsx src/regex/export-legacy-data.ts",
     "regex:data:verify": "tsx src/regex/verify-generated-data.ts",
+    "regex:economy:refresh": "tsx src/regex/refresh-economy-snapshot.ts",
     "test:i18n": "tsx --test src/localization/validate.test.ts src/localization/locale-core.test.ts src/localization/locale-state.test.ts src/localization/poe-tools-shell.test.ts src/localization/route-sources.test.ts src/localization/useful-resources.test.ts",
     "test:regex": "tsx --test src/regex/core-contract.test.ts src/regex/profile-migration.test.ts src/regex/data-contract.test.ts src/regex/vendor-parity.test.ts src/regex/vendor-gem-catalog.test.ts src/regex/map-parity.test.ts src/regex/content-parity.test.ts src/regex/items-flasks-parity.test.ts src/regex/regex-ui.test.ts src/regex/bundle-isolation.test.ts",
     "validate:i18n": "tsx src/localization/validate-i18n.ts"

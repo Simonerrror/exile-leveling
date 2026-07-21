@@ -15,6 +15,7 @@ const OUTPUT_DIRECTORY = resolve(fileURLToPath(
   new URL("../../../web/src/features/regex/data/generated/", import.meta.url),
 ));
 const GEM_METADATA_FILE = fileURLToPath(new URL("../../../common/data/json/gems.json", import.meta.url));
+const ECONOMY_SNAPSHOT_FILE = fileURLToPath(new URL("./data/poe1-economy.json", import.meta.url));
 type LegacyModule = Record<string, unknown>;
 
 interface CanonicalGem {
@@ -82,6 +83,22 @@ function enrichVendorCatalog(catalog: unknown, levels: Map<number, number>): unk
   };
 }
 
+function expeditionPrices(
+  source: Record<string, unknown>,
+  snapshot: unknown,
+): Record<string, number> {
+  const economy = snapshot as { prices?: Record<string, unknown> };
+  if (typeof economy !== "object" || economy === null || typeof economy.prices !== "object" || economy.prices === null) {
+    throw new TypeError("Economy snapshot has no prices");
+  }
+  const baseTypes = objectValue(source, "baseTypeRegex") as Record<string, { items?: Array<{ name?: string }> }>;
+  const obtainable = new Set(Object.values(baseTypes).flatMap(({ items = [] }) =>
+    items.flatMap(({ name }) => typeof name === "string" ? [name] : [])));
+  return Object.fromEntries(Object.entries(economy.prices)
+    .filter(([name, value]) => obtainable.has(name) && typeof value === "number" && Number.isFinite(value) && value >= 0)
+    .sort(([left], [right]) => left.localeCompare(right)));
+}
+
 function sourceArgument(argv: string[]): string {
   const index = argv.indexOf("--source");
   const value = index >= 0 ? argv[index + 1] : undefined;
@@ -147,6 +164,9 @@ function buildPayload(
   modules: Map<string, LegacyModule>,
   trade: unknown,
   vendorLevels: Map<number, number>,
+  fallbackPrices: Record<string, number>,
+  priceLeague: string,
+  priceUpdatedAt: string,
 ): unknown {
   const russianContent = objectValue(
     moduleAt(modules, "src/generated/repoe/GeneratedRussianContent.ts"),
@@ -219,6 +239,9 @@ function buildPayload(
         numberOfUniques: objectValue(source, "numberOfUniques"),
         obtainableItems: objectValue(source, "obtainableItems"),
         uniquesSeen: objectValue(source, "uniquesSeen"),
+        fallbackPrices,
+        priceLeague,
+        priceUpdatedAt,
         translations: locale === "ru" ? {
           bases: translations("expeditionBases"),
           items: translations("expeditionItems"),
@@ -307,6 +330,17 @@ async function main(): Promise<void> {
   );
   const vendorLevels = vendorMetadataById(englishVendor, gemMetadata);
   validated.inputs.push({ path: "common/data/json/gems.json", sha256: sha256(gemMetadataContents) });
+  const expeditionSource = moduleAt(modules, "src/generated/GeneratedExpedition.ts");
+  const economyContents = await readFile(ECONOMY_SNAPSHOT_FILE);
+  const economy = JSON.parse(economyContents.toString("utf8")) as {
+    generatedAt?: unknown; league?: unknown; schemaVersion?: unknown;
+  };
+  if (
+    economy.schemaVersion !== 1 || typeof economy.generatedAt !== "string" ||
+    typeof economy.league !== "string"
+  ) throw new TypeError("Economy snapshot metadata has an invalid shape");
+  validated.inputs.push({ path: "seeding/src/regex/data/poe1-economy.json", sha256: sha256(economyContents) });
+  const fallbackPrices = expeditionPrices(expeditionSource, economy);
 
   const parent = resolve(OUTPUT_DIRECTORY, "..");
   await mkdir(parent, { recursive: true });
@@ -323,7 +357,16 @@ async function main(): Promise<void> {
     for (const file of EXPECTED_SHARD_FILES) {
       const [tool, locale] = file.split(".") as [RegexToolId, RegexDataLocale];
       if (!REGEX_TOOL_IDS.includes(tool)) throw new Error(`Unexpected tool id: ${tool}`);
-      const payload = buildPayload(tool, locale, modules, trade, vendorLevels);
+      const payload = buildPayload(
+        tool,
+        locale,
+        modules,
+        trade,
+        vendorLevels,
+        fallbackPrices,
+        economy.league,
+        economy.generatedAt,
+      );
       const serialized = stableJson(payload);
       await writeFile(join(temporary, file), serialized, "utf8");
       shards.push({
@@ -334,7 +377,7 @@ async function main(): Promise<void> {
       });
     }
     await writeFile(join(temporary, "manifest.json"), stableJson({
-      generatorVersion: 2,
+      generatorVersion: 3,
       inputs: validated.inputs,
       shards,
     }), "utf8");

@@ -70,6 +70,29 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   margin-bottom: 0.65rem;
 }
+.expeditionSettings {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  margin-bottom: 0.65rem;
+}
+.economyMeta { color: #8f99a3; font-size: 0.75rem; grid-column: 1 / -1; margin: 0; }
+.expeditionGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+.expeditionOption {
+  align-items: start;
+  background: #272c31;
+  border: 1px solid #394149;
+  border-left: 0.2rem solid #d6a85f;
+  border-radius: 0.28rem;
+  display: flex;
+  gap: 0.45rem;
+  min-height: 4rem;
+  padding: 0.5rem;
+}
+.expeditionOption input { margin-top: 0.15rem; }
+.uniqueOutcomes { display: flex; flex-wrap: wrap; gap: 0.2rem 0.5rem; margin-top: 0.15rem; }
+.uniqueOutcomes span { color: #c5ccd3; font-size: 0.75rem; }
+.uniqueOutcomes b { color: #d6a85f; font-weight: var(--font-heavy); }
 .numberField,
 .settingToggle {
   align-items: center;

@@ -33,6 +33,14 @@ import { compileItemRegex } from "../../features/regex/core/items";
 import { groupVendorGems } from "../../features/regex/vendor-gem-catalog";
 import { heistContractLabels } from "../../features/regex/heist-contract-labels";
 import {
+  defaultExpeditionSettings,
+  expeditionCatalog,
+  formatChaosValue,
+  normalizeExpeditionSettings,
+  valuableExpeditionFillers,
+  type ExpeditionSettings,
+} from "../../features/regex/expedition-catalog";
+import {
   createDefaultToolSettings,
   normalizeFlaskSettings,
   normalizeVendorSettings,
@@ -272,6 +280,10 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
     : [];
 }
 
+function storedExpeditionSettings(store: RegexProfileStore): ExpeditionSettings {
+  return normalizeExpeditionSettings(selectedProfile(store)?.tools.expedition);
+}
+
 export default function RegexWorkspace() {
   const { toolId } = useParams();
   const { locale, t } = useI18n();
@@ -291,6 +303,9 @@ export default function RegexWorkspace() {
   const [flaskSettings, setFlaskSettings] = useState<FlaskProfileSettings>(() =>
     normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks),
   );
+  const [expeditionSettings, setExpeditionSettings] = useState<ExpeditionSettings>(() =>
+    storedExpeditionSettings(profileStore),
+  );
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
@@ -304,6 +319,7 @@ export default function RegexWorkspace() {
       selectedProfile(profileStore)?.tools.vendor ?? createDefaultToolSettings().vendor,
     ));
     setFlaskSettings(normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks));
+    setExpeditionSettings(storedExpeditionSettings(profileStore));
     setQuery("");
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
       if (active) setLoaded({ tool, locale, value });
@@ -324,10 +340,24 @@ export default function RegexWorkspace() {
       needle === "" || rawText.toLocaleLowerCase().includes(needle));
     return groupVendorGems(tokens);
   }, [data, query, tool]);
-  const result = useMemo(
-    () => tool && data ? compile(tool, data, selected, vendorSettings, flaskSettings, locale) : emptyResult,
-    [data, flaskSettings, locale, selected, tool, vendorSettings],
-  );
+  const expeditionEntries = useMemo(() => {
+    if (tool !== "expedition" || data === null) return [];
+    const needle = query.trim().toLocaleLowerCase();
+    return expeditionCatalog(data as ExpeditionRegexData).filter((entry) =>
+      (entry.maxChaosValue >= expeditionSettings.minValueToDisplay || selected.includes(entry.id)) &&
+      (needle === "" || entry.searchText.includes(needle)));
+  }, [data, expeditionSettings.minValueToDisplay, query, selected, tool]);
+  const expeditionFillers = useMemo(() => {
+    if (tool !== "expedition" || data === null || !expeditionSettings.addFillerItems) return [];
+    return valuableExpeditionFillers(selected, expeditionSettings.minAddValue, data as ExpeditionRegexData);
+  }, [data, expeditionSettings.addFillerItems, expeditionSettings.minAddValue, selected, tool]);
+  const result = useMemo(() => {
+    if (!tool || !data) return emptyResult;
+    if (tool === "expedition") {
+      return compileExpeditionRegex(selected, expeditionFillers, data as ExpeditionRegexData);
+    }
+    return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
+  }, [data, expeditionFillers, flaskSettings, locale, selected, tool, vendorSettings]);
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);
@@ -381,6 +411,18 @@ export default function RegexWorkspace() {
       // Browsing stays functional when storage is disabled or full.
     }
   };
+  const updateExpedition = (next: ExpeditionSettings) => {
+    setExpeditionSettings(next);
+    const draft = JSON.parse(JSON.stringify(profileStore)) as RegexProfileStore;
+    const profile = selectedProfile(draft);
+    if (!profile) return;
+    profile.tools.expedition = { ...profile.tools.expedition, ...next, selected };
+    try {
+      setProfileStore(saveProfileStore(window.localStorage, draft));
+    } catch {
+      // Browsing stays functional when storage is disabled or full.
+    }
+  };
   const toggleVendorGroup = (group: VendorBooleanGroup, key: string) => {
     const values = vendorSettings[group] as Record<string, boolean>;
     updateVendor({
@@ -391,9 +433,12 @@ export default function RegexWorkspace() {
   const reset = () => {
     const nextVendor = createDefaultToolSettings().vendor;
     const nextFlasks = createDefaultToolSettings().flasks;
+    const nextExpedition = defaultExpeditionSettings();
     setSelected([]);
     setVendorSettings(nextVendor);
     setFlaskSettings(nextFlasks);
+    setExpeditionSettings(nextExpedition);
+    if (tool === "expedition") updateExpedition(nextExpedition);
     persist([], nextVendor);
   };
   const copy = async (value: string, pass: "A" | "B") => {
@@ -484,12 +529,60 @@ export default function RegexWorkspace() {
               ))}
             </div>
           )}
+          {tool === "expedition" && data !== null && (
+            <div className={styles.expeditionSettings}>
+              <label className={styles.numberField}>
+                <span>{t("regex.workspace.expedition.displayValue")}</span>
+                <input
+                  type="number"
+                  min="0"
+                  value={expeditionSettings.minValueToDisplay}
+                  onChange={(event) => updateExpedition(normalizeExpeditionSettings({
+                    ...expeditionSettings,
+                    minValueToDisplay: Number(event.target.value),
+                  }))}
+                />
+              </label>
+              <label className={styles.settingToggle}>
+                <input
+                  type="checkbox"
+                  checked={expeditionSettings.addFillerItems}
+                  onChange={() => updateExpedition({
+                    ...expeditionSettings,
+                    addFillerItems: !expeditionSettings.addFillerItems,
+                  })}
+                />
+                <span>{t("regex.workspace.expedition.autoAdd")}</span>
+              </label>
+              <label className={styles.numberField}>
+                <span>{t("regex.workspace.expedition.autoValue")}</span>
+                <input
+                  type="number"
+                  min="0"
+                  value={expeditionSettings.minAddValue}
+                  onChange={(event) => updateExpedition(normalizeExpeditionSettings({
+                    ...expeditionSettings,
+                    minAddValue: Number(event.target.value),
+                  }))}
+                />
+              </label>
+              <p className={styles.economyMeta}>
+                {t("regex.workspace.expedition.economy", {
+                  league: (data as ExpeditionRegexData).priceLeague,
+                  date: new Intl.DateTimeFormat(locale).format(new Date((data as ExpeditionRegexData).priceUpdatedAt)),
+                })}
+              </p>
+            </div>
+          )}
           <label className={styles.search}>
             <span>{t("regex.workspace.search")}</span>
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
           </label>
           <div className={styles.summary}>
             <span>{t("regex.workspace.selected")}: {selected.length}</span>
+            {tool === "expedition" && expeditionFillers.length > 0 && (
+              <span>{t("regex.workspace.expedition.autoAdded", { count: expeditionFillers.length })}</span>
+            )}
             <button type="button" onClick={reset}>
               {t("regex.workspace.reset")}
             </button>
@@ -541,6 +634,23 @@ export default function RegexWorkspace() {
                     ))}
                   </div>
                 </section>
+              ))}
+            </div>
+          ) : tool === "expedition" ? (
+            <div className={styles.expeditionGrid}>
+              {expeditionEntries.map((entry) => (
+                <label className={styles.expeditionOption} key={entry.id}>
+                  <input type="checkbox" checked={selected.includes(entry.id)} onChange={() => toggle(entry.id)} />
+                  <span className={styles.optionText}>
+                    <strong>{entry.label}</strong>
+                    <small>{entry.id}</small>
+                    <span className={styles.uniqueOutcomes}>
+                      {entry.uniques.filter(({ chaosValue }) => chaosValue > 0).slice(0, 3).map((unique) => (
+                        <span key={unique.name}>{unique.label} <b>{formatChaosValue(unique.chaosValue, locale)}</b></span>
+                      ))}
+                    </span>
+                  </span>
+                </label>
               ))}
             </div>
           ) : (

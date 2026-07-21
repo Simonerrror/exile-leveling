@@ -52,7 +52,14 @@ export interface HeistRegexData {
   translations: Record<string, unknown>;
 }
 export interface ExpeditionRegexData {
-  baseTypeRegex: Record<string, unknown>;
+  baseTypeRegex: Record<string, {
+    baseType: string;
+    regex: string;
+    items: Array<{ baseType: string; icon?: string; id?: string; name: string }>;
+  }>;
+  fallbackPrices: Record<string, number>;
+  priceLeague: string;
+  priceUpdatedAt: string;
   numberOfUniques: number;
   obtainableItems: number;
   uniquesSeen: unknown[];
