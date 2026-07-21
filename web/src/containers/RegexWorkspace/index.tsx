@@ -63,10 +63,10 @@ const profileToolByRoute: Record<ToolId, keyof RegexToolProfileSettings> = {
 
 type VendorBooleanGroup = "movement" | "plusGems" | "damage" | "weapon";
 const vendorGroups = [
-  { key: "movement", title: "regex.workspace.vendor.movement", options: [["ten", "10%"], ["fifteen", "15%"]] },
-  { key: "plusGems", title: "regex.workspace.vendor.plusGems", options: [["any", "Any"], ["fire", "Fire"], ["cold", "Cold"], ["lightning", "Lightning"], ["phys", "Physical"], ["chaos", "Chaos"]] },
-  { key: "damage", title: "regex.workspace.vendor.damage", options: [["phys", "Physical"], ["firemult", "Fire"], ["coldmult", "Cold"], ["chaosmult", "Chaos"]] },
-  { key: "weapon", title: "regex.workspace.vendor.weapon", options: [["sceptre", "Sceptre"], ["mace", "Mace"], ["axe", "Axe"], ["sword", "Sword"], ["bow", "Bow"], ["claw", "Claw"], ["dagger", "Dagger"], ["staff", "Staff"], ["wand", "Wand"], ["shield", "Shield"]] },
+  { key: "movement", title: "regex.workspace.vendor.movement", options: [["ten", "regex.workspace.vendor.option.ten"], ["fifteen", "regex.workspace.vendor.option.fifteen"]] },
+  { key: "plusGems", title: "regex.workspace.vendor.plusGems", options: [["any", "regex.workspace.vendor.option.any"], ["fire", "regex.workspace.vendor.option.fire"], ["cold", "regex.workspace.vendor.option.cold"], ["lightning", "regex.workspace.vendor.option.lightning"], ["phys", "regex.workspace.vendor.option.physical"], ["chaos", "regex.workspace.vendor.option.chaos"]] },
+  { key: "damage", title: "regex.workspace.vendor.damage", options: [["phys", "regex.workspace.vendor.option.physical"], ["firemult", "regex.workspace.vendor.option.fire"], ["coldmult", "regex.workspace.vendor.option.cold"], ["chaosmult", "regex.workspace.vendor.option.chaos"]] },
+  { key: "weapon", title: "regex.workspace.vendor.weapon", options: [["sceptre", "regex.workspace.vendor.weapon.sceptre"], ["mace", "regex.workspace.vendor.weapon.mace"], ["axe", "regex.workspace.vendor.weapon.axe"], ["sword", "regex.workspace.vendor.weapon.sword"], ["bow", "regex.workspace.vendor.weapon.bow"], ["claw", "regex.workspace.vendor.weapon.claw"], ["dagger", "regex.workspace.vendor.weapon.dagger"], ["staff", "regex.workspace.vendor.weapon.staff"], ["wand", "regex.workspace.vendor.weapon.wand"], ["shield", "regex.workspace.vendor.weapon.shield"]] },
 ] as const;
 
 interface Option { id: string; label: string; pattern?: string }
@@ -348,7 +348,7 @@ export default function RegexWorkspace() {
             <div className={styles.vendorFilters}>
               <fieldset className={styles.linkFieldset}>
                 <legend>{t("regex.workspace.links")}</legend>
-                {[4, 5, 6].map((count) => (
+                {[2, 3, 4, 5, 6].map((count) => (
                   <label key={count}>
                     <input
                       type="checkbox"
@@ -367,14 +367,14 @@ export default function RegexWorkspace() {
               {vendorGroups.map((group) => (
                 <fieldset className={styles.linkFieldset} key={group.key}>
                   <legend>{t(group.title)}</legend>
-                  {group.options.map(([key, label]) => (
+                  {group.options.map(([key, labelKey]) => (
                     <label key={key}>
                       <input
                         type="checkbox"
                         checked={(vendorSettings[group.key] as Record<string, boolean>)[key]}
                         onChange={() => toggleVendorGroup(group.key, key)}
                       />
-                      {label}
+                      {t(labelKey)}
                     </label>
                   ))}
                 </fieldset>

@@ -2,7 +2,7 @@ import type { RegexLocale } from "../core/types.js";
 
 export const PROFILE_SCHEMA_VERSION = 2 as const;
 
-export type LinkCount = 4 | 5 | 6;
+export type LinkCount = 2 | 3 | 4 | 5 | 6;
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
 export interface JsonObject { [key: string]: JsonValue }
 
@@ -187,7 +187,8 @@ export function normalizeVendorSettings(value: unknown): VendorProfileSettings {
   const record = isRecord(value) ? value : {};
   const linkCounts = Array.isArray(record.linkCounts)
     ? Array.from(new Set(record.linkCounts.filter(
-        (count): count is LinkCount => count === 4 || count === 5 || count === 6,
+        (count): count is LinkCount =>
+          count === 2 || count === 3 || count === 4 || count === 5 || count === 6,
       ))).sort((left, right) => left - right)
     : [];
   const gems = Array.isArray(record.gems)

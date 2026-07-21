@@ -15,8 +15,6 @@ import {
 } from "../../../web/src/features/regex/profile/storage.js";
 
 const forbiddenVendorKeys = [
-  "anyTwoLink",
-  "anyThreeLink",
   "anyTwoColorLink",
   "anyThreeColorLink",
   "anyFourColorLink",
@@ -28,14 +26,18 @@ const forbiddenVendorKeys = [
   "specLinkColors",
 ];
 
-test("profile normalization preserves signed catalog gem ids", () => {
+test("profile normalization preserves 2–6 links and signed catalog gem ids", () => {
+  assert.deepEqual(
+    normalizeVendorSettings({ linkCounts: [6, 2, 3, 2, 1, 7] }).linkCounts,
+    [2, 3, 6],
+  );
   assert.deepEqual(
     normalizeVendorSettings({ gems: [-2137186526, 12, -2137186526, "bad"] }).gems,
     [-2137186526, 12],
   );
 });
 
-test("migrates only selected 4/5/6 link counts and recognized vendor settings", () => {
+test("migrates selected 2–6 link counts and recognized vendor settings", () => {
   const legacy = {
     default: {
       name: "ignored legacy name",
@@ -73,7 +75,7 @@ test("migrates only selected 4/5/6 link counts and recognized vendor settings", 
   assert.equal(migrated.selectedProfile, "default");
   assert.equal(migrated.profiles[0]?.locale, "ru");
   assert.deepEqual(migrated.profiles[0]?.tools.vendor, {
-    linkCounts: [4, 6],
+    linkCounts: [2, 3, 4, 6],
     movement: { ten: true, fifteen: false },
     plusGems: {
       lightning: false,

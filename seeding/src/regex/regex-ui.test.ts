@@ -39,9 +39,10 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   assert.match(workspace, /damage/);
   assert.match(workspace, /weapon/);
   assert.match(workspace, /linkCounts/);
-  assert.match(workspace, /\[4, 5, 6\]/);
+  assert.match(workspace, /\[2, 3, 4, 5, 6\]/);
+  assert.match(workspace, /t\(labelKey\)/);
   for (const forbidden of [
-    "anyTwoLink", "anyThreeLink", "ColorLink", "SixSocket", "specLink", "socket color",
+    "ColorLink", "SixSocket", "specLink", "socket color",
   ]) assert.equal(workspace.includes(forbidden), false, forbidden);
 });
 
@@ -56,6 +57,44 @@ test("regex UI messages have exact EN/RU parity and no migration placeholder", (
     ]) assert.equal(typeof messages[key as keyof typeof messages], "string", key);
     assert.doesNotMatch(messages["regex.catalog.description"], /moving|переезжа/i);
   }
+  assert.deepEqual(
+    {
+      any: ru["regex.workspace.vendor.option.any"],
+      fire: ru["regex.workspace.vendor.option.fire"],
+      cold: ru["regex.workspace.vendor.option.cold"],
+      lightning: ru["regex.workspace.vendor.option.lightning"],
+      physical: ru["regex.workspace.vendor.option.physical"],
+      chaos: ru["regex.workspace.vendor.option.chaos"],
+      sceptre: ru["regex.workspace.vendor.weapon.sceptre"],
+      mace: ru["regex.workspace.vendor.weapon.mace"],
+      axe: ru["regex.workspace.vendor.weapon.axe"],
+      sword: ru["regex.workspace.vendor.weapon.sword"],
+      bow: ru["regex.workspace.vendor.weapon.bow"],
+      claw: ru["regex.workspace.vendor.weapon.claw"],
+      dagger: ru["regex.workspace.vendor.weapon.dagger"],
+      staff: ru["regex.workspace.vendor.weapon.staff"],
+      wand: ru["regex.workspace.vendor.weapon.wand"],
+      shield: ru["regex.workspace.vendor.weapon.shield"],
+    },
+    {
+      any: "Любой",
+      fire: "Огонь",
+      cold: "Холод",
+      lightning: "Молния",
+      physical: "Физический",
+      chaos: "Хаос",
+      sceptre: "Скипетр",
+      mace: "Булава",
+      axe: "Топор",
+      sword: "Меч",
+      bow: "Лук",
+      claw: "Коготь",
+      dagger: "Кинжал",
+      staff: "Посох",
+      wand: "Жезл",
+      shield: "Щит",
+    },
+  );
 });
 
 test("workspace layout has visible focus, sticky desktop output, and mobile fallback", () => {

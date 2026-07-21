@@ -29,6 +29,8 @@ function legacyVendor(value: unknown): ReturnType<typeof normalizeVendorSettings
   const record = isRecord(value) ? value : {};
   return normalizeVendorSettings({
     linkCounts: [
+      ...(record.anyTwoLink === true ? [2] : []),
+      ...(record.anyThreeLink === true ? [3] : []),
       ...(record.anyFourLink === true ? [4] : []),
       ...(record.anyFiveLink === true ? [5] : []),
       ...(record.anySixLink === true ? [6] : []),
