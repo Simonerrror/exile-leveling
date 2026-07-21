@@ -1,5 +1,19 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  FaBug,
+  FaCoins,
+  FaFingerprint,
+  FaFlask,
+  FaGem,
+  FaMagic,
+  FaMap,
+  FaPaw,
+  FaRegMap,
+  FaSearch,
+  FaStore,
+  FaUserSecret,
+} from "react-icons/fa";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
 import { loadRegexData } from "../../features/regex/data/loaders";
@@ -19,6 +33,21 @@ export const regexToolIds = [
   "scarabs",
   "jewels",
 ] as const;
+
+const regexToolIcons = {
+  vendor: FaStore,
+  maps: FaMap,
+  items: FaSearch,
+  mapnames: FaRegMap,
+  expedition: FaCoins,
+  heist: FaUserSecret,
+  flasks: FaFlask,
+  beast: FaPaw,
+  tattoo: FaFingerprint,
+  runegraft: FaMagic,
+  scarabs: FaBug,
+  jewels: FaGem,
+};
 
 export default function RegexCatalog() {
   const { locale, t } = useI18n();
@@ -46,18 +75,22 @@ export default function RegexCatalog() {
         </Link>
       </header>
       <section className={styles.grid} aria-label={t("regex.catalog.title")}>
-        {regexToolIds.map((id) => (
-          <Link
-            className={styles.tool}
-            key={id}
-            onFocus={() => { if (id === "mapnames") void loadRegexData("mapnames", locale); }}
-            onPointerEnter={() => { if (id === "mapnames") void loadRegexData("mapnames", locale); }}
-            to={`/regex/${id}`}
-          >
-            <strong>{t(`regex.tool.${id}` as MessageKey)}</strong>
-            <span>{t("regex.catalog.open")}</span>
-          </Link>
-        ))}
+        {regexToolIds.map((id) => {
+          const Icon = regexToolIcons[id];
+          return (
+            <Link
+              className={styles.tool}
+              key={id}
+              onFocus={() => { if (id === "mapnames") void loadRegexData("mapnames", locale); }}
+              onPointerEnter={() => { if (id === "mapnames") void loadRegexData("mapnames", locale); }}
+              to={`/regex/${id}`}
+            >
+              <Icon aria-hidden={true} className={styles.toolIcon} />
+              <strong>{t(`regex.tool.${id}` as MessageKey)}</strong>
+              <span>{t("regex.catalog.open")}</span>
+            </Link>
+          );
+        })}
       </section>
     </main>
   );

@@ -21,6 +21,9 @@ test("routes the catalog and twelve stable regex workspaces lazily", () => {
   assert.match(catalog, /<Link/);
   assert.match(catalog, /requestIdleCallback/);
   assert.match(catalog, /loadRegexData\("mapnames", locale\)/);
+  assert.match(catalog, /regexToolIcons/);
+  assert.match(catalog, /aria-hidden=\{true\}/);
+  for (const id of toolIds) assert.match(catalog, new RegExp(`${id}:\\s*Fa`));
   assert.doesNotMatch(catalog, /upcoming/);
 });
 

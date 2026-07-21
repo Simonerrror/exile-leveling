@@ -46,15 +46,31 @@
 }
 
 .tool {
+  align-items: center;
   background: var(--secondary);
   border: var(--border-width) solid var(--accent-secondary);
   border-left: 0.2rem solid #d6a85f;
   border-radius: 0.35rem;
   display: grid;
-  gap: 0.2rem;
+  column-gap: 0.7rem;
+  grid-template-columns: 2.55rem 1fr;
+  row-gap: 0.1rem;
   padding: 0.65rem 0.75rem;
   text-decoration: none;
   transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.toolIcon {
+  align-self: stretch;
+  background: #181c20;
+  border: var(--border-width) solid #48515a;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  color: #d6a85f;
+  grid-row: 1 / 3;
+  height: 2.55rem;
+  padding: 0.58rem;
+  width: 2.55rem;
 }
 
 .tool:hover,
@@ -67,6 +83,7 @@
 .tool span {
   color: #8d969f;
   font-size: 0.78rem;
+  grid-column: 2;
 }
 
 @media (max-width: 36rem) {
