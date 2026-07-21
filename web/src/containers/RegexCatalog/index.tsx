@@ -1,22 +1,20 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  FaBug,
-  FaCoins,
-  FaFingerprint,
-  FaFlask,
-  FaGem,
-  FaMagic,
-  FaMap,
-  FaPaw,
-  FaRegMap,
-  FaSearch,
-  FaStore,
-  FaUserSecret,
-} from "react-icons/fa";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
 import { loadRegexData } from "../../features/regex/data/loaders";
+import beastIcon from "./images/regex-tool-beast.png";
+import expeditionIcon from "./images/regex-tool-expedition.png";
+import flasksIcon from "./images/regex-tool-flasks.png";
+import heistIcon from "./images/regex-tool-heist.png";
+import itemsIcon from "./images/regex-tool-items.png";
+import jewelsIcon from "./images/regex-tool-jewels.png";
+import mapnamesIcon from "./images/regex-tool-mapnames.png";
+import mapsIcon from "./images/regex-tool-maps.png";
+import runegraftIcon from "./images/regex-tool-runegraft.png";
+import scarabsIcon from "./images/regex-tool-scarabs.png";
+import tattooIcon from "./images/regex-tool-tattoo.png";
+import vendorIcon from "./images/regex-tool-vendor.png";
 import styles from "./styles.module.css";
 
 export const regexToolIds = [
@@ -35,18 +33,18 @@ export const regexToolIds = [
 ] as const;
 
 const regexToolIcons = {
-  vendor: FaStore,
-  maps: FaMap,
-  items: FaSearch,
-  mapnames: FaRegMap,
-  expedition: FaCoins,
-  heist: FaUserSecret,
-  flasks: FaFlask,
-  beast: FaPaw,
-  tattoo: FaFingerprint,
-  runegraft: FaMagic,
-  scarabs: FaBug,
-  jewels: FaGem,
+  vendor: vendorIcon,
+  maps: mapsIcon,
+  items: itemsIcon,
+  mapnames: mapnamesIcon,
+  expedition: expeditionIcon,
+  heist: heistIcon,
+  flasks: flasksIcon,
+  beast: beastIcon,
+  tattoo: tattooIcon,
+  runegraft: runegraftIcon,
+  scarabs: scarabsIcon,
+  jewels: jewelsIcon,
 };
 
 export default function RegexCatalog() {
@@ -76,7 +74,6 @@ export default function RegexCatalog() {
       </header>
       <section className={styles.grid} aria-label={t("regex.catalog.title")}>
         {regexToolIds.map((id) => {
-          const Icon = regexToolIcons[id];
           return (
             <Link
               className={styles.tool}
@@ -85,7 +82,14 @@ export default function RegexCatalog() {
               onPointerEnter={() => { if (id === "mapnames") void loadRegexData("mapnames", locale); }}
               to={`/regex/${id}`}
             >
-              <Icon aria-hidden={true} className={styles.toolIcon} />
+              <img
+                alt=""
+                aria-hidden={true}
+                className={styles.toolIcon}
+                decoding="async"
+                loading="lazy"
+                src={regexToolIcons[id]}
+              />
               <strong>{t(`regex.tool.${id}` as MessageKey)}</strong>
               <span>{t("regex.catalog.open")}</span>
             </Link>

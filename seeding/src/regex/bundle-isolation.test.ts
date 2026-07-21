@@ -29,6 +29,7 @@ test("PWA precache excludes lazy regex workspaces and every data shard family", 
   assert.match(viteConfig, /RegexWorkspace-\*\.css/);
   assert.match(viteConfig, /RegexCatalog-\*\.js/);
   assert.match(viteConfig, /RegexCatalog-\*\.css/);
+  assert.match(viteConfig, /regex-tool-\*\.png/);
 
   for (const family of shardFamilies) {
     assert.match(viteConfig, new RegExp(`\\*\\*/${family}\\.\\*\\.js`), family);

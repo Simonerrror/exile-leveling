@@ -20,6 +20,7 @@ export default defineConfig({
         globIgnores: [
           "**/RegexCatalog-*.js",
           "**/RegexCatalog-*.css",
+          "**/regex-tool-*.png",
           "**/RegexWorkspace-*.js",
           "**/RegexWorkspace-*.css",
           "**/vendor.*.js",

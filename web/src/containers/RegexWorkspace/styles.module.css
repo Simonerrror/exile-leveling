@@ -60,6 +60,28 @@
 .option span { overflow-wrap: anywhere; }
 .optionText { display: grid; gap: 0.08rem; }
 .optionText small { color: #8f99a3; font-size: 0.72rem; }
+.marketGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.marketOption {
+  align-items: center;
+  background: #272c31;
+  border: 1px solid #394149;
+  border-radius: 0.28rem;
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: auto 3.15rem minmax(0, 1fr);
+  min-height: 4.25rem;
+  padding: 0.45rem;
+}
+.marketOption > input { align-self: start; margin-top: 0.2rem; }
+.marketOption > img {
+  filter: drop-shadow(0 0.1rem 0.25rem rgb(0 0 0 / 70%));
+  height: 3.15rem;
+  object-fit: contain;
+  width: 3.15rem;
+}
+.marketTitle { align-items: start; display: flex; gap: 0.45rem; justify-content: space-between; }
+.marketTitle strong { font-size: 0.86rem; }
+.marketTitle b { color: #d6a85f; flex: 0 0 auto; font-size: 0.78rem; }
 .showAll { grid-column: 1 / -1; }
 .notice { color: #8db8df; }
 .error { color: #e0a15d; }

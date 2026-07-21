@@ -12,6 +12,7 @@ import type {
   JewelRegexData,
   MapNameRegexData,
   MapRegexData,
+  PricedEntriesRegexData,
   RegexDataByTool,
   RegexDataToolId,
   VendorRegexData,
@@ -82,7 +83,9 @@ const vendorGroups = [
 ] as const;
 
 interface Option {
+  chaosValue?: number;
   id: string;
+  icon?: string;
   label: string;
   secondaryLabel?: string;
   pattern?: string;
@@ -103,6 +106,12 @@ function valueText(value: unknown, key: string): string | undefined {
   return isRecord(value) && typeof value[key] === "string" ? value[key] : undefined;
 }
 
+function valueNumber(value: unknown, key: string): number | undefined {
+  return isRecord(value) && typeof value[key] === "number" && Number.isFinite(value[key])
+    ? value[key]
+    : undefined;
+}
+
 function translatedLabel(
   id: string,
   entry: unknown,
@@ -114,6 +123,16 @@ function translatedLabel(
     ?? valueText(entry, "name")
     ?? valueText(entry, "description")
     ?? id;
+}
+
+function translatedDescription(
+  id: string,
+  entry: unknown,
+  translations: Record<string, unknown>,
+): string | undefined {
+  const localized = valueText(translations[id], "displayDescription");
+  if (localized) return /^Описание отсутствует/i.test(localized) ? undefined : localized;
+  return valueText(entry, "description");
 }
 
 function flaskOptions(data: FlaskRegexData): Option[] {
@@ -173,16 +192,36 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
       return flaskOptions(data as FlaskRegexData);
     }
     case "scarabs": {
-      const value = data as EntriesRegexData;
+      const value = data as PricedEntriesRegexData;
       const entries = isRecord(value.entries) ? value.entries : {};
-      return Object.entries(entries).map(([id, entry]) => ({ id, label: translatedLabel(id, entry, value.translations) }));
+      return Object.entries(entries).map(([id, entry]) => ({
+        chaosValue: valueNumber(entry, "chaosValue"),
+        icon: valueText(entry, "icon"),
+        id,
+        label: translatedLabel(id, entry, value.translations),
+        secondaryLabel: translatedDescription(id, entry, value.translations),
+      })).sort((left, right) => (right.chaosValue ?? -1) - (left.chaosValue ?? -1) || left.label.localeCompare(right.label));
+    }
+    case "runegraft": {
+      const value = data as PricedEntriesRegexData;
+      const entries = Array.isArray(value.entries) ? value.entries : [];
+      return entries.map((entry, index) => {
+        const id = valueText(entry, "runegraft") ?? valueText(entry, "name") ?? String(index);
+        return {
+          chaosValue: valueNumber(entry, "chaosValue"),
+          icon: valueText(entry, "icon"),
+          id,
+          label: translatedLabel(id, entry, value.translations),
+          secondaryLabel: translatedDescription(id, entry, value.translations),
+        };
+      }).sort((left, right) => (right.chaosValue ?? -1) - (left.chaosValue ?? -1) || left.label.localeCompare(right.label));
     }
     case "beast":
     case "tattoo":
-    case "runegraft": {
+    {
       const value = data as EntriesRegexData;
       const entries = Array.isArray(value.entries) ? value.entries : [];
-      const key = tool === "beast" ? "beast" : tool === "tattoo" ? "tattoo" : "runegraft";
+      const key = tool === "beast" ? "beast" : "tattoo";
       return entries.map((entry, index) => {
         const id = valueText(entry, key) ?? valueText(entry, "name") ?? String(index);
         return { id, label: translatedLabel(id, entry, value.translations) };
@@ -330,7 +369,8 @@ export default function RegexWorkspace() {
   const options = useMemo(() => tool && data ? optionsFor(tool, data) : [], [data, tool]);
   const filtered = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
-    return options.filter(({ label }) => needle === "" || label.toLocaleLowerCase().includes(needle));
+    return options.filter(({ label, secondaryLabel }) => needle === "" ||
+      `${label} ${secondaryLabel ?? ""}`.toLocaleLowerCase().includes(needle));
   }, [options, query]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
   const vendorSections = useMemo(() => {
@@ -574,6 +614,14 @@ export default function RegexWorkspace() {
               </p>
             </div>
           )}
+          {(tool === "scarabs" || tool === "runegraft") && data !== null && (
+            <p className={styles.economyMeta}>
+              {t("regex.workspace.expedition.economy", {
+                league: (data as PricedEntriesRegexData).priceLeague,
+                date: new Intl.DateTimeFormat(locale).format(new Date((data as PricedEntriesRegexData).priceUpdatedAt)),
+              })}
+            </p>
+          )}
           <label className={styles.search}>
             <span>{t("regex.workspace.search")}</span>
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
@@ -649,6 +697,24 @@ export default function RegexWorkspace() {
                         <span key={unique.name}>{unique.label} <b>{formatChaosValue(unique.chaosValue, locale)}</b></span>
                       ))}
                     </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          ) : tool === "scarabs" || tool === "runegraft" ? (
+            <div className={styles.marketGrid}>
+              {visible.map((option) => (
+                <label className={styles.marketOption} key={option.id}>
+                  <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
+                  {option.icon && (
+                    <img alt="" decoding="async" loading="lazy" src={option.icon} />
+                  )}
+                  <span className={styles.optionText}>
+                    <span className={styles.marketTitle}>
+                      <strong>{option.label}</strong>
+                      <b>{option.chaosValue === undefined ? "—" : formatChaosValue(option.chaosValue, locale)}</b>
+                    </span>
+                    {option.secondaryLabel && <small>{option.secondaryLabel}</small>}
                   </span>
                 </label>
               ))}

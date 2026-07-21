@@ -13,9 +13,15 @@ const SNAPSHOT_INPUT = "seeding/src/regex/data/poe1-economy.json";
 interface EconomySnapshot {
   generatedAt: string;
   league: string;
+  markets: {
+    runegrafts: Record<string, MarketEntry>;
+    scarabs: Record<string, MarketEntry>;
+  };
   prices: Record<string, number>;
   schemaVersion: number;
 }
+
+interface MarketEntry { chaosValue: number; icon: string }
 
 interface ExpeditionPayload {
   baseTypeRegex: Record<string, { items?: Array<{ name?: string }> }>;
@@ -23,6 +29,13 @@ interface ExpeditionPayload {
   priceLeague: string;
   priceUpdatedAt: string;
   uniquesSeen: unknown[];
+}
+
+interface PricedEntriesPayload {
+  entries: unknown[] | Record<string, unknown>;
+  priceLeague?: string;
+  priceUpdatedAt?: string;
+  translations: Record<string, unknown>;
 }
 
 interface Manifest {
@@ -36,8 +49,10 @@ async function main(): Promise<void> {
   const snapshotContents = await readFile(SNAPSHOT);
   const snapshot = JSON.parse(snapshotContents.toString("utf8")) as EconomySnapshot;
   if (
-    snapshot.schemaVersion !== 1 || typeof snapshot.generatedAt !== "string" ||
-    typeof snapshot.league !== "string" || typeof snapshot.prices !== "object" || snapshot.prices === null
+    snapshot.schemaVersion !== 2 || typeof snapshot.generatedAt !== "string" ||
+    typeof snapshot.league !== "string" || typeof snapshot.prices !== "object" || snapshot.prices === null ||
+    typeof snapshot.markets !== "object" || snapshot.markets === null ||
+    typeof snapshot.markets.scarabs !== "object" || typeof snapshot.markets.runegrafts !== "object"
   ) throw new TypeError("Economy snapshot has an invalid shape");
 
   const manifestPath = resolve(GENERATED, "manifest.json");
@@ -66,9 +81,41 @@ async function main(): Promise<void> {
     shard.sha256 = sha256(serialized);
   }
 
+  for (const locale of ["en", "ru"] as const) {
+    for (const [tool, market] of [
+      ["scarabs", snapshot.markets.scarabs],
+      ["runegrafts", snapshot.markets.runegrafts],
+    ] as const) {
+      const file = `${tool}.${locale}.json`;
+      const path = resolve(GENERATED, file);
+      const payload = JSON.parse(await readFile(path, "utf8")) as PricedEntriesPayload;
+      const applyPrice = (entry: unknown, fallbackName: string): unknown => {
+        if (typeof entry !== "object" || entry === null || Array.isArray(entry)) return entry;
+        const record = entry as Record<string, unknown>;
+        const name = typeof record.name === "string"
+          ? record.name
+          : typeof record.runegraft === "string" ? record.runegraft : fallbackName;
+        const priced = market[name];
+        return priced ? { ...record, chaosValue: priced.chaosValue, icon: priced.icon } : record;
+      };
+      payload.entries = Array.isArray(payload.entries)
+        ? payload.entries.map((entry) => applyPrice(entry, ""))
+        : Object.fromEntries(Object.entries(payload.entries).map(([name, entry]) => [name, applyPrice(entry, name)]));
+      payload.priceLeague = snapshot.league;
+      payload.priceUpdatedAt = snapshot.generatedAt;
+      const serialized = stableJson(payload);
+      await writeFile(path, serialized, "utf8");
+      const shard = manifest.shards.find((candidate) => candidate.file === file);
+      if (!shard) throw new Error(`Manifest has no ${file} shard`);
+      shard.bytes = Buffer.byteLength(serialized);
+      shard.records = collectionSize(payload.entries);
+      shard.sha256 = sha256(serialized);
+    }
+  }
+
   await writeFile(manifestPath, stableJson(manifest), "utf8");
   verifyGeneratedRegexData(GENERATED);
-  process.stdout.write(`Applied ${snapshot.league} economy snapshot to Expedition shards.\n`);
+  process.stdout.write(`Applied ${snapshot.league} economy snapshot to Expedition and market item shards.\n`);
 }
 
 await main();

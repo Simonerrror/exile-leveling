@@ -81,12 +81,21 @@ for (const locale of ["en", "ru"] as const) {
     assert.equal(compileScarabRegex([], scarabs).primary, "");
     const scarabName = Object.keys(scarabs.entries)[0];
     assert.ok(scarabName);
+    const scarabEntry = (scarabs.entries as Record<string, unknown>)[scarabName] as Record<string, unknown>;
+    assert.equal(typeof scarabEntry.chaosValue, "number");
+    assert.match(String(scarabEntry.icon), /^https:\/\/web\.poecdn\.com\//);
+    assert.ok(scarabs.priceLeague);
+    assert.ok(scarabs.priceUpdatedAt);
     assertResult(compileScarabRegex([scarabName], scarabs));
 
     const runegrafts = await loadRegexData("runegrafts", locale);
     assert.equal(compileRunegraftRegex([], runegrafts).primary, "");
     const runegraftEntry = Array.isArray(runegrafts.entries) ? runegrafts.entries[0] : undefined;
     assert.ok(runegraftEntry && typeof runegraftEntry === "object" && "runegraft" in runegraftEntry);
+    assert.equal(typeof runegraftEntry.chaosValue, "number");
+    assert.match(String(runegraftEntry.icon), /^https:\/\/web\.poecdn\.com\//);
+    assert.ok(runegrafts.priceLeague);
+    assert.ok(runegrafts.priceUpdatedAt);
     assertResult(compileRunegraftRegex([String(runegraftEntry.runegraft)], runegrafts));
 
     const jewels = await loadRegexData("jewels", locale);
@@ -136,4 +145,5 @@ test("Expedition prices stay compact in dense cards", () => {
   assert.equal(formatChaosValue(6_686_190, "en"), "6.7Mc");
   assert.match(formatChaosValue(6_686_190, "ru"), /^6,7\s*млнc$/);
   assert.equal(formatChaosValue(99, "ru"), "99c");
+  assert.equal(formatChaosValue(0.3, "en"), "0.3c");
 });

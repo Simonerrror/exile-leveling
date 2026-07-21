@@ -148,13 +148,21 @@ function validateRegexData<T extends RegexDataToolId>(
       }
       break;
     case "beast":
-    case "scarabs":
     case "tattoos":
+      if (!Array.isArray(data.entries) && !isRecord(data.entries)) {
+        throw new TypeError(`${tool}.entries must be an array or object`);
+      }
+      requireRecord(data.translations, `${tool}.translations`);
+      break;
+    case "scarabs":
     case "runegrafts":
       if (!Array.isArray(data.entries) && !isRecord(data.entries)) {
         throw new TypeError(`${tool}.entries must be an array or object`);
       }
       requireRecord(data.translations, `${tool}.translations`);
+      if (typeof data.priceLeague !== "string" || typeof data.priceUpdatedAt !== "string") {
+        throw new TypeError(`${tool} economy metadata has an invalid shape`);
+      }
       break;
     case "jewels":
       requireArray(data.abyss, "jewels.abyss");

@@ -22,8 +22,10 @@ test("routes the catalog and twelve stable regex workspaces lazily", () => {
   assert.match(catalog, /requestIdleCallback/);
   assert.match(catalog, /loadRegexData\("mapnames", locale\)/);
   assert.match(catalog, /regexToolIcons/);
-  assert.match(catalog, /aria-hidden=\{true\}/);
-  for (const id of toolIds) assert.match(catalog, new RegExp(`${id}:\\s*Fa`));
+  assert.match(catalog, /<img/);
+  assert.match(catalog, /loading="lazy"/);
+  for (const id of toolIds) assert.match(catalog, new RegExp(`${id}:\\s*\\w+Icon`));
+  assert.doesNotMatch(catalog, /react-icons\/fa/);
   assert.doesNotMatch(catalog, /upcoming/);
 });
 
@@ -47,6 +49,9 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   assert.match(workspace, /\[2, 3, 4, 5, 6\]/);
   assert.match(workspace, /t\(labelKey\)/);
   assert.match(workspace, /displayDescription/);
+  assert.match(workspace, /marketOption/);
+  assert.match(workspace, /option\.icon/);
+  assert.match(workspace, /formatChaosValue/);
   assert.match(workspace, /selectedPrefix/);
   assert.match(workspace, /selectedSuffix/);
   assert.match(workspace, /ignoreEffectTiers/);

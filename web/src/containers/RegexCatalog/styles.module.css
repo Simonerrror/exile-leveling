@@ -61,15 +61,11 @@
 }
 
 .toolIcon {
-  align-self: stretch;
-  background: #181c20;
-  border: var(--border-width) solid #48515a;
-  border-radius: 0.3rem;
-  box-sizing: border-box;
-  color: #d6a85f;
+  align-self: center;
+  filter: drop-shadow(0 0.1rem 0.25rem rgb(0 0 0 / 70%));
   grid-row: 1 / 3;
   height: 2.55rem;
-  padding: 0.58rem;
+  object-fit: contain;
   width: 2.55rem;
 }
 

@@ -69,6 +69,10 @@ export interface EntriesRegexData {
   entries: unknown[] | Record<string, unknown>;
   translations: Record<string, unknown>;
 }
+export interface PricedEntriesRegexData extends EntriesRegexData {
+  priceLeague: string;
+  priceUpdatedAt: string;
+}
 export interface JewelRegexData {
   abyss: unknown[];
   regular: unknown[];
@@ -84,8 +88,8 @@ export interface RegexDataByTool {
   heist: HeistRegexData;
   expedition: ExpeditionRegexData;
   beast: EntriesRegexData;
-  scarabs: EntriesRegexData;
+  scarabs: PricedEntriesRegexData;
   tattoos: EntriesRegexData;
-  runegrafts: EntriesRegexData;
+  runegrafts: PricedEntriesRegexData;
   jewels: JewelRegexData;
 }

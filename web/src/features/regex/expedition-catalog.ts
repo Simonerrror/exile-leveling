@@ -92,8 +92,9 @@ export function valuableExpeditionFillers(
 }
 
 export function formatChaosValue(value: number, locale: "en" | "ru"): string {
+  const displayValue = value < 10 ? Math.round(value * 10) / 10 : Math.round(value);
   return `${new Intl.NumberFormat(locale, {
     maximumFractionDigits: 1,
     notation: value >= 1_000 ? "compact" : "standard",
-  }).format(Math.round(value))}c`;
+  }).format(displayValue)}c`;
 }
