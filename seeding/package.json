@@ -7,7 +7,7 @@
     "generate-route-ids": "tsx src/index.ts ../common/data/json generate-route-ids",
     "generate:ru-display-data": "tsx src/localization/generate-ru-display-data.ts",
     "test:i18n": "tsx --test src/localization/validate.test.ts src/localization/locale-core.test.ts src/localization/locale-state.test.ts src/localization/poe-tools-shell.test.ts src/localization/route-sources.test.ts src/localization/useful-resources.test.ts",
-    "test:regex": "tsx --test src/regex/core-contract.test.ts",
+    "test:regex": "tsx --test src/regex/core-contract.test.ts src/regex/profile-migration.test.ts",
     "validate:i18n": "tsx src/localization/validate-i18n.ts"
   },
   "license": "ISC",
