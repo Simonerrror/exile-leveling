@@ -282,6 +282,18 @@ test("localizes every Heist rogue name", () => {
   }
 });
 
+test("uses build and skill-tree terminology throughout the Russian UI", () => {
+  const messages = Object.values(ru as Record<string, string>).join("\n");
+  assert.doesNotMatch(messages, /сборк/iu);
+  assert.doesNotMatch(messages, /дерев[ео] пассив/iu);
+  assert.equal(ru["nav.build"], "Билд");
+  assert.equal(ru["build.importSuccess"], "Билд импортирован");
+  assert.match(
+    ru["useful.resource.timeless-jewel.description"],
+    /дереве умений/,
+  );
+});
+
 test("defines three cheat sheets with unique filenames", () => {
   assert.equal(cheatSheets.length, 3);
   assert.equal(
