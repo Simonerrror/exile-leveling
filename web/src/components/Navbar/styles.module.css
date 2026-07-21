@@ -42,6 +42,15 @@
   cursor: pointer;
 }
 
+.brand {
+  color: #d6a85f;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-weight: var(--font-heavy);
+  letter-spacing: 0.02em;
+  min-width: max-content;
+}
+
 .navItem.expand {
   text-align: right;
 }
@@ -67,7 +76,7 @@
   top: 100%;
 }
 
-.navItems:not(.expand) > *:nth-child(n + 3) {
+.navItems:not(.expand) > *:nth-child(n + 6) {
   display: none;
 }
 
@@ -93,4 +102,14 @@
 
 .localeButton[aria-pressed="true"] {
   background-color: var(--highlight-primary);
+}
+
+@media (max-width: 46rem) {
+  .navElement {
+    padding: var(--size-2);
+  }
+
+  .navItems:not(.expand) > *:nth-child(n + 3) {
+    display: none;
+  }
 }

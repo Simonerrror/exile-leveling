@@ -10,8 +10,9 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import {
   FaBars,
-  FaBookOpen,
+  FaCode,
   FaGithub,
+  FaHome,
   FaMap,
   FaRegClipboard,
   FaTools,
@@ -111,26 +112,40 @@ export function Navbar({}: NavbarProps) {
               [styles.expand]: navExpand,
             })}
           >
+            <button
+              type="button"
+              className={classNames(styles.brand, styles.navElement)}
+              onClick={() => {
+                navigate("/");
+                setNavExpand(false);
+              }}
+            >
+              PoE Tools
+            </button>
             <NavbarItem
-              label={t("nav.route")}
+              label={t("nav.home")}
               expand={navExpand}
-              icon={<FaMap className={classNames("inlineIcon")} />}
+              icon={<FaHome className={classNames("inlineIcon")} />}
               onClick={() => {
                 navigate("/");
                 setNavExpand(false);
               }}
             />
             <NavbarItem
-              label={t("nav.useful")}
+              label={t("nav.leveling")}
               expand={navExpand}
-              icon={
-                <FaBookOpen
-                  aria-hidden={true}
-                  className={classNames("inlineIcon")}
-                />
-              }
+              icon={<FaMap className={classNames("inlineIcon")} />}
               onClick={() => {
-                navigate("/useful");
+                navigate("/leveling");
+                setNavExpand(false);
+              }}
+            />
+            <NavbarItem
+              label={t("nav.regex")}
+              expand={navExpand}
+              icon={<FaCode className={classNames("inlineIcon")} />}
+              onClick={() => {
+                navigate("/regex");
                 setNavExpand(false);
               }}
             />
@@ -150,7 +165,7 @@ export function Navbar({}: NavbarProps) {
                   label={x.name}
                   expand={navExpand}
                   onClick={() => {
-                    navigate(`/#section-${i}`);
+                    navigate(`/leveling#section-${i}`);
                     setNavExpand(false);
                   }}
                 />
@@ -192,7 +207,7 @@ export function Navbar({}: NavbarProps) {
               onClick={() => {
                 window
                   .open(
-                    "https://github.com/HeartofPhos/exile-leveling",
+                    "https://github.com/Simonerrror/exile-leveling",
                     "_blank",
                   )
                   ?.focus();

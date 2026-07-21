@@ -100,3 +100,15 @@ test("uses PoE Tools product metadata and disables production sourcemaps", () =>
   assert.equal(en["app.title"], "PoE Tools");
   assert.equal(ru["app.title"], "PoE Tools");
 });
+
+test("orders the primary PoE Tools navigation and uses the canonical repository", () => {
+  const navbar = readSource("../../../web/src/components/Navbar/index.tsx");
+  assert.match(
+    navbar,
+    /nav\.home[\s\S]*nav\.leveling[\s\S]*nav\.regex[\s\S]*nav\.build/,
+  );
+  assert.match(
+    navbar,
+    /https:\/\/github\.com\/Simonerrror\/exile-leveling/,
+  );
+});
