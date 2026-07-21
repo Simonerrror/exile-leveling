@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { stableJson } from "./export-utils.js";
@@ -25,6 +25,11 @@ interface EconomyItem {
 }
 
 interface MarketEntry { chaosValue: number; icon: string }
+interface MarketSnapshot {
+  entries: Record<string, MarketEntry>;
+  generatedAt: string;
+  league: string;
+}
 
 async function getJson(url: string): Promise<unknown> {
   let lastError: unknown;
@@ -35,6 +40,7 @@ async function getJson(url: string): Promise<unknown> {
       return response.json();
     } catch (error) {
       lastError = error;
+      if (error instanceof Error && error.message.includes("poe.ninja 404")) throw error;
       if (attempt < 3) await new Promise((resolveDelay) => setTimeout(resolveDelay, attempt * 1_000));
     }
   }
@@ -69,7 +75,42 @@ async function marketEntries(league: string, type: "Scarab" | "Runegraft"): Prom
   return Object.fromEntries([...entries].sort(([left], [right]) => left.localeCompare(right)));
 }
 
+function previousMarket(value: unknown, key: "scarabs" | "runegrafts"): MarketSnapshot | undefined {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return undefined;
+  const snapshot = value as Record<string, unknown>;
+  const markets = snapshot.markets;
+  if (typeof markets !== "object" || markets === null || Array.isArray(markets)) return undefined;
+  const market = (markets as Record<string, unknown>)[key];
+  if (typeof market !== "object" || market === null || Array.isArray(market)) return undefined;
+  const record = market as Record<string, unknown>;
+  const entries = typeof record.entries === "object" && record.entries !== null ? record.entries : market;
+  const generatedAt = typeof record.generatedAt === "string" ? record.generatedAt : snapshot.generatedAt;
+  const league = typeof record.league === "string" ? record.league : snapshot.league;
+  return typeof generatedAt === "string" && typeof league === "string"
+    ? { entries: entries as Record<string, MarketEntry>, generatedAt, league }
+    : undefined;
+}
+
+async function currentMarket(
+  league: string,
+  type: "Scarab" | "Runegraft",
+  fallback: MarketSnapshot | undefined,
+): Promise<MarketSnapshot> {
+  try {
+    return { entries: await marketEntries(league, type), generatedAt: new Date().toISOString(), league };
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("poe.ninja 404") && fallback) return fallback;
+    throw error;
+  }
+}
+
 async function main(): Promise<void> {
+  let previousSnapshot: unknown;
+  try {
+    previousSnapshot = JSON.parse(await readFile(OUTPUT, "utf8"));
+  } catch {
+    previousSnapshot = undefined;
+  }
   const leagues = await getJson(`${API}/leagues`) as Array<{ id?: unknown }>;
   const permanentLeagues = new Set(["Standard", "Hardcore", "Ruthless", "Hardcore Ruthless"]);
   const tradeLeagues = leagues.flatMap(({ id }) =>
@@ -97,8 +138,8 @@ async function main(): Promise<void> {
 
   if (prices.size < 500) throw new Error(`Economy snapshot is unexpectedly small: ${prices.size}`);
   const markets = {
-    runegrafts: await marketEntries(league, "Runegraft"),
-    scarabs: await marketEntries(league, "Scarab"),
+    runegrafts: await currentMarket(league, "Runegraft", previousMarket(previousSnapshot, "runegrafts")),
+    scarabs: await currentMarket(league, "Scarab", previousMarket(previousSnapshot, "scarabs")),
   };
   await mkdir(dirname(OUTPUT), { recursive: true });
   await writeFile(OUTPUT, stableJson({
@@ -106,11 +147,11 @@ async function main(): Promise<void> {
     league,
     markets,
     prices: Object.fromEntries([...prices].sort(([left], [right]) => left.localeCompare(right))),
-    schemaVersion: 2,
+    schemaVersion: 3,
   }), "utf8");
   process.stdout.write(
-    `Saved ${prices.size} uniques, ${Object.keys(markets.scarabs).length} scarabs, and ` +
-    `${Object.keys(markets.runegrafts).length} runegrafts for ${league}.\n`,
+    `Saved ${prices.size} uniques, ${Object.keys(markets.scarabs.entries).length} scarabs, and ` +
+    `${Object.keys(markets.runegrafts.entries).length} runegrafts for ${league}.\n`,
   );
 }
 

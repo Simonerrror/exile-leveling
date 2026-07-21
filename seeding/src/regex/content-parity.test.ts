@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { loadRegexData } from "../../../web/src/features/regex/data/loaders.js";
 import {
@@ -116,6 +117,19 @@ test("Russian Heist contract labels are concise and bilingual", async () => {
     secondary: "Counter-Thaumaturgy",
   });
   assert.ok(labels.every(({ primary, secondary }) => primary && secondary));
+});
+
+test("Market shards preserve their own economy league and timestamp", async () => {
+  const snapshot = JSON.parse(readFileSync(new URL("./data/poe1-economy.json", import.meta.url), "utf8")) as {
+    markets: Record<string, { generatedAt: string; league: string }>;
+    schemaVersion: number;
+  };
+  assert.equal(snapshot.schemaVersion, 3);
+  for (const tool of ["scarabs", "runegrafts"] as const) {
+    const data = await loadRegexData(tool, "ru");
+    assert.equal(data.priceLeague, snapshot.markets[tool].league);
+    assert.equal(data.priceUpdatedAt, snapshot.markets[tool].generatedAt);
+  }
 });
 
 test("Expedition catalog ranks bases by valuable unique outcomes", async () => {

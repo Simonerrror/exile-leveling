@@ -14,14 +14,19 @@ interface EconomySnapshot {
   generatedAt: string;
   league: string;
   markets: {
-    runegrafts: Record<string, MarketEntry>;
-    scarabs: Record<string, MarketEntry>;
+    runegrafts: MarketSnapshot;
+    scarabs: MarketSnapshot;
   };
   prices: Record<string, number>;
   schemaVersion: number;
 }
 
 interface MarketEntry { chaosValue: number; icon: string }
+interface MarketSnapshot {
+  entries: Record<string, MarketEntry>;
+  generatedAt: string;
+  league: string;
+}
 
 interface ExpeditionPayload {
   baseTypeRegex: Record<string, { items?: Array<{ name?: string }> }>;
@@ -49,10 +54,15 @@ async function main(): Promise<void> {
   const snapshotContents = await readFile(SNAPSHOT);
   const snapshot = JSON.parse(snapshotContents.toString("utf8")) as EconomySnapshot;
   if (
-    snapshot.schemaVersion !== 2 || typeof snapshot.generatedAt !== "string" ||
+    snapshot.schemaVersion !== 3 || typeof snapshot.generatedAt !== "string" ||
     typeof snapshot.league !== "string" || typeof snapshot.prices !== "object" || snapshot.prices === null ||
     typeof snapshot.markets !== "object" || snapshot.markets === null ||
-    typeof snapshot.markets.scarabs !== "object" || typeof snapshot.markets.runegrafts !== "object"
+    typeof snapshot.markets.scarabs?.entries !== "object" ||
+    typeof snapshot.markets.scarabs?.generatedAt !== "string" ||
+    typeof snapshot.markets.scarabs?.league !== "string" ||
+    typeof snapshot.markets.runegrafts?.entries !== "object" ||
+    typeof snapshot.markets.runegrafts?.generatedAt !== "string" ||
+    typeof snapshot.markets.runegrafts?.league !== "string"
   ) throw new TypeError("Economy snapshot has an invalid shape");
 
   const manifestPath = resolve(GENERATED, "manifest.json");
@@ -82,10 +92,11 @@ async function main(): Promise<void> {
   }
 
   for (const locale of ["en", "ru"] as const) {
-    for (const [tool, market] of [
+    for (const [tool, marketSnapshot] of [
       ["scarabs", snapshot.markets.scarabs],
       ["runegrafts", snapshot.markets.runegrafts],
     ] as const) {
+      const market = marketSnapshot.entries;
       const file = `${tool}.${locale}.json`;
       const path = resolve(GENERATED, file);
       const payload = JSON.parse(await readFile(path, "utf8")) as PricedEntriesPayload;
@@ -101,8 +112,8 @@ async function main(): Promise<void> {
       payload.entries = Array.isArray(payload.entries)
         ? payload.entries.map((entry) => applyPrice(entry, ""))
         : Object.fromEntries(Object.entries(payload.entries).map(([name, entry]) => [name, applyPrice(entry, name)]));
-      payload.priceLeague = snapshot.league;
-      payload.priceUpdatedAt = snapshot.generatedAt;
+      payload.priceLeague = marketSnapshot.league;
+      payload.priceUpdatedAt = marketSnapshot.generatedAt;
       const serialized = stableJson(payload);
       await writeFile(path, serialized, "utf8");
       const shard = manifest.shards.find((candidate) => candidate.file === file);
