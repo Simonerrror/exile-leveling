@@ -5,6 +5,9 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/exile-leveling/",
+  build: {
+    sourcemap: false,
+  },
   server: {
     host: true,
   },
@@ -13,12 +16,12 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Exile Leveling",
-        short_name: "Exile Leveling",
+        name: "PoE Tools",
+        short_name: "PoE Tools",
         description:
-          "Path of Exile leveling guide with PoB integration / Русский гайд по прокачке с интеграцией PoB",
-        theme_color: "#000000",
-        background_color: "#000000",
+          "Path of Exile leveling, build and regex tools / Прокачка, билды и regex-инструменты для Path of Exile",
+        theme_color: "#222222",
+        background_color: "#171717",
         icons: [
           {
             src: "android-chrome-192x192.png",
