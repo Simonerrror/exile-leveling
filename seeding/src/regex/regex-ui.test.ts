@@ -32,6 +32,9 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   const workspace = read("../../../web/src/containers/RegexWorkspace/index.tsx");
   assert.match(workspace, /regexEditorToolIds/);
   assert.match(workspace, /EntityImage/);
+  assert.match(workspace, /requiredGemsSelector/);
+  assert.match(workspace, /matchBuildGems/);
+  assert.match(workspace, /token\.icon/);
   assert.match(workspace, /loadRegexData/);
   assert.match(workspace, /loaded\.tool === tool/);
   assert.match(workspace, /loaded\.locale === locale/);
@@ -79,6 +82,9 @@ test("regex UI messages have exact EN/RU parity and no migration placeholder", (
       "regex.workspace.vendor.color.b", "regex.workspace.vendor.color.w",
       "regex.workspace.vendor.active", "regex.workspace.vendor.support",
       "regex.workspace.vendor.requiredLevel",
+      "regex.workspace.vendor.selectBuildGems",
+      "regex.workspace.vendor.noBuildGems",
+      "regex.workspace.vendor.buildGemReport",
     ]) assert.equal(typeof messages[key as keyof typeof messages], "string", key);
     assert.doesNotMatch(messages["regex.catalog.description"], /moving|переезжа/i);
   }

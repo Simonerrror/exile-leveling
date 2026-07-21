@@ -6,6 +6,13 @@ export interface VendorGemSection {
   tokens: VendorRegexToken[];
 }
 
+export interface BuildGemMatch {
+  alreadySelectedTokenIds: number[];
+  selectedTokenIds: number[];
+  unavailableGameIds: string[];
+  unknownGameIds: string[];
+}
+
 const sectionOrder = [
   ["r", false], ["r", true],
   ["g", false], ["g", true],
@@ -25,4 +32,37 @@ export function groupVendorGems(tokens: VendorRegexToken[]): VendorGemSection[] 
         left.requiredLevel - right.requiredLevel || compareNames(left.rawText, right.rawText));
     return sectionTokens.length > 0 ? [{ color, support, tokens: sectionTokens }] : [];
   });
+}
+
+export function matchBuildGems(
+  requiredGems: ReadonlyArray<{ id: string }>,
+  tokens: readonly VendorRegexToken[],
+  selectedTokenIds: readonly number[] = [],
+): BuildGemMatch {
+  const tokenByGameId = new Map(tokens.map((token) => [token.gameId, token]));
+  const selected = new Set(selectedTokenIds);
+  const alreadySelectedTokenIds = new Set<number>();
+  const unavailableGameIds = new Set<string>();
+  const unknownGameIds = new Set<string>();
+
+  for (const gem of requiredGems) {
+    if (!gem.id.startsWith("Metadata/Items/Gems/")) {
+      unknownGameIds.add(gem.id);
+      continue;
+    }
+    const token = tokenByGameId.get(gem.id);
+    if (!token) {
+      unavailableGameIds.add(gem.id);
+      continue;
+    }
+    if (selected.has(token.id)) alreadySelectedTokenIds.add(token.id);
+    selected.add(token.id);
+  }
+
+  return {
+    alreadySelectedTokenIds: [...alreadySelectedTokenIds].sort((left, right) => left - right),
+    selectedTokenIds: [...selected].sort((left, right) => left - right),
+    unavailableGameIds: [...unavailableGameIds].sort(),
+    unknownGameIds: [...unknownGameIds].sort(),
+  };
 }

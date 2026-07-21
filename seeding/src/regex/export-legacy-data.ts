@@ -33,6 +33,12 @@ interface LegacyGemToken {
   [key: string]: unknown;
 }
 
+interface VendorGemMetadata {
+  gameId: string;
+  icon: string;
+  requiredLevel: number;
+}
+
 const colorByAttribute = {
   strength: "r",
   dexterity: "g",
@@ -40,19 +46,32 @@ const colorByAttribute = {
   none: "w",
 } as const;
 
+function gemIcon(gameId: string): string {
+  const metadataName = gameId.slice("Metadata/Items/Gems/".length);
+  const relative = metadataName.startsWith("SupportGem")
+    ? `Support/${metadataName.slice("SupportGem".length)}`
+    : metadataName.startsWith("SkillGem")
+      ? metadataName.slice("SkillGem".length)
+      : metadataName;
+  return `https://web.poecdn.com/image/Art/2DItems/Gems/${relative}.png?scale=1`;
+}
+
 function vendorMetadataById(
   catalog: unknown,
   metadata: Record<string, CanonicalGem>,
-): Map<number, number> {
+): Map<number, VendorGemMetadata> {
   const tokens = (catalog as { tokens?: unknown }).tokens;
   if (!Array.isArray(tokens)) throw new TypeError("English vendor catalog has no tokens");
   const canonical = Object.values(metadata).filter(({ id }) => !id.includes("Royale"));
   const aliases: Record<string, string> = {
     "Lesser Multiple Projectiles Support": "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles",
   };
-  const archivedRequiredLevels: Record<string, number> = {
-    "Increased Duration Support": 31,
-    Sweep: 12,
+  const archived: Record<string, { gameId: string; requiredLevel: number }> = {
+    "Increased Duration Support": {
+      gameId: "Metadata/Items/Gems/SupportGemIncreasedDuration",
+      requiredLevel: 31,
+    },
+    Sweep: { gameId: "Metadata/Items/Gems/SkillGemSweep", requiredLevel: 12 },
   };
   return new Map(tokens.map((candidate) => {
     const token = candidate as LegacyGemToken;
@@ -61,24 +80,26 @@ function vendorMetadataById(
       (alias ? gem.id === alias : gem.name === token.rawText) &&
       colorByAttribute[gem.primary_attribute] === token.options.c &&
       gem.is_support === token.options.support);
-    const requiredLevel = matches[0]?.required_level ?? archivedRequiredLevels[token.rawText];
-    if (!Number.isSafeInteger(requiredLevel) || requiredLevel < 0) {
+    const gem = matches[0] ?? archived[token.rawText];
+    const requiredLevel = gem?.required_level ?? gem?.requiredLevel;
+    const gameId = gem?.id ?? gem?.gameId;
+    if (!Number.isSafeInteger(requiredLevel) || requiredLevel < 0 || typeof gameId !== "string") {
       throw new TypeError(`Missing canonical required level for vendor gem: ${token.rawText}`);
     }
-    return [token.id, requiredLevel] as const;
+    return [token.id, { gameId, icon: gemIcon(gameId), requiredLevel }] as const;
   }));
 }
 
-function enrichVendorCatalog(catalog: unknown, levels: Map<number, number>): unknown {
+function enrichVendorCatalog(catalog: unknown, metadata: Map<number, VendorGemMetadata>): unknown {
   const value = catalog as Record<string, unknown> & { tokens?: unknown[] };
   if (!Array.isArray(value.tokens)) throw new TypeError("Vendor catalog has no tokens");
   return {
     ...value,
     tokens: value.tokens.map((candidate) => {
       const token = candidate as LegacyGemToken;
-      const requiredLevel = levels.get(token.id);
-      if (requiredLevel === undefined) throw new TypeError(`Missing vendor metadata id: ${token.id}`);
-      return { ...token, requiredLevel };
+      const gem = metadata.get(token.id);
+      if (gem === undefined) throw new TypeError(`Missing vendor metadata id: ${token.id}`);
+      return { ...token, ...gem };
     }),
   };
 }

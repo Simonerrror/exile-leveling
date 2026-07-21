@@ -90,8 +90,12 @@ function requireVendorCatalog(value: unknown): void {
   const catalog = requireTokenCatalog(value, "vendor.gems");
   for (const [index, token] of catalog.tokens.entries()) {
     const requiredLevel = (token as RegexToken & { requiredLevel?: unknown }).requiredLevel;
+    const gameId = (token as RegexToken & { gameId?: unknown }).gameId;
+    const icon = (token as RegexToken & { icon?: unknown }).icon;
     if (
       !Number.isSafeInteger(requiredLevel) || Number(requiredLevel) < 0 ||
+      typeof gameId !== "string" || !gameId.startsWith("Metadata/Items/") ||
+      typeof icon !== "string" || !icon.startsWith("https://web.poecdn.com/image/Art/2DItems/Gems/") ||
       !["r", "g", "b", "w"].includes(String(token.options.c)) ||
       typeof token.options.support !== "boolean"
     ) throw new TypeError(`vendor.gems.tokens[${index}] has invalid gem metadata`);

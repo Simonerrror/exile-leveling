@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useAtomValue } from "jotai";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
@@ -29,7 +30,12 @@ import {
 } from "../../features/regex/core/content";
 import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
-import { groupVendorGems } from "../../features/regex/vendor-gem-catalog";
+import {
+  groupVendorGems,
+  matchBuildGems,
+  type BuildGemMatch,
+} from "../../features/regex/vendor-gem-catalog";
+import { requiredGemsSelector } from "../../state/gem";
 import { heistContractLabels } from "../../features/regex/heist-contract-labels";
 import {
   defaultExpeditionSettings,
@@ -342,6 +348,8 @@ export default function RegexWorkspace() {
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
+  const [buildGemReport, setBuildGemReport] = useState<BuildGemMatch | null>(null);
+  const requiredGems = useAtomValue(requiredGemsSelector);
 
   useEffect(() => {
     if (tool === null) return;
@@ -354,6 +362,7 @@ export default function RegexWorkspace() {
     setFlaskSettings(normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks));
     setExpeditionSettings(storedExpeditionSettings(profileStore));
     setQuery("");
+    setBuildGemReport(null);
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
       if (active) setLoaded({ tool, locale, value });
     });
@@ -472,6 +481,7 @@ export default function RegexWorkspace() {
     setVendorSettings(nextVendor);
     setFlaskSettings(nextFlasks);
     setExpeditionSettings(nextExpedition);
+    setBuildGemReport(null);
     if (tool === "expedition") updateExpedition(nextExpedition);
     persist([], nextVendor);
   };
@@ -494,6 +504,7 @@ export default function RegexWorkspace() {
       <div className={styles.layout}>
         <section className={styles.controls} aria-label={title}>
           {tool === "vendor" && (
+            <>
             <div className={styles.vendorFilters}>
               <fieldset className={styles.linkFieldset}>
                 <legend>{t("regex.workspace.links")}</legend>
@@ -529,6 +540,36 @@ export default function RegexWorkspace() {
                 </fieldset>
               ))}
             </div>
+            <div className={styles.vendorBuildImport}>
+              <button
+                disabled={requiredGems.length === 0 || data === null}
+                onClick={() => {
+                  if (data === null) return;
+                  const match = matchBuildGems(
+                    requiredGems,
+                    (data as VendorRegexData).gems.tokens,
+                    selected.map(Number).filter(Number.isSafeInteger),
+                  );
+                  const next = match.selectedTokenIds.map(String);
+                  setSelected(next);
+                  persist(next);
+                  setBuildGemReport(match);
+                }}
+                type="button"
+              >
+                {t("regex.workspace.vendor.selectBuildGems")}
+              </button>
+              {requiredGems.length === 0 && <span>{t("regex.workspace.vendor.noBuildGems")}</span>}
+              {buildGemReport && (
+                <span>{t("regex.workspace.vendor.buildGemReport", {
+                  selected: buildGemReport.selectedTokenIds.length,
+                  existing: buildGemReport.alreadySelectedTokenIds.length,
+                  unavailable: buildGemReport.unavailableGameIds.length,
+                  unknown: buildGemReport.unknownGameIds.length,
+                })}</span>
+              )}
+            </div>
+            </>
           )}
           {tool === "flasks" && (
             <div className={styles.flaskSettings}>
@@ -653,6 +694,7 @@ export default function RegexWorkspace() {
                       return (
                         <label className={styles.gemOption} key={id}>
                           <input type="checkbox" checked={selected.includes(id)} onChange={() => toggle(id)} />
+                          <EntityImage alt="" src={token.icon} />
                           <span>{token.rawText}</span>
                           <small>{t("regex.workspace.vendor.requiredLevel", { level: token.requiredLevel })}</small>
                         </label>

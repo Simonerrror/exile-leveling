@@ -50,6 +50,10 @@
 .search input { background: #16191c; border: 1px solid #4b555e; border-radius: 0.3rem; color: #fff; min-height: 2.5rem; padding: 0.4rem 0.55rem; width: 100%; }
 
 .vendorFilters { display: grid; gap: 0.45rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.vendorBuildImport { align-items: center; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.55rem 0; }
+.vendorBuildImport button { background: #332b1f; border: 1px solid #d6a85f; border-radius: 0.3rem; color: #f0c77f; min-height: 2.4rem; padding: 0.35rem 0.65rem; }
+.vendorBuildImport button:disabled { opacity: 0.45; }
+.vendorBuildImport span { color: #a8b1ba; font-size: 0.78rem; }
 .linkFieldset { border: 1px solid #4b555e; display: flex; flex-wrap: wrap; gap: 0.35rem 0.7rem; padding: 0.45rem 0.65rem; }
 .linkFieldset legend { color: #d6a85f; padding: 0 0.25rem; }
 .linkFieldset label { align-items: center; display: flex; gap: 0.3rem; min-height: 2.2rem; }
@@ -156,7 +160,7 @@
   border-radius: 0.28rem;
   display: grid;
   gap: 0.4rem;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto 2rem minmax(0, 1fr) auto;
   min-height: 2.65rem;
   padding: 0.4rem 0.45rem;
 }
