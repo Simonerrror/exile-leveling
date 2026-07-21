@@ -47,3 +47,23 @@ test("vendor source and output contain no color-link or six-socket paths", async
   assert.equal(matchesSearchExpression(result.primary, "Резкие сапоги"), true);
   assert.equal(result.primary.includes("[rgb]"), false);
 });
+
+test("vendor shards contain canonical non-Royale required levels in both locales", async () => {
+  for (const locale of ["en", "ru"] as const) {
+    const data = await loadRegexData("vendor", locale);
+    assert.ok(data.gems.tokens.every(({ requiredLevel }) =>
+      Number.isSafeInteger(requiredLevel) && requiredLevel >= 0));
+    const chainHook = data.gems.tokens.find(({ id }) => id === -2137186526);
+    assert.equal(chainHook?.requiredLevel, 12);
+    const iceNova = data.gems.tokens.find(({ rawText }) =>
+      locale === "en" ? rawText === "Ice Nova" : rawText === "Кольцо льда");
+    assert.equal(iceNova?.requiredLevel, 12);
+  }
+  const english = await loadRegexData("vendor", "en");
+  assert.equal(
+    english.gems.tokens.find(({ rawText }) => rawText === "Lesser Multiple Projectiles Support")?.requiredLevel,
+    8,
+  );
+  assert.equal(english.gems.tokens.find(({ rawText }) => rawText === "Increased Duration Support")?.requiredLevel, 31);
+  assert.equal(english.gems.tokens.find(({ rawText }) => rawText === "Sweep")?.requiredLevel, 12);
+});

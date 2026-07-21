@@ -2,6 +2,7 @@ import type {
   RegexDataByTool,
   RegexDataLocale,
   RegexDataToolId,
+  RegexToken,
   RegexTokenCatalog,
 } from "./types.js";
 
@@ -89,6 +90,18 @@ function requireTokenCatalog(value: unknown, label: string): RegexTokenCatalog {
   return catalog as RegexTokenCatalog;
 }
 
+function requireVendorCatalog(value: unknown): void {
+  const catalog = requireTokenCatalog(value, "vendor.gems");
+  for (const [index, token] of catalog.tokens.entries()) {
+    const requiredLevel = (token as RegexToken & { requiredLevel?: unknown }).requiredLevel;
+    if (
+      !Number.isSafeInteger(requiredLevel) || Number(requiredLevel) < 0 ||
+      !["r", "g", "b", "w"].includes(String(token.options.c)) ||
+      typeof token.options.support !== "boolean"
+    ) throw new TypeError(`vendor.gems.tokens[${index}] has invalid gem metadata`);
+  }
+}
+
 function validateRegexData<T extends RegexDataToolId>(
   tool: T,
   value: unknown,
@@ -96,7 +109,7 @@ function validateRegexData<T extends RegexDataToolId>(
   const data = requireRecord(value, `${tool} data`);
   switch (tool) {
     case "vendor":
-      requireTokenCatalog(data.gems, "vendor.gems");
+      requireVendorCatalog(data.gems);
       break;
     case "maps":
       requireTokenCatalog(data.mods, "maps.mods");

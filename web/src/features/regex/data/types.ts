@@ -19,7 +19,14 @@ export interface RegexTokenCatalog {
   [key: string]: unknown;
 }
 
-export interface VendorRegexData { gems: RegexTokenCatalog }
+export type VendorGemColor = "r" | "g" | "b" | "w";
+export interface VendorRegexToken extends Omit<RegexToken, "options"> {
+  requiredLevel: number;
+  options: { c: VendorGemColor; support: boolean } & Record<string, unknown>;
+}
+export interface VendorRegexData {
+  gems: Omit<RegexTokenCatalog, "tokens"> & { tokens: VendorRegexToken[] };
+}
 export interface MapRegexData {
   mods: RegexTokenCatalog;
   tradeStatIdMatching: Record<string, unknown>;

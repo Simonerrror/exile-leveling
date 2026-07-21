@@ -30,6 +30,7 @@ import {
 } from "../../features/regex/core/content";
 import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
+import { groupVendorGems } from "../../features/regex/vendor-gem-catalog";
 import {
   createDefaultToolSettings,
   normalizeFlaskSettings,
@@ -306,6 +307,13 @@ export default function RegexWorkspace() {
     return options.filter(({ label }) => needle === "" || label.toLocaleLowerCase().includes(needle));
   }, [options, query]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
+  const vendorSections = useMemo(() => {
+    if (tool !== "vendor" || data === null) return [];
+    const needle = query.trim().toLocaleLowerCase();
+    const tokens = (data as VendorRegexData).gems.tokens.filter(({ rawText }) =>
+      needle === "" || rawText.toLocaleLowerCase().includes(needle));
+    return groupVendorGems(tokens);
+  }, [data, query, tool]);
   const result = useMemo(
     () => tool && data ? compile(tool, data, selected, vendorSettings, flaskSettings, locale) : emptyResult,
     [data, flaskSettings, locale, selected, tool, vendorSettings],
@@ -476,7 +484,40 @@ export default function RegexWorkspace() {
               {t("regex.workspace.reset")}
             </button>
           </div>
-          {data === null ? <p>{t("regex.workspace.loading")}</p> : tool === "flasks" ? (
+          {data === null ? <p>{t("regex.workspace.loading")}</p> : tool === "vendor" ? (
+            <div className={styles.gemSections}>
+              {vendorSections.map((section) => (
+                <section
+                  className={styles.gemSection}
+                  data-color={section.color}
+                  key={`${section.color}:${section.support}`}
+                >
+                  <header className={styles.gemSectionHeader}>
+                    <h2>
+                      {t(`regex.workspace.vendor.color.${section.color}` as MessageKey)} · {t(
+                        section.support
+                          ? "regex.workspace.vendor.support"
+                          : "regex.workspace.vendor.active",
+                      )}
+                    </h2>
+                    <span>{section.tokens.length}</span>
+                  </header>
+                  <div className={styles.gemGrid}>
+                    {section.tokens.map((token) => {
+                      const id = String(token.id);
+                      return (
+                        <label className={styles.gemOption} key={id}>
+                          <input type="checkbox" checked={selected.includes(id)} onChange={() => toggle(id)} />
+                          <span>{token.rawText}</span>
+                          <small>{t("regex.workspace.vendor.requiredLevel", { level: token.requiredLevel })}</small>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : tool === "flasks" ? (
             <div className={styles.flaskColumns}>
               {(["prefix", "suffix"] as const).map((affix) => (
                 <section className={styles.flaskColumn} key={affix}>

@@ -33,10 +33,10 @@ export function verifyGeneratedRegexData(directory: string): { shards: number; b
 
   const manifestText = readFileSync(resolve(directory, "manifest.json"), "utf8");
   const manifest = JSON.parse(manifestText) as RegexDataManifest;
-  if (manifest.generatorVersion !== 1 || !Array.isArray(manifest.inputs) || !Array.isArray(manifest.shards)) {
+  if (manifest.generatorVersion !== 2 || !Array.isArray(manifest.inputs) || !Array.isArray(manifest.shards)) {
     throw new Error("Invalid regex data manifest");
   }
-  if (manifest.inputs.length !== 19) throw new Error("Regex manifest must contain 19 allowlisted inputs");
+  if (manifest.inputs.length !== 20) throw new Error("Regex manifest must contain 20 audited inputs");
   if (manifest.shards.length !== EXPECTED_SHARD_FILES.length) {
     throw new Error("Regex manifest must contain exactly 24 shards");
   }

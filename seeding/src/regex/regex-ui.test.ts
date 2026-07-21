@@ -64,6 +64,10 @@ test("regex UI messages have exact EN/RU parity and no migration placeholder", (
       "regex.workspace.flasks.suffix", "regex.workspace.flasks.requireBoth",
       "regex.workspace.flasks.openAffix", "regex.workspace.flasks.ignoreEffectTier",
       "regex.workspace.flasks.highestPrefix", "regex.workspace.flasks.highestSuffix",
+      "regex.workspace.vendor.color.r", "regex.workspace.vendor.color.g",
+      "regex.workspace.vendor.color.b", "regex.workspace.vendor.color.w",
+      "regex.workspace.vendor.active", "regex.workspace.vendor.support",
+      "regex.workspace.vendor.requiredLevel",
     ]) assert.equal(typeof messages[key as keyof typeof messages], "string", key);
     assert.doesNotMatch(messages["regex.catalog.description"], /moving|переезжа/i);
   }

@@ -85,6 +85,37 @@
 .flaskColumn { background: #1b1f22; border: 1px solid #394149; border-radius: 0.35rem; padding: 0.55rem; }
 .flaskColumn h2 { color: #d6a85f; font-size: 1rem; margin: 0 0 0.5rem; }
 
+.gemSections { display: grid; gap: 0.7rem; }
+.gemSection {
+  --gem-accent: #d7dce1;
+  background: #1b1f22;
+  border: 1px solid #394149;
+  border-left: 0.25rem solid var(--gem-accent);
+  border-radius: 0.35rem;
+  padding: 0.55rem;
+}
+.gemSection[data-color="r"] { --gem-accent: #d96b62; }
+.gemSection[data-color="g"] { --gem-accent: #6fbf83; }
+.gemSection[data-color="b"] { --gem-accent: #6f9fd8; }
+.gemSection[data-color="w"] { --gem-accent: #d7dce1; }
+.gemSectionHeader { align-items: center; display: flex; justify-content: space-between; margin-bottom: 0.45rem; }
+.gemSectionHeader h2 { color: var(--gem-accent); font-size: 1rem; margin: 0; }
+.gemSectionHeader > span { color: #8f99a3; font-size: 0.78rem; }
+.gemGrid { display: grid; gap: 0.3rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+.gemOption {
+  align-items: center;
+  background: #272c31;
+  border: 1px solid #394149;
+  border-radius: 0.28rem;
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 2.65rem;
+  padding: 0.4rem 0.45rem;
+}
+.gemOption span { overflow-wrap: anywhere; }
+.gemOption small { color: var(--gem-accent); white-space: nowrap; }
+
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,

@@ -14,7 +14,73 @@ import { verifyGeneratedRegexData } from "./verify-generated-data.js";
 const OUTPUT_DIRECTORY = resolve(fileURLToPath(
   new URL("../../../web/src/features/regex/data/generated/", import.meta.url),
 ));
+const GEM_METADATA_FILE = fileURLToPath(new URL("../../../common/data/json/gems.json", import.meta.url));
 type LegacyModule = Record<string, unknown>;
+
+interface CanonicalGem {
+  id: string;
+  name: string;
+  primary_attribute: "strength" | "dexterity" | "intelligence" | "none";
+  required_level: number;
+  is_support: boolean;
+}
+
+interface LegacyGemToken {
+  id: number;
+  rawText: string;
+  options: { c: "r" | "g" | "b" | "w"; support: boolean };
+  [key: string]: unknown;
+}
+
+const colorByAttribute = {
+  strength: "r",
+  dexterity: "g",
+  intelligence: "b",
+  none: "w",
+} as const;
+
+function vendorMetadataById(
+  catalog: unknown,
+  metadata: Record<string, CanonicalGem>,
+): Map<number, number> {
+  const tokens = (catalog as { tokens?: unknown }).tokens;
+  if (!Array.isArray(tokens)) throw new TypeError("English vendor catalog has no tokens");
+  const canonical = Object.values(metadata).filter(({ id }) => !id.includes("Royale"));
+  const aliases: Record<string, string> = {
+    "Lesser Multiple Projectiles Support": "Metadata/Items/Gems/SupportGemLesserMultipleProjectiles",
+  };
+  const archivedRequiredLevels: Record<string, number> = {
+    "Increased Duration Support": 31,
+    Sweep: 12,
+  };
+  return new Map(tokens.map((candidate) => {
+    const token = candidate as LegacyGemToken;
+    const alias = aliases[token.rawText];
+    const matches = canonical.filter((gem) =>
+      (alias ? gem.id === alias : gem.name === token.rawText) &&
+      colorByAttribute[gem.primary_attribute] === token.options.c &&
+      gem.is_support === token.options.support);
+    const requiredLevel = matches[0]?.required_level ?? archivedRequiredLevels[token.rawText];
+    if (!Number.isSafeInteger(requiredLevel) || requiredLevel < 0) {
+      throw new TypeError(`Missing canonical required level for vendor gem: ${token.rawText}`);
+    }
+    return [token.id, requiredLevel] as const;
+  }));
+}
+
+function enrichVendorCatalog(catalog: unknown, levels: Map<number, number>): unknown {
+  const value = catalog as Record<string, unknown> & { tokens?: unknown[] };
+  if (!Array.isArray(value.tokens)) throw new TypeError("Vendor catalog has no tokens");
+  return {
+    ...value,
+    tokens: value.tokens.map((candidate) => {
+      const token = candidate as LegacyGemToken;
+      const requiredLevel = levels.get(token.id);
+      if (requiredLevel === undefined) throw new TypeError(`Missing vendor metadata id: ${token.id}`);
+      return { ...token, requiredLevel };
+    }),
+  };
+}
 
 function sourceArgument(argv: string[]): string {
   const index = argv.indexOf("--source");
@@ -80,6 +146,7 @@ function buildPayload(
   locale: RegexDataLocale,
   modules: Map<string, LegacyModule>,
   trade: unknown,
+  vendorLevels: Map<number, number>,
 ): unknown {
   const russianContent = objectValue(
     moduleAt(modules, "src/generated/repoe/GeneratedRussianContent.ts"),
@@ -92,7 +159,8 @@ function buildPayload(
       const path = locale === "ru"
         ? "src/generated/gems/Generated.Gems.Russian.ts"
         : "src/generated/gems/Generated.Gems.English.ts";
-      return { gems: objectValue(moduleAt(modules, path), locale === "ru" ? "regexGemsRussian" : "regexGems") };
+      const catalog = objectValue(moduleAt(modules, path), locale === "ru" ? "regexGemsRussian" : "regexGems");
+      return { gems: enrichVendorCatalog(catalog, vendorLevels) };
     }
     case "maps": {
       const path = locale === "ru"
@@ -231,6 +299,14 @@ async function main(): Promise<void> {
   }
   const tradePath = "src/generated/mapmods/trade/TradeStatIdMatching.json";
   const trade = JSON.parse(await readFile(validated.files.get(tradePath)!, "utf8"));
+  const gemMetadataContents = await readFile(GEM_METADATA_FILE);
+  const gemMetadata = JSON.parse(gemMetadataContents.toString("utf8")) as Record<string, CanonicalGem>;
+  const englishVendor = objectValue(
+    moduleAt(modules, "src/generated/gems/Generated.Gems.English.ts"),
+    "regexGems",
+  );
+  const vendorLevels = vendorMetadataById(englishVendor, gemMetadata);
+  validated.inputs.push({ path: "common/data/json/gems.json", sha256: sha256(gemMetadataContents) });
 
   const parent = resolve(OUTPUT_DIRECTORY, "..");
   await mkdir(parent, { recursive: true });
@@ -247,7 +323,7 @@ async function main(): Promise<void> {
     for (const file of EXPECTED_SHARD_FILES) {
       const [tool, locale] = file.split(".") as [RegexToolId, RegexDataLocale];
       if (!REGEX_TOOL_IDS.includes(tool)) throw new Error(`Unexpected tool id: ${tool}`);
-      const payload = buildPayload(tool, locale, modules, trade);
+      const payload = buildPayload(tool, locale, modules, trade, vendorLevels);
       const serialized = stableJson(payload);
       await writeFile(join(temporary, file), serialized, "utf8");
       shards.push({
@@ -258,7 +334,7 @@ async function main(): Promise<void> {
       });
     }
     await writeFile(join(temporary, "manifest.json"), stableJson({
-      generatorVersion: 1,
+      generatorVersion: 2,
       inputs: validated.inputs,
       shards,
     }), "utf8");
