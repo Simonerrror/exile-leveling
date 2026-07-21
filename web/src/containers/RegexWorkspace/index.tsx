@@ -38,6 +38,11 @@ import {
 import { requiredGemsSelector } from "../../state/gem";
 import { heistContractLabels } from "../../features/regex/heist-contract-labels";
 import {
+  heistCompileInput,
+  normalizeHeistSettings,
+  type HeistProfileSettings,
+} from "../../features/regex/heist-settings";
+import {
   defaultExpeditionSettings,
   expeditionCatalog,
   formatChaosValue,
@@ -307,6 +312,9 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
       ...settings.selectedSuffix.map((description) => `suffix:${description}`),
     ];
   }
+  if (tool === "heist") {
+    return Object.keys(normalizeHeistSettings(profile.tools.heist).contractLevels);
+  }
   const settings = profile.tools[profileToolByRoute[tool]] as JsonObject;
   const fallbackKey: Partial<Record<ToolId, string>> = {
     maps: "badIds", expedition: "selectedBaseTypes",
@@ -321,6 +329,10 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
 
 function storedExpeditionSettings(store: RegexProfileStore): ExpeditionSettings {
   return normalizeExpeditionSettings(selectedProfile(store)?.tools.expedition);
+}
+
+function storedHeistSettings(store: RegexProfileStore): HeistProfileSettings {
+  return normalizeHeistSettings(selectedProfile(store)?.tools.heist);
 }
 
 export default function RegexWorkspace() {
@@ -345,6 +357,9 @@ export default function RegexWorkspace() {
   const [expeditionSettings, setExpeditionSettings] = useState<ExpeditionSettings>(() =>
     storedExpeditionSettings(profileStore),
   );
+  const [heistSettings, setHeistSettings] = useState<HeistProfileSettings>(() =>
+    storedHeistSettings(profileStore),
+  );
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
@@ -361,6 +376,7 @@ export default function RegexWorkspace() {
     ));
     setFlaskSettings(normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks));
     setExpeditionSettings(storedExpeditionSettings(profileStore));
+    setHeistSettings(storedHeistSettings(profileStore));
     setQuery("");
     setBuildGemReport(null);
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
@@ -399,8 +415,12 @@ export default function RegexWorkspace() {
     if (tool === "expedition") {
       return compileExpeditionRegex(selected, expeditionFillers, data as ExpeditionRegexData);
     }
+    if (tool === "heist") {
+      const input = heistCompileInput(heistSettings);
+      return compileHeistRegex(input.contracts, input.targetValue, input.requireBoth, data as HeistRegexData);
+    }
     return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
-  }, [data, expeditionFillers, flaskSettings, locale, selected, tool, vendorSettings]);
+  }, [data, expeditionFillers, flaskSettings, heistSettings, locale, selected, tool, vendorSettings]);
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);
@@ -466,6 +486,26 @@ export default function RegexWorkspace() {
       // Browsing stays functional when storage is disabled or full.
     }
   };
+  const updateHeist = (nextValue: HeistProfileSettings) => {
+    const next = normalizeHeistSettings(nextValue);
+    setHeistSettings(next);
+    setSelected(Object.keys(next.contractLevels));
+    const draft = JSON.parse(JSON.stringify(profileStore)) as RegexProfileStore;
+    const profile = selectedProfile(draft);
+    if (!profile) return;
+    profile.tools.heist = { ...next, selected: Object.keys(next.contractLevels) };
+    try {
+      setProfileStore(saveProfileStore(window.localStorage, draft));
+    } catch {
+      // Browsing stays functional when storage is disabled or full.
+    }
+  };
+  const toggleHeistContract = (name: string) => {
+    const contractLevels = { ...heistSettings.contractLevels };
+    if (contractLevels[name]) delete contractLevels[name];
+    else contractLevels[name] = { start: 1, end: 5 };
+    updateHeist({ ...heistSettings, contractLevels });
+  };
   const toggleVendorGroup = (group: VendorBooleanGroup, key: string) => {
     const values = vendorSettings[group] as Record<string, boolean>;
     updateVendor({
@@ -481,8 +521,10 @@ export default function RegexWorkspace() {
     setVendorSettings(nextVendor);
     setFlaskSettings(nextFlasks);
     setExpeditionSettings(nextExpedition);
+    setHeistSettings(normalizeHeistSettings({}));
     setBuildGemReport(null);
     if (tool === "expedition") updateExpedition(nextExpedition);
+    if (tool === "heist") updateHeist(normalizeHeistSettings({}));
     persist([], nextVendor);
   };
   const copy = async (value: string, pass: "A" | "B") => {
@@ -649,6 +691,45 @@ export default function RegexWorkspace() {
               </p>
             </div>
           )}
+          {tool === "heist" && (
+            <div className={styles.heistSettings}>
+              <label className={styles.numberField}>
+                <span>{t("regex.workspace.heist.targetValue")}</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="100"
+                  value={heistSettings.targetValue}
+                  onChange={(event) => updateHeist({ ...heistSettings, targetValue: Number(event.target.value) })}
+                />
+              </label>
+              <label className={styles.settingToggle}>
+                <input
+                  type="checkbox"
+                  checked={heistSettings.requireCoinValue}
+                  onChange={() => updateHeist({
+                    ...heistSettings,
+                    requireCoinValue: !heistSettings.requireCoinValue,
+                  })}
+                />
+                <span>{t("regex.workspace.heist.requireBoth")}</span>
+              </label>
+              <button
+                className={styles.heistPreset}
+                type="button"
+                onClick={() => updateHeist({
+                  ...heistSettings,
+                  contractLevels: {
+                    "Counter-Thaumaturgy": { start: 1, end: 5 },
+                    Deception: { start: 1, end: 5 },
+                    Perception: { start: 1, end: 5 },
+                  },
+                })}
+              >
+                {t("regex.workspace.heist.giannaPreset")}
+              </button>
+            </div>
+          )}
           {(tool === "scarabs" || tool === "runegraft") && data !== null && (
             <p className={styles.economyMeta}>
               {t("regex.workspace.expedition.economy", {
@@ -719,6 +800,54 @@ export default function RegexWorkspace() {
                   </div>
                 </section>
               ))}
+            </div>
+          ) : tool === "heist" ? (
+            <div className={styles.heistGrid}>
+              {visible.map((option) => {
+                const range = heistSettings.contractLevels[option.id];
+                return (
+                  <div className={styles.heistOption} key={option.id}>
+                    <label>
+                      <input type="checkbox" checked={Boolean(range)} onChange={() => toggleHeistContract(option.id)} />
+                      <span className={styles.optionText}>
+                        <strong>{option.label}</strong>
+                        {option.secondaryLabel && <small>{option.secondaryLabel}</small>}
+                      </span>
+                    </label>
+                    <div className={styles.heistRange} aria-label={t("regex.workspace.heist.levelRange")}>
+                      <select
+                        aria-label={t("regex.workspace.heist.levelFrom")}
+                        disabled={!range}
+                        value={range?.start ?? 1}
+                        onChange={(event) => updateHeist({
+                          ...heistSettings,
+                          contractLevels: {
+                            ...heistSettings.contractLevels,
+                            [option.id]: { start: Number(event.target.value), end: range?.end ?? 5 },
+                          },
+                        })}
+                      >
+                        {[1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
+                      </select>
+                      <span>–</span>
+                      <select
+                        aria-label={t("regex.workspace.heist.levelTo")}
+                        disabled={!range}
+                        value={range?.end ?? 5}
+                        onChange={(event) => updateHeist({
+                          ...heistSettings,
+                          contractLevels: {
+                            ...heistSettings.contractLevels,
+                            [option.id]: { start: range?.start ?? 1, end: Number(event.target.value) },
+                          },
+                        })}
+                      >
+                        {[1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : tool === "expedition" ? (
             <div className={styles.expeditionGrid}>

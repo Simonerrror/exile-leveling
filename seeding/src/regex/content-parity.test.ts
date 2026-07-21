@@ -13,6 +13,10 @@ import {
 } from "../../../web/src/features/regex/core/content.js";
 import { heistContractLabels } from "../../../web/src/features/regex/heist-contract-labels.js";
 import {
+  heistCompileInput,
+  normalizeHeistSettings,
+} from "../../../web/src/features/regex/heist-settings.js";
+import {
   expeditionCatalog,
   formatChaosValue,
   valuableExpeditionFillers,
@@ -112,6 +116,26 @@ test("Russian Heist contract labels are concise and bilingual", async () => {
     secondary: "Counter-Thaumaturgy",
   });
   assert.ok(labels.every(({ primary, secondary }) => primary && secondary));
+});
+
+test("Heist settings preserve per-contract levels, target value, and AND mode", () => {
+  const settings = normalizeHeistSettings({
+    contractLevels: {
+      Deception: { start: 2, end: 5 },
+      Agility: { start: -4, end: 99 },
+      Missing: { start: 0, end: 0 },
+    },
+    targetValue: 1200,
+    requireCoinValue: true,
+  });
+  assert.deepEqual(heistCompileInput(settings), {
+    contracts: [
+      { name: "Agility", start: 1, end: 5 },
+      { name: "Deception", start: 2, end: 5 },
+    ],
+    targetValue: 1200,
+    requireBoth: true,
+  });
 });
 
 test("Market shards preserve their own economy league and timestamp", async () => {
