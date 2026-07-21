@@ -5,6 +5,10 @@ import test from "node:test";
 import { basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { verifyGeneratedRegexData } from "./verify-generated-data.js";
+import {
+  loadRegexData,
+  resetRegexDataCacheForTests,
+} from "../../../web/src/features/regex/data/loaders.js";
 
 const generatedUrl = new URL(
   "../../../web/src/features/regex/data/generated/",
@@ -76,4 +80,34 @@ test("manifest verification is source-independent and rejects forbidden payloads
   ]) {
     assert.doesNotMatch(corpus, new RegExp(forbidden));
   }
+});
+
+test("loads and caches only the requested typed tool/locale shard", async () => {
+  resetRegexDataCacheForTests();
+  const first = loadRegexData("maps", "ru");
+  const second = loadRegexData("maps", "ru");
+  assert.equal(first, second);
+
+  const maps = await first;
+  assert.equal(maps.mods.tokens.length, 122);
+  assert.equal(maps.mods.tokens[0]?.rawText, "Босса карты сопровождает босс Синтеза");
+
+  const vendor = await loadRegexData("vendor", "en");
+  assert.equal(vendor.gems.tokens.length, 610);
+  assert.equal(vendor.gems.tokens[0]?.rawText, "Chain Hook");
+  await assert.rejects(
+    loadRegexData("unknown" as "maps", "en"),
+    /unknown regex data request/i,
+  );
+});
+
+test("uses an explicit literal import cell for every shard", () => {
+  const source = readFileSync(
+    new URL("../../../web/src/features/regex/data/loaders.ts", import.meta.url),
+    "utf8",
+  );
+  for (const file of expectedShards) {
+    assert.match(source, new RegExp(`generated/${file.replaceAll(".", "\\.")}`));
+  }
+  assert.doesNotMatch(source, /generated\/.*\$\{/);
 });
