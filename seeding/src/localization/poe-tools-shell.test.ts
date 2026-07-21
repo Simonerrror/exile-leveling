@@ -99,6 +99,11 @@ test("uses PoE Tools product metadata and disables production sourcemaps", () =>
   assert.match(vite, /sourcemap:\s*false/);
   assert.equal(en["app.title"], "PoE Tools");
   assert.equal(ru["app.title"], "PoE Tools");
+  for (const messages of [en, ru]) {
+    assert.match(messages["app.buildTitle"], /^PoE Tools/);
+    assert.match(messages["app.editRouteTitle"], /^PoE Tools/);
+    assert.match(messages["app.usefulTitle"], /^PoE Tools/);
+  }
 });
 
 test("orders the primary PoE Tools navigation and uses the canonical repository", () => {
