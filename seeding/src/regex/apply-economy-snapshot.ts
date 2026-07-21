@@ -50,6 +50,36 @@ interface Manifest {
   }>;
 }
 
+const RUNEGRAFT_ICON_NUMBER: Record<string, number> = {
+  "Runegraft of Bellows": 13,
+  "Runegraft of Blasphemy": 15,
+  "Runegraft of Gemcraft": 14,
+  "Runegraft of Loyalty": 23,
+  "Runegraft of Quaffing": 21,
+  "Runegraft of Refraction": 7,
+  "Runegraft of Restitching": 22,
+  "Runegraft of Stability": 2,
+  "Runegraft of Time": 19,
+  "Runegraft of Treachery": 20,
+  "Runegraft of the Angler": 10,
+  "Runegraft of the Bound": 3,
+  "Runegraft of the Combatant": 4,
+  "Runegraft of the Fortress": 1,
+  "Runegraft of the Jeweller": 8,
+  "Runegraft of the Novamark": 25,
+  "Runegraft of the River": 5,
+  "Runegraft of the Sinistral": 6,
+  "Runegraft of the Soulwick": 12,
+  "Runegraft of the Warp": 11,
+  "Runegraft of the Witchmark": 24,
+};
+
+function runegraftIcon(name: string): string | undefined {
+  const number = RUNEGRAFT_ICON_NUMBER[name];
+  return number === undefined ? undefined :
+    `https://web.poecdn.com/image/Art/2DItems/Currency/Settlers/VillageRune${number}.png?scale=1`;
+}
+
 async function main(): Promise<void> {
   const snapshotContents = await readFile(SNAPSHOT);
   const snapshot = JSON.parse(snapshotContents.toString("utf8")) as EconomySnapshot;
@@ -107,7 +137,10 @@ async function main(): Promise<void> {
           ? record.name
           : typeof record.runegraft === "string" ? record.runegraft : fallbackName;
         const priced = market[name];
-        return priced ? { ...record, chaosValue: priced.chaosValue, icon: priced.icon } : record;
+        const fallbackIcon = tool === "runegrafts" ? runegraftIcon(name) : undefined;
+        return priced
+          ? { ...record, chaosValue: priced.chaosValue, icon: priced.icon || fallbackIcon }
+          : fallbackIcon ? { ...record, icon: fallbackIcon } : record;
       };
       payload.entries = Array.isArray(payload.entries)
         ? payload.entries.map((entry) => applyPrice(entry, ""))

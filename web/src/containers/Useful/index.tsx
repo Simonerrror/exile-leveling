@@ -202,8 +202,13 @@ function InternalToolCard({ tool }: { tool: InternalTool }) {
       data-accent={tool.accent}
       to={tool.href}
     >
-      <strong>{t(tool.titleKey)}</strong>
-      <span>{t(tool.descriptionKey)}</span>
+      <span className={styles.cardIcon} aria-hidden={true}>
+        <img src={tool.icon} alt="" />
+      </span>
+      <span className={styles.cardContent}>
+        <strong>{t(tool.titleKey)}</strong>
+        <span>{t(tool.descriptionKey)}</span>
+      </span>
     </Link>
   );
 }
@@ -212,7 +217,6 @@ function ExternalResourceCard({ id }: { id: ResourceId }) {
   const { t } = useI18n();
   const resource = resourcesById.get(id);
   if (!resource) return null;
-  const note = "note" in resource ? resource.note : null;
   const description = t(`useful.resource.${resource.id}.description` as MessageKey);
 
   return (
@@ -223,18 +227,21 @@ function ExternalResourceCard({ id }: { id: ResourceId }) {
       rel="noopener noreferrer"
       aria-label={`${resource.name}. ${description}. ${t("useful.externalLink")}`}
     >
-      <span className={styles.resourceTitle}>
-        <strong>{resource.name}</strong>
-        <FaExternalLinkAlt aria-hidden={true} />
+      <span className={styles.cardIcon} aria-hidden={true}>
+        <img
+          src={resource.icon}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
       </span>
-      <span className={styles.resourceDescription}>{description}</span>
-      {note && (
-        <span className={styles.resourceFooter}>
-          <span className={styles.badge}>
-            {t(`useful.note.${note}` as MessageKey)}
-          </span>
+      <span className={styles.cardContent}>
+        <span className={styles.resourceTitle}>
+          <strong>{resource.name}</strong>
+          <FaExternalLinkAlt aria-hidden={true} />
         </span>
-      )}
+        <span className={styles.resourceDescription}>{description}</span>
+      </span>
     </a>
   );
 }

@@ -9,6 +9,7 @@ import {
   resourceCategories,
   resources,
 } from "../../../web/src/containers/Useful/resources.js";
+import { internalTools } from "../../../web/src/containers/Useful/tools.js";
 import {
   extractRemotePobCode,
   fetchPobCode,
@@ -19,7 +20,7 @@ const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("defines all useful resources with unique IDs", () => {
-  assert.equal(resources.length, 15);
+  assert.equal(resources.length, 12);
   assert.equal(new Set(resources.map(({ id }) => id)).size, resources.length);
 });
 
@@ -39,9 +40,6 @@ test("defines the canonical resource names in catalog order", () => {
       "Awakened PoE Trade",
       "Wealthy Exile",
       "poe.ninja",
-      "PoE-leveling",
-      "Merchant Tabs",
-      "Current-league map preset",
     ],
   );
 });
@@ -52,14 +50,25 @@ test("uses HTTPS resource URLs with matching domains", () => {
 
     assert.equal(url.protocol, "https:", resource.id);
     assert.equal(resource.domain, url.hostname, resource.id);
+    assert.match(resource.icon, /^https:\/\//, resource.id);
   }
 });
 
-test("uses the current-league map preset URL", () => {
+test("uses item art and service logos without an obsolete other category", () => {
+  assert.equal(new Set(resources.map(({ icon }) => icon)).size, resources.length);
+  assert.deepEqual(resourceCategories.map(({ id }) => id), [
+    "calculators", "planning", "trade", "analytics",
+  ]);
+  assert.ok(resources.slice(0, 4).every(({ icon }) => icon.startsWith("https://web.poecdn.com/")));
+});
+
+test("gives every internal tool a distinct bundled icon", () => {
+  assert.ok(internalTools.every(({ icon }) => icon.length > 0));
   assert.equal(
-    resources.find(({ id }) => id === "map-preset")?.url,
-    "https://ru.pathofexile.com/trade/search/Mirage/mkJBkBQeT6",
+    new Set(internalTools.map(({ icon }) => icon)).size,
+    internalTools.length,
   );
+  assert.ok(internalTools.every(({ icon }) => !icon.startsWith("http")));
 });
 
 test("compact useful layout keeps the important content dense", () => {
@@ -75,7 +84,6 @@ test("compact useful layout keeps the important content dense", () => {
   const styles = readSource(
     "../../../web/src/containers/Useful/styles.module.css",
   );
-  const merchantTabs = resources.find(({ id }) => id === "merchant-tabs");
   const enMessages = en as Record<string, string>;
   const ruMessages = ru as Record<string, string>;
 
@@ -99,6 +107,14 @@ test("compact useful layout keeps the important content dense", () => {
     styles,
     /\.resourceDescription\s*\{[^}]*color:\s*var\(--useful-description\)/s,
   );
+  assert.match(
+    styles,
+    /\.catalogLayout\s*\{[^}]*min-width:\s*0/s,
+  );
+  assert.match(
+    styles,
+    /\.categoryRail\s*\{[^}]*min-width:\s*0[^}]*width:\s*100%/s,
+  );
   assert.match(modal, /hint\?: string/);
   assert.match(modal, /aria-describedby/);
   assert.match(navbarStyles, /\.navItem\s*\{[^}]*text-align: center/s);
@@ -109,7 +125,7 @@ test("compact useful layout keeps the important content dense", () => {
   assert.equal(ruMessages["build.pobCode"], "Код или ссылка Path of Building");
   assert.match(enMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
   assert.match(ruMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
-  assert.ok(merchantTabs && !("note" in merchantTabs));
+  assert.doesNotMatch(useful, /resourceFooter|badge/);
 });
 
 test("only rewrites exact supported PoB build URLs", () => {

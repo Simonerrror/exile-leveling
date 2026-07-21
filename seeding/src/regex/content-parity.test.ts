@@ -95,6 +95,10 @@ for (const locale of ["en", "ru"] as const) {
     assert.ok(runegraftEntry && typeof runegraftEntry === "object" && "runegraft" in runegraftEntry);
     assert.equal(typeof runegraftEntry.chaosValue, "number");
     assert.match(String(runegraftEntry.icon), /^https:\/\/web\.poecdn\.com\//);
+    assert.ok(Array.isArray(runegrafts.entries));
+    assert.ok(runegrafts.entries.every((entry) =>
+      typeof entry === "object" && entry !== null &&
+      "icon" in entry && /^https:\/\/web\.poecdn\.com\//.test(String(entry.icon))));
     assert.ok(runegrafts.priceLeague);
     assert.ok(runegrafts.priceUpdatedAt);
     assertResult(compileRunegraftRegex([String(runegraftEntry.runegraft)], runegrafts));

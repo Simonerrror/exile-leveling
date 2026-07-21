@@ -1,5 +1,26 @@
 import type { MessageKey } from "../../i18n/core";
 
+const craftingIcon = new URL(
+  "../../components/FragmentStep/Fragment/images/crafting.png",
+  import.meta.url,
+).href;
+const waypointIcon = new URL(
+  "../../components/FragmentStep/Fragment/images/waypoint.png",
+  import.meta.url,
+).href;
+const wisdomIcon = new URL(
+  "../../components/GemCost/images/wisdom.png",
+  import.meta.url,
+).href;
+const jewelIcon = new URL(
+  "../RegexCatalog/images/regex-tool-jewels.png",
+  import.meta.url,
+).href;
+const gemIcon = new URL(
+  "../RegexCatalog/images/regex-tool-vendor.png",
+  import.meta.url,
+).href;
+
 export type InternalToolId = "leveling" | "regex" | "build" | "tree" | "gems";
 export type InternalToolCategoryId = "tools" | "reference";
 
@@ -8,6 +29,7 @@ export type InternalTool = Readonly<{
   href: string;
   category: InternalToolCategoryId;
   accent: "planning" | "regex" | "reference";
+  icon: string;
   titleKey: MessageKey;
   descriptionKey: MessageKey;
   keywordsKey: MessageKey;
@@ -19,6 +41,7 @@ export const internalTools = [
     href: "/leveling",
     category: "tools",
     accent: "planning",
+    icon: waypointIcon,
     titleKey: "tools.leveling.title",
     descriptionKey: "tools.leveling.description",
     keywordsKey: "tools.leveling.keywords",
@@ -28,6 +51,7 @@ export const internalTools = [
     href: "/regex",
     category: "tools",
     accent: "regex",
+    icon: wisdomIcon,
     titleKey: "tools.regex.title",
     descriptionKey: "tools.regex.description",
     keywordsKey: "tools.regex.keywords",
@@ -37,6 +61,7 @@ export const internalTools = [
     href: "/build",
     category: "reference",
     accent: "reference",
+    icon: craftingIcon,
     titleKey: "tools.build.title",
     descriptionKey: "tools.build.description",
     keywordsKey: "tools.build.keywords",
@@ -46,6 +71,7 @@ export const internalTools = [
     href: "/leveling?view=tree",
     category: "reference",
     accent: "reference",
+    icon: jewelIcon,
     titleKey: "tools.tree.title",
     descriptionKey: "tools.tree.description",
     keywordsKey: "tools.tree.keywords",
@@ -55,6 +81,7 @@ export const internalTools = [
     href: "/leveling?view=gems",
     category: "reference",
     accent: "reference",
+    icon: gemIcon,
     titleKey: "tools.gems.title",
     descriptionKey: "tools.gems.description",
     keywordsKey: "tools.gems.keywords",
