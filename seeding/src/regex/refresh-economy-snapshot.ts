@@ -72,8 +72,9 @@ async function marketEntries(league: string, type: "Scarab" | "Runegraft"): Prom
 async function main(): Promise<void> {
   const leagues = await getJson(`${API}/leagues`) as Array<{ id?: unknown }>;
   const permanentLeagues = new Set(["Standard", "Hardcore", "Ruthless", "Hardcore Ruthless"]);
-  const league = leagues.find(({ id }) =>
-    typeof id === "string" && !permanentLeagues.has(id) && !id.startsWith("Hardcore "))?.id;
+  const tradeLeagues = leagues.flatMap(({ id }) =>
+    typeof id === "string" && !id.startsWith("Hardcore ") ? [id] : []);
+  const league = tradeLeagues.find((id) => !permanentLeagues.has(id)) ?? tradeLeagues[0];
   if (typeof league !== "string" || league === "") throw new Error("poe.ninja returned no economy league");
 
   const prices = new Map<string, number>();
