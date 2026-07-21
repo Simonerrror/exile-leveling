@@ -48,6 +48,8 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
 
 test("regex UI messages have exact EN/RU parity and no migration placeholder", () => {
   assert.deepEqual(Object.keys(en).sort(), Object.keys(ru).sort());
+  assert.equal(ru["regex.tool.runegraft"], "Рунограммы");
+  assert.doesNotMatch(JSON.stringify(ru), /рунн(?:ые|ая|ых)? привив/i);
   for (const messages of [en, ru]) {
     for (const key of [
       "regex.catalog.description", "regex.workspace.search", "regex.workspace.copyA",
