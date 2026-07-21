@@ -19,7 +19,9 @@ export interface HeistContractLabel {
 }
 
 export function heistContractLabels(data: HeistRegexData): HeistContractLabel[] {
-  const russian = Object.keys(data.translations.contractTypes).length > 0;
+  const contractTranslations = data.translations.contractTypes;
+  const russian = typeof contractTranslations === "object" && contractTranslations !== null &&
+    !Array.isArray(contractTranslations) && Object.keys(contractTranslations).length > 0;
   return Object.keys(data.contractTypes).map((id) => ({
     id,
     primary: russian ? conciseRussianNames[id] ?? id : id,
