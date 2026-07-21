@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
+import { regexEditorToolIds } from "../../features/regex/editors";
 import beastIcon from "./images/regex-tool-beast.png";
 import expeditionIcon from "./images/regex-tool-expedition.png";
 import flasksIcon from "./images/regex-tool-flasks.png";
@@ -14,19 +15,7 @@ import tattooIcon from "./images/regex-tool-tattoo.png";
 import vendorIcon from "./images/regex-tool-vendor.png";
 import styles from "./styles.module.css";
 
-export const regexToolIds = [
-  "vendor",
-  "maps",
-  "items",
-  "expedition",
-  "heist",
-  "flasks",
-  "beast",
-  "tattoo",
-  "runegraft",
-  "scarabs",
-  "jewels",
-] as const;
+export const regexToolIds = regexEditorToolIds;
 
 const regexToolIcons = {
   vendor: vendorIcon,

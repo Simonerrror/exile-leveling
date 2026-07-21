@@ -30,6 +30,8 @@ test("routes the catalog and eleven current regex workspaces lazily", () => {
 
 test("workspace loads route-level data and exposes accessible A/B output", () => {
   const workspace = read("../../../web/src/containers/RegexWorkspace/index.tsx");
+  assert.match(workspace, /regexEditorToolIds/);
+  assert.match(workspace, /EntityImage/);
   assert.match(workspace, /loadRegexData/);
   assert.match(workspace, /loaded\.tool === tool/);
   assert.match(workspace, /loaded\.locale === locale/);

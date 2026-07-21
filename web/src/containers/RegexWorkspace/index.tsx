@@ -52,13 +52,14 @@ import {
 } from "../../features/regex/profile/schema";
 import { loadProfileStore, saveProfileStore } from "../../features/regex/profile/storage";
 import type { RegexCompileResult } from "../../features/regex/core/types";
+import {
+  EntityImage,
+  regexEditorToolIds,
+  type RegexEditorToolId,
+} from "../../features/regex/editors";
 import styles from "./styles.module.css";
 
-const toolIds = [
-  "vendor", "maps", "items", "expedition", "heist",
-  "flasks", "beast", "tattoo", "runegraft", "scarabs", "jewels",
-] as const;
-type ToolId = (typeof toolIds)[number];
+type ToolId = RegexEditorToolId;
 
 const dataToolByRoute: Record<ToolId, RegexDataToolId> = {
   vendor: "vendor", maps: "maps", items: "items",
@@ -319,7 +320,7 @@ function storedExpeditionSettings(store: RegexProfileStore): ExpeditionSettings 
 export default function RegexWorkspace() {
   const { toolId } = useParams();
   const { locale, t } = useI18n();
-  const tool = toolIds.includes(toolId as ToolId) ? toolId as ToolId : null;
+  const tool = regexEditorToolIds.includes(toolId as ToolId) ? toolId as ToolId : null;
   const [profileStore, setProfileStore] = useState<RegexProfileStore>(() =>
     loadProfileStore(window.localStorage),
   );
@@ -699,9 +700,7 @@ export default function RegexWorkspace() {
               {visible.map((option) => (
                 <label className={styles.marketOption} key={option.id}>
                   <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
-                  {option.icon && (
-                    <img alt="" decoding="async" loading="lazy" src={option.icon} />
-                  )}
+                  <EntityImage alt={option.label} src={option.icon} />
                   <span className={styles.optionText}>
                     <span className={styles.marketTitle}>
                       <strong>{option.label}</strong>

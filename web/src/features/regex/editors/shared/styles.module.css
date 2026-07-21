@@ -1,0 +1,15 @@
+.entityImage,
+.imageFallback {
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.imageFallback {
+  align-items: center;
+  background: #15191d;
+  border: 1px solid #46515b;
+  color: #dfab53;
+  display: inline-flex;
+  justify-content: center;
+}
