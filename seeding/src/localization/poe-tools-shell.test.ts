@@ -123,3 +123,20 @@ test("homepage exposes search, continuation, recent tools, and safe links", () =
   assert.match(useful, /<Link/);
   assert.match(useful, /target="_blank"/);
 });
+
+test("enforces the initial JavaScript budget without sourcemaps", () => {
+  const packageJson = JSON.parse(readSource("../../../package.json")) as {
+    scripts?: Record<string, string>;
+  };
+  assert.equal(packageJson.scripts?.["build:web"], "npm run build -w web");
+  assert.equal(
+    packageJson.scripts?.["check:bundle"],
+    "node scripts/check-bundle-budget.mjs",
+  );
+  assert.match(packageJson.scripts?.verify ?? "", /check:bundle/);
+
+  const budget = readSource("../../../scripts/check-bundle-budget.mjs");
+  assert.match(budget, /250\s*\*\s*1024/);
+  assert.match(budget, /\.map/);
+  assert.match(budget, /web\/dist\/\.vite\/manifest\.json/);
+});

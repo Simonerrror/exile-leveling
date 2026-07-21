@@ -6,8 +6,11 @@
     "web"
   ],
   "scripts": {
+    "build:web": "npm run build -w web",
+    "check:bundle": "node scripts/check-bundle-budget.mjs",
     "test:i18n": "npm run test:i18n -w seeding",
-    "validate:i18n": "npm run validate:i18n -w seeding"
+    "validate:i18n": "npm run validate:i18n -w seeding",
+    "verify": "npm run test:i18n && npm run validate:i18n && npm run build:web && npm run check:bundle"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",

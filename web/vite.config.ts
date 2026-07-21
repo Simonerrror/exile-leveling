@@ -6,6 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   base: "/exile-leveling/",
   build: {
+    manifest: true,
     sourcemap: false,
   },
   server: {
