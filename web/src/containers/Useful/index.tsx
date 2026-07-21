@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
+import { FaArrowRight, FaExternalLinkAlt, FaKey } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { labyrinthLinks } from "../../features/labyrinth-links";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
 import { CheatSheetGallery } from "./CheatSheetGallery";
@@ -21,6 +22,11 @@ import styles from "./styles.module.css";
 const resourcesById = new Map(
   resources.map((resource) => [resource.id, resource] as const),
 );
+const trialIcon = new URL(
+  "../../components/FragmentStep/Fragment/images/trial.png",
+  import.meta.url,
+).href;
+
 export default function UsefulContainer() {
   const { t } = useI18n();
   const [query, setQuery] = useState("");
@@ -80,24 +86,25 @@ export default function UsefulContainer() {
               {t(category.titleKey)}
             </a>
           ))}
+          <a href="#useful-labyrinth">{t("useful.labyrinth.title")}</a>
           <a href="#catalog-external">{t("tools.external.title")}</a>
           <a href="#useful-heist">{t("useful.heist.title")}</a>
           <a href="#useful-sheets">{t("useful.sheets.title")}</a>
         </nav>
 
         <div className={styles.catalogContent}>
-          {(["tools", "reference"] as const).map((category) => {
+          {internalToolCategories.map((category) => {
             const tools = visibleInternalTools.filter(
-              (tool) => tool.category === category,
+              (tool) => tool.category === category.id,
             );
             if (tools.length === 0) return null;
             return (
               <section
-                id={`catalog-${category}`}
+                id={`catalog-${category.id}`}
                 className={styles.catalogSection}
-                key={category}
+                key={category.id}
               >
-                <h2>{t(`tools.category.${category}` as MessageKey)}</h2>
+                <h2>{t(category.titleKey)}</h2>
                 <div className={styles.internalGrid}>
                   {tools.map((tool) => (
                     <InternalToolCard key={tool.id} tool={tool} />
@@ -111,6 +118,45 @@ export default function UsefulContainer() {
             visibleResources.length === 0 && (
               <p className={styles.emptyState}>{t("tools.noResults")}</p>
             )}
+
+          {normalizedQuery === "" && (
+            <section
+              id="useful-labyrinth"
+              className={styles.catalogSection}
+              aria-labelledby="useful-labyrinth-title"
+            >
+              <div className={styles.sectionHeading}>
+                <h2 id="useful-labyrinth-title">
+                  {t("useful.labyrinth.title")}
+                </h2>
+                <p>{t("useful.labyrinth.description")}</p>
+              </div>
+              <div className={styles.labyrinthGrid}>
+                {labyrinthLinks.map((link) => (
+                  <a
+                    className={styles.labyrinthLink}
+                    data-labyrinth={link.id}
+                    href={link.url}
+                    key={link.id}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${t(`useful.labyrinth.${link.id}` as MessageKey)}. ${t("useful.externalLink")}`}
+                  >
+                    <span className={styles.labyrinthIcon} aria-hidden={true}>
+                      {link.id === "eternal" ? (
+                        <img src={trialIcon} alt="" />
+                      ) : (
+                        <FaKey />
+                      )}
+                    </span>
+                    <strong>
+                      {t(`useful.labyrinth.${link.id}` as MessageKey)}
+                    </strong>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
 
           {visibleResources.length > 0 && (
             <section id="catalog-external" className={styles.catalogSection}>

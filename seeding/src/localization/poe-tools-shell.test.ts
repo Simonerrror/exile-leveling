@@ -23,8 +23,12 @@ test("defines unique internal tools with safe hash routes", () => {
   );
   assert.ok(internalTools.every(({ href }) => href.startsWith("/")));
   assert.deepEqual(
+    internalTools.map(({ id }) => id),
+    ["leveling", "regex"],
+  );
+  assert.deepEqual(
     internalToolCategories.map(({ id }) => id),
-    ["tools", "reference"],
+    ["tools"],
   );
 });
 

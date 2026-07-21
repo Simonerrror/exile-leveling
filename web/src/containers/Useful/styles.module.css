@@ -142,10 +142,6 @@
   --tool-accent: #d6a85f;
 }
 
-.internalCard[data-accent="reference"] {
-  --tool-accent: #7ebc87;
-}
-
 .internalCard:hover,
 .internalCard:focus-visible {
   border-color: var(--tool-accent, var(--useful-gold));
@@ -243,6 +239,68 @@
 
 .category[data-category="analytics"] {
   --category-accent: #b68ad8;
+}
+
+.category[data-category="knowledge"] {
+  --category-accent: #c8834b;
+}
+
+.labyrinthGrid {
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.labyrinthLink {
+  align-items: center;
+  background: var(--secondary);
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: 0.35rem;
+  color: var(--useful-title);
+  display: flex;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.48rem 0.58rem;
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.labyrinthLink:hover,
+.labyrinthLink:focus-visible {
+  border-color: var(--labyrinth-accent);
+  transform: translateY(-1px);
+}
+
+.labyrinthLink[data-labyrinth="normal"] {
+  --labyrinth-accent: #b87333;
+}
+
+.labyrinthLink[data-labyrinth="cruel"] {
+  --labyrinth-accent: #bfc3c8;
+}
+
+.labyrinthLink[data-labyrinth="merciless"] {
+  --labyrinth-accent: #d6a85f;
+}
+
+.labyrinthLink[data-labyrinth="eternal"] {
+  --labyrinth-accent: #7ebc87;
+}
+
+.labyrinthIcon {
+  align-items: center;
+  color: var(--labyrinth-accent);
+  display: inline-flex;
+  flex: 0 0 1.55rem;
+  font-size: 1.2rem;
+  justify-content: center;
+}
+
+.labyrinthIcon img {
+  display: block;
+  height: 1.55rem;
+  object-fit: contain;
+  width: 1.55rem;
 }
 
 .resourceGrid {
@@ -503,16 +561,22 @@
   .internalGrid {
     grid-template-columns: 1fr;
   }
+
+  .labyrinthGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .resourceCard,
   .internalCard,
+  .labyrinthLink,
   .sheetPreview {
     transition: none;
   }
 
   .resourceCard:hover,
+  .labyrinthLink:hover,
   .sheetTrigger:hover .sheetPreview {
     transform: none;
   }

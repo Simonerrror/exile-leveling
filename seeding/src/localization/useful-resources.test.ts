@@ -20,7 +20,7 @@ const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("defines all useful resources with unique IDs", () => {
-  assert.equal(resources.length, 12);
+  assert.equal(resources.length, 13);
   assert.equal(new Set(resources.map(({ id }) => id)).size, resources.length);
 });
 
@@ -40,8 +40,18 @@ test("defines the canonical resource names in catalog order", () => {
       "Awakened PoE Trade",
       "Wealthy Exile",
       "poe.ninja",
+      "Path of Exile Wiki",
     ],
   );
+});
+
+test("includes the official Path of Exile community wiki", () => {
+  const wiki = resources.find(({ id }) => id === "poe-wiki");
+  assert.ok(wiki);
+  assert.equal(wiki.category, "knowledge");
+  assert.equal(wiki.url, "https://www.poewiki.net/wiki/Path_of_Exile_Wiki");
+  assert.equal(wiki.domain, "www.poewiki.net");
+  assert.match(wiki.icon, /^https:\/\/www\.poewiki\.net\//);
 });
 
 test("uses HTTPS resource URLs with matching domains", () => {
@@ -57,7 +67,7 @@ test("uses HTTPS resource URLs with matching domains", () => {
 test("uses item art and service logos without an obsolete other category", () => {
   assert.equal(new Set(resources.map(({ icon }) => icon)).size, resources.length);
   assert.deepEqual(resourceCategories.map(({ id }) => id), [
-    "calculators", "planning", "trade", "analytics",
+    "calculators", "planning", "trade", "analytics", "knowledge",
   ]);
   assert.ok(resources.slice(0, 4).every(({ icon }) => icon.startsWith("https://web.poecdn.com/")));
 });
@@ -126,6 +136,10 @@ test("compact useful layout keeps the important content dense", () => {
   assert.match(enMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
   assert.match(ruMessages["build.pobHint"], /pobb\.in.*poe\.ninja\/pob/);
   assert.doesNotMatch(useful, /resourceFooter|badge/);
+  assert.match(useful, /labyrinthLinks/);
+  assert.match(useful, /useful-labyrinth/);
+  assert.match(useful, /FaKey/);
+  assert.doesNotMatch(useful, /\(\["tools", "reference"\]/);
 });
 
 test("only rewrites exact supported PoB build URLs", () => {

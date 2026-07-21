@@ -1,5 +1,5 @@
 export type ResourceCategoryId =
-  "calculators" | "planning" | "trade" | "analytics";
+  "calculators" | "planning" | "trade" | "analytics" | "knowledge";
 
 export type Resource = Readonly<{
   id: string;
@@ -107,6 +107,14 @@ export const resources = [
     domain: "poe.ninja",
     icon: "https://poe.ninja/favicons/favicon-96x96.png",
   },
+  {
+    id: "poe-wiki",
+    category: "knowledge",
+    name: "Path of Exile Wiki",
+    url: "https://www.poewiki.net/wiki/Path_of_Exile_Wiki",
+    domain: "www.poewiki.net",
+    icon: "https://www.poewiki.net/favicon.ico",
+  },
 ] as const satisfies readonly Resource[];
 
 export type ResourceId = (typeof resources)[number]["id"];
@@ -133,6 +141,10 @@ export const resourceCategories = [
   {
     id: "analytics",
     resourceIds: ["wealthy-exile", "poe-ninja"],
+  },
+  {
+    id: "knowledge",
+    resourceIds: ["poe-wiki"],
   },
 ] as const satisfies readonly Readonly<{
   id: ResourceCategoryId;
