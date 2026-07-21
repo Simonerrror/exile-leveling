@@ -1,6 +1,7 @@
 import { CopyToClipboard } from "../../CopyToClipboard";
 import { InlineFakeBlock } from "../../InlineFakeBlock";
 import { ItemReward } from "../../ItemReward";
+import { labyrinthLinksById } from "../../../features/labyrinth-links";
 import type { MessageKey, MessageParameters } from "../../../i18n/core";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -221,27 +222,11 @@ function CraftingComponent(
   );
 }
 
-const ASCEND_LOOKUP: Record<
-  Fragments.AscendFragment["version"],
-  { url: string; areaId: string }
-> = {
-  normal: { url: "https://www.poelab.com/gtgax", areaId: "1_Labyrinth_boss_3" },
-  cruel: { url: "https://www.poelab.com/r8aws", areaId: "2_Labyrinth_boss_3" },
-  merciless: {
-    url: "https://www.poelab.com/riikv",
-    areaId: "3_Labyrinth_boss_3",
-  },
-  eternal: {
-    url: "https://www.poelab.com/wfbra",
-    areaId: "EndGame_Labyrinth_boss_3",
-  },
-};
-
 function AscendComponent(
   version: Fragments.AscendFragment["version"],
   context: FragmentRenderContext,
 ): [React.ReactNode, React.ReactNode] {
-  const { url, areaId } = ASCEND_LOOKUP[version];
+  const { url, areaId } = labyrinthLinksById[version];
   const area = Data.Areas[areaId];
   return [
     <div className={classNames(styles.noWrap)}>

@@ -8,6 +8,10 @@ import {
   internalTools,
   matchesToolQuery,
 } from "../../../web/src/containers/Useful/tools.js";
+import {
+  labyrinthLinks,
+  labyrinthLinksById,
+} from "../../../web/src/features/labyrinth-links.js";
 
 const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
@@ -30,6 +34,28 @@ test("matches localized tool search text case-insensitively", () => {
   assert.equal(matchesToolQuery(regex, "REGEX", en), true);
   assert.equal(matchesToolQuery(regex, "регуляр", ru), true);
   assert.equal(matchesToolQuery(regex, "unrelated", ru), false);
+});
+
+test("shares four canonical PoELab daily-layout links", () => {
+  assert.deepEqual(
+    labyrinthLinks.map(({ id }) => id),
+    ["normal", "cruel", "merciless", "eternal"],
+  );
+  assert.equal(new Set(labyrinthLinks.map(({ url }) => url)).size, 4);
+
+  for (const link of labyrinthLinks) {
+    const url = new URL(link.url);
+    assert.equal(url.protocol, "https:");
+    assert.equal(url.hostname, "www.poelab.com");
+    assert.equal(labyrinthLinksById[link.id], link);
+  }
+
+  const fragment = readSource(
+    "../../../web/src/components/FragmentStep/Fragment/index.tsx",
+  );
+  assert.match(fragment, /labyrinthLinksById/);
+  assert.doesNotMatch(fragment, /ASCEND_LOOKUP/);
+  assert.doesNotMatch(fragment, /https:\/\/www\.poelab\.com/);
 });
 
 test("routes Useful to root and Leveling to a stable route", () => {
