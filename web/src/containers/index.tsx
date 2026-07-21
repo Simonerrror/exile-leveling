@@ -7,7 +7,7 @@ import { withBlank } from "../utility/withBlank";
 import { withScrollRestoration } from "../utility/withScrollRestoration";
 import { Suspense, lazy, useEffect, type JSX } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,6 +18,7 @@ const RoutesContainer = pipe(
 const BuildContainer = withBlank(lazy(() => import("./Build")));
 const EditRouteContainer = withBlank(lazy(() => import("./EditRoute")));
 const UsefulContainer = withBlank(lazy(() => import("./Useful")));
+const RegexCatalog = withBlank(lazy(() => import("./RegexCatalog")));
 
 export function App() {
   const { locale, t } = useI18n();
@@ -34,6 +35,15 @@ export function App() {
           <Routes>
             <Route
               path="/"
+              element={
+                <Page
+                  title={t("app.usefulTitle")}
+                  component={<UsefulContainer />}
+                />
+              }
+            />
+            <Route
+              path="/leveling"
               element={
                 <Page title={t("app.title")} component={<RoutesContainer />} />
               }
@@ -58,10 +68,14 @@ export function App() {
             />
             <Route
               path="/useful"
+              element={<Navigate to="/" replace />}
+            />
+            <Route
+              path="/regex"
               element={
                 <Page
-                  title={t("app.usefulTitle")}
-                  component={<UsefulContainer />}
+                  title={t("app.regexTitle")}
+                  component={<RegexCatalog />}
                 />
               }
             />
