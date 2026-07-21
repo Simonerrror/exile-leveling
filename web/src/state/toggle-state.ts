@@ -5,7 +5,7 @@ import {
   NO_MIGRATORS,
   setPersistent,
 } from "../utility";
-import { atom, type WritableAtom } from "jotai";
+import { atom, type Atom, type WritableAtom } from "jotai";
 import { atomFamily, type AtomFamily } from "jotai-family";
 
 type ClearableAtomFamily = AtomFamily<
@@ -13,6 +13,7 @@ type ClearableAtomFamily = AtomFamily<
   WritableAtom<boolean, [newValue: boolean], void>
 > & {
   clear: WritableAtom<null, [], void>;
+  keys: Atom<readonly string[]>;
 };
 
 export const buildToggleState = (
@@ -54,5 +55,10 @@ export const buildToggleState = (
     refresh(set);
   });
 
-  return Object.assign(toggleFamily, { clear: clearAtom });
+  const keysAtom = atom((get) => {
+    get(refreshAtom);
+    return [...toggleState];
+  });
+
+  return Object.assign(toggleFamily, { clear: clearAtom, keys: keysAtom });
 };

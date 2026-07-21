@@ -12,6 +12,7 @@ import {
   normalizeRecentToolIds,
   pushRecentToolId,
 } from "../../../web/src/state/recent-tools.js";
+import { summarizeLevelingProgress } from "../../../web/src/containers/Useful/progress.js";
 
 const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
@@ -45,6 +46,42 @@ test("normalizes recent tools to known unique bounded ids", () => {
     "leveling",
     "regex",
   ]);
+});
+
+test("continues at the first incomplete route fragment", () => {
+  const route = [
+    {
+      steps: [
+        { type: "fragment_step" },
+        { type: "fragment_step" },
+        { type: "gem_step" },
+      ],
+    },
+    { steps: [{ type: "fragment_step" }] },
+  ];
+
+  assert.deepEqual(summarizeLevelingProgress(route, ["0,0", "0,1"]), {
+    sectionIndex: 1,
+    stepIndex: 0,
+    completed: 2,
+    total: 3,
+    done: false,
+  });
+});
+
+test("reports a fully completed leveling route", () => {
+  const route = [
+    { steps: [{ type: "fragment_step" }] },
+    { steps: [{ type: "fragment_step" }] },
+  ];
+
+  assert.deepEqual(summarizeLevelingProgress(route, ["0,0", "1,0"]), {
+    sectionIndex: 1,
+    stepIndex: 0,
+    completed: 2,
+    total: 2,
+    done: true,
+  });
 });
 
 test("routes Useful to root and Leveling to a stable route", () => {
