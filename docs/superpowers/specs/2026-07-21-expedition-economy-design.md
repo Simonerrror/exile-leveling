@@ -16,7 +16,7 @@ Make the Expedition generator answer the actual Gwennen decision: which base is 
 
 - The browser consumes a compact checked-in price map, never the multi-megabyte raw economy responses.
 - `regex:economy:refresh` reads the supported poe.ninja PoE 1 economy endpoints, rejects corrupted, linked, relic, and Foulborn variants, and records the active economy league and timestamp.
-- Scheduled Pages builds refresh the snapshot daily. Push builds use the checked-in snapshot so a third-party outage cannot block a normal release.
+- Scheduled Pages builds refresh the snapshot and patch only the two existing Expedition shards daily. Push builds use the checked-in snapshot so a third-party outage cannot block a normal release, and the workflow has no cross-repository dependency.
 - Generated shards and the economy snapshot are covered by the deterministic manifest and runtime shape validation.
 
 ## Verification

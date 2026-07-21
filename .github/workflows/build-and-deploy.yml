@@ -21,14 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Checkout audited regex source
-        if: github.event_name != 'push'
-        uses: actions/checkout@v3
-        with:
-          repository: Simonerrror/poe-regex-ru
-          ref: codex/design-poe-regex-ru
-          path: .legacy-regex-source
-
       - name: Install dependencies
         run: |
           npm ci --ignore-scripts
@@ -40,7 +32,7 @@ jobs:
         if: github.event_name != 'push'
         run: |
           npm run regex:economy:refresh -w seeding
-          npm run regex:data:export -w seeding -- --source "$GITHUB_WORKSPACE/.legacy-regex-source"
+          npm run regex:economy:apply -w seeding
 
       - name: Verify production release
         run: |
