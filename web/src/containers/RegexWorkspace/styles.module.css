@@ -129,9 +129,12 @@
   padding: 0.5rem;
 }
 .expeditionOption input { margin-top: 0.15rem; }
-.uniqueOutcomes { display: flex; flex-wrap: wrap; gap: 0.2rem 0.5rem; margin-top: 0.15rem; }
+.uniqueOutcomes { display: flex; flex-wrap: wrap; gap: 0.35rem 0.5rem; margin-top: 0.2rem; }
 .uniqueOutcomes span { color: #c5ccd3; font-size: 0.75rem; }
 .uniqueOutcomes b { color: #d6a85f; font-weight: var(--font-heavy); }
+.uniqueOutcome { align-items: center; background: #1d2125; border: 1px solid #394149; border-radius: 0.25rem; display: flex; gap: 0.35rem; padding: 0.2rem 0.35rem; }
+.uniqueOutcome > img { filter: drop-shadow(0 0.1rem 0.2rem rgb(0 0 0 / 70%)); height: 2.25rem; object-fit: contain; width: 2.25rem; }
+.cheapOutcome { align-self: center; }
 .numberField,
 .settingToggle {
   align-items: center;

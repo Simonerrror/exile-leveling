@@ -19,6 +19,7 @@ import {
 import {
   expeditionCatalog,
   formatChaosValue,
+  visibleExpeditionOutcomes,
   valuableExpeditionFillers,
 } from "../../../web/src/features/regex/expedition-catalog.js";
 
@@ -160,6 +161,13 @@ test("Expedition catalog ranks bases by valuable unique outcomes", async () => {
   assert.ok(heavyBelt.maxChaosValue > 0);
   assert.ok(heavyBelt.uniques.some(({ name, label }) => name === "Mageblood" && label === "Волшебная кровь"));
   assert.ok(catalog.every((entry, index) => index === 0 || catalog[index - 1].maxChaosValue >= entry.maxChaosValue));
+});
+
+test("Expedition thumbnails are limited to valuable outcomes with real art", async () => {
+  const data = await loadRegexData("expedition", "en");
+  const outcomes = expeditionCatalog(data).flatMap((entry) => visibleExpeditionOutcomes(entry, 100));
+  assert.ok(outcomes.length > 0);
+  assert.ok(outcomes.every(({ chaosValue, icon }) => chaosValue >= 100 && /^https:\/\//.test(icon)));
 });
 
 test("Expedition valuable fillers stay within a single copyable regex", async () => {

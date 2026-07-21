@@ -47,6 +47,7 @@ import {
   expeditionCatalog,
   formatChaosValue,
   normalizeExpeditionSettings,
+  visibleExpeditionOutcomes,
   valuableExpeditionFillers,
   type ExpeditionSettings,
 } from "../../features/regex/expedition-catalog";
@@ -858,8 +859,18 @@ export default function RegexWorkspace() {
                     <strong>{entry.label}</strong>
                     <small>{entry.id}</small>
                     <span className={styles.uniqueOutcomes}>
-                      {entry.uniques.filter(({ chaosValue }) => chaosValue > 0).slice(0, 3).map((unique) => (
-                        <span key={unique.name}>{unique.label} <b>{formatChaosValue(unique.chaosValue, locale)}</b></span>
+                      {visibleExpeditionOutcomes(entry, expeditionSettings.minValueToDisplay).slice(0, 3).map((unique) => (
+                        <span className={styles.uniqueOutcome} key={unique.name}>
+                          <EntityImage alt={unique.label} src={unique.icon} size={36} />
+                          <span>{unique.label} <b>{formatChaosValue(unique.chaosValue, locale)}</b></span>
+                        </span>
+                      ))}
+                      {entry.uniques.filter(({ chaosValue, icon }) =>
+                        chaosValue > 0 && (chaosValue < expeditionSettings.minValueToDisplay || !icon)
+                      ).slice(0, 3).map((unique) => (
+                        <span className={styles.cheapOutcome} key={unique.name}>
+                          {unique.label} <b>{formatChaosValue(unique.chaosValue, locale)}</b>
+                        </span>
                       ))}
                     </span>
                   </span>

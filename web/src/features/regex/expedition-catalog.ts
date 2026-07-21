@@ -7,6 +7,7 @@ export interface ExpeditionCatalogUnique {
   name: string;
   label: string;
   chaosValue: number;
+  icon?: string;
 }
 
 export interface ExpeditionCatalogBase {
@@ -59,10 +60,11 @@ export function expeditionCatalog(data: ExpeditionRegexData): ExpeditionCatalogB
   const itemTranslations = data.translations.items as Record<string, unknown> | undefined ?? {};
 
   return Object.entries(data.baseTypeRegex).map(([id, entry]) => {
-    const uniques = entry.items.map(({ name }) => ({
+    const uniques = entry.items.map(({ icon, name }) => ({
       name,
       label: localizedName(name, itemTranslations),
       chaosValue: data.fallbackPrices[name] ?? 0,
+      icon,
     })).sort((left, right) => right.chaosValue - left.chaosValue || left.label.localeCompare(right.label));
     const label = localizedName(id, baseTranslations);
     return {
@@ -73,6 +75,15 @@ export function expeditionCatalog(data: ExpeditionRegexData): ExpeditionCatalogB
       uniques,
     };
   }).sort((left, right) => right.maxChaosValue - left.maxChaosValue || left.label.localeCompare(right.label));
+}
+
+export function visibleExpeditionOutcomes(
+  base: ExpeditionCatalogBase,
+  minimumChaosValue: number,
+): Array<ExpeditionCatalogUnique & { icon: string }> {
+  return base.uniques.filter((outcome): outcome is ExpeditionCatalogUnique & { icon: string } =>
+    outcome.chaosValue >= minimumChaosValue &&
+    typeof outcome.icon === "string" && /^https:\/\//.test(outcome.icon));
 }
 
 export function valuableExpeditionFillers(
