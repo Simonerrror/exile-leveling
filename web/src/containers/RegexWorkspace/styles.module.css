@@ -20,7 +20,7 @@
 .layout {
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.58fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .controls,
@@ -31,8 +31,15 @@
   padding: 0.7rem;
 }
 
-.output { align-self: start; display: grid; gap: 0.5rem; position: sticky; top: 3.5rem; }
-.output textarea { background: #15181b; border: 1px solid #444c54; color: #f1f3f5; min-height: 7rem; padding: 0.55rem; resize: vertical; width: 100%; }
+.output {
+  align-items: center;
+  display: grid;
+  gap: 0.45rem;
+  grid-row: 1;
+  grid-template-columns: minmax(7rem, auto) minmax(0, 1fr) auto;
+}
+.output textarea { background: #15181b; border: 1px solid #444c54; color: #f1f3f5; height: 2.6rem; min-height: 2.6rem; padding: 0.55rem; resize: vertical; width: 100%; }
+.output > p { grid-column: 1 / -1; margin: 0; }
 .output button,
 .summary button,
 .showAll { background: #303840; border: 1px solid #56616b; border-radius: 0.3rem; color: #f1f3f5; min-height: 2.4rem; padding: 0.35rem 0.6rem; }
@@ -47,13 +54,36 @@
 .linkFieldset legend { color: #d6a85f; padding: 0 0.25rem; }
 .linkFieldset label { align-items: center; display: flex; gap: 0.3rem; min-height: 2.2rem; }
 .summary { color: #a8b1ba; font-size: 0.82rem; margin-bottom: 0.5rem; }
-.options { display: grid; gap: 0.3rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+.options { display: grid; gap: 0.3rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
 .option { align-items: start; background: #272c31; border: 1px solid #394149; border-radius: 0.28rem; display: flex; gap: 0.45rem; line-height: 1.25; min-height: 2.65rem; padding: 0.45rem; }
 .option input { flex: 0 0 auto; margin-top: 0.12rem; }
 .option span { overflow-wrap: anywhere; }
 .showAll { grid-column: 1 / -1; }
 .notice { color: #8db8df; }
 .error { color: #e0a15d; }
+
+.flaskSettings {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  margin-bottom: 0.65rem;
+}
+.numberField,
+.settingToggle {
+  align-items: center;
+  background: #272c31;
+  border: 1px solid #3f4851;
+  border-radius: 0.3rem;
+  display: flex;
+  gap: 0.45rem;
+  min-height: 2.65rem;
+  padding: 0.45rem 0.55rem;
+}
+.numberField { justify-content: space-between; }
+.numberField input { background: #16191c; border: 1px solid #4b555e; color: #fff; max-width: 5rem; min-height: 2rem; padding: 0.25rem 0.4rem; }
+.flaskColumns { display: grid; gap: 0.7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.flaskColumn { background: #1b1f22; border: 1px solid #394149; border-radius: 0.35rem; padding: 0.55rem; }
+.flaskColumn h2 { color: #d6a85f; font-size: 1rem; margin: 0 0 0.5rem; }
 
 button:focus-visible,
 input:focus-visible,
@@ -64,12 +94,13 @@ a:focus-visible {
 }
 
 @media (max-width: 54rem) {
-  .layout { grid-template-columns: 1fr; }
-  .output { grid-row: 1; position: static; }
+  .output { grid-template-columns: 1fr auto; }
+  .outputHeader { grid-column: 1 / -1; }
 }
 
 @media (max-width: 34rem) {
   .header { align-items: flex-start; flex-direction: column; }
   .options { grid-template-columns: 1fr; }
   .option { min-height: 2.9rem; }
+  .flaskColumns { grid-template-columns: 1fr; }
 }

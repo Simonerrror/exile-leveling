@@ -32,7 +32,9 @@ import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
 import {
   createDefaultToolSettings,
+  normalizeFlaskSettings,
   normalizeVendorSettings,
+  type FlaskProfileSettings,
   type JsonObject,
   type LinkCount,
   type RegexProfileStore,
@@ -69,7 +71,7 @@ const vendorGroups = [
   { key: "weapon", title: "regex.workspace.vendor.weapon", options: [["sceptre", "regex.workspace.vendor.weapon.sceptre"], ["mace", "regex.workspace.vendor.weapon.mace"], ["axe", "regex.workspace.vendor.weapon.axe"], ["sword", "regex.workspace.vendor.weapon.sword"], ["bow", "regex.workspace.vendor.weapon.bow"], ["claw", "regex.workspace.vendor.weapon.claw"], ["dagger", "regex.workspace.vendor.weapon.dagger"], ["staff", "regex.workspace.vendor.weapon.staff"], ["wand", "regex.workspace.vendor.weapon.wand"], ["shield", "regex.workspace.vendor.weapon.shield"]] },
 ] as const;
 
-interface Option { id: string; label: string; pattern?: string }
+interface Option { id: string; label: string; pattern?: string; affix?: "prefix" | "suffix" }
 interface LoadedData {
   tool: ToolId;
   locale: "en" | "ru";
@@ -98,6 +100,31 @@ function translatedLabel(
     ?? id;
 }
 
+function flaskOptions(data: FlaskRegexData): Option[] {
+  const localizedPrefix = Array.isArray(data.translations.prefix) ? data.translations.prefix : [];
+  const localizedSuffix = Array.isArray(data.translations.suffix) ? data.translations.suffix : [];
+  const affixes = [
+    ["prefix", localizedPrefix.length > 0 ? localizedPrefix : data.prefix],
+    ["suffix", localizedSuffix.length > 0 ? localizedSuffix : data.suffix],
+  ] as const;
+  return affixes.flatMap(([affix, entries]) => entries.flatMap((entry) => {
+    const description = valueText(entry, "description");
+    if (!description) return [];
+    return [{
+      id: `${affix}:${description}`,
+      label: valueText(entry, "displayDescription") ?? description,
+      affix,
+    }];
+  }));
+}
+
+function flaskSelections(selected: string[]): Pick<FlaskProfileSettings, "selectedPrefix" | "selectedSuffix"> {
+  return {
+    selectedPrefix: selected.filter((id) => id.startsWith("prefix:")).map((id) => id.slice(7)),
+    selectedSuffix: selected.filter((id) => id.startsWith("suffix:")).map((id) => id.slice(7)),
+  };
+}
+
 function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Option[] {
   switch (tool) {
     case "vendor":
@@ -124,12 +151,7 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
       return Object.entries(value.contractTypes).map(([id, entry]) => ({ id, label: translatedLabel(id, entry, translations) }));
     }
     case "flasks": {
-      const value = data as FlaskRegexData;
-      const localized = Array.isArray(value.translations.prefix) ? value.translations.prefix : value.prefix;
-      return localized.map((entry, index) => ({
-        id: valueText(entry, "description") ?? String(index),
-        label: valueText(entry, "description") ?? `#${index + 1}`,
-      }));
+      return flaskOptions(data as FlaskRegexData);
     }
     case "scarabs": {
       const value = data as EntriesRegexData;
@@ -162,6 +184,7 @@ function compile(
   data: RegexDataByTool[RegexDataToolId],
   selected: string[],
   vendorSettings: VendorProfileSettings,
+  flaskSettings: FlaskProfileSettings,
   locale: "en" | "ru",
 ): RegexCompileResult {
   switch (tool) {
@@ -186,11 +209,10 @@ function compile(
     case "mapnames": return compileMapNameRegex(selected, false, data as MapNameRegexData);
     case "expedition": return compileExpeditionRegex(selected, [], data as ExpeditionRegexData);
     case "heist": return compileHeistRegex(selected.map((name) => ({ name, start: 1, end: 1 })), 0, false, data as HeistRegexData);
-    case "flasks": return compileFlaskRegex({
-      selectedPrefix: selected, selectedSuffix: [], itemLevel: 85,
-      onlyMaxPrefix: false, onlyMaxSuffix: false, requireBoth: true,
-      matchOpenAffix: true, ignoreEffectTiers: false,
-    }, data as FlaskRegexData, locale);
+    case "flasks": return compileFlaskRegex(normalizeFlaskSettings({
+      ...flaskSettings,
+      ...flaskSelections(selected),
+    }), data as FlaskRegexData, locale);
     case "scarabs": return compileScarabRegex(selected, data as EntriesRegexData);
     case "runegraft": return compileRunegraftRegex(selected, data as EntriesRegexData);
     case "jewels": return compileJewelRegex({ selected, abyss: false, allMatch: false }, data as JewelRegexData);
@@ -220,6 +242,13 @@ function storedSelection(store: RegexProfileStore, tool: ToolId): string[] {
   const profile = selectedProfile(store);
   if (!profile) return [];
   if (tool === "vendor") return profile.tools.vendor.gems.map(String);
+  if (tool === "flasks") {
+    const settings = normalizeFlaskSettings(profile.tools.flasks);
+    return [
+      ...settings.selectedPrefix.map((description) => `prefix:${description}`),
+      ...settings.selectedSuffix.map((description) => `suffix:${description}`),
+    ];
+  }
   const settings = profile.tools[profileToolByRoute[tool]] as JsonObject;
   const fallbackKey: Partial<Record<ToolId, string>> = {
     maps: "badIds", mapnames: "selected", expedition: "selectedBaseTypes",
@@ -248,6 +277,9 @@ export default function RegexWorkspace() {
     normalizeVendorSettings(selectedProfile(profileStore)?.tools.vendor
       ?? createDefaultToolSettings().vendor),
   );
+  const [flaskSettings, setFlaskSettings] = useState<FlaskProfileSettings>(() =>
+    normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks),
+  );
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
@@ -260,6 +292,7 @@ export default function RegexWorkspace() {
     setVendorSettings(normalizeVendorSettings(
       selectedProfile(profileStore)?.tools.vendor ?? createDefaultToolSettings().vendor,
     ));
+    setFlaskSettings(normalizeFlaskSettings(selectedProfile(profileStore)?.tools.flasks));
     setQuery("");
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
       if (active) setLoaded({ tool, locale, value });
@@ -274,8 +307,8 @@ export default function RegexWorkspace() {
   }, [options, query]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
   const result = useMemo(
-    () => tool && data ? compile(tool, data, selected, vendorSettings, locale) : emptyResult,
-    [data, locale, selected, tool, vendorSettings],
+    () => tool && data ? compile(tool, data, selected, vendorSettings, flaskSettings, locale) : emptyResult,
+    [data, flaskSettings, locale, selected, tool, vendorSettings],
   );
 
   if (tool === null) return <Navigate to="/regex" replace />;
@@ -292,8 +325,13 @@ export default function RegexWorkspace() {
         ...nextVendorSettings,
         gems: nextSelected.map(Number).filter(Number.isSafeInteger),
       });
+    } else if (tool === "flasks") {
+      profile.tools.flasks = normalizeFlaskSettings({
+        ...flaskSettings,
+        ...flaskSelections(nextSelected),
+      });
     } else {
-      const key = profileToolByRoute[tool] as Exclude<keyof RegexToolProfileSettings, "vendor">;
+      const key = profileToolByRoute[tool] as Exclude<keyof RegexToolProfileSettings, "vendor" | "flasks">;
       profile.tools[key] = { ...profile.tools[key], selected: nextSelected };
     }
     try {
@@ -313,6 +351,18 @@ export default function RegexWorkspace() {
     setVendorSettings(next);
     persist(selected, next);
   };
+  const updateFlasks = (next: FlaskProfileSettings) => {
+    setFlaskSettings(next);
+    const draft = JSON.parse(JSON.stringify(profileStore)) as RegexProfileStore;
+    const profile = selectedProfile(draft);
+    if (!profile) return;
+    profile.tools.flasks = normalizeFlaskSettings({ ...next, ...flaskSelections(selected) });
+    try {
+      setProfileStore(saveProfileStore(window.localStorage, draft));
+    } catch {
+      // Browsing stays functional when storage is disabled or full.
+    }
+  };
   const toggleVendorGroup = (group: VendorBooleanGroup, key: string) => {
     const values = vendorSettings[group] as Record<string, boolean>;
     updateVendor({
@@ -322,8 +372,10 @@ export default function RegexWorkspace() {
   };
   const reset = () => {
     const nextVendor = createDefaultToolSettings().vendor;
+    const nextFlasks = createDefaultToolSettings().flasks;
     setSelected([]);
     setVendorSettings(nextVendor);
+    setFlaskSettings(nextFlasks);
     persist([], nextVendor);
   };
   const copy = async (value: string, pass: "A" | "B") => {
@@ -381,6 +433,39 @@ export default function RegexWorkspace() {
               ))}
             </div>
           )}
+          {tool === "flasks" && (
+            <div className={styles.flaskSettings}>
+              <label className={styles.numberField}>
+                <span>{t("regex.workspace.flasks.itemLevel")}</span>
+                <input
+                  type="number"
+                  min="1"
+                  max="100"
+                  value={flaskSettings.itemLevel}
+                  onChange={(event) => updateFlasks(normalizeFlaskSettings({
+                    ...flaskSettings,
+                    itemLevel: event.target.value,
+                  }))}
+                />
+              </label>
+              {([
+                ["requireBoth", "regex.workspace.flasks.requireBoth"],
+                ["matchOpenAffix", "regex.workspace.flasks.openAffix"],
+                ["ignoreEffectTiers", "regex.workspace.flasks.ignoreEffectTier"],
+                ["onlyMaxPrefix", "regex.workspace.flasks.highestPrefix"],
+                ["onlyMaxSuffix", "regex.workspace.flasks.highestSuffix"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.settingToggle} key={key}>
+                  <input
+                    type="checkbox"
+                    checked={flaskSettings[key]}
+                    onChange={() => updateFlasks({ ...flaskSettings, [key]: !flaskSettings[key] })}
+                  />
+                  <span>{t(label)}</span>
+                </label>
+              ))}
+            </div>
+          )}
           <label className={styles.search}>
             <span>{t("regex.workspace.search")}</span>
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
@@ -391,7 +476,23 @@ export default function RegexWorkspace() {
               {t("regex.workspace.reset")}
             </button>
           </div>
-          {data === null ? <p>{t("regex.workspace.loading")}</p> : (
+          {data === null ? <p>{t("regex.workspace.loading")}</p> : tool === "flasks" ? (
+            <div className={styles.flaskColumns}>
+              {(["prefix", "suffix"] as const).map((affix) => (
+                <section className={styles.flaskColumn} key={affix}>
+                  <h2>{t(`regex.workspace.flasks.${affix}`)}</h2>
+                  <div className={styles.options}>
+                    {filtered.filter((option) => option.affix === affix).map((option) => (
+                      <label className={styles.option} key={option.id}>
+                        <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
+                        <span>{option.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
             <div className={styles.options}>
               {visible.map((option) => (
                 <label className={styles.option} key={option.id}>

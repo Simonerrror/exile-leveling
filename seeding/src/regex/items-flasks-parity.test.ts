@@ -54,3 +54,33 @@ test("items report A/B or a blocking diagnostic above 250 characters", () => {
   const result = compileItemRegex({ baseName: "Item", selected, mode: "any", matchOpenAffix: false });
   assert.ok(result.secondary !== undefined || result.diagnostics.some(({ severity }) => severity === "blocking"));
 });
+
+for (const locale of ["en", "ru"] as const) {
+  test(`${locale} flask restores Mageblood tier matching and minimum item level`, async () => {
+    const data = await loadRegexData("flasks", locale);
+    const prefixGroups = (locale === "ru" ? data.translations.prefix : data.prefix) as Array<{
+      description: string;
+      displayDescription?: string;
+      regex: string;
+      mods: Array<{ level: number; regex: string }>;
+    }>;
+    const effect = prefixGroups.find(({ description }) => description.includes("reduced Duration"));
+    assert.ok(effect);
+    if (locale === "ru") assert.match(effect.displayDescription ?? "", /усиление эффекта/i);
+
+    const base = {
+      selectedPrefix: [effect.description], selectedSuffix: [], itemLevel: 85,
+      onlyMaxPrefix: true, onlyMaxSuffix: false,
+      requireBoth: true, matchOpenAffix: true,
+    };
+    const tiered = compileFlaskRegex({ ...base, ignoreEffectTiers: false }, data, locale);
+    const mageblood = compileFlaskRegex({ ...base, ignoreEffectTiers: true }, data, locale);
+    const highestTier = [...effect.mods].sort((left, right) => right.level - left.level)[0];
+    assert.ok(highestTier);
+    assert.match(tiered.primary, new RegExp(highestTier.regex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(mageblood.primary, new RegExp(effect.regex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.notEqual(mageblood.primary, tiered.primary);
+    assert.ok(mageblood.diagnostics.some(({ code, message }) =>
+      code === "minimum-item-level" && /\d+/.test(message)));
+  });
+}

@@ -6,7 +6,8 @@ export type RegexDiagnosticCode =
   | "two-pass-required"
   | "atomic-clause-too-long"
   | "two-pass-overflow"
-  | "invalid-expression";
+  | "invalid-expression"
+  | "minimum-item-level";
 
 export interface RegexDiagnostic {
   code: RegexDiagnosticCode;

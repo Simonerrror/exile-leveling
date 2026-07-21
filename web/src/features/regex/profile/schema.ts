@@ -38,6 +38,17 @@ export interface VendorProfileSettings {
   gems: number[];
 }
 
+export interface FlaskProfileSettings extends JsonObject {
+  selectedPrefix: string[];
+  selectedSuffix: string[];
+  itemLevel: number;
+  onlyMaxPrefix: boolean;
+  onlyMaxSuffix: boolean;
+  requireBoth: boolean;
+  matchOpenAffix: boolean;
+  ignoreEffectTiers: boolean;
+}
+
 export interface RegexToolProfileSettings {
   vendor: VendorProfileSettings;
   maps: JsonObject;
@@ -45,7 +56,7 @@ export interface RegexToolProfileSettings {
   mapnames: JsonObject;
   expedition: JsonObject;
   heist: JsonObject;
-  flasks: JsonObject;
+  flasks: FlaskProfileSettings;
   beast: JsonObject;
   tattoos: JsonObject;
   runegrafts: JsonObject;
@@ -79,6 +90,17 @@ const defaultVendor = (): VendorProfileSettings => ({
   gems: [],
 });
 
+const defaultFlasks = (): FlaskProfileSettings => ({
+  selectedPrefix: [],
+  selectedSuffix: [],
+  itemLevel: 85,
+  onlyMaxPrefix: false,
+  onlyMaxSuffix: false,
+  requireBoth: true,
+  matchOpenAffix: true,
+  ignoreEffectTiers: false,
+});
+
 export const createDefaultToolSettings = (): RegexToolProfileSettings => ({
   vendor: defaultVendor(),
   maps: {},
@@ -86,7 +108,7 @@ export const createDefaultToolSettings = (): RegexToolProfileSettings => ({
   mapnames: {},
   expedition: {},
   heist: {},
-  flasks: {},
+  flasks: defaultFlasks(),
   beast: {},
   tattoos: {},
   runegrafts: {},
@@ -94,7 +116,7 @@ export const createDefaultToolSettings = (): RegexToolProfileSettings => ({
   jewels: {},
 });
 
-const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor">, readonly string[]> = {
+const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor" | "flasks">, readonly string[]> = {
   maps: [
     "selected",
     "badIds", "goodIds", "allGoodMods", "quantity", "packsize", "itemRarity",
@@ -111,12 +133,6 @@ const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor">,
   mapnames: ["selected", "mapTabSearch"],
   expedition: ["selected", "selectedBaseTypes", "league", "addFillerItems", "minValueToDisplay", "minAddValue"],
   heist: ["selected", "targetValue", "requireCoinValue", "contractLevels"],
-  flasks: [
-    "selected",
-    "selectedPrefix", "selectedSuffix", "ilevel", "onlyMaxPrefixTierMod",
-    "onlyMaxSuffixTierMod", "matchBothPrefixAndSuffix", "ignoreEffectTiers",
-    "matchOpenPrefixSuffix",
-  ],
   beast: ["selected", "includeHarvest", "minChaosValue", "maxChaosValue", "menagerieLimit", "redBeastsOnly"],
   tattoos: ["selected", "minValue", "maxValue"],
   runegrafts: ["selected", "minValue", "maxValue"],
@@ -218,10 +234,43 @@ export function normalizeVendorSettings(value: unknown): VendorProfileSettings {
   };
 }
 
+function stringSelection(value: unknown): string[] {
+  return Array.isArray(value)
+    ? Array.from(new Set(value.filter((entry): entry is string => typeof entry === "string")))
+      .slice(0, 1_000)
+    : [];
+}
+
+export function normalizeFlaskSettings(value: unknown): FlaskProfileSettings {
+  const record = isRecord(value) ? value : {};
+  const rawLevel = record.itemLevel ?? record.ilevel;
+  const parsedLevel = typeof rawLevel === "number" || typeof rawLevel === "string"
+    ? Number(rawLevel)
+    : 85;
+  const itemLevel = Number.isFinite(parsedLevel)
+    ? Math.max(1, Math.min(100, Math.trunc(parsedLevel)))
+    : 85;
+  const boolean = (current: string, legacy: string, fallback: boolean): boolean => {
+    const candidate = record[current] ?? record[legacy];
+    return typeof candidate === "boolean" ? candidate : fallback;
+  };
+  return {
+    selectedPrefix: stringSelection(record.selectedPrefix),
+    selectedSuffix: stringSelection(record.selectedSuffix),
+    itemLevel,
+    onlyMaxPrefix: boolean("onlyMaxPrefix", "onlyMaxPrefixTierMod", false),
+    onlyMaxSuffix: boolean("onlyMaxSuffix", "onlyMaxSuffixTierMod", false),
+    requireBoth: boolean("requireBoth", "matchBothPrefixAndSuffix", true),
+    matchOpenAffix: boolean("matchOpenAffix", "matchOpenPrefixSuffix", true),
+    ignoreEffectTiers: record.ignoreEffectTiers === true,
+  };
+}
+
 function normalizeTools(value: unknown): RegexToolProfileSettings {
   const record = isRecord(value) ? value : {};
   const defaults = createDefaultToolSettings();
   defaults.vendor = normalizeVendorSettings(record.vendor);
+  defaults.flasks = normalizeFlaskSettings(record.flasks);
   for (const tool of Object.keys(allowedToolKeys) as Array<keyof typeof allowedToolKeys>) {
     defaults[tool] = sanitizeToolSettings(record[tool], allowedToolKeys[tool]);
   }

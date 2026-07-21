@@ -41,6 +41,10 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   assert.match(workspace, /linkCounts/);
   assert.match(workspace, /\[2, 3, 4, 5, 6\]/);
   assert.match(workspace, /t\(labelKey\)/);
+  assert.match(workspace, /displayDescription/);
+  assert.match(workspace, /selectedPrefix/);
+  assert.match(workspace, /selectedSuffix/);
+  assert.match(workspace, /ignoreEffectTiers/);
   for (const forbidden of [
     "ColorLink", "SixSocket", "specLink", "socket color",
   ]) assert.equal(workspace.includes(forbidden), false, forbidden);
@@ -56,6 +60,10 @@ test("regex UI messages have exact EN/RU parity and no migration placeholder", (
       "regex.workspace.copyB", "regex.workspace.empty", "regex.workspace.links",
       "regex.workspace.vendor.movement", "regex.workspace.vendor.plusGems",
       "regex.workspace.vendor.damage", "regex.workspace.vendor.weapon",
+      "regex.workspace.flasks.itemLevel", "regex.workspace.flasks.prefix",
+      "regex.workspace.flasks.suffix", "regex.workspace.flasks.requireBoth",
+      "regex.workspace.flasks.openAffix", "regex.workspace.flasks.ignoreEffectTier",
+      "regex.workspace.flasks.highestPrefix", "regex.workspace.flasks.highestSuffix",
     ]) assert.equal(typeof messages[key as keyof typeof messages], "string", key);
     assert.doesNotMatch(messages["regex.catalog.description"], /moving|переезжа/i);
   }
@@ -99,9 +107,11 @@ test("regex UI messages have exact EN/RU parity and no migration placeholder", (
   );
 });
 
-test("workspace layout has visible focus, sticky desktop output, and mobile fallback", () => {
+test("workspace layout has visible focus, compact top output, and mobile fallback", () => {
   const styles = read("../../../web/src/containers/RegexWorkspace/styles.module.css");
-  assert.match(styles, /position:\s*sticky/);
+  assert.doesNotMatch(styles, /position:\s*sticky/);
+  assert.match(styles, /\.output\s*\{[^}]*grid-row:\s*1/s);
+  assert.match(styles, /height:\s*2\.6rem/);
   assert.match(styles, /:focus-visible/);
   assert.match(styles, /@media\s*\(max-width:\s*54rem\)/);
   assert.match(styles, /grid-template-columns:\s*1fr/);

@@ -31,17 +31,28 @@ function selectedRegex(
   available: FlaskGroup[],
   itemLevel: number,
   onlyMax: boolean,
-): string {
-  return selected.flatMap((description) => {
+  ignoreEffectTier = false,
+): { expression: string; minimumLevel?: number } {
+  const minimumLevels: number[] = [];
+  const expressions = selected.flatMap((description) => {
     const group = available.find((candidate) => candidate.description === description);
     if (group === undefined) return [];
     const possible = group.mods.filter(({ level }) => level <= itemLevel);
     if (onlyMax) {
-      const best = possible.sort((left, right) => right.level - left.level)[0];
-      return best === undefined ? [] : [best.regex];
+      const best = [...possible].sort((left, right) => right.level - left.level)[0];
+      if (best === undefined) return [];
+      minimumLevels.push(best.level);
+      if (ignoreEffectTier && group.description.includes("reduced Duration")) {
+        return [group.regex];
+      }
+      return [best.regex];
     }
     return group.minLevel <= itemLevel ? [group.regex] : [];
-  }).join("|");
+  });
+  return {
+    expression: expressions.join("|"),
+    minimumLevel: minimumLevels.length > 0 ? Math.max(...minimumLevels) : undefined,
+  };
 }
 
 export function compileFlaskRegex(
@@ -54,20 +65,38 @@ export function compileFlaskRegex(
   const prefixGroups = localizedPrefix.length > 0 ? localizedPrefix : groups(data.prefix);
   const suffixGroups = localizedSuffix.length > 0 ? localizedSuffix : groups(data.suffix);
   const level = Number.isFinite(settings.itemLevel) ? settings.itemLevel : 85;
-  const prefix = selectedRegex(settings.selectedPrefix, prefixGroups, level, settings.onlyMaxPrefix);
+  const prefix = selectedRegex(
+    settings.selectedPrefix,
+    prefixGroups,
+    level,
+    settings.onlyMaxPrefix,
+    settings.ignoreEffectTiers,
+  );
   const suffix = selectedRegex(settings.selectedSuffix, suffixGroups, level, settings.onlyMaxSuffix);
   const open = locale === "ru"
     ? { prefix: "^\\S+ флакон", suffix: "(?:флакон|здоровья|маны)$" }
     : { prefix: "^[a-z]+ F", suffix: "ask$" };
 
   let expression = "";
-  if (prefix && suffix) {
+  if (prefix.expression && suffix.expression) {
     if (settings.requireBoth) {
       expression = settings.matchOpenAffix
-        ? `"${open.prefix}|${prefix}" "${open.suffix}|${suffix}"`
-        : `"${prefix}" "${suffix}"`;
-    } else expression = `"${prefix}|${suffix}"`;
-  } else if (prefix) expression = `"${prefix}"`;
-  else if (suffix) expression = `"${suffix}"`;
-  return splitRegexIntoTwoPasses(expression);
+        ? `"${open.prefix}|${prefix.expression}" "${open.suffix}|${suffix.expression}"`
+        : `"${prefix.expression}" "${suffix.expression}"`;
+    } else expression = `"${prefix.expression}|${suffix.expression}"`;
+  } else if (prefix.expression) expression = `"${prefix.expression}"`;
+  else if (suffix.expression) expression = `"${suffix.expression}"`;
+
+  const result = splitRegexIntoTwoPasses(expression);
+  const minimumLevel = Math.max(prefix.minimumLevel ?? 0, suffix.minimumLevel ?? 0);
+  if (minimumLevel > 0) {
+    result.diagnostics.push({
+      code: "minimum-item-level",
+      severity: "info",
+      message: locale === "ru"
+        ? `Минимальный уровень предмета флакона: ${minimumLevel}`
+        : `Minimum flask item level: ${minimumLevel}`,
+    });
+  }
+  return result;
 }

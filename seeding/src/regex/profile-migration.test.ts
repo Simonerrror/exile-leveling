@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   DEFAULT_PROFILE_STORE,
+  normalizeFlaskSettings,
   normalizeProfileStore,
   normalizeVendorSettings,
 } from "../../../web/src/features/regex/profile/schema.js";
@@ -35,6 +36,38 @@ test("profile normalization preserves 2–6 links and signed catalog gem ids", (
     normalizeVendorSettings({ gems: [-2137186526, 12, -2137186526, "bad"] }).gems,
     [-2137186526, 12],
   );
+});
+
+test("flask settings restore typed defaults and normalize legacy field names", () => {
+  assert.deepEqual(normalizeFlaskSettings({}), {
+    selectedPrefix: [],
+    selectedSuffix: [],
+    itemLevel: 85,
+    onlyMaxPrefix: false,
+    onlyMaxSuffix: false,
+    requireBoth: true,
+    matchOpenAffix: true,
+    ignoreEffectTiers: false,
+  });
+  assert.deepEqual(normalizeFlaskSettings({
+    selectedPrefix: ["prefix", 7],
+    selectedSuffix: ["suffix"],
+    ilevel: "82",
+    onlyMaxPrefixTierMod: true,
+    onlyMaxSuffixTierMod: true,
+    matchBothPrefixAndSuffix: false,
+    matchOpenPrefixSuffix: false,
+    ignoreEffectTiers: true,
+  }), {
+    selectedPrefix: ["prefix"],
+    selectedSuffix: ["suffix"],
+    itemLevel: 82,
+    onlyMaxPrefix: true,
+    onlyMaxSuffix: true,
+    requireBoth: false,
+    matchOpenAffix: false,
+    ignoreEffectTiers: true,
+  });
 });
 
 test("migrates selected 2–6 link counts and recognized vendor settings", () => {
