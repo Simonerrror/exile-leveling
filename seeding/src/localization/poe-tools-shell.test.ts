@@ -8,11 +8,6 @@ import {
   internalTools,
   matchesToolQuery,
 } from "../../../web/src/containers/Useful/tools.js";
-import {
-  normalizeRecentToolIds,
-  pushRecentToolId,
-} from "../../../web/src/state/recent-tools.js";
-import { summarizeLevelingProgress } from "../../../web/src/containers/Useful/progress.js";
 
 const readSource = (path: string) =>
   readFileSync(new URL(path, import.meta.url), "utf8");
@@ -25,7 +20,7 @@ test("defines unique internal tools with safe hash routes", () => {
   assert.ok(internalTools.every(({ href }) => href.startsWith("/")));
   assert.deepEqual(
     internalToolCategories.map(({ id }) => id),
-    ["continue", "tools", "reference"],
+    ["tools", "reference"],
   );
 });
 
@@ -35,53 +30,6 @@ test("matches localized tool search text case-insensitively", () => {
   assert.equal(matchesToolQuery(regex, "REGEX", en), true);
   assert.equal(matchesToolQuery(regex, "регуляр", ru), true);
   assert.equal(matchesToolQuery(regex, "unrelated", ru), false);
-});
-
-test("normalizes recent tools to known unique bounded ids", () => {
-  assert.deepEqual(
-    normalizeRecentToolIds(["regex", "regex", "unknown", "leveling"]),
-    ["regex", "leveling"],
-  );
-  assert.deepEqual(pushRecentToolId(["leveling", "regex"], "leveling"), [
-    "leveling",
-    "regex",
-  ]);
-});
-
-test("continues at the first incomplete route fragment", () => {
-  const route = [
-    {
-      steps: [
-        { type: "fragment_step" },
-        { type: "fragment_step" },
-        { type: "gem_step" },
-      ],
-    },
-    { steps: [{ type: "fragment_step" }] },
-  ];
-
-  assert.deepEqual(summarizeLevelingProgress(route, ["0,0", "0,1"]), {
-    sectionIndex: 1,
-    stepIndex: 0,
-    completed: 2,
-    total: 3,
-    done: false,
-  });
-});
-
-test("reports a fully completed leveling route", () => {
-  const route = [
-    { steps: [{ type: "fragment_step" }] },
-    { steps: [{ type: "fragment_step" }] },
-  ];
-
-  assert.deepEqual(summarizeLevelingProgress(route, ["0,0", "1,0"]), {
-    sectionIndex: 1,
-    stepIndex: 0,
-    completed: 2,
-    total: 2,
-    done: true,
-  });
 });
 
 test("routes Useful to root and Leveling to a stable route", () => {
@@ -118,12 +66,14 @@ test("orders the primary PoE Tools navigation and uses the canonical repository"
   );
 });
 
-test("homepage exposes search, continuation, recent tools, and safe links", () => {
+test("homepage exposes search, the tool catalog, and safe links", () => {
   const useful = readSource("../../../web/src/containers/Useful/index.tsx");
   assert.match(useful, /type="search"/);
   assert.match(useful, /internalTools/);
-  assert.match(useful, /recentToolsAtom/);
-  assert.match(useful, /routeProgressFamily\.keys/);
+  assert.doesNotMatch(useful, /ContinuationCard/);
+  assert.doesNotMatch(useful, /recentToolsAtom/);
+  assert.doesNotMatch(useful, /catalog-continue/);
+  assert.doesNotMatch(useful, /tools\.recent/);
   assert.match(useful, /categoryRail/);
   assert.match(useful, /<Link/);
   assert.match(useful, /target="_blank"/);

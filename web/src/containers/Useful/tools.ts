@@ -1,12 +1,12 @@
 import type { MessageKey } from "../../i18n/core";
 
 export type InternalToolId = "leveling" | "regex" | "build" | "tree" | "gems";
-export type InternalToolCategoryId = "continue" | "tools" | "reference";
+export type InternalToolCategoryId = "tools" | "reference";
 
 export type InternalTool = Readonly<{
   id: InternalToolId;
   href: string;
-  category: Exclude<InternalToolCategoryId, "continue">;
+  category: InternalToolCategoryId;
   accent: "planning" | "regex" | "reference";
   titleKey: MessageKey;
   descriptionKey: MessageKey;
@@ -62,7 +62,6 @@ export const internalTools = [
 ] as const satisfies readonly InternalTool[];
 
 export const internalToolCategories = [
-  { id: "continue", titleKey: "tools.category.continue" },
   { id: "tools", titleKey: "tools.category.tools" },
   { id: "reference", titleKey: "tools.category.reference" },
 ] as const;

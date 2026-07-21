@@ -116,8 +116,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.internalCard,
-.continuationCard {
+.internalCard {
   background: var(--secondary);
   border: var(--border-width) solid var(--accent-secondary);
   border-left: 0.2rem solid var(--tool-accent, var(--useful-gold));
@@ -143,15 +142,12 @@
 }
 
 .internalCard:hover,
-.internalCard:focus-visible,
-.continuationCard:hover,
-.continuationCard:focus-visible {
+.internalCard:focus-visible {
   border-color: var(--tool-accent, var(--useful-gold));
   transform: translateY(-1px);
 }
 
-.internalCard span,
-.continuationCard small {
+.internalCard span {
   color: var(--useful-description);
   display: -webkit-box;
   font-size: 0.84rem;
@@ -159,22 +155,6 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-}
-
-.continuationCard {
-  align-items: center;
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-
-.continuationCard > span:first-child {
-  display: grid;
-  gap: 0.18rem;
-}
-
-.progressText {
-  color: #8ab3ff;
-  font-size: 0.78rem;
-  font-weight: var(--font-heavy);
 }
 
 .emptyState {
@@ -521,7 +501,6 @@
 @media (prefers-reduced-motion: reduce) {
   .resourceCard,
   .internalCard,
-  .continuationCard,
   .sheetPreview {
     transition: none;
   }

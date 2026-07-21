@@ -1,18 +1,9 @@
-import { useAtom, useAtomValue } from "jotai";
-import { Suspense, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { MessageKey } from "../../i18n/core";
-import {
-  normalizeRecentToolIds,
-  pushRecentToolId,
-  recentToolsAtom,
-} from "../../state/recent-tools";
-import { routeSelector } from "../../state/route";
-import { routeProgressFamily } from "../../state/route-progress";
 import { CheatSheetGallery } from "./CheatSheetGallery";
-import { summarizeLevelingProgress } from "./progress";
 import {
   heistBranches,
   resourceCategories,
@@ -24,22 +15,15 @@ import {
   internalTools,
   matchesToolQuery,
   type InternalTool,
-  type InternalToolId,
 } from "./tools";
 import styles from "./styles.module.css";
 
 const resourcesById = new Map(
   resources.map((resource) => [resource.id, resource] as const),
 );
-const internalToolsById = new Map(
-  internalTools.map((tool) => [tool.id, tool] as const),
-);
-
 export default function UsefulContainer() {
   const { t } = useI18n();
   const [query, setQuery] = useState("");
-  const [storedRecentTools, setRecentTools] = useAtom(recentToolsAtom);
-  const recentToolIds = normalizeRecentToolIds(storedRecentTools);
   const normalizedQuery = query.trim().toLocaleLowerCase();
 
   const visibleInternalTools = useMemo(
@@ -69,10 +53,6 @@ export default function UsefulContainer() {
   const visibleResourceIds = new Set(
     visibleResources.map(({ id }) => id as ResourceId),
   );
-
-  const rememberTool = (id: InternalToolId) => {
-    setRecentTools(pushRecentToolId(recentToolIds, id));
-  };
 
   return (
     <main className={styles.page}>
@@ -106,30 +86,6 @@ export default function UsefulContainer() {
         </nav>
 
         <div className={styles.catalogContent}>
-          <section id="catalog-continue" className={styles.catalogSection}>
-            <Suspense fallback={<p>{t("tools.continue.loading")}</p>}>
-              <ContinuationCard />
-            </Suspense>
-          </section>
-
-          {recentToolIds.length > 0 && normalizedQuery === "" && (
-            <section className={styles.catalogSection}>
-              <h2>{t("tools.recent")}</h2>
-              <div className={styles.internalGrid}>
-                {recentToolIds.map((id) => {
-                  const tool = internalToolsById.get(id);
-                  return tool ? (
-                    <InternalToolCard
-                      key={id}
-                      tool={tool}
-                      onOpen={rememberTool}
-                    />
-                  ) : null;
-                })}
-              </div>
-            </section>
-          )}
-
           {(["tools", "reference"] as const).map((category) => {
             const tools = visibleInternalTools.filter(
               (tool) => tool.category === category,
@@ -144,11 +100,7 @@ export default function UsefulContainer() {
                 <h2>{t(`tools.category.${category}` as MessageKey)}</h2>
                 <div className={styles.internalGrid}>
                   {tools.map((tool) => (
-                    <InternalToolCard
-                      key={tool.id}
-                      tool={tool}
-                      onOpen={rememberTool}
-                    />
+                    <InternalToolCard key={tool.id} tool={tool} />
                   ))}
                 </div>
               </section>
@@ -242,54 +194,13 @@ export default function UsefulContainer() {
   );
 }
 
-function ContinuationCard() {
-  const { t } = useI18n();
-  const route = useAtomValue(routeSelector);
-  const completedKeys = useAtomValue(routeProgressFamily.keys);
-  const summary = summarizeLevelingProgress(route, completedKeys);
-  if (summary === null) return null;
-  const sectionName = route[summary.sectionIndex]?.name ?? "";
-
-  return (
-    <>
-      <h2>{t("tools.category.continue")}</h2>
-      <Link
-        className={styles.continuationCard}
-        to={`/leveling#section-${summary.sectionIndex}`}
-      >
-        <span>
-          <strong>
-            {summary.done
-              ? t("tools.continue.done")
-              : t("tools.continue.title")}
-          </strong>
-          <small>{sectionName}</small>
-        </span>
-        <span className={styles.progressText}>
-          {t("tools.continue.progress", {
-            completed: summary.completed,
-            total: summary.total,
-          })}
-        </span>
-      </Link>
-    </>
-  );
-}
-
-function InternalToolCard({
-  tool,
-  onOpen,
-}: {
-  tool: InternalTool;
-  onOpen: (id: InternalToolId) => void;
-}) {
+function InternalToolCard({ tool }: { tool: InternalTool }) {
   const { t } = useI18n();
   return (
     <Link
       className={styles.internalCard}
       data-accent={tool.accent}
       to={tool.href}
-      onClick={() => onOpen(tool.id)}
     >
       <strong>{t(tool.titleKey)}</strong>
       <span>{t(tool.descriptionKey)}</span>
