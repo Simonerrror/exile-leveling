@@ -22,7 +22,7 @@ export interface RegexTokenCatalog {
 export type VendorGemColor = "r" | "g" | "b" | "w";
 export interface VendorRegexToken extends Omit<RegexToken, "options"> {
   gameId: string;
-  icon: string;
+  icon?: string;
   requiredLevel: number;
   options: { c: VendorGemColor; support: boolean } & Record<string, unknown>;
 }

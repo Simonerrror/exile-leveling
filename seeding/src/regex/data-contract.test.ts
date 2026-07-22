@@ -51,8 +51,9 @@ test("commits exactly eleven EN/RU shards plus a deterministic manifest", () => 
   };
   assert.equal(manifest.generatorVersion, 3);
   assert.deepEqual(manifest.shards.map(({ file }) => file), expectedShards);
-  assert.equal(manifest.inputs.length, 20);
+  assert.equal(manifest.inputs.length, 21);
   assert.ok(manifest.inputs.some(({ path }) => path === "common/data/json/gems.json"));
+  assert.ok(manifest.inputs.some(({ path }) => path === "seeding/src/regex/data/gem-icons.json"));
 
   for (const entry of manifest.shards) {
     assert.equal(entry.file, basename(entry.file));

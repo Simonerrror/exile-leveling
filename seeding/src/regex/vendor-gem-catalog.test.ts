@@ -55,8 +55,9 @@ test("vendor catalog exposes stable build matching and official gem art", () => 
     )) as { gems: { tokens: Array<{ gameId?: unknown; icon?: unknown }> } };
     assert.ok(shard.gems.tokens.every(({ gameId }) =>
       typeof gameId === "string" && gameId.startsWith("Metadata/Items/")));
-    assert.ok(shard.gems.tokens.every(({ icon }) =>
-      typeof icon === "string" && icon.startsWith("https://web.poecdn.com/image/Art/2DItems/Gems/")));
+    const icons = shard.gems.tokens.flatMap(({ icon }) => typeof icon === "string" ? [icon] : []);
+    assert.ok(icons.length >= 500);
+    assert.ok(icons.every((icon) => icon.startsWith("https://web.poecdn.com/gen/image/")));
   }
 });
 

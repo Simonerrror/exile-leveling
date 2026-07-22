@@ -95,7 +95,7 @@ function requireVendorCatalog(value: unknown): void {
     if (
       !Number.isSafeInteger(requiredLevel) || Number(requiredLevel) < 0 ||
       typeof gameId !== "string" || !gameId.startsWith("Metadata/Items/") ||
-      typeof icon !== "string" || !icon.startsWith("https://web.poecdn.com/image/Art/2DItems/Gems/") ||
+      (icon !== undefined && (typeof icon !== "string" || !icon.startsWith("https://web.poecdn.com/gen/image/"))) ||
       !["r", "g", "b", "w"].includes(String(token.options.c)) ||
       typeof token.options.support !== "boolean"
     ) throw new TypeError(`vendor.gems.tokens[${index}] has invalid gem metadata`);

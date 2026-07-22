@@ -82,6 +82,8 @@ import {
   type RegexEditorToolId,
 } from "../../features/regex/editors";
 import styles from "./styles.module.css";
+import beastIcon from "../RegexCatalog/images/regex-tool-beast.png";
+import tattooIcon from "../RegexCatalog/images/regex-tool-tattoo.png";
 
 type ToolId = RegexEditorToolId;
 
@@ -245,7 +247,10 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
         const id = valueText(entry, key) ?? valueText(entry, "name") ?? String(index);
         return {
           id,
-          label: translatedLabel(id, entry, value.translations),
+          icon: tool === "beast" ? beastIcon : tattooIcon,
+          label: tool === "tattoo"
+            ? valueText(value.translations[id], "displayName") ?? id
+            : translatedLabel(id, entry, value.translations),
           secondaryLabel: tool === "tattoo"
             ? translatedDescription(id, entry, value.translations)
             : valueText(entry, "recipe"),
@@ -1098,6 +1103,7 @@ export default function RegexWorkspace() {
                 <article className={styles.beastOption} key={entry.id}>
                   <label>
                     <input type="checkbox" checked={selected.includes(entry.id)} onChange={() => toggle(entry.id)} />
+                    <EntityImage alt="" src={beastIcon} size={34} />
                     <span className={styles.optionText}>
                       <strong>{entry.label}</strong>
                       <small>{entry.id}</small>
@@ -1207,6 +1213,7 @@ export default function RegexWorkspace() {
               {visible.map((option) => (
                 <label className={styles.option} key={option.id}>
                   <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
+                  {option.icon && <EntityImage alt="" src={option.icon} size={32} />}
                   <span className={styles.optionText}>
                     <span>{option.label}</span>
                     {option.secondaryLabel && <small>{option.secondaryLabel}</small>}

@@ -36,7 +36,7 @@ export function verifyGeneratedRegexData(directory: string): { shards: number; b
   if (manifest.generatorVersion !== 3 || !Array.isArray(manifest.inputs) || !Array.isArray(manifest.shards)) {
     throw new Error("Invalid regex data manifest");
   }
-  if (manifest.inputs.length !== 20) throw new Error("Regex manifest must contain 20 audited inputs");
+  if (manifest.inputs.length !== 21) throw new Error("Regex manifest must contain 21 audited inputs");
   if (manifest.shards.length !== EXPECTED_SHARD_FILES.length) {
     throw new Error("Regex manifest must contain exactly 22 shards");
   }

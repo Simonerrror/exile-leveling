@@ -15,6 +15,7 @@ const OUTPUT_DIRECTORY = resolve(fileURLToPath(
   new URL("../../../web/src/features/regex/data/generated/", import.meta.url),
 ));
 const GEM_METADATA_FILE = fileURLToPath(new URL("../../../common/data/json/gems.json", import.meta.url));
+const GEM_ICON_FILE = fileURLToPath(new URL("./data/gem-icons.json", import.meta.url));
 const ECONOMY_SNAPSHOT_FILE = fileURLToPath(new URL("./data/poe1-economy.json", import.meta.url));
 type LegacyModule = Record<string, unknown>;
 
@@ -35,7 +36,7 @@ interface LegacyGemToken {
 
 interface VendorGemMetadata {
   gameId: string;
-  icon: string;
+  icon?: string;
   requiredLevel: number;
 }
 
@@ -83,19 +84,10 @@ function applyRussianTattooEffects(value: unknown): unknown {
   }));
 }
 
-function gemIcon(gameId: string): string {
-  const metadataName = gameId.slice("Metadata/Items/Gems/".length);
-  const relative = metadataName.startsWith("SupportGem")
-    ? `Support/${metadataName.slice("SupportGem".length)}`
-    : metadataName.startsWith("SkillGem")
-      ? metadataName.slice("SkillGem".length)
-      : metadataName;
-  return `https://web.poecdn.com/image/Art/2DItems/Gems/${relative}.png?scale=1`;
-}
-
 function vendorMetadataById(
   catalog: unknown,
   metadata: Record<string, CanonicalGem>,
+  icons: Record<string, string>,
 ): Map<number, VendorGemMetadata> {
   const tokens = (catalog as { tokens?: unknown }).tokens;
   if (!Array.isArray(tokens)) throw new TypeError("English vendor catalog has no tokens");
@@ -123,7 +115,7 @@ function vendorMetadataById(
     if (!Number.isSafeInteger(requiredLevel) || requiredLevel < 0 || typeof gameId !== "string") {
       throw new TypeError(`Missing canonical required level for vendor gem: ${token.rawText}`);
     }
-    return [token.id, { gameId, icon: gemIcon(gameId), requiredLevel }] as const;
+    return [token.id, { gameId, icon: icons[token.rawText], requiredLevel }] as const;
   }));
 }
 
@@ -380,12 +372,26 @@ async function main(): Promise<void> {
   const trade = JSON.parse(await readFile(validated.files.get(tradePath)!, "utf8"));
   const gemMetadataContents = await readFile(GEM_METADATA_FILE);
   const gemMetadata = JSON.parse(gemMetadataContents.toString("utf8")) as Record<string, CanonicalGem>;
+  const gemIconContents = await readFile(GEM_ICON_FILE);
+  const gemIconSnapshot = JSON.parse(gemIconContents.toString("utf8")) as {
+    icons?: unknown; league?: unknown; schemaVersion?: unknown; source?: unknown;
+  };
+  if (
+    gemIconSnapshot.schemaVersion !== 1 || gemIconSnapshot.league !== "Standard" ||
+    typeof gemIconSnapshot.source !== "string" || typeof gemIconSnapshot.icons !== "object" ||
+    gemIconSnapshot.icons === null || Array.isArray(gemIconSnapshot.icons)
+  ) throw new TypeError("Gem icon snapshot metadata has an invalid shape");
   const englishVendor = objectValue(
     moduleAt(modules, "src/generated/gems/Generated.Gems.English.ts"),
     "regexGems",
   );
-  const vendorLevels = vendorMetadataById(englishVendor, gemMetadata);
+  const vendorLevels = vendorMetadataById(
+    englishVendor,
+    gemMetadata,
+    gemIconSnapshot.icons as Record<string, string>,
+  );
   validated.inputs.push({ path: "common/data/json/gems.json", sha256: sha256(gemMetadataContents) });
+  validated.inputs.push({ path: "seeding/src/regex/data/gem-icons.json", sha256: sha256(gemIconContents) });
   const expeditionSource = moduleAt(modules, "src/generated/GeneratedExpedition.ts");
   const economyContents = await readFile(ECONOMY_SNAPSHOT_FILE);
   const economy = JSON.parse(economyContents.toString("utf8")) as {
