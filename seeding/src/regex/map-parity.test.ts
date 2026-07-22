@@ -75,6 +75,37 @@ test("map numeric and Russian rarity clauses retain legacy behavior", async () =
   assert.equal(matchesSearchExpression(rarityResult.primary, "Rarity: Magic"), false);
 });
 
+test("map numeric thresholds stay exact even for legacy optimized profiles", async () => {
+  const data = await loadRegexData("maps", "en");
+  const settings = createDefaultMapSettings();
+  settings.quantity = "85";
+  settings.optimizeQuant = true;
+
+  const result = compileMapRegex(settings, data.mods, "en");
+  assert.equal(matchesSearchExpression(result.primary, "Item Quantity: +84%"), false);
+  assert.equal(matchesSearchExpression(result.primary, "Item Quantity: +85%"), true);
+});
+
+test("quality reward thresholds switch cleanly between any and all", async () => {
+  const data = await loadRegexData("maps", "en");
+  const settings = createDefaultMapSettings();
+  settings.quality.currency = "20";
+  settings.quality.divination = "30";
+
+  settings.anyQuality = true;
+  const anyResult = compileMapRegex(settings, data.mods, "en");
+  assert.equal(matchesSearchExpression(anyResult.primary, "Quality (Currency): +20%"), true);
+  assert.equal(matchesSearchExpression(anyResult.primary, "Quality (Divination Cards): +30%"), true);
+
+  settings.anyQuality = false;
+  const allResult = compileMapRegex(settings, data.mods, "en");
+  assert.equal(matchesSearchExpression(allResult.primary, "Quality (Currency): +20%"), false);
+  assert.equal(matchesSearchExpression(
+    allResult.primary,
+    "Quality (Currency): +20%\nQuality (Divination Cards): +30%",
+  ), true);
+});
+
 test("map compiler uses the common A/B limit and stable diagnostics", async () => {
   const data = await loadRegexData("maps", "en");
   const settings = createDefaultMapSettings();

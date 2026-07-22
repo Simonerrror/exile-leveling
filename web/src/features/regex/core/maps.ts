@@ -68,13 +68,11 @@ const staticRegex = {
   },
 } as const;
 
-function generateNumberRegex(number: string, optimize: boolean): string {
+function generateNumberRegex(number: string): string {
   const digits = number.match(/\d/g);
   if (digits === null) return "";
-  const quantity = optimize
-    ? Math.floor(Number(digits.join("")) / 10) * 10
-    : Number(digits.join(""));
-  if (!Number.isFinite(quantity) || quantity === 0) return optimize && digits.length === 1 ? "." : "";
+  const quantity = Number(digits.join(""));
+  if (!Number.isFinite(quantity) || quantity === 0) return "";
   if (quantity >= 100) {
     const value = String(quantity).padStart(3, "0");
     const hundreds = Number(value[0]);
@@ -149,12 +147,12 @@ function rarityClause(settings: MapRegexSettings, locale: RegexLocale): string {
 function qualityClause(settings: MapRegexSettings, locale: RegexLocale): string {
   const stat = staticRegex[locale];
   const entries = [
-    addQuantifier(stat.qualityRegular, generateNumberRegex(settings.quality.regular, settings.optimizeQuality)),
-    addQuantifier(stat.qualityCurrency, generateNumberRegex(settings.quality.currency, settings.optimizeQuality)),
-    addQuantifier(stat.qualityDivination, generateNumberRegex(settings.quality.divination, settings.optimizeQuality)),
-    addQuantifier(stat.qualityRarity, generateNumberRegex(settings.quality.rarity, settings.optimizeQuality)),
-    addQuantifier(stat.qualityPacksize, generateNumberRegex(settings.quality.packSize, settings.optimizeQuality)),
-    addQuantifier(stat.qualityScarab, generateNumberRegex(settings.quality.scarab, settings.optimizeQuality)),
+    addQuantifier(stat.qualityRegular, generateNumberRegex(settings.quality.regular)),
+    addQuantifier(stat.qualityCurrency, generateNumberRegex(settings.quality.currency)),
+    addQuantifier(stat.qualityDivination, generateNumberRegex(settings.quality.divination)),
+    addQuantifier(stat.qualityRarity, generateNumberRegex(settings.quality.rarity)),
+    addQuantifier(stat.qualityPacksize, generateNumberRegex(settings.quality.packSize)),
+    addQuantifier(stat.qualityScarab, generateNumberRegex(settings.quality.scarab)),
   ].filter(Boolean);
   if (!settings.anyQuality) return entries.join(" ");
   return entries.length === 0 ? "" : `"${entries.map((entry) => entry.slice(1, -1)).join("|")}"`;
@@ -170,12 +168,12 @@ export function compileMapRegex(
   const expression = [
     badMods(settings, catalog),
     goodMods(settings, catalog),
-    addQuantifier(stat.quantity, generateNumberRegex(settings.quantity, settings.optimizeQuant)),
-    addQuantifier(stat.packsize, generateNumberRegex(settings.packsize, settings.optimizePacksize)),
-    addQuantifier(stat.itemrarity, generateNumberRegex(settings.itemRarity, settings.optimizeQuant)),
+    addQuantifier(stat.quantity, generateNumberRegex(settings.quantity)),
+    addQuantifier(stat.packsize, generateNumberRegex(settings.packsize)),
+    addQuantifier(stat.itemrarity, generateNumberRegex(settings.itemRarity)),
     qualityClause(settings, locale),
     rarityClause(settings, locale),
-    addQuantifier(stat.mapdrop, generateNumberRegex(settings.mapDropChance, settings.optimizeQuant)),
+    addQuantifier(stat.mapdrop, generateNumberRegex(settings.mapDropChance)),
     settings.corrupted.enabled ? (settings.corrupted.include ? stat.corrupted : `!${stat.corrupted}`) : "",
     settings.unidentified.enabled ? (settings.unidentified.include ? stat.unidentified : `!${stat.unidentified}`) : "",
     settings.customText.enabled ? settings.customText.value.trim() : "",
