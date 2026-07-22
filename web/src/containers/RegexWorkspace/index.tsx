@@ -91,6 +91,7 @@ import {
   regexEditorToolIds,
   type RegexEditorToolId,
 } from "../../features/regex/editors";
+import { MapEditor } from "../../features/regex/editors/MapEditor";
 import styles from "./styles.module.css";
 import beastIcon from "../RegexCatalog/images/regex-tool-beast.png";
 import heistIcon from "../RegexCatalog/images/regex-tool-heist.png";
@@ -926,74 +927,6 @@ export default function RegexWorkspace() {
               </button>
             </div>
           )}
-          {tool === "maps" && (
-            <div className={styles.advancedSettings}>
-              {([
-                ["quantity", "regex.workspace.maps.quantity"],
-                ["packsize", "regex.workspace.maps.packsize"],
-                ["itemRarity", "regex.workspace.maps.itemRarity"],
-                ["mapDropChance", "regex.workspace.maps.mapDropChance"],
-              ] as const).map(([key, label]) => (
-                <label className={styles.numberField} key={key}>
-                  <span>{t(label)}</span>
-                  <input value={mapSettings[key]} inputMode="numeric" onChange={(event) => updateMaps({
-                    ...mapSettings, [key]: event.target.value,
-                  })} />
-                </label>
-              ))}
-              {([
-                ["allGoodMods", "regex.workspace.maps.allGood"],
-                ["displayNightmareMods", "regex.workspace.maps.nightmare"],
-                ["optimizeQuant", "regex.workspace.maps.optimizeQuant"],
-                ["optimizePacksize", "regex.workspace.maps.optimizePacksize"],
-                ["optimizeQuality", "regex.workspace.maps.optimizeQuality"],
-                ["anyQuality", "regex.workspace.maps.anyQuality"],
-              ] as const).map(([key, label]) => (
-                <label className={styles.settingToggle} key={key}>
-                  <input type="checkbox" checked={mapSettings[key]} onChange={() => updateMaps({
-                    ...mapSettings, [key]: !mapSettings[key],
-                  })} />
-                  <span>{t(label)}</span>
-                </label>
-              ))}
-              {(["corrupted", "unidentified"] as const).map((key) => (
-                <fieldset className={styles.inlineFieldset} key={key}>
-                  <legend>{t(`regex.workspace.maps.${key}`)}</legend>
-                  <label><input type="checkbox" checked={mapSettings[key].enabled} onChange={() => updateMaps({
-                    ...mapSettings, [key]: { ...mapSettings[key], enabled: !mapSettings[key].enabled },
-                  })} />{t("regex.workspace.maps.enabled")}</label>
-                  <label><input type="checkbox" checked={mapSettings[key].include} onChange={() => updateMaps({
-                    ...mapSettings, [key]: { ...mapSettings[key], include: !mapSettings[key].include },
-                  })} />{t("regex.workspace.maps.include")}</label>
-                </fieldset>
-              ))}
-              <fieldset className={styles.inlineFieldset}>
-                <legend>{t("regex.workspace.maps.rarity")}</legend>
-                {(["normal", "magic", "rare"] as const).map((key) => (
-                  <label key={key}><input type="checkbox" checked={mapSettings.rarity[key]} onChange={() => updateMaps({
-                    ...mapSettings, rarity: { ...mapSettings.rarity, [key]: !mapSettings.rarity[key] },
-                  })} />{t(`regex.workspace.maps.rarity.${key}`)}</label>
-                ))}
-                <label><input type="checkbox" checked={mapSettings.rarity.include} onChange={() => updateMaps({
-                  ...mapSettings, rarity: { ...mapSettings.rarity, include: !mapSettings.rarity.include },
-                })} />{t("regex.workspace.maps.include")}</label>
-              </fieldset>
-              {Object.entries(mapSettings.quality).map(([key, value]) => (
-                <label className={styles.numberField} key={key}>
-                  <span>{t(`regex.workspace.maps.quality.${key}` as MessageKey)}</span>
-                  <input value={value} inputMode="numeric" onChange={(event) => updateMaps({
-                    ...mapSettings, quality: { ...mapSettings.quality, [key]: event.target.value },
-                  })} />
-                </label>
-              ))}
-              <label className={styles.wideField}>
-                <span>{t("regex.workspace.maps.custom")}</span>
-                <input value={mapSettings.customText.value} onChange={(event) => updateMaps({
-                  ...mapSettings, customText: { enabled: true, value: event.target.value },
-                })} />
-              </label>
-            </div>
-          )}
           {tool === "items" && (
             <div className={styles.advancedSettings}>
               <label className={styles.wideField}>
@@ -1100,11 +1033,11 @@ export default function RegexWorkspace() {
               </p>
             </div>
           )}
-          <label className={styles.search}>
+          {tool !== "maps" && <label className={styles.search}>
             <span>{t("regex.workspace.search")}</span>
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
-          </label>
-          <div className={styles.summary}>
+          </label>}
+          {tool !== "maps" && <div className={styles.summary}>
             <span>{t("regex.workspace.selected")}: {selectedCount}</span>
             {tool === "expedition" && expeditionFillers.length > 0 && (
               <span>{t("regex.workspace.expedition.autoAdded", { count: expeditionFillers.length })}</span>
@@ -1127,7 +1060,7 @@ export default function RegexWorkspace() {
             <button type="button" onClick={reset}>
               {t("regex.workspace.reset")}
             </button>
-          </div>
+          </div>}
           {data === null ? <p>{t("regex.workspace.loading")}</p> : tool === "vendor" ? (
             <div className={styles.gemSections}>
               {vendorSections.map((section) => (
@@ -1179,30 +1112,14 @@ export default function RegexWorkspace() {
               ))}
             </div>
           ) : tool === "maps" ? (
-            <div className={styles.mapGrid}>
-              {visible.map((option) => {
-                const id = Number(option.id);
-                return (
-                  <article className={styles.mapOption} key={option.id}>
-                    <span>{option.label}</span>
-                    <label><input type="checkbox" checked={mapSettings.badIds.includes(id)} onChange={() => updateMaps({
-                      ...mapSettings,
-                      badIds: mapSettings.badIds.includes(id)
-                        ? mapSettings.badIds.filter((value) => value !== id)
-                        : [...mapSettings.badIds, id],
-                      goodIds: mapSettings.goodIds.filter((value) => value !== id),
-                    })} />{t("regex.workspace.maps.exclude")}</label>
-                    <label><input type="checkbox" checked={mapSettings.goodIds.includes(id)} onChange={() => updateMaps({
-                      ...mapSettings,
-                      goodIds: mapSettings.goodIds.includes(id)
-                        ? mapSettings.goodIds.filter((value) => value !== id)
-                        : [...mapSettings.goodIds, id],
-                      badIds: mapSettings.badIds.filter((value) => value !== id),
-                    })} />{t("regex.workspace.maps.require")}</label>
-                  </article>
-                );
-              })}
-            </div>
+            <MapEditor
+              options={options}
+              query={query}
+              reset={reset}
+              setQuery={setQuery}
+              settings={mapSettings}
+              update={updateMaps}
+            />
           ) : tool === "items" ? (
             <div className={styles.options}>
               {itemMods.slice(0, showAll ? itemMods.length : 160).map((option) => (

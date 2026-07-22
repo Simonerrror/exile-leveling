@@ -64,6 +64,7 @@ export function mapModOptions(data: MapRegexData, displayNightmareMods: boolean)
       id: String(token.id),
       label: token.rawText,
       pattern: token.regex,
+      nightmare: token.options.nm === true,
     }));
 }
 

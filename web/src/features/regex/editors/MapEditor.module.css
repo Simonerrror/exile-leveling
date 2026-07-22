@@ -1,0 +1,90 @@
+.editor { display: grid; gap: 0.75rem; }
+.panels { display: grid; gap: 0.75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.panel,
+.formatPanel,
+.modsPanel,
+.custom { background: #1b1f22; border: 1px solid #394149; border-radius: 0.4rem; }
+.panel { border-top: 0.2rem solid #d6a85f; padding: 0.7rem; }
+.qualityPanel { border-top-color: #7f9fd0; }
+.panelHeader { align-items: start; display: flex; gap: 0.6rem; justify-content: space-between; margin-bottom: 0.5rem; }
+.panelHeader h2,
+.modsHeader h2 { font-size: 1rem; margin: 0; }
+.panelHeader p { color: #8f99a3; font-size: 0.68rem; letter-spacing: 0.07em; margin: 0 0 0.15rem; text-transform: uppercase; }
+.numberGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.numberField { align-items: center; background: #24292e; border: 1px solid #363e45; border-radius: 0.3rem; display: flex; gap: 0.45rem; justify-content: space-between; min-height: 2.8rem; padding: 0.4rem 0.5rem; }
+.numberField > span:first-child { color: #c9d0d7; font-size: 0.78rem; line-height: 1.2; }
+.numberInput { align-items: center; display: flex; flex: 0 0 auto; }
+.numberInput input { background: #14181b; border: 1px solid #4b555e; border-radius: 0.25rem 0 0 0.25rem; color: #fff; height: 2rem; padding: 0.25rem 0.4rem; text-align: right; width: 4.25rem; }
+.numberInput b { align-items: center; background: #303840; border: 1px solid #4b555e; border-left: 0; border-radius: 0 0.25rem 0.25rem 0; color: #a8b1ba; display: flex; font-size: 0.72rem; font-weight: normal; height: 2rem; padding: 0 0.35rem; }
+.modeSwitch { display: inline-flex; }
+.modeSwitch button,
+.chips button,
+.modModes button { background: #242a2f; border: 1px solid #4b555e; color: #aeb7c0; min-height: 2rem; padding: 0.3rem 0.5rem; }
+.modeSwitch button:first-child,
+.chips button:first-child,
+.modModes button:first-child { border-radius: 0.3rem 0 0 0.3rem; }
+.modeSwitch button:last-child,
+.chips button:last-child,
+.modModes button:last-child { border-radius: 0 0.3rem 0.3rem 0; }
+.modeSwitch button + button,
+.chips button + button,
+.modModes button + button { border-left: 0; }
+.modeSwitch button[aria-pressed="true"],
+.chips button[aria-pressed="true"] { background: #493c29; border-color: #d6a85f; color: #f0c77f; }
+.modeHelp { color: #8f99a3; font-size: 0.74rem; margin: -0.15rem 0 0.5rem; }
+.formatPanel { align-items: end; display: grid; gap: 0.7rem; grid-template-columns: repeat(3, minmax(0, auto)); justify-content: start; padding: 0.65rem 0.7rem; }
+.formatGroup { border: 0; margin: 0; min-width: 0; padding: 0; }
+.formatGroup strong,
+.formatGroup legend { color: #d6a85f; display: block; font-size: 0.75rem; margin-bottom: 0.3rem; padding: 0; }
+.chips { display: flex; }
+.modsPanel { overflow: hidden; }
+.modsHeader { align-items: end; background: #20252a; border-bottom: 1px solid #394149; display: grid; gap: 0.55rem; grid-template-columns: auto minmax(14rem, 1fr) auto auto auto; padding: 0.65rem 0.7rem; }
+.modsHeader > div:first-child { align-self: center; }
+.modsHeader > div:first-child span { color: #8f99a3; font-size: 0.72rem; }
+.search { display: grid; gap: 0.2rem; }
+.search span,
+.requiredMode > span { color: #8f99a3; font-size: 0.68rem; }
+.search input { background: #14181b; border: 1px solid #4b555e; border-radius: 0.3rem; color: #fff; min-height: 2.15rem; padding: 0.3rem 0.45rem; width: 100%; }
+.nightmareToggle { align-items: center; display: flex; font-size: 0.76rem; gap: 0.3rem; min-height: 2.15rem; }
+.requiredMode { display: grid; gap: 0.2rem; }
+.reset { background: transparent; border: 1px solid #56616b; border-radius: 0.3rem; color: #c9d0d7; min-height: 2.15rem; padding: 0.3rem 0.55rem; }
+.modGrid { display: grid; gap: 0.35rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); padding: 0.55rem; }
+.modCard { background: #24292e; border: 1px solid #394149; border-left: 0.2rem solid #56616b; border-radius: 0.3rem; display: grid; gap: 0.45rem; padding: 0.5rem; }
+.modCard[data-mode="exclude"] { border-left-color: #c96c61; }
+.modCard[data-mode="require"] { border-left-color: #6eaf7d; }
+.modTitle { align-items: start; display: flex; gap: 0.45rem; justify-content: space-between; min-height: 2.3rem; }
+.modTitle span { font-size: 0.78rem; line-height: 1.25; overflow-wrap: anywhere; }
+.modTitle b { background: #3e3150; border: 1px solid #765a92; border-radius: 999px; color: #cbb1e8; font-size: 0.6rem; padding: 0.15rem 0.35rem; white-space: nowrap; }
+.modModes { display: flex; }
+.modModes button { flex: 1; font-size: 0.68rem; min-height: 1.85rem; padding: 0.2rem 0.35rem; }
+.modModes button[aria-pressed="true"] { background: #384149; color: #fff; }
+.modCard[data-mode="exclude"] .modModes button[aria-pressed="true"] { background: #4b2c2a; border-color: #a95750; color: #efb1ab; }
+.modCard[data-mode="require"] .modModes button[aria-pressed="true"] { background: #27402f; border-color: #538b62; color: #a9dbb4; }
+.empty { color: #8f99a3; margin: 0; padding: 1rem; text-align: center; }
+.custom { padding: 0.6rem 0.7rem; }
+.custom summary { color: #a8b1ba; cursor: pointer; font-size: 0.78rem; }
+.custom label { display: grid; gap: 0.3rem; margin-top: 0.5rem; }
+.custom label span { color: #8f99a3; font-size: 0.72rem; }
+.custom input { background: #14181b; border: 1px solid #4b555e; border-radius: 0.3rem; color: #fff; min-height: 2.25rem; padding: 0.35rem 0.45rem; width: 100%; }
+
+@media (max-width: 62rem) {
+  .modsHeader { grid-template-columns: 1fr 1fr; }
+  .search { grid-column: 1 / -1; grid-row: 1; }
+}
+
+@media (max-width: 46rem) {
+  .panels { grid-template-columns: 1fr; }
+  .formatPanel { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 32rem) {
+  .numberGrid,
+  .modsHeader { grid-template-columns: 1fr; }
+  .panelHeader { align-items: stretch; flex-direction: column; }
+  .search { grid-column: auto; grid-row: auto; }
+  .chips,
+  .modeSwitch { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .modeSwitch { grid-template-columns: repeat(2, 1fr); }
+  .chips button,
+  .modeSwitch button { border: 1px solid #4b555e; border-radius: 0.25rem !important; }
+}
