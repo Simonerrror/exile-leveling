@@ -12,6 +12,11 @@ const numbers = (value: unknown): number[] => Array.isArray(value)
 export function normalizeMapEditorSettings(value: unknown): MapRegexSettings {
   const defaults = createDefaultMapSettings();
   if (!isRecord(value)) return defaults;
+  const goodIds = Array.from(new Set(numbers(value.goodIds))).sort((left, right) => left - right);
+  const goodIdSet = new Set(goodIds);
+  const badIds = Array.from(new Set(numbers(value.badIds)))
+    .filter((id) => !goodIdSet.has(id))
+    .sort((left, right) => left - right);
   const boolean = (key: keyof MapRegexSettings, fallback: boolean) =>
     typeof value[key] === "boolean" ? value[key] as boolean : fallback;
   const text = (key: keyof MapRegexSettings, fallback = "") =>
@@ -29,8 +34,8 @@ export function normalizeMapEditorSettings(value: unknown): MapRegexSettings {
   const custom = isRecord(value.customText) ? value.customText : {};
   return {
     ...defaults,
-    badIds: numbers(value.badIds),
-    goodIds: numbers(value.goodIds),
+    badIds,
+    goodIds,
     allGoodMods: boolean("allGoodMods", defaults.allGoodMods),
     quantity: text("quantity"),
     packsize: text("packsize"),

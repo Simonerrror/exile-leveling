@@ -6,6 +6,13 @@ import {
   createDefaultMapSettings,
 } from "../../../web/src/features/regex/core/maps.js";
 import { matchesSearchExpression } from "../../../web/src/features/regex/core/search-expression.js";
+import { normalizeMapEditorSettings } from "../../../web/src/features/regex/editors/compile-input.js";
+import {
+  applyMapFlagMode,
+  mapFlagMode,
+  setMapModMode,
+  toggleMapRarity,
+} from "../../../web/src/features/regex/editors/map-editor-state.js";
 
 const fixtures = [
   [-2050206104, "Players have 40% less Recovery Rate of Life and Energy Shield", "Скорость восстановления здоровья и энергетического щита игроков на 40% меньше"],
@@ -90,4 +97,35 @@ test("hidden Nightmare mods are excluded from the compiled map selection", async
   const result = compileMapRegex(settings, data.mods, "en");
   assert.equal(result.primary, "");
   assert.deepEqual(result.matchedIds, []);
+});
+
+test("map editor exposes exact tri-state flag modes", () => {
+  const defaults = createDefaultMapSettings();
+  assert.equal(mapFlagMode(defaults.corrupted), "any");
+  assert.deepEqual(applyMapFlagMode(defaults.corrupted, "only"), {
+    enabled: true,
+    include: true,
+  });
+  assert.deepEqual(applyMapFlagMode(defaults.corrupted, "exclude"), {
+    enabled: true,
+    include: false,
+  });
+});
+
+test("map editor never leaves zero rarities or conflicting mod ids", () => {
+  const defaults = createDefaultMapSettings();
+  const rareOnly = { normal: false, magic: false, rare: true, include: true };
+  assert.deepEqual(toggleMapRarity(rareOnly, "rare"), rareOnly);
+
+  const required = setMapModMode(
+    { ...defaults, badIds: [10], goodIds: [] },
+    10,
+    "require",
+  );
+  assert.deepEqual(required.badIds, []);
+  assert.deepEqual(required.goodIds, [10]);
+
+  const normalized = normalizeMapEditorSettings({ badIds: [10, 20], goodIds: [10] });
+  assert.deepEqual(normalized.badIds, [20]);
+  assert.deepEqual(normalized.goodIds, [10]);
 });
