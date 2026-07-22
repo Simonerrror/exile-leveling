@@ -32,6 +32,10 @@ export function normalizeMapEditorSettings(value: unknown): MapRegexSettings {
       [name, typeof candidate[name] === "string" ? String(candidate[name]).slice(0, 20) : defaultValue])) as T;
   };
   const custom = isRecord(value.customText) ? value.customText : {};
+  const storedRarity = group("rarity", defaults.rarity);
+  const rarity = storedRarity.normal || storedRarity.magic || storedRarity.rare
+    ? { ...storedRarity, include: true }
+    : defaults.rarity;
   return {
     ...defaults,
     badIds,
@@ -45,7 +49,7 @@ export function normalizeMapEditorSettings(value: unknown): MapRegexSettings {
     optimizePacksize: boolean("optimizePacksize", defaults.optimizePacksize),
     optimizeQuality: boolean("optimizeQuality", defaults.optimizeQuality),
     displayNightmareMods: boolean("displayNightmareMods", defaults.displayNightmareMods),
-    rarity: group("rarity", defaults.rarity),
+    rarity,
     corrupted: group("corrupted", defaults.corrupted),
     unidentified: group("unidentified", defaults.unidentified),
     quality: textGroup("quality", defaults.quality),

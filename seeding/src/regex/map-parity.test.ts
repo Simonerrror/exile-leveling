@@ -159,4 +159,9 @@ test("map editor never leaves zero rarities or conflicting mod ids", () => {
   const normalized = normalizeMapEditorSettings({ badIds: [10, 20], goodIds: [10] });
   assert.deepEqual(normalized.badIds, [20]);
   assert.deepEqual(normalized.goodIds, [10]);
+
+  const repairedRarity = normalizeMapEditorSettings({
+    rarity: { normal: false, magic: false, rare: false, include: false },
+  });
+  assert.deepEqual(repairedRarity.rarity, defaults.rarity);
 });

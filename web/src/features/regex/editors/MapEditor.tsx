@@ -43,7 +43,9 @@ export function MapEditor({ options, query, reset, setQuery, settings, update }:
   const { t } = useI18n();
   const needle = query.trim().toLocaleLowerCase();
   const filtered = options.filter(({ label }) => needle === "" || label.toLocaleLowerCase().includes(needle));
-  const selectedCount = settings.badIds.length + settings.goodIds.length;
+  const availableIds = new Set(options.map(({ id }) => Number(id)));
+  const selectedCount = [...settings.badIds, ...settings.goodIds]
+    .filter((id) => availableIds.has(id)).length;
 
   const setFlagMode = (key: "corrupted" | "unidentified", mode: MapFlagMode) => update({
     ...settings,
