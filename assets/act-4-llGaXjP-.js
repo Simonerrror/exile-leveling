@@ -1,0 +1,56 @@
+var e=`#section Акт 4
+➞ {enter|1_4_1} #The Aqueduct
+➞ {enter|1_4_town} #Highgate
+➞ {enter|1_4_2} #The Dried Lake
+Найди и убей {kill|Voll, Emperor of Purity}, забери {quest_text|Знамя Дешрет}
+Получи рецепт {crafting}
+{logout}
+Сломай {quest_text|Печать Дешрет}
+Сдай {quest|a4q2} #Breaking the Seal
+➞ {enter|1_4_3_1} #The Mines Level 1
+Получи рецепт {crafting}
+➞ {enter|1_4_3_2} #The Mines Level 2
+Освободи {quest_text|Дешрет}
+➞ {enter|1_4_3_3} #The Crystal Veins
+Получи рецепт {crafting}
+{waypoint|1_4_town} #Highgate
+Сдай {quest|a4q6} #An Indomitable Spirit
+{waypoint|1_3_town} #The Sarn Encampment
+➞ {enter|Labyrinth_Airlock}, активируй {waypoint_get} #Aspirants' Plaza
+{ascend|normal}
+Получи рецепт {crafting|1_Labyrinth_boss_3}
+{waypoint|1_4_3_3} #The Crystal Veins
+➞ {enter|1_4_5_1} #Daresso's Dream
+➞ {enter|1_4_5_2} #The Grand Arena
+Получи рецепт {crafting}
+{waypoint|1_4_3_3} #The Crystal Veins
+➞ {enter|1_4_4_1} #Kaom's Dream
+➞ {enter|1_4_4_3} #Kaom's Stronghold
+    #sub Иди {dir|45}
+    #sub Иди по мостам
+Получи рецепт {crafting}
+➞ {arena|Кальдера царя}, убей {kill|King Kaom}, забери {quest_text|Око ярости}
+{portal|use}
+{waypoint|1_4_5_2} #The Grand Arena
+➞ {arena|Кольцо клинков}, убей {kill|Daresso, King of Swords}, забери {quest_text|Око желания}
+    #sub Иди {dir|225}; проходи через выходы, придерживаясь направления {dir|270}
+{logout}
+{waypoint|1_4_3_3} #The Crystal Veins
+Поговори с {generic|госпожой Диаллой}
+➞ {enter|1_4_6_1} #The Belly of the Beast Level 1
+➞ {enter|1_4_6_2} #The Belly of the Beast Level 2
+➞ {arena|Утроба Зверя}, убей {kill|Piety, the Abomination}
+Поговори с {generic|Пиети}
+Получи рецепт {crafting}
+➞ {enter|1_4_6_3} #The Harvest
+Найди и убей {kill|Doedre Darktongue}, забери {quest_text|Лёгкие Малахая}
+Найди и убей {kill|Maligaro, The Inquisitor}, забери {quest_text|Сердце Малахая}
+Найди и убей {kill|Shavronne of Umbra}, забери {quest_text|Потроха Малахая}
+Сдай {quest|a4q5} #Corpus Malachus
+➞ {arena|Средоточие тьмы}, убей {kill|Malachai, The Nightmare}
+{logout}
+Сдай {quest|a4q1} #The Eternal Nightmare
+➞ {enter|1_4_7} #The Ascent
+Получи рецепт {crafting}
+Активируй {quest_text|Резонатор}, войди в {quest_text|Портал на Ориат}
+`;export{e as default};

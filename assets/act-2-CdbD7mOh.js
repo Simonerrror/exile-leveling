@@ -1,0 +1,173 @@
+var e=`#section Акт 2
+➞ {enter|1_2_1} #The Southern Forest
+➞ {enter|1_2_town} #The Forest Encampment
+➞ {enter|1_2_2} #The Old Fields
+    #sub Иди {dir|45}
+#ifdef LEAGUE_START
+    Найди {area|1_2_2a}, поставь {portal|set} #The Den
+#endif
+➞ {enter|1_2_3} #The Crossroads
+    #sub Иди по дороге
+#ifdef LEAGUE_START
+    {waypoint|1_2_town} #The Forest Encampment
+        #sub Иди по дороге
+    Войди в {portal|use}
+    ➞ {enter|1_2_2a} #The Den
+    Найди и убей {kill|The Great White Beast}
+    {logout}
+    Сдай {quest|a2q10} #The Great White Beast
+    {waypoint|1_2_3} #The Crossroads
+#endif
+#ifndef LEAGUE_START
+    Активируй {waypoint_get}
+#endif
+➞ {enter|1_2_6_1} #The Chamber of Sins Level 1
+    #sub Иди {dir|315}
+➞ {enter|1_2_6_2} #The Chamber of Sins Level 2
+    #sub Иди в том же направлении, что и от {waypoint}
+#ifdef LEAGUE_START
+    Пройди {trial}
+#endif
+Убей {kill|Fidelitas, the Mourning}, возьми {quest_text|Камень мора}
+    #sub Ищи длинный коридор
+    #sub Рекомендуемый уровень: 14–15
+{logout}
+Сдай {quest|a2q6} #Intruders in Black
+{waypoint|1_2_3} #The Crossroads
+➞ {enter|1_2_15} #The Fellshrine Ruins
+    #sub Иди {dir|135}
+➞ {enter|1_2_5_1} #The Crypt Level 1
+    #sub Иди по дороге
+#ifdef LEAGUE_START
+    Пройди {trial}
+#endif
+➞ {enter|1_2_5_2} #The Crypt Level 2
+Найди {quest_text|Алтарь}, возьми {quest_text|Золотая рука}
+{logout}
+Сдай {quest|a2q5} #Through Sacred Ground
+➞ {enter|1_2_7} #The Riverways
+    #sub Иди {dir|225}
+Активируй {waypoint_get}
+    #sub Иди по дороге
+➞ {enter|1_2_9} #The Western Forest
+    #sub Иди по дороге
+Активируй {waypoint_get}
+    #sub Иди по дороге
+➞ {enter|1_2_10} #The Weaver's Chambers
+    #sub Ищи на противоположной от {waypoint} стороне дороги
+➞ {arena|Гнездо Ткачихи}, убей {kill|The Weaver}, возьми {quest_text|Шип Малигаро}
+    #sub Сначала иди {dir|270}; если путь закрыт — {dir|45}
+    #sub Рекомендуемый уровень: 16
+{logout}
+Сдай {quest|a2q4} #Sharp and Cruel
+#ifdef BANDIT_KILL
+    {waypoint|1_2_3} #The Crossroads
+    ➞ {enter|1_2_4} #The Broken Bridge
+        #sub Иди {dir|45}
+    Убей {kill|Kraityn, Scarbearer}, возьми {quest_text|Амулет Крайтина}
+        #sub Иди по дороге
+    {logout}
+    {waypoint|1_2_7} #The Riverways
+    ➞ {enter|1_2_12} #The Wetlands
+        #sub Найди 2 столба рядом с {waypoint} и иди по тропе
+    Найди и убей {kill|Oak, Skullbreaker}, возьми {quest_text|Амулет Дуба}
+    {waypoint|1_2_9} #The Western Forest
+        #sub Ищи в стороне, противоположной входу в лагерь
+    Убей {kill|Alira Darktongue}, возьми {quest_text|Амулет Алиры}
+        #sub Иди {dir|180}, ищи факел вплотную к дороге
+        #sub Иди по тропе в направлении факела
+    Убей {kill|Captain Arteri}
+        #sub Иди по дороге {dir|225}
+    Возьми {quest_text|Волшебный символ}, активируй {quest_text|Волшебная печать}
+    {logout}
+    Сдай {quest|a2q7}, возьми {quest_text|Верхушка} #Deal with the Bandits
+    {waypoint|1_1_town} #Lioneye's Watch
+    Сдай {quest|a1q9} #The Way Forward
+    {waypoint|1_2_12} #The Wetlands
+    Отрави {quest_text|Древесные корни} ➞ {enter|1_2_11} #The Vaal Ruins
+#endif
+#ifdef BANDIT_ALIRA
+    {waypoint|1_2_3} #The Crossroads
+    ➞ {enter|1_2_4} #The Broken Bridge
+        #sub Иди {dir|45}
+    Убей {kill|Kraityn, Scarbearer}, возьми {quest_text|Амулет Крайтина}
+        #sub Иди по дороге
+    {logout}
+    {waypoint|1_2_7} #The Riverways
+    ➞ {enter|1_2_12} #The Wetlands
+        #sub Найди 2 столба рядом с {waypoint} и иди по тропе
+    Найди и убей {kill|Oak, Skullbreaker}, возьми {quest_text|Амулет Дуба}
+    {waypoint|1_2_9} #The Western Forest
+        #sub Ищи в стороне, противоположной входу в лагерь
+    Оставь в живых {kill|Alira Darktongue}, возьми {quest_text|Верхушка}
+        #sub Иди {dir|180}, ищи факел вплотную к дороге
+        #sub Иди по тропе в направлении факела
+    Убей {kill|Captain Arteri}
+        #sub Иди по дороге {dir|225}
+    Возьми {quest_text|Волшебный символ}, активируй {quest_text|Волшебная печать}
+    {logout}
+    {waypoint|1_1_town} #Lioneye's Watch
+    Сдай {quest|a1q9} #The Way Forward
+    {waypoint|1_2_12} #The Wetlands
+    Отрави {quest_text|Древесные корни} ➞ {enter|1_2_11} #The Vaal Ruins
+#endif
+#ifdef BANDIT_KRAITYN
+    {waypoint|1_2_7} #The Riverways
+    ➞ {enter|1_2_12} #The Wetlands
+        #sub Найди 2 столба рядом с {waypoint} и иди по тропе
+    Найди и убей {kill|Oak, Skullbreaker}, возьми {quest_text|Амулет Дуба}
+    {waypoint|1_2_9} #The Western Forest
+        #sub Ищи в стороне, противоположной входу в лагерь
+    Убей {kill|Alira Darktongue}, возьми {quest_text|Амулет Алиры}
+        #sub Иди {dir|180}, ищи факел вплотную к дороге
+        #sub Иди по тропе в направлении факела
+    Убей {kill|Captain Arteri}
+        #sub Иди по дороге {dir|225}
+    Возьми {quest_text|Волшебный символ}, активируй {quest_text|Волшебная печать}
+    {logout}
+    {waypoint|1_1_town} #Lioneye's Watch
+    Сдай {quest|a1q9} #The Way Forward
+    {waypoint|1_2_3} #The Crossroads
+    ➞ {enter|1_2_4} #The Broken Bridge
+        #sub Иди {dir|45}
+    Оставь в живых {kill|Kraityn, Scarbearer}, возьми {quest_text|Верхушка}
+        #sub Иди по дороге
+    {logout}
+    {waypoint|1_2_12} #The Wetlands
+    Отрави {quest_text|Древесные корни} ➞ {enter|1_2_11} #The Vaal Ruins
+#endif
+#ifdef BANDIT_OAK
+    {waypoint|1_2_3} #The Crossroads
+    ➞ {enter|1_2_4} #The Broken Bridge
+        #sub Иди {dir|45}
+    Убей {kill|Kraityn, Scarbearer}, возьми {quest_text|Амулет Крайтина}
+        #sub Иди по дороге
+    {logout}
+    {waypoint|1_2_9} #The Western Forest
+    Убей {kill|Alira Darktongue}, возьми {quest_text|Амулет Алиры}
+        #sub Иди {dir|180}, ищи факел вплотную к дороге
+        #sub Иди по тропе в направлении факела
+    Убей {kill|Captain Arteri}
+        #sub Иди по дороге {dir|225}
+    Возьми {quest_text|Волшебный символ}, активируй {quest_text|Волшебная печать}
+    {logout}
+    {waypoint|1_1_town} #Lioneye's Watch
+    Сдай {quest|a1q9} #The Way Forward
+    {waypoint|1_2_7} #The Riverways
+    ➞ {enter|1_2_12} #The Wetlands
+        #sub Найди 2 столба рядом с {waypoint} и иди по тропе
+    Оставь в живых {kill|Oak, Skullbreaker}, возьми {quest_text|Верхушка}
+    Отрави {quest_text|Древесные корни} ➞ {enter|1_2_11} #The Vaal Ruins
+        #sub Ищи в стороне, противоположной входу в лагерь
+#endif
+➞ {enter|1_2_8} #The Northern Forest
+    #sub К выходу ведёт проход в форме S или L
+➞ {enter|1_2_14_2} #The Caverns
+Получи рецепт {crafting}
+➞ {enter|1_2_14_3} #The Ancient Pyramid
+➞ {arena|Вершина пирамиды}, убей {kill|Vaal Oversoul}
+    #sub На первом этаже выход будет в одном из 3 углов
+    #sub На остальных этажах выход будет по диагонали от входа
+    #sub Рекомендуемый уровень: 20–22
+Получи рецепт {crafting}
+`;export{e as default};

@@ -1,0 +1,58 @@
+var e=`#section Акт 6
+➞ {enter|2_6_town} #Lioneye's Watch
+➞ {enter|2_6_1} #The Twilight Strand
+Убей {kill|Everything}
+{logout}
+Сдай {quest|a6q4} #Fallen from Grace
+➞ {enter|2_6_2} #The Coast
+➞ {enter|2_6_4} #The Mud Flats
+Найди и убей {kill|The Dishonoured Queen}, забери {quest_text|Око завоевателя}
+    #sub Угол локации в направлении {dir|45}, обычно рядом с домом
+➞ {enter|2_6_5} #The Karui Fortress
+➞ {arena|Крепость Тукохамы}, убей {kill|Tukohama, Karui God of War}
+Получи рецепт {crafting}
+➞ {enter|2_6_6} #The Ridge
+    #sub Иди {dir|0}
+➞ {enter|2_6_7_1} #The Lower Prison
+#ifdef LEAGUE_START
+    Пройди {trial}
+#endif
+Получи рецепт {crafting}
+➞ {enter|2_6_7_2} #Shavronne's Tower
+➞ {arena|Крыша тюрьмы}, убей {kill|Shavronne the Returned} и {kill|Reassembled Brutus}
+➞ {arena|Покои надзирателя}
+Получи рецепт {crafting}
+➞ {enter|2_6_8} #Prisoner's Gate
+➞ {enter|2_6_9} #The Western Forest
+    #sub Иди по дороге
+Получи рецепт {crafting}
+    #sub Ищи факел у самой дороги
+    #sub Иди по следу в направлении факела
+➞ {enter|2_6_10} #The Riverways
+    #sub Иди по дороге
+Активируй {waypoint_get}
+    #sub Иди по дороге
+➞ {enter|2_6_11} #The Wetlands
+    #sub Ищи 2 столба рядом с {waypoint}, иди по следу
+➞ {arena|Нерестилище}, убей {kill|Ryslatha, the Puppet Mistress}
+    #sub Иди {dir|315}
+{logout}
+Сдай {quest|a6q3} #The Father of War
+Сдай {quest|a6q2} #Essence of Umbra
+Сдай {quest|a6q6} #The Puppet Mistress
+{waypoint|2_6_10} #The Riverways
+➞ {enter|2_6_12} #The Southern Forest
+    #sub Иди по дороге до конца
+    #sub Иди {dir|135}
+➞ {enter|2_6_13} #The Cavern of Anger
+Забери {quest_text|Чёрный флаг}
+➞ {enter|2_6_14} #The Beacon
+Получи рецепт {crafting}
+    #sub Иди вдоль берега
+Активируй {quest_text|Столбы}
+Зажги {quest_text|Маяк}, помести туда {quest_text|Чёрный флаг}
+Поговори с {generic|Вейламом Ротом} и отплыви ➞ {enter|2_6_15} #The Brine King's Reef
+➞ {arena|Трон Морского царя}, убей {kill|Tsoagoth, The Brine King}
+{logout}
+Выбери {generic|Пантеон}
+`;export{e as default};

@@ -1,0 +1,49 @@
+var e=`#section Акт 5
+➞ {enter|1_5_1} #The Slave Pens
+Найди и убей {kill|Overseer Krow}
+    #sub Иди {dir|180} до повешенного каруи
+    #sub Обойди по часовой стрелке и двигайся {dir|270}
+➞ {enter|1_5_town} #Overseer's Tower
+Сдай {quest|a5q1b} #Return to Oriath
+➞ {enter|1_5_2} #The Control Blocks
+Найди и забери {quest_text|Миазметр}
+    #sub Иди {dir|270} насколько возможно
+Найди и убей {kill|Justicar Casticus}, забери {quest_text|Глаза фанатика}
+    #sub Иди {dir|45} от {quest_text|Миазметр}
+➞ {enter|1_5_3} #Oriath Square
+➞ {enter|1_5_4} #The Templar Courts
+    #sub Иди {dir|45}
+➞ {enter|1_5_5} #The Chamber of Innocence
+    #sub Обойди по часовой стрелке
+    #sub Уровень для фарма: 40–42
+Получи рецепт {crafting}
+➞ {arena|Святилище Невинности}, убей {kill|High Templar Avarius}
+    #sub Иди {dir|315} по спирали против часовой стрелки
+{logout}
+Сдай {quest|a5q2} #The Key to Freedom
+Сдай {quest|a5q3} #In Service to Science
+Сдай {quest|a5q4} #Death to Purity
+{waypoint|1_5_5} #The Chamber of Innocence
+➞ {enter|1_5_4b} #The Torched Courts
+➞ {enter|1_5_3b} #The Ruined Square
+    #sub Обойди против часовой стрелки
+Активируй {waypoint_get}
+    #sub Иди {dir|315}
+➞ {enter|1_5_6} #The Ossuary
+Найди и забери {quest_text|Символ Чистоты}
+Получи рецепт {crafting}
+{logout}
+{waypoint|1_5_3b} #The Ruined Square
+➞ {enter|1_5_7} #The Reliquary
+    #sub Иди {dir|225}, найди площадь
+    #sub Иди {dir|180}
+Найди 3×{quest_text|Мучение Китавы}, проверяй углы локации
+Получи рецепт {crafting}
+{logout}
+Сдай {quest|a5q7} #Kitava's Torments
+{waypoint|1_5_3b} #The Ruined Square
+➞ {enter|1_5_8} #The Cathedral Rooftop
+    #sub Иди {dir|225}
+➞ {arena|Вершина собора}, убей {kill|Kitava, the Insatiable}
+Поговори с {generic|Лилией Рот}, отплыви в Рэкласт
+`;export{e as default};
