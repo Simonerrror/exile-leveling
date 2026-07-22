@@ -87,6 +87,7 @@ test("uses a 250-character default and stable A/B diagnostics", () => {
   assert.deepEqual(split, {
     primary: '"!alpha|beta"',
     secondary: '"!gamma"',
+    composition: "intersection",
     length: 13,
     diagnostics: [
       {
@@ -97,6 +98,29 @@ test("uses a 250-character default and stable A/B diagnostics", () => {
     ],
   });
   assert.deepEqual(split, splitRegexIntoTwoPasses('"!alpha|beta|gamma"', 13));
+});
+
+test("declares union for a split positive alternation", () => {
+  const result = splitRegexIntoTwoPasses('"alpha|beta|gamma"', 13);
+  assert.equal(result.composition, "union");
+  assert.ok(result.secondary);
+});
+
+test("declares intersection for negated alternatives and whole AND clauses", () => {
+  assert.equal(
+    splitRegexIntoTwoPasses('"!alpha|beta|gamma"', 13).composition,
+    "intersection",
+  );
+  assert.equal(
+    splitRegexIntoTwoPasses('"alpha|beta" gamma', 13).composition,
+    "intersection",
+  );
+});
+
+test("blocks a mixed split that would change boolean semantics", () => {
+  const result = splitRegexIntoTwoPasses('"alpha|beta|gamma" delta', 13);
+  assert.equal(result.secondary, undefined);
+  assert.equal(result.diagnostics[0]?.code, "unsafe-composition");
 });
 
 test("never splits escaped, bracketed, or parenthesized alternatives", () => {

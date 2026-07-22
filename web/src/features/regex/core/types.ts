@@ -4,6 +4,7 @@ export type RegexDiagnosticSeverity = "info" | "blocking";
 
 export type RegexDiagnosticCode =
   | "two-pass-required"
+  | "unsafe-composition"
   | "atomic-clause-too-long"
   | "two-pass-overflow"
   | "invalid-expression"
@@ -18,6 +19,7 @@ export interface RegexDiagnostic {
 export interface RegexCompileResult {
   primary: string;
   secondary?: string;
+  composition?: "union" | "intersection";
   length: number;
   diagnostics: RegexDiagnostic[];
 }

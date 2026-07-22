@@ -9,6 +9,10 @@ interface AtomicClause {
   pattern: string;
 }
 
+interface SplitUnit {
+  atoms: AtomicClause[];
+}
+
 function compareCodeUnits(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
@@ -103,43 +107,55 @@ export function splitRegexIntoTwoPasses(
     }
   }
 
-  const atoms = clauses.flatMap((clause, clauseIndex) =>
+  const clauseAtoms = clauses.map((clause, clauseIndex) =>
     splitTopLevelAlternatives(clause.pattern).map((pattern) => ({
       clauseIndex,
       negated: clause.negated,
       pattern,
     })),
   );
-  const oversized = atoms.find(
-    (atom) => serializeAtoms([atom]).length > maxLength,
-  );
+  const oneClause = clauses.length === 1;
+  const composition = oneClause && clauses[0]?.negated !== true ? "union" : "intersection";
+  const units: SplitUnit[] = oneClause
+    ? (clauseAtoms[0] ?? []).map((atom) => ({ atoms: [atom] }))
+    : clauseAtoms.flatMap((atoms, clauseIndex) => {
+      if (clauses[clauseIndex]?.negated === true) {
+        return atoms.map((atom) => ({ atoms: [atom] }));
+      }
+      return [{ atoms }];
+    });
+  const oversized = units.find((unit) => serializeAtoms(unit.atoms).length > maxLength);
   if (oversized !== undefined) {
+    const positiveAlternation = oversized.atoms.length > 1 && oversized.atoms[0]?.negated !== true;
     return {
       primary: expression,
       length: expression.length,
       diagnostics: blocking(
-        "atomic-clause-too-long",
-        `An atomic clause exceeds the ${maxLength} character limit and cannot be split safely.`,
+        positiveAlternation ? "unsafe-composition" : "atomic-clause-too-long",
+        positiveAlternation
+          ? "Expression mixes AND with an oversized OR clause and cannot be split without changing its meaning."
+          : `An atomic clause exceeds the ${maxLength} character limit and cannot be split safely.`,
       ),
     };
   }
 
   const bins: [AtomicClause[], AtomicClause[]] = [[], []];
-  const sortedAtoms = atoms.slice().sort((left, right) => {
-    const lengthDifference =
-      serializeAtoms([right]).length - serializeAtoms([left]).length;
+  const sortedUnits = units.slice().sort((left, right) => {
+    const lengthDifference = serializeAtoms(right.atoms).length - serializeAtoms(left.atoms).length;
     if (lengthDifference !== 0) return lengthDifference;
-    if (left.clauseIndex !== right.clauseIndex) {
-      return left.clauseIndex - right.clauseIndex;
+    const leftAtom = left.atoms[0];
+    const rightAtom = right.atoms[0];
+    if (leftAtom?.clauseIndex !== rightAtom?.clauseIndex) {
+      return (leftAtom?.clauseIndex ?? 0) - (rightAtom?.clauseIndex ?? 0);
     }
-    return compareCodeUnits(left.pattern, right.pattern);
+    return compareCodeUnits(leftAtom?.pattern ?? "", rightAtom?.pattern ?? "");
   });
 
-  for (const atom of sortedAtoms) {
+  for (const unit of sortedUnits) {
     const target = bins
       .map((bin, index) => ({
         index,
-        length: serializeAtoms([...bin, atom]).length,
+        length: serializeAtoms([...bin, ...unit.atoms]).length,
       }))
       .filter(({ length }) => length <= maxLength)
       .sort((left, right) => left.length - right.length || left.index - right.index)[0];
@@ -153,7 +169,7 @@ export function splitRegexIntoTwoPasses(
         ),
       };
     }
-    bins[target.index].push(atom);
+    bins[target.index].push(...unit.atoms);
   }
 
   const primary = serializeAtoms(bins[0]);
@@ -172,6 +188,7 @@ export function splitRegexIntoTwoPasses(
   return {
     primary,
     secondary,
+    composition,
     length: primary.length,
     diagnostics: [
       {
