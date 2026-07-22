@@ -19,9 +19,13 @@ import {
 } from "../../../web/src/features/regex/bestiary-catalog.js";
 import {
   itemCompileInput,
+  itemBaseOptions,
   itemModCatalog,
+  normalizeBeastEditorSettings,
   normalizeJewelEditorSettings,
   normalizeMapEditorSettings,
+  normalizeValueFilterSettings,
+  valueFilterMatches,
 } from "../../../web/src/features/regex/editors/compile-input.js";
 import {
   heistCompileInput,
@@ -65,6 +69,12 @@ for (const locale of ["en", "ru"] as const) {
     const beastEntry = Array.isArray(beasts.entries) ? beasts.entries[0] : undefined;
     assert.ok(beastEntry && typeof beastEntry === "object");
     assert.equal(compilePricedBeastRegex([], { includeHarvest: true, redOnly: false }).primary, "");
+    assert.notEqual(compilePricedBeastRegex(
+      [beastEntry as never], { includeHarvest: true, redOnly: false }, beasts.translations,
+    ).primary, "");
+    assert.equal(compilePricedBeastRegex(
+      [beastEntry as never], { includeHarvest: true, redOnly: false, minValue: 1 }, beasts.translations,
+    ).primary, "");
     const beastResult = compilePricedBeastRegex(
       [{ ...(beastEntry as object), chaosValue: 10 }],
       { includeHarvest: true, redOnly: false, minValue: 5, maxValue: 15 },
@@ -77,6 +87,12 @@ for (const locale of ["en", "ru"] as const) {
     const tattooEntry = Array.isArray(tattoos.entries) ? tattoos.entries[0] : undefined;
     assert.ok(tattooEntry && typeof tattooEntry === "object");
     assert.equal(compilePricedTattooRegex([], 0, 100, tattoos.translations).primary, "");
+    assert.notEqual(compilePricedTattooRegex(
+      [tattooEntry as never], undefined, undefined, tattoos.translations,
+    ).primary, "");
+    assert.equal(compilePricedTattooRegex(
+      [tattooEntry as never], 1, undefined, tattoos.translations,
+    ).primary, "");
     const tattooResult = compilePricedTattooRegex(
       [{ ...(tattooEntry as object), chaosValue: 10 }], 5, 15, tattoos.translations,
     );
@@ -114,7 +130,7 @@ for (const locale of ["en", "ru"] as const) {
     assert.equal(compileJewelRegex({ selected: [], abyss: false, allMatch: false }, jewels).primary, "");
     const jewel = jewels.regular[0] as { mod?: string } | undefined;
     assert.ok(jewel?.mod);
-    assertResult(compileJewelRegex({ selected: [jewel.mod], abyss: false, allMatch: false }, jewels));
+    assertResult(compileJewelRegex({ selected: [jewel.mod], abyss: false, allMatch: false }, jewels, locale));
   });
 }
 
@@ -230,8 +246,45 @@ test("Map, item, and jewel editor adapters preserve distinct compiler fields", (
     matchOpenAffix: true,
   });
 
-  assert.deepEqual(normalizeJewelEditorSettings({ abyss: true, allMatch: true, magicOnly: true }), {
+  assert.deepEqual(normalizeJewelEditorSettings({
+    abyss: true, allMatch: true, magicOnly: true,
+    matchBothPrefixAndSuffix: true, matchOpenPrefixSuffix: true,
+  }), {
     abyss: true, allMatch: true, magicOnly: true, selected: [],
+    requireBoth: true, matchOpenAffix: true,
+  });
+});
+
+test("magic jewel compiler restores prefix/suffix and open-affix modes", async () => {
+  const data = await loadRegexData("jewels", "en");
+  const prefix = data.regular.find((entry) => typeof entry === "object" && entry !== null && "isPrefix" in entry && entry.isPrefix === true) as { mod: string };
+  const suffix = data.regular.find((entry) => typeof entry === "object" && entry !== null && "isPrefix" in entry && entry.isPrefix === false) as { mod: string };
+  assert.ok(prefix?.mod && suffix?.mod);
+  const strict = compileJewelRegex({
+    selected: [prefix.mod, suffix.mod], abyss: false, allMatch: false,
+    magicOnly: true, requireBoth: true, matchOpenAffix: false,
+  }, data, "en");
+  assert.match(strict.primary, /^".+" ".+"$/);
+  const open = compileJewelRegex({
+    selected: [prefix.mod, suffix.mod], abyss: false, allMatch: false,
+    magicOnly: true, requireBoth: true, matchOpenAffix: true,
+  }, data, "en");
+  assert.match(open.primary, /\^\[a-z\]\+ J/);
+  assert.match(open.primary, /wel\$/);
+});
+
+test("market and beast controls normalize legacy profile keys without inventing prices", () => {
+  assert.deepEqual(normalizeValueFilterSettings({ minPrice: 5, maxPrice: 25 }), {
+    minValue: 5, maxValue: 25,
+  });
+  assert.equal(valueFilterMatches(undefined, {}), true);
+  assert.equal(valueFilterMatches(undefined, { minValue: 1 }), false);
+  assert.equal(valueFilterMatches(10, { minValue: 5, maxValue: 15 }), true);
+  assert.deepEqual(normalizeBeastEditorSettings({
+    includeHarvest: false, redBeastsOnly: true, menagerieLimit: true,
+    minChaosValue: 3, maxChaosValue: 9,
+  }), {
+    includeHarvest: false, redOnly: true, menagerieLimit: true, minValue: 3, maxValue: 9,
   });
 });
 
@@ -241,6 +294,7 @@ test("Russian item modifier catalog uses localized labels and regex patterns", a
   assert.ok(options.length > 0);
   assert.ok(options.some(({ label }) => label && /[А-Яа-яЁё]/.test(label)));
   assert.ok(options.some(({ pattern }) => /[А-Яа-яЁё]/.test(pattern)));
+  assert.ok(itemBaseOptions(data, "Helmets").some((name) => /[А-Яа-яЁё]/.test(name)));
 });
 
 test("Expedition valuable fillers stay within a single copyable regex", async () => {

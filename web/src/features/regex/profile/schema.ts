@@ -133,7 +133,7 @@ const allowedToolKeys: Record<Exclude<keyof RegexToolProfileSettings, "vendor" |
   beast: ["selected", "includeHarvest", "minChaosValue", "maxChaosValue", "menagerieLimit", "redBeastsOnly"],
   tattoos: ["selected", "minValue", "maxValue"],
   runegrafts: ["selected", "minValue", "maxValue"],
-  scarabs: ["selected", "maxPrice", "minPrice"],
+  scarabs: ["selected", "maxPrice", "minPrice", "minValue", "maxValue"],
   jewels: [
     "selected",
     "allMatch", "magicOnly", "abyssJewel", "selectedRegular", "selectedAbyss",

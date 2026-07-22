@@ -15,7 +15,10 @@ export interface ItemCompileSettings {
 
 export function compileItemRegex(settings: ItemCompileSettings): RegexCompileResult {
   const selected = settings.selected.filter(({ pattern }) => pattern.length > 0);
-  if (selected.length === 0) return splitRegexIntoTwoPasses("");
+  const base = settings.baseName.trim().replaceAll('"', "")
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const baseClause = base ? `"${base}"` : "";
+  if (selected.length === 0) return splitRegexIntoTwoPasses(baseClause);
   let expression: string;
   if (settings.mode === "any") {
     expression = `"${selected.map(({ pattern }) => pattern).join("|")}"`;
@@ -32,5 +35,5 @@ export function compileItemRegex(settings: ItemCompileSettings): RegexCompileRes
       expression = `"${prefixes}" "${suffixes}"`;
     }
   }
-  return splitRegexIntoTwoPasses(expression);
+  return splitRegexIntoTwoPasses([baseClause, expression].filter(Boolean).join(" "));
 }

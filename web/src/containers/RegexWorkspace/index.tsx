@@ -27,18 +27,26 @@ import {
   compilePricedTattooRegex,
   compileRunegraftRegex,
   compileScarabRegex,
+  type PricedBeastEntry,
+  type PricedTattooEntry,
 } from "../../features/regex/core/content";
 import { compileFlaskRegex } from "../../features/regex/core/flasks";
 import { compileItemRegex } from "../../features/regex/core/items";
 import {
   itemCompileInput,
+  itemBaseOptions,
   itemModCatalog,
   jewelOptions,
+  normalizeBeastEditorSettings,
   normalizeItemEditorSettings,
   normalizeJewelEditorSettings,
   normalizeMapEditorSettings,
+  normalizeValueFilterSettings,
+  valueFilterMatches,
+  type BeastEditorSettings,
   type ItemEditorSettings,
   type JewelEditorSettings,
+  type ValueFilterSettings,
 } from "../../features/regex/editors/compile-input";
 import type { MapRegexSettings } from "../../features/regex/core/maps";
 import {
@@ -83,6 +91,7 @@ import {
 } from "../../features/regex/editors";
 import styles from "./styles.module.css";
 import beastIcon from "../RegexCatalog/images/regex-tool-beast.png";
+import heistIcon from "../RegexCatalog/images/regex-tool-heist.png";
 import tattooIcon from "../RegexCatalog/images/regex-tool-tattoo.png";
 
 type ToolId = RegexEditorToolId;
@@ -306,15 +315,13 @@ function compile(
     case "beast": {
       const value = data as EntriesRegexData;
       const entries = (Array.isArray(value.entries) ? value.entries : [])
-        .filter((entry) => selected.includes(valueText(entry, "beast") ?? ""))
-        .map((entry) => ({ ...(entry as object), chaosValue: 1 }));
+        .filter((entry): entry is PricedBeastEntry => isRecord(entry) && selected.includes(valueText(entry, "beast") ?? ""));
       return compilePricedBeastRegex(entries, { includeHarvest: true, redOnly: false }, value.translations);
     }
     case "tattoo": {
       const value = data as EntriesRegexData;
       const entries = (Array.isArray(value.entries) ? value.entries : [])
-        .filter((entry) => selected.includes(valueText(entry, "tattoo") ?? ""))
-        .map((entry) => ({ ...(entry as object), chaosValue: 1 }));
+        .filter((entry): entry is PricedTattooEntry => isRecord(entry) && selected.includes(valueText(entry, "tattoo") ?? ""));
       return compilePricedTattooRegex(entries, undefined, undefined, value.translations);
     }
   }
@@ -377,6 +384,14 @@ function storedJewelSettings(store: RegexProfileStore): JewelEditorSettings {
   return normalizeJewelEditorSettings(selectedProfile(store)?.tools.jewels);
 }
 
+function storedBeastSettings(store: RegexProfileStore): BeastEditorSettings {
+  return normalizeBeastEditorSettings(selectedProfile(store)?.tools.beast);
+}
+
+function storedValueSettings(store: RegexProfileStore, tool: "tattoo" | "runegraft" | "scarabs"): ValueFilterSettings {
+  return normalizeValueFilterSettings(selectedProfile(store)?.tools[profileToolByRoute[tool]]);
+}
+
 export default function RegexWorkspace() {
   const { toolId } = useParams();
   const { locale, t } = useI18n();
@@ -405,6 +420,8 @@ export default function RegexWorkspace() {
   const [mapSettings, setMapSettings] = useState<MapRegexSettings>(() => storedMapSettings(profileStore));
   const [itemSettings, setItemSettings] = useState<ItemEditorSettings>(() => storedItemSettings(profileStore));
   const [jewelSettings, setJewelSettings] = useState<JewelEditorSettings>(() => storedJewelSettings(profileStore));
+  const [beastSettings, setBeastSettings] = useState<BeastEditorSettings>(() => storedBeastSettings(profileStore));
+  const [valueSettings, setValueSettings] = useState<ValueFilterSettings>({});
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState<"A" | "B" | null>(null);
@@ -425,6 +442,9 @@ export default function RegexWorkspace() {
     setMapSettings(storedMapSettings(profileStore));
     setItemSettings(storedItemSettings(profileStore));
     setJewelSettings(storedJewelSettings(profileStore));
+    setBeastSettings(storedBeastSettings(profileStore));
+    setValueSettings(tool === "tattoo" || tool === "runegraft" || tool === "scarabs"
+      ? storedValueSettings(profileStore, tool) : {});
     setQuery("");
     setBuildGemReport(null);
     loadRegexData(dataToolByRoute[tool], locale).then((value) => {
@@ -437,8 +457,10 @@ export default function RegexWorkspace() {
   const filtered = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
     return options.filter(({ label, secondaryLabel }) => needle === "" ||
-      `${label} ${secondaryLabel ?? ""}`.toLocaleLowerCase().includes(needle));
-  }, [options, query]);
+      `${label} ${secondaryLabel ?? ""}`.toLocaleLowerCase().includes(needle))
+      .filter(({ chaosValue }) => tool === "scarabs" || tool === "runegraft" || tool === "tattoo"
+        ? valueFilterMatches(chaosValue, valueSettings) : true);
+  }, [options, query, tool, valueSettings]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
   const vendorSections = useMemo(() => {
     if (tool !== "vendor" || data === null) return [];
@@ -461,9 +483,10 @@ export default function RegexWorkspace() {
   const beastEntries = useMemo(() => {
     if (tool !== "beast" || data === null) return [];
     const needle = query.trim().toLocaleLowerCase();
-    return bestiaryCatalog(data as EntriesRegexData, locale).filter(({ searchText }) =>
-      needle === "" || searchText.includes(needle));
-  }, [data, locale, query, tool]);
+    return bestiaryCatalog(data as EntriesRegexData, locale)
+      .filter(({ harvest, red }) => (beastSettings.includeHarvest || !harvest) && (!beastSettings.redOnly || red))
+      .filter(({ searchText }) => needle === "" || searchText.includes(needle));
+  }, [beastSettings.includeHarvest, beastSettings.redOnly, data, locale, query, tool]);
   const itemCategories = useMemo(() => {
     if (tool !== "items" || data === null) return [];
     return (data as ItemRegexData).bases.flatMap((candidate) => {
@@ -477,6 +500,9 @@ export default function RegexWorkspace() {
     return itemModCatalog(data as ItemRegexData, itemSettings.baseCategory).filter(({ label }) =>
       needle === "" || label?.toLocaleLowerCase().includes(needle));
   }, [data, itemSettings.baseCategory, query, tool]);
+  const itemBases = useMemo(() => tool === "items" && data !== null && itemSettings.baseCategory
+    ? itemBaseOptions(data as ItemRegexData, itemSettings.baseCategory) : [],
+  [data, itemSettings.baseCategory, tool]);
   const visibleJewelOptions = useMemo(() => {
     if (tool !== "jewels" || data === null) return [];
     const needle = query.trim().toLocaleLowerCase();
@@ -494,9 +520,21 @@ export default function RegexWorkspace() {
     }
     if (tool === "maps") return compileMapRegex(mapSettings, (data as MapRegexData).mods, locale);
     if (tool === "items") return compileItemRegex(itemCompileInput(itemSettings));
-    if (tool === "jewels") return compileJewelRegex(jewelSettings, data as JewelRegexData);
+    if (tool === "jewels") return compileJewelRegex(jewelSettings, data as JewelRegexData, locale);
+    if (tool === "beast") {
+      const value = data as EntriesRegexData;
+      const entries = (Array.isArray(value.entries) ? value.entries : [])
+        .filter((entry): entry is PricedBeastEntry => isRecord(entry) && selected.includes(valueText(entry, "beast") ?? ""));
+      return compilePricedBeastRegex(entries, beastSettings, value.translations);
+    }
+    if (tool === "tattoo") {
+      const value = data as EntriesRegexData;
+      const entries = (Array.isArray(value.entries) ? value.entries : [])
+        .filter((entry): entry is PricedTattooEntry => isRecord(entry) && selected.includes(valueText(entry, "tattoo") ?? ""));
+      return compilePricedTattooRegex(entries, valueSettings.minValue, valueSettings.maxValue, value.translations);
+    }
     return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
-  }, [data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, selected, tool, vendorSettings]);
+  }, [beastSettings, data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, selected, tool, valueSettings, vendorSettings]);
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);
@@ -582,7 +620,7 @@ export default function RegexWorkspace() {
     else contractLevels[name] = { start: 1, end: 5 };
     updateHeist({ ...heistSettings, contractLevels });
   };
-  const saveJsonTool = (key: "maps" | "items" | "jewels", value: JsonObject) => {
+  const saveJsonTool = (key: "maps" | "items" | "jewels" | "beast" | "tattoos" | "runegrafts" | "scarabs", value: JsonObject) => {
     const draft = JSON.parse(JSON.stringify(profileStore)) as RegexProfileStore;
     const profile = selectedProfile(draft);
     if (!profile) return;
@@ -613,8 +651,32 @@ export default function RegexWorkspace() {
       abyssJewel: next.abyss,
       allMatch: next.allMatch,
       magicOnly: next.magicOnly,
+      matchBothPrefixAndSuffix: next.requireBoth,
+      matchOpenPrefixSuffix: next.matchOpenAffix,
       selected: next.selected,
       [next.abyss ? "selectedAbyss" : "selectedRegular"]: next.selected,
+    });
+  };
+  const updateBeasts = (value: unknown) => {
+    const next = normalizeBeastEditorSettings(value);
+    setBeastSettings(next);
+    saveJsonTool("beast", {
+      selected,
+      includeHarvest: next.includeHarvest,
+      redBeastsOnly: next.redOnly,
+      menagerieLimit: next.menagerieLimit,
+      ...(next.minValue === undefined ? {} : { minChaosValue: next.minValue }),
+      ...(next.maxValue === undefined ? {} : { maxChaosValue: next.maxValue }),
+    });
+  };
+  const updateValueSettings = (value: unknown) => {
+    const next = normalizeValueFilterSettings(value);
+    setValueSettings(next);
+    if (tool !== "tattoo" && tool !== "runegraft" && tool !== "scarabs") return;
+    saveJsonTool(profileToolByRoute[tool] as "tattoos" | "runegrafts" | "scarabs", {
+      selected,
+      ...(next.minValue === undefined ? {} : { minValue: next.minValue }),
+      ...(next.maxValue === undefined ? {} : { maxValue: next.maxValue }),
     });
   };
   const toggleVendorGroup = (group: VendorBooleanGroup, key: string) => {
@@ -636,12 +698,16 @@ export default function RegexWorkspace() {
     setMapSettings(normalizeMapEditorSettings({}));
     setItemSettings(normalizeItemEditorSettings({}));
     setJewelSettings(normalizeJewelEditorSettings({}));
+    setBeastSettings(normalizeBeastEditorSettings({}));
+    setValueSettings({});
     setBuildGemReport(null);
     if (tool === "expedition") updateExpedition(nextExpedition);
     if (tool === "heist") updateHeist(normalizeHeistSettings({}));
     if (tool === "maps") updateMaps({});
     if (tool === "items") updateItems({});
     if (tool === "jewels") updateJewels({});
+    if (tool === "beast") updateBeasts({});
+    if (tool === "tattoo" || tool === "runegraft" || tool === "scarabs") updateValueSettings({});
     persist([], nextVendor);
   };
   const copy = async (value: string, pass: "A" | "B") => {
@@ -928,9 +994,12 @@ export default function RegexWorkspace() {
               </label>
               <label className={styles.wideField}>
                 <span>{t("regex.workspace.items.base")}</span>
-                <input value={itemSettings.baseName} onChange={(event) => updateItems({
+                <input list="regex-item-bases" value={itemSettings.baseName} onChange={(event) => updateItems({
                   ...itemSettings, baseName: event.target.value,
                 })} />
+                <datalist id="regex-item-bases">
+                  {itemBases.map((name) => <option key={name} value={name} />)}
+                </datalist>
               </label>
               <label className={styles.wideField}>
                 <span>{t("regex.workspace.items.mode")}</span>
@@ -964,15 +1033,59 @@ export default function RegexWorkspace() {
                   <span>{t(label)}</span>
                 </label>
               ))}
+              {jewelSettings.magicOnly && ([
+                ["requireBoth", "regex.workspace.jewels.requireBoth"],
+                ["matchOpenAffix", "regex.workspace.jewels.openAffix"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.settingToggle} key={key}>
+                  <input type="checkbox" checked={jewelSettings[key]} onChange={() => updateJewels({
+                    ...jewelSettings, [key]: !jewelSettings[key],
+                  })} />
+                  <span>{t(label)}</span>
+                </label>
+              ))}
+            </div>
+          )}
+          {tool === "beast" && (
+            <div className={styles.advancedSettings}>
+              {([
+                ["includeHarvest", "regex.workspace.beast.includeHarvest"],
+                ["redOnly", "regex.workspace.beast.redOnly"],
+                ["menagerieLimit", "regex.workspace.beast.menagerieLimit"],
+              ] as const).map(([key, label]) => (
+                <label className={styles.settingToggle} key={key}>
+                  <input type="checkbox" checked={beastSettings[key]} onChange={() => updateBeasts({
+                    ...beastSettings, [key]: !beastSettings[key],
+                  })} />
+                  <span>{t(label)}</span>
+                </label>
+              ))}
             </div>
           )}
           {(tool === "scarabs" || tool === "runegraft") && data !== null && (
-            <p className={styles.economyMeta}>
-              {t("regex.workspace.expedition.economy", {
-                league: (data as PricedEntriesRegexData).priceLeague,
-                date: new Intl.DateTimeFormat(locale).format(new Date((data as PricedEntriesRegexData).priceUpdatedAt)),
-              })}
-            </p>
+            <div className={styles.advancedSettings}>
+              {(["minValue", "maxValue"] as const).map((key) => (
+                <label className={styles.numberField} key={key}>
+                  <span>{t(`regex.workspace.market.${key}`)}</span>
+                  <input
+                    min="0"
+                    step="1"
+                    type="number"
+                    value={valueSettings[key] ?? ""}
+                    onChange={(event) => updateValueSettings({
+                      ...valueSettings,
+                      [key]: event.target.value === "" ? undefined : Number(event.target.value),
+                    })}
+                  />
+                </label>
+              ))}
+              <p className={styles.economyMeta}>
+                {t("regex.workspace.expedition.economy", {
+                  league: (data as PricedEntriesRegexData).priceLeague,
+                  date: new Intl.DateTimeFormat(locale).format(new Date((data as PricedEntriesRegexData).priceUpdatedAt)),
+                })}
+              </p>
+            </div>
           )}
           <label className={styles.search}>
             <span>{t("regex.workspace.search")}</span>
@@ -982,6 +1095,21 @@ export default function RegexWorkspace() {
             <span>{t("regex.workspace.selected")}: {selected.length}</span>
             {tool === "expedition" && expeditionFillers.length > 0 && (
               <span>{t("regex.workspace.expedition.autoAdded", { count: expeditionFillers.length })}</span>
+            )}
+            {(tool === "scarabs" || tool === "runegraft") && (
+              <>
+                <button type="button" onClick={() => {
+                  const next = Array.from(new Set([...selected, ...filtered.map(({ id }) => id)]));
+                  setSelected(next);
+                  persist(next);
+                }}>{t("regex.workspace.market.selectVisible")}</button>
+                <button type="button" onClick={() => {
+                  const filteredIds = new Set(filtered.map(({ id }) => id));
+                  const next = selected.filter((id) => !filteredIds.has(id));
+                  setSelected(next);
+                  persist(next);
+                }}>{t("regex.workspace.market.clearVisible")}</button>
+              </>
             )}
             <button type="button" onClick={reset}>
               {t("regex.workspace.reset")}
@@ -1125,6 +1253,7 @@ export default function RegexWorkspace() {
                   <div className={styles.heistOption} key={option.id}>
                     <label>
                       <input type="checkbox" checked={Boolean(range)} onChange={() => toggleHeistContract(option.id)} />
+                      <EntityImage alt="" src={heistIcon} size={32} />
                       <span className={styles.optionText}>
                         <strong>{option.label}</strong>
                         {option.secondaryLabel && <small>{option.secondaryLabel}</small>}
@@ -1201,7 +1330,9 @@ export default function RegexWorkspace() {
                   <span className={styles.optionText}>
                     <span className={styles.marketTitle}>
                       <strong>{option.label}</strong>
-                      <b>{option.chaosValue === undefined ? "—" : formatChaosValue(option.chaosValue, locale)}</b>
+                      <b>{option.chaosValue === undefined
+                        ? t("regex.workspace.market.priceUnavailable")
+                        : formatChaosValue(option.chaosValue, locale)}</b>
                     </span>
                     {option.secondaryLabel && <small>{option.secondaryLabel}</small>}
                   </span>

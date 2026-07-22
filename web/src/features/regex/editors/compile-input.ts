@@ -120,10 +120,19 @@ export function itemModCatalog(data: ItemRegexData, category: string): ItemEdito
   });
 }
 
+export function itemBaseOptions(data: ItemRegexData, category: string): string[] {
+  const group = data.bases.find((candidate) => isRecord(candidate) && candidate.name === category);
+  const items = isRecord(group) && Array.isArray(group.items) ? strings(group.items) : [];
+  const translations = isRecord(data.translations.bases) ? data.translations.bases : {};
+  return items.map((name) => typeof translations[name] === "string" ? translations[name] as string : name);
+}
+
 export interface JewelEditorSettings {
   abyss: boolean;
   allMatch: boolean;
   magicOnly: boolean;
+  requireBoth: boolean;
+  matchOpenAffix: boolean;
   selected: string[];
 }
 
@@ -133,6 +142,8 @@ export function normalizeJewelEditorSettings(value: unknown): JewelEditorSetting
     abyss: source.abyss === true || source.abyssJewel === true,
     allMatch: source.allMatch === true,
     magicOnly: source.magicOnly === true,
+    requireBoth: source.requireBoth === true || source.matchBothPrefixAndSuffix === true,
+    matchOpenAffix: source.matchOpenAffix === true || source.matchOpenPrefixSuffix === true,
     selected: strings(source.selected ?? (source.abyssJewel ? source.selectedAbyss : source.selectedRegular)),
   };
 }
@@ -146,4 +157,51 @@ export function jewelOptions(data: JewelRegexData, settings: JewelEditorSettings
     return [{ id: candidate.mod, label: typeof translation.displayDescription === "string"
       ? translation.displayDescription : candidate.mod }];
   });
+}
+
+export interface ValueFilterSettings {
+  minValue?: number;
+  maxValue?: number;
+}
+
+function optionalNonNegativeNumber(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
+}
+
+export function normalizeValueFilterSettings(value: unknown): ValueFilterSettings {
+  const source = isRecord(value) ? value : {};
+  return {
+    minValue: optionalNonNegativeNumber(source.minValue ?? source.minPrice),
+    maxValue: optionalNonNegativeNumber(source.maxValue ?? source.maxPrice),
+  };
+}
+
+export function valueFilterMatches(
+  chaosValue: number | undefined,
+  settings: ValueFilterSettings,
+): boolean {
+  if (settings.minValue === undefined && settings.maxValue === undefined) return true;
+  if (chaosValue === undefined) return false;
+  return (settings.minValue === undefined || chaosValue >= settings.minValue) &&
+    (settings.maxValue === undefined || chaosValue <= settings.maxValue);
+}
+
+export interface BeastEditorSettings extends ValueFilterSettings {
+  includeHarvest: boolean;
+  menagerieLimit: boolean;
+  redOnly: boolean;
+}
+
+export function normalizeBeastEditorSettings(value: unknown): BeastEditorSettings {
+  const source = isRecord(value) ? value : {};
+  const range = normalizeValueFilterSettings({
+    minValue: source.minChaosValue,
+    maxValue: source.maxChaosValue,
+  });
+  return {
+    ...range,
+    includeHarvest: source.includeHarvest !== false,
+    menagerieLimit: source.menagerieLimit === true,
+    redOnly: source.redOnly === true || source.redBeastsOnly === true,
+  };
 }

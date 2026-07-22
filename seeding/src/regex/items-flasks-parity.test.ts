@@ -33,14 +33,18 @@ for (const locale of ["en", "ru"] as const) {
 
 test("items compile empty, any, all, and prefix/suffix modes through the shared limit", () => {
   assert.equal(compileItemRegex({ baseName: "", selected: [], mode: "any", matchOpenAffix: false }).primary, "");
+  assert.equal(
+    compileItemRegex({ baseName: "Hubris Circlet", selected: [], mode: "any", matchOpenAffix: false }).primary,
+    '"Hubris Circlet"',
+  );
   const selected = [
     { pattern: "maximum life", kind: "prefix" as const },
     { pattern: "fire resistance", kind: "suffix" as const },
   ];
   const any = compileItemRegex({ baseName: "Hubris Circlet", selected, mode: "any", matchOpenAffix: false });
-  assert.equal(any.primary, '"maximum life|fire resistance"');
+  assert.equal(any.primary, '"Hubris Circlet" "maximum life|fire resistance"');
   const all = compileItemRegex({ baseName: "Hubris Circlet", selected, mode: "all", matchOpenAffix: false });
-  assert.equal(all.primary, '"maximum life" "fire resistance"');
+  assert.equal(all.primary, '"Hubris Circlet" "maximum life" "fire resistance"');
   const both = compileItemRegex({ baseName: "Hubris Circlet", selected, mode: "prefix-and-suffix", matchOpenAffix: true });
   assert.match(both.primary, /Hubris Circlet/);
   assert.equal(both.length, both.primary.length);
