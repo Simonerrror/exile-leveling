@@ -181,8 +181,6 @@ export function compileMapRegex(
     settings.customText.enabled ? settings.customText.value.trim() : "",
   ].filter(Boolean).join(" ").replaceAll(/\s{2,}/g, " ").replaceAll(`"!"`, "");
   const split = splitRegexIntoTwoPasses(expression, options.maxLength);
-  const matchedIds = Array.from(new Set([...settings.badIds, ...settings.goodIds]))
-    .filter((id) => tokenById(catalog, id) !== undefined)
-    .sort((left, right) => left - right);
+  const matchedIds = availableIds(settings, [...settings.badIds, ...settings.goodIds], catalog);
   return { ...split, matchedIds, locale };
 }

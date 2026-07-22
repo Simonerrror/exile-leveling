@@ -37,6 +37,7 @@ import {
   itemBaseOptions,
   itemModCatalog,
   jewelOptions,
+  mapModOptions,
   normalizeBeastEditorSettings,
   normalizeItemEditorSettings,
   normalizeJewelEditorSettings,
@@ -200,7 +201,7 @@ function optionsFor(tool: ToolId, data: RegexDataByTool[RegexDataToolId]): Optio
     case "vendor":
       return (data as VendorRegexData).gems.tokens.map((token) => ({ id: String(token.id), label: token.rawText, pattern: token.regex }));
     case "maps":
-      return (data as MapRegexData).mods.tokens.map((token) => ({ id: String(token.id), label: token.rawText, pattern: token.regex }));
+      return mapModOptions(data as MapRegexData, true);
     case "items":
       return (data as ItemRegexData).bases.map((entry, index) => ({
         id: `${index}:${valueText(entry, "baseType") ?? valueText(entry, "name") ?? index}`,
@@ -454,7 +455,11 @@ export default function RegexWorkspace() {
     return () => { active = false; };
   }, [locale, tool]);
 
-  const options = useMemo(() => tool && data ? optionsFor(tool, data) : [], [data, tool]);
+  const options = useMemo<Option[]>(() => tool && data
+    ? tool === "maps"
+      ? mapModOptions(data as MapRegexData, mapSettings.displayNightmareMods)
+      : optionsFor(tool, data)
+    : [], [data, mapSettings.displayNightmareMods, tool]);
   const filtered = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
     return options.filter(({ label, secondaryLabel }) => needle === "" ||
@@ -463,6 +468,9 @@ export default function RegexWorkspace() {
         ? valueFilterMatches(chaosValue, valueSettings) : true);
   }, [options, query, tool, valueSettings]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
+  const selectedCount = tool === "maps"
+    ? selected.filter((id) => options.some((option) => option.id === id)).length
+    : selected.length;
   const marketSelected = useMemo(() => selectedWithinValueFilter(selected, options, valueSettings),
     [options, selected, valueSettings]);
   const vendorSections = useMemo(() => {
@@ -1097,7 +1105,7 @@ export default function RegexWorkspace() {
             <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} />
           </label>
           <div className={styles.summary}>
-            <span>{t("regex.workspace.selected")}: {selected.length}</span>
+            <span>{t("regex.workspace.selected")}: {selectedCount}</span>
             {tool === "expedition" && expeditionFillers.length > 0 && (
               <span>{t("regex.workspace.expedition.autoAdded", { count: expeditionFillers.length })}</span>
             )}

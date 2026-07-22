@@ -1,6 +1,6 @@
 import type { ItemCompileSettings } from "../core/items.js";
 import { createDefaultMapSettings, type MapRegexSettings } from "../core/maps.js";
-import type { ItemRegexData, JewelRegexData } from "../data/types.js";
+import type { ItemRegexData, JewelRegexData, MapRegexData } from "../data/types.js";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -50,6 +50,16 @@ export function normalizeMapEditorSettings(value: unknown): MapRegexSettings {
       enabled: typeof custom.enabled === "boolean" ? custom.enabled : true,
     },
   };
+}
+
+export function mapModOptions(data: MapRegexData, displayNightmareMods: boolean) {
+  return data.mods.tokens
+    .filter(({ options }) => displayNightmareMods || options.nm !== true)
+    .map((token) => ({
+      id: String(token.id),
+      label: token.rawText,
+      pattern: token.regex,
+    }));
 }
 
 export interface ItemEditorMod {

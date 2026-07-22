@@ -77,3 +77,17 @@ test("map compiler uses the common A/B limit and stable diagnostics", async () =
   assert.deepEqual(first, second);
   assert.ok(first.secondary !== undefined || first.diagnostics.some(({ severity }) => severity === "blocking"));
 });
+
+test("hidden Nightmare mods are excluded from the compiled map selection", async () => {
+  const data = await loadRegexData("maps", "en");
+  const nightmare = data.mods.tokens.find(({ options }) => options.nm === true);
+  assert.ok(nightmare);
+
+  const settings = createDefaultMapSettings();
+  settings.badIds = [nightmare.id];
+  settings.displayNightmareMods = false;
+
+  const result = compileMapRegex(settings, data.mods, "en");
+  assert.equal(result.primary, "");
+  assert.deepEqual(result.matchedIds, []);
+});
