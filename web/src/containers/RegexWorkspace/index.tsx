@@ -86,6 +86,7 @@ import {
 } from "../../features/regex/profile/schema";
 import { loadProfileStore, saveProfileStore } from "../../features/regex/profile/storage";
 import type { RegexCompileResult } from "../../features/regex/core/types";
+import { REGEX_CHARACTER_LIMIT } from "../../features/regex/core/two-pass";
 import {
   EntityImage,
   regexEditorToolIds,
@@ -1291,7 +1292,7 @@ export default function RegexWorkspace() {
         </section>
         <aside className={styles.output} aria-live="polite">
           <div className={styles.outputHeader}>
-            <strong>Regex A</strong><span>{result.primary.length}/250</span>
+            <strong>Regex A</strong><span>{result.primary.length}/{REGEX_CHARACTER_LIMIT}</span>
           </div>
           <textarea readOnly value={result.primary} placeholder={t("regex.workspace.empty")} />
           <button type="button" disabled={!result.primary} onClick={() => void copy(result.primary, "A")}>
@@ -1299,16 +1300,23 @@ export default function RegexWorkspace() {
           </button>
           {result.secondary && (
             <>
-              <div className={styles.outputHeader}><strong>Regex B</strong><span>{result.secondary.length}/250</span></div>
+              <div className={styles.outputHeader}><strong>Regex B</strong><span>{result.secondary.length}/{REGEX_CHARACTER_LIMIT}</span></div>
               <textarea readOnly value={result.secondary} />
               <button type="button" onClick={() => void copy(result.secondary ?? "", "B")}>
                 {copied === "B" ? t("regex.workspace.copied") : t("regex.workspace.copyB")}
               </button>
+              <p className={styles.passHelp}>{t(result.composition === "union"
+                ? "regex.workspace.passes.union"
+                : "regex.workspace.passes.intersection")}</p>
             </>
           )}
           {result.diagnostics.map((diagnostic) => (
             <p className={diagnostic.severity === "blocking" ? styles.error : styles.notice} key={diagnostic.code}>
-              {diagnostic.message}
+              {diagnostic.code === "minimum-item-level"
+                ? diagnostic.message
+                : t(`regex.workspace.diagnostic.${diagnostic.code}` as MessageKey, {
+                  limit: REGEX_CHARACTER_LIMIT,
+                })}
             </p>
           ))}
         </aside>

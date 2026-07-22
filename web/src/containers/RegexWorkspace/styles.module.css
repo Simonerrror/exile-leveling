@@ -90,6 +90,7 @@
 .showAll { grid-column: 1 / -1; }
 .notice { color: #8db8df; }
 .error { color: #e0a15d; }
+.passHelp { background: #1a252d; border-left: 0.2rem solid #8db8df; color: #b7c9d9; font-size: 0.76rem; padding: 0.45rem 0.55rem; }
 
 .flaskSettings {
   display: grid;
