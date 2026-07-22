@@ -550,6 +550,7 @@ export default function RegexWorkspace() {
     }
     return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
   }, [beastSettings, data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, marketSelected, selected, tool, valueSettings, vendorSettings]);
+  const hasBlockingDiagnostics = result.diagnostics.some(({ severity }) => severity === "blocking");
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);
@@ -1295,7 +1296,7 @@ export default function RegexWorkspace() {
             <strong>Regex A</strong><span>{result.primary.length}/{REGEX_CHARACTER_LIMIT}</span>
           </div>
           <textarea readOnly value={result.primary} placeholder={t("regex.workspace.empty")} />
-          <button type="button" disabled={!result.primary} onClick={() => void copy(result.primary, "A")}>
+          <button type="button" disabled={!result.primary || hasBlockingDiagnostics} onClick={() => void copy(result.primary, "A")}>
             {copied === "A" ? t("regex.workspace.copied") : t("regex.workspace.copyA")}
           </button>
           {result.secondary && (

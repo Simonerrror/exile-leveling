@@ -86,6 +86,20 @@ test("map numeric thresholds stay exact even for legacy optimized profiles", asy
   assert.equal(matchesSearchExpression(result.primary, "Item Quantity: +85%"), true);
 });
 
+test("map numeric thresholds stay exact above one hundred", async () => {
+  const data = await loadRegexData("maps", "en");
+
+  for (const [threshold, below] of [["199", "198"], ["950", "949"]] as const) {
+    const settings = createDefaultMapSettings();
+    settings.quantity = threshold;
+    const result = compileMapRegex(settings, data.mods, "en");
+
+    assert.equal(matchesSearchExpression(result.primary, `Item Quantity: +${below}%`), false, threshold);
+    assert.equal(matchesSearchExpression(result.primary, `Item Quantity: +${threshold}%`), true, threshold);
+    assert.equal(matchesSearchExpression(result.primary, `Item Quantity: +${Number(threshold) + 1}%`), true, threshold);
+  }
+});
+
 test("quality reward thresholds switch cleanly between any and all", async () => {
   const data = await loadRegexData("maps", "en");
   const settings = createDefaultMapSettings();

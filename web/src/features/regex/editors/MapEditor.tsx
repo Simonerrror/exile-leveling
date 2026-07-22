@@ -218,13 +218,25 @@ export function MapEditor({ options, query, reset, setQuery, settings, update }:
 
       <details className={styles.custom}>
         <summary>{t("regex.workspace.maps.custom")}</summary>
+        <label className={styles.customToggle}>
+          <input
+            type="checkbox"
+            checked={settings.customText.enabled}
+            onChange={() => update({
+              ...settings,
+              customText: { ...settings.customText, enabled: !settings.customText.enabled },
+            })}
+          />
+          <span>{t("regex.workspace.maps.customEnabled")}</span>
+        </label>
         <label>
           <span>{t("regex.workspace.maps.customHelp")}</span>
           <input
+            disabled={!settings.customText.enabled}
             value={settings.customText.value}
             onChange={(event) => update({
               ...settings,
-              customText: { enabled: true, value: event.target.value },
+              customText: { ...settings.customText, value: event.target.value },
             })}
           />
         </label>

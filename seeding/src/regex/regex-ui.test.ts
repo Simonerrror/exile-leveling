@@ -42,6 +42,7 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   assert.match(workspace, /compileMapRegex/);
   assert.match(workspace, /aria-live="polite"/);
   assert.match(workspace, /navigator\.clipboard\.writeText/);
+  assert.match(workspace, /disabled=\{!result\.primary \|\| hasBlockingDiagnostics\}/);
   assert.match(workspace, /loadProfileStore/);
   assert.match(workspace, /saveProfileStore/);
   assert.match(workspace, /vendorGroups/);
@@ -62,6 +63,12 @@ test("workspace loads route-level data and exposes accessible A/B output", () =>
   for (const forbidden of [
     "ColorLink", "SixSocket", "specLink", "socket color",
   ]) assert.equal(workspace.includes(forbidden), false, forbidden);
+});
+
+test("map advanced expression can be disabled without deleting its value", () => {
+  const editor = read("../../../web/src/features/regex/editors/MapEditor.tsx");
+  assert.match(editor, /checked=\{settings\.customText\.enabled\}/);
+  assert.match(editor, /customText:\s*\{\s*\.\.\.settings\.customText,\s*enabled:/s);
 });
 
 test("regex UI messages have exact EN/RU parity and no migration placeholder", () => {

@@ -60,6 +60,7 @@
   "regex.workspace.maps.quality.packSize": "Pack-size reward",
   "regex.workspace.maps.quality.scarab": "Scarab reward",
   "regex.workspace.maps.custom": "Custom expression",
+  "regex.workspace.maps.customEnabled": "Use custom expression",
   "regex.workspace.maps.customHelp": "Optional advanced Path of Exile search expression.",
   "regex.workspace.maps.mode.ignore": "Ignore",
   "regex.workspace.maps.mode.exclude": "Exclude",

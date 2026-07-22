@@ -60,6 +60,7 @@
   "regex.workspace.maps.quality.packSize": "Размер групп в награде",
   "regex.workspace.maps.quality.scarab": "Скарабеи в награде",
   "regex.workspace.maps.custom": "Своё выражение",
+  "regex.workspace.maps.customEnabled": "Использовать своё выражение",
   "regex.workspace.maps.customHelp": "Необязательное выражение поиска Path of Exile для продвинутых условий.",
   "regex.workspace.maps.mode.ignore": "Пропустить",
   "regex.workspace.maps.mode.exclude": "Исключить",

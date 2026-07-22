@@ -73,19 +73,21 @@ function generateNumberRegex(number: string): string {
   if (digits === null) return "";
   const quantity = Number(digits.join(""));
   if (!Number.isFinite(quantity) || quantity === 0) return "";
-  if (quantity >= 100) {
-    const value = String(quantity).padStart(3, "0");
-    const hundreds = Number(value[0]);
-    return hundreds >= 9 ? `${value[0]}..` : `[${value[0]}-9]..`;
+  const value = String(quantity);
+  const alternatives = [value];
+
+  for (let index = 0; index < value.length; index += 1) {
+    const digit = Number(value[index]);
+    if (digit === 9) continue;
+    const prefix = value.slice(0, index);
+    const next = digit + 1;
+    const range = next === 9 ? "9" : `[${next}-9]`;
+    const remaining = value.length - index - 1;
+    const suffix = remaining === 0 ? "" : remaining === 1 ? "\\d" : `\\d{${remaining}}`;
+    alternatives.push(`${prefix}${range}${suffix}`);
   }
-  if (quantity > 9) {
-    const tens = Number(String(quantity)[0]);
-    const ones = String(quantity)[1];
-    if (ones === "0") return `([${tens}-9].|\\d..)`;
-    if (tens === 9) return `(9[${ones}-9]|\\d..)`;
-    return `(${tens}[${ones}-9]|[${tens + 1}-9].|\\d..)`;
-  }
-  return `([${quantity}-9]|\\d..?)`;
+  alternatives.push(`\\d{${value.length + 1},}`);
+  return `(${alternatives.join("|")})`;
 }
 
 function tokenById(catalog: MapRegexCatalog, id: number): RegexToken | undefined {
