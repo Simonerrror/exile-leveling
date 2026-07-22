@@ -25,6 +25,7 @@ import {
   normalizeJewelEditorSettings,
   normalizeMapEditorSettings,
   normalizeValueFilterSettings,
+  selectedWithinValueFilter,
   valueFilterMatches,
 } from "../../../web/src/features/regex/editors/compile-input.js";
 import {
@@ -271,6 +272,11 @@ test("magic jewel compiler restores prefix/suffix and open-affix modes", async (
   }, data, "en");
   assert.match(open.primary, /\^\[a-z\]\+ J/);
   assert.match(open.primary, /wel\$/);
+  const all = compileJewelRegex({
+    selected: [prefix.mod, suffix.mod], abyss: false, allMatch: true,
+    magicOnly: true, requireBoth: false, matchOpenAffix: false,
+  }, data, "en");
+  assert.match(all.primary, /^".+" ".+"$/);
 });
 
 test("market and beast controls normalize legacy profile keys without inventing prices", () => {
@@ -280,6 +286,11 @@ test("market and beast controls normalize legacy profile keys without inventing 
   assert.equal(valueFilterMatches(undefined, {}), true);
   assert.equal(valueFilterMatches(undefined, { minValue: 1 }), false);
   assert.equal(valueFilterMatches(10, { minValue: 5, maxValue: 15 }), true);
+  assert.deepEqual(selectedWithinValueFilter(
+    ["cheap", "valuable"],
+    [{ id: "cheap", chaosValue: 2 }, { id: "valuable", chaosValue: 20 }],
+    { minValue: 10 },
+  ), ["valuable"]);
   assert.deepEqual(normalizeBeastEditorSettings({
     includeHarvest: false, redBeastsOnly: true, menagerieLimit: true,
     minChaosValue: 3, maxChaosValue: 9,

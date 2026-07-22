@@ -42,6 +42,7 @@ import {
   normalizeJewelEditorSettings,
   normalizeMapEditorSettings,
   normalizeValueFilterSettings,
+  selectedWithinValueFilter,
   valueFilterMatches,
   type BeastEditorSettings,
   type ItemEditorSettings,
@@ -462,6 +463,8 @@ export default function RegexWorkspace() {
         ? valueFilterMatches(chaosValue, valueSettings) : true);
   }, [options, query, tool, valueSettings]);
   const visible = showAll ? filtered : filtered.slice(0, 160);
+  const marketSelected = useMemo(() => selectedWithinValueFilter(selected, options, valueSettings),
+    [options, selected, valueSettings]);
   const vendorSections = useMemo(() => {
     if (tool !== "vendor" || data === null) return [];
     const needle = query.trim().toLocaleLowerCase();
@@ -521,6 +524,8 @@ export default function RegexWorkspace() {
     if (tool === "maps") return compileMapRegex(mapSettings, (data as MapRegexData).mods, locale);
     if (tool === "items") return compileItemRegex(itemCompileInput(itemSettings));
     if (tool === "jewels") return compileJewelRegex(jewelSettings, data as JewelRegexData, locale);
+    if (tool === "scarabs") return compileScarabRegex(marketSelected, data as EntriesRegexData);
+    if (tool === "runegraft") return compileRunegraftRegex(marketSelected, data as EntriesRegexData);
     if (tool === "beast") {
       const value = data as EntriesRegexData;
       const entries = (Array.isArray(value.entries) ? value.entries : [])
@@ -534,7 +539,7 @@ export default function RegexWorkspace() {
       return compilePricedTattooRegex(entries, valueSettings.minValue, valueSettings.maxValue, value.translations);
     }
     return compile(tool, data, selected, vendorSettings, flaskSettings, locale);
-  }, [beastSettings, data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, selected, tool, valueSettings, vendorSettings]);
+  }, [beastSettings, data, expeditionFillers, flaskSettings, heistSettings, itemSettings, jewelSettings, locale, mapSettings, marketSelected, selected, tool, valueSettings, vendorSettings]);
 
   if (tool === null) return <Navigate to="/regex" replace />;
   const title = t(`regex.tool.${tool}` as MessageKey);

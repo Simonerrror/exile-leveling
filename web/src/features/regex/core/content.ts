@@ -190,6 +190,9 @@ export function compileJewelRegex(
       const suffixGroup = settings.matchOpenAffix ? [openSuffix, ...suffixes] : suffixes;
       return splitRegexIntoTwoPasses(`"${prefixGroup.join("|")}" "${suffixGroup.join("|")}"`);
     }
+    if (settings.allMatch) {
+      return splitRegexIntoTwoPasses([...prefixes, ...suffixes].map((pattern) => `"${pattern}"`).join(" "));
+    }
     return compilePatterns([...prefixes, ...suffixes]);
   }
   const patterns = settings.selected.map((mod) => localizedRegex(byMod.get(mod), data.translations, mod));

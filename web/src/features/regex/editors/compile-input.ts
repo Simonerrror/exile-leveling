@@ -186,6 +186,15 @@ export function valueFilterMatches(
     (settings.maxValue === undefined || chaosValue <= settings.maxValue);
 }
 
+export function selectedWithinValueFilter(
+  selected: string[],
+  options: Array<{ id: string; chaosValue?: number }>,
+  settings: ValueFilterSettings,
+): string[] {
+  const values = new Map(options.map(({ id, chaosValue }) => [id, chaosValue]));
+  return selected.filter((id) => values.has(id) && valueFilterMatches(values.get(id), settings));
+}
+
 export interface BeastEditorSettings extends ValueFilterSettings {
   includeHarvest: boolean;
   menagerieLimit: boolean;
